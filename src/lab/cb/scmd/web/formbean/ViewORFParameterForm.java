@@ -9,7 +9,11 @@
 //--------------------------------------
 package lab.cb.scmd.web.formbean;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionMapping;
 
 
 
@@ -29,6 +33,27 @@ public class ViewORFParameterForm extends ActionForm
     String format = "";
     Integer[] paramID = new Integer[] {}; // データシートに表示するparameter ID
     ColumnType columnType = ColumnType.input;
+    int page = 0;
+    
+    
+   
+    
+    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request)    
+    {
+        if(page < 0)
+            page = 0;
+        return super.validate(mapping, request);
+    }
+    
+    public int getPage()
+    {
+        return page;
+    }
+    public void setPage(int page)
+    {
+        this.page = page;
+    }
+    
     
     /**
      * @return Returns the format.

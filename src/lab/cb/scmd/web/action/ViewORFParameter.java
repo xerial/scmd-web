@@ -40,8 +40,6 @@ public class ViewORFParameter extends Action
     {
         ViewORFParameterForm input = (ViewORFParameterForm) form;
         
-        
-        
         List<MorphParameter> selectedORFParameter = null;
         switch(input.getColumnType())
         {
