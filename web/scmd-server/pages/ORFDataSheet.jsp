@@ -39,7 +39,7 @@
 <tr><td class="small">Stain Type:</td><td class="small"><%= para.getStainType()%></td></tr>
 <tr><td class="small">Nucleus Status:</td><td class="small"><%= para.getNucleusStatus() %></td></tr>
 <tr><td class="small">Parameter Type:</td><td class="small"><%= para.getParameterType() %></td></tr>
-<tr><td class="small">Description:</td><td class="small"><%= para.getDisplayname() %></td></tr>
+<tr><td class="small">Description:</td><td class="small" width="250"><%= para.getDisplayname() %></td></tr>
 </table>
 </td>
 <td>
@@ -51,22 +51,31 @@
 
 <scmd-base:pagemover page="ORFDataSheet.do" target="<%= Integer.toString(para.getId())%>" currentPage="${pageStatus.currentPage}" maxPage="${pageStatus.maxPage}"/>
 
+<table>
+<tr>
+<logic:iterate id="dataSet" name="orfData" scope="request">
+<td valign="top">
 <table class="datasheet">
 <tr class="sheetlabel">
 <td align="center" colspan="2">ORF</td>
-<td align="center" title="<bean:write name="para" property="displayname"/>">
-<bean:write name="para" property="shortName"/>
-</td>
+<td align="center">Std. name</td>
+<td align="center" title="${para.displayname}">${para.shortName}</td>
 </tr>
-<logic:iterate id="data" name="orfData" scope="request" type="lab.cb.scmd.web.container.ORFParamData">
+<logic:iterate id="data" name="dataSet" type="lab.cb.scmd.web.container.ORFParamData">
 <tr>
-<td align="left" width="15"><p align="center"><html:multibox name="selection" property="inputList" value="${data.orf}"/></p></td>
+<td align="left"><p align="center"><html:multibox name="selection" property="inputList" value="${data.orf}"/></p></td>
 <td class="orf"><a href="ViewStats.do?orf=${data.orf}">${data.orf}</a></td>
-<td>${data.data}</td>
+<td class="genename">${data.standardname}</td>
+<td>
+${data.data}
+</td>
 </tr>
 </logic:iterate>
 </table>
-
+</td>
+</logic:iterate>
+</tr>
+</table>
 </html:form>
 
 </center>

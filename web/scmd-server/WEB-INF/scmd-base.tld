@@ -157,4 +157,15 @@
         </attribute>
 	</tag>
 
+    <tag>
+    	<name>format</name>
+    	<tagclass>lab.cb.scmd.web.taglib.Format</tagclass>
+    	<info> format body content </info>
+        <attribute>
+            <name>format</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+	</tag>
+
 </taglib>

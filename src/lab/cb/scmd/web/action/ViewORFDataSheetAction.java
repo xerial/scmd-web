@@ -9,6 +9,8 @@
 //--------------------------------------
 package lab.cb.scmd.web.action;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -76,7 +78,7 @@ public class ViewORFDataSheetAction extends Action
         if(count != null)
             numData = count.intValue();
         
-        int numORFsInAPage = 200;
+        int numORFsInAPage = 150;
         int maxPage = (int) Math.ceil(((double) numData / numORFsInAPage));
         
         while(currentPage < 0)
@@ -90,15 +92,36 @@ public class ViewORFDataSheetAction extends Action
         // dataの取得
         List<ORFParamData> orfData = 
             (List<ORFParamData>) ConnectionServer.query(new BeanListHandler(ORFParamData.class), 
-                "select strainname as orf, average as data from $1 where paramid=$2 order by average $3 limit $4 offset $5",
+                "select strainname as orf, average as data, primaryname as standardname from $1 left join $6 on $1.strainname = $6.systematicname where paramid=$2 order by average $3 limit $4 offset $5",
                 SCMDConfiguration.getProperty("DB_PARAMSTAT", "paramstat"),
                 paramID,
                 input.getOrder().name(),
                 numORFsInAPage,
-                currentPage * numORFsInAPage);
+                currentPage * numORFsInAPage,
+                SCMDConfiguration.getProperty("DB_GENENAME")                
+            );
                 
+        LinkedList<List<ORFParamData>> orfDataList = new LinkedList<List<ORFParamData>>();
+        int orfCount = orfData.size();
+        int numORFsInACol = 50;
+        int numCol = (int) Math.ceil((double) orfCount / numORFsInACol);
+        Iterator<ORFParamData> it = orfData.iterator();                
+        for(int col=0; col<numCol; col++)
+        {
+            LinkedList<ORFParamData> list = new LinkedList<ORFParamData>(); 
+            for(int i=0; i<numORFsInACol; i++)
+            {            
+                if(it.hasNext())
+                {
+                    list.add(it.next());
+                }
+                else
+                    break;
+            }
+            orfDataList.add(list);
+        }        
         
-        request.setAttribute("orfData", orfData);
+        request.setAttribute("orfData", orfDataList);
         
         // 表示するデータのmin, maxを求める
         TreeSet<Double> dataList = new TreeSet<Double>();

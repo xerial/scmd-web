@@ -9,6 +9,8 @@
 //--------------------------------------
 package lab.cb.scmd.web.container;
 
+import lab.cb.scmd.web.bean.YeastGene;
+
 /**
  * ORFに関するデータを格納するクラス
  * @author leo
@@ -16,7 +18,8 @@ package lab.cb.scmd.web.container;
  */
 public class ORFParamData
 {
-    String orf;    
+    String orf; 
+    String standardname;
     double data;
     
     /**
@@ -28,7 +31,7 @@ public class ORFParamData
 
     public String getOrf()
     {
-        return orf;
+        return YeastGene.formatedOrf(orf);
     }
     public void setOrf(String orf)
     {
@@ -43,6 +46,16 @@ public class ORFParamData
     public void setData(double data)
     {
         this.data = data;
+    }
+    
+    
+    public String getStandardname()
+    {
+        return standardname;
+    }
+    public void setStandardname(String standardname)
+    {
+        this.standardname = standardname;
     }
 }
 

@@ -53,12 +53,10 @@ public class ParamFigPainter extends HttpServlet {
             }
             catch (MalformedURLException e)
             {
-                e.printStackTrace();
                 throw new SCMDException(e);
             }
             catch (IOException e)
             {
-                e.printStackTrace();
                 throw new SCMDException(e);
             }
 
