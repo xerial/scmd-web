@@ -16,8 +16,9 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author sesejun
+ * @deprecated
  *
- */
+
 public class ViewParamSheetForm extends ActionForm 
 {
     String param = "";
@@ -38,3 +39,4 @@ public class ViewParamSheetForm extends ActionForm
         this.param = param;
     }
 }
+ */

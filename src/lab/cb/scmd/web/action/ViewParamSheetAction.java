@@ -16,7 +16,6 @@ import javax.servlet.http.HttpSession;
 import lab.cb.scmd.web.action.logic.DBUtil;
 import lab.cb.scmd.web.bean.CellViewerForm;
 import lab.cb.scmd.web.bean.ORFListViewForm;
-import lab.cb.scmd.web.formbean.ViewParamSheetForm;
 import lab.cb.scmd.web.sessiondata.MorphParameter;
 
 import org.apache.struts.action.Action;
