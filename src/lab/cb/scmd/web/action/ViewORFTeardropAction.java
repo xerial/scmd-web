@@ -66,7 +66,9 @@ import org.xerial.util.Pair;
  */
 public class ViewORFTeardropAction extends Action
 {
-
+    static public final Color shadeMinus = new Color(0x0086FF);
+    static public final Color shadeMedium = new Color(0xFFFFFF);
+    static public final Color shadePlus = new Color(0xFF0070);
     /**
      * 
      */
@@ -85,7 +87,7 @@ public class ViewORFTeardropAction extends Action
         
         int sheetType = teardropForm.getSheetType();
         if(sheetType < 0)
-            sheetType = view.getSheetType();
+            sheetType = view.getOrfSheetType();
         else
             view.setSheetType(sheetType);
         String sql = null;
@@ -194,7 +196,7 @@ public class ViewORFTeardropAction extends Action
                         strength = -1.0;
                     double score = (diff < 0) ? -strength : strength;
                     valRow.add(new AttributeDecollation(new StringElement(format.format(value)), "bgcolor", 
-                            getShadingColorColde(new Color(0x0086FF), new Color(0xFFFFFF), new Color(0xFF0070), score)));
+                            getShadingColorCode(shadeMinus, shadeMedium, shadePlus, score)));
                 }
                 else
                     valRow.add(new StringElement(format.format(value)));
@@ -213,7 +215,7 @@ public class ViewORFTeardropAction extends Action
             ImageElement img = new ImageElement("scmdimage.img", imgArg);
             img.setProperty("alt", "average = " + format.format(teardrop.getAverage()));
             img.setProperty("align", "center");
-            img.setProperty("border", "0");
+            img.setProperty("bgcolor", "white");
             teardropRow.add(img);
         }
         
@@ -234,10 +236,9 @@ public class ViewORFTeardropAction extends Action
         
         Table label = new Table();
         label.insertRow(0, new String[] {"parameter", "value", "min", "Teardrop", "max"});
-        label.decollate(0, 1, new AttributeDecollator("width", "70"));
-        label.decollate(0, 2, new AttributeDecollator("width", "70"));
-        label.decollate(0, 4, new AttributeDecollator("width", "70"));
-        label.setProperty("class", "datasheet");        
+        label.decollate(0, 1, new AttributeDecollator("width", "50"));
+        label.decollate(0, 2, new AttributeDecollator("width", "50"));
+        label.decollate(0, 4, new AttributeDecollator("width", "50"));
         label.decollateRow(0, new StyleDecollator("sheetlabel"));
         
         
@@ -251,7 +252,7 @@ public class ViewORFTeardropAction extends Action
             if(numPickedRow + rowSize >= availableRow)
                 rowSize = availableRow - numPickedRow;
             
-            Table newTable = new Table();
+            Table newTable = new Table();           
             newTable.appendToBottom(label);
             for(int row=numPickedRow; row<numPickedRow+rowSize; row++)
                 newTable.appendToBottom(teardropSheet.getRow(row));
@@ -261,17 +262,36 @@ public class ViewORFTeardropAction extends Action
         }
         
         Table tdTable = new Table();
+        tdTable.setProperty("class", "datasheet");  
+        tdTable.setProperty("cellpadding", "0");
         for(Table t : tableList)
         {
             tdTable.appendToRight(t);
             tdTable.addCol(new TableElement[] {new AttributeDecollation(new StringElement(""), "width", "20")});
         }
+        tdTable.removeCol(tdTable.getColSize() -1);
         
         request.setAttribute("teardropSheet", tdTable);
 
 
+        double shadingUnit = 0.05;
+        int numShadingCol = (int) (2 / shadingUnit) +1;        
+        Table shadingTable = new Table(1, numShadingCol);
+        shadingTable.setProperty("cellspacing", "0");
+        shadingTable.setProperty("cellpadding", "0");
+        for(int i=0; i<numShadingCol; i++)
+        {
+            shadingTable.decollate(0, i, new AttributeDecollator("bgcolor", getShadingColorCode(shadeMinus, shadeMedium, shadePlus, -1 + shadingUnit * i)));
+            shadingTable.decollate(0, i, new AttributeDecollator("width", "10"));
+            shadingTable.decollate(0, i, new AttributeDecollator("height", "15"));
+        }
+        request.setAttribute("shadingTable", shadingTable);
+        
+         
         return mapping.findForward("success");        
     }
+    
+    
     
     /**
      * @param low 低いscoreの方の色
@@ -280,7 +300,7 @@ public class ViewORFTeardropAction extends Action
      * @param score -1.0 から 1.0の値
      * @return カラーコード
      */
-    public String getShadingColorColde(Color low, Color middle, Color high, double score)
+    static public String getShadingColorCode(Color low, Color middle, Color high, double score)
     {
         if(score >= 0)
             return getShade(middle, high, score);
@@ -288,12 +308,21 @@ public class ViewORFTeardropAction extends Action
             return getShade(middle, low, -score);
     }
     
-    private String getShade(Color base, Color target, double score)
+    static private String getShade(Color base, Color target, double score)
     {
         int r = (int) ((target.getRed() - base.getRed()) * score + base.getRed());
         int g = (int) ((target.getGreen() - base.getGreen()) * score + base.getGreen());
         int b = (int) ((target.getBlue() - base.getBlue()) * score + base.getBlue());
-        return "#" + Integer.toString(r, 16) + Integer.toString(g, 16) + Integer.toString(b, 16);        
+        
+        return "#" + formatColorCode(r) + formatColorCode(g) + formatColorCode(b);
+    }
+    
+    static private String formatColorCode(int oneOfRGB)
+    {
+        String colorCode = Integer.toString(oneOfRGB, 16);
+        if(colorCode.length() == 1)
+            colorCode = "0" + colorCode;
+        return colorCode;
     }
     
     class DrowTeardropTask implements Runnable

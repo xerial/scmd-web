@@ -37,6 +37,7 @@ public class CellViewerForm extends ActionForm
     int photoType = PhotoType.ANALYZED_PHOTO;
     int magnification = 50;
     int sheetType = DataSheetType.SHEET_SHAPE;
+    int orfSheetType = 0;
     
     PageStatus _photoPageStatus = new PageStatus(1, 0);
     boolean _isReadyPhotoPageMax = false;
@@ -57,6 +58,14 @@ public class CellViewerForm extends ActionForm
 
     
     
+    public int getOrfSheetType()
+    {
+        return orfSheetType;
+    }
+    public void setOrfSheetType(int orfSheetType)
+    {
+        this.orfSheetType = orfSheetType;
+    }
 	public void reset(ActionMapping arg0, HttpServletRequest arg1) {
 		discardPhotoBuffer();		
 	}

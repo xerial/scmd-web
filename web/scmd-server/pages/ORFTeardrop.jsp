@@ -45,6 +45,26 @@
 </tr>
 </table>
 
+<table>
+<tr><td><scmd-base:table name="shadingTable"/></td></tr>
+<tr><td>
+<table>
+<tr class="small">
+<td width="40" align="center">-4SD</td>
+<td width="40" align="center">-3SD</td>
+<td width="40" align="center">-2SD</td>
+<td width="40" align="center">-1SD</td>
+<td width="40" align="center">  0 </td>
+<td width="40" align="center"> 1SD</td>
+<td width="40" align="center"> 2SD</td>
+<td width="40" align="center"> 3SD</td>
+<td width="40" align="center"> 4SD</td>
+</tr>
+</table>
+</td></tr>
+</table>
+
+
 <scmd-tags:linkMenu orf="${gene.orf}" logo="on"/> 
 
 <scmd-tags:searchframe/>
