@@ -7,7 +7,7 @@
 
 <script language="javascript" src="js/styleutil.js"></script>
 
-<table width="700" border="0" cellspacing=0 cellpadding=0>
+<table width="750" border="0" cellspacing=0 cellpadding=0>
 <tr>
 <logic:equal name="top" value="true"> 
 <td width="110"><html:link page="/"><html:img page="/image/scmd_logo.png" alt="SCMD" border="0"/></html:link></td>
@@ -23,11 +23,12 @@
 </td>
 </tr>
 </table>
-<table width="700" border="0" bgcolor="#70b0b0" class="menubar" cellpadding="0">
+<table width="750" border="0" bgcolor="#70b0b0" class="menubar" cellpadding="0">
   <tr> 
     <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="ViewORFList.do">Yeast Mutant</a></td>
     <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="SelectShape.do">Morphology Search</a> </td>
     <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="ViewPhoto.do">Cell Viewer</a> </td>
+    <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="ORFTeardrop.do">Teardrop</a> </td>
     <td align="center" width="100" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="ViewStats.do"> Stats </a> </td>     
     <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="publication.jsp">Publications</a> </td>
     <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="about.jsp">About SCMD</a> </td>
