@@ -111,7 +111,9 @@ public class ViewSelectionAction extends Action
         {
             // ÉÜÅ[ÉUÅ[ÇÃì¸óÕÇè¡ãé
             for(String s : inputtedORFSet)
+            {
                 userSelection.removeSelection(s);
+            }
         }
         else
         {
@@ -119,7 +121,7 @@ public class ViewSelectionAction extends Action
             for(String s : inputtedORFSet)
             {
                 userSelection.addSelection(s);
-                userSelection.setColor(s, "skyblue");
+                userSelection.setColor(s, userSelection.randomColor());
             }                        
         }
 

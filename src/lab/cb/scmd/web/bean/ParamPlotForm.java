@@ -37,7 +37,26 @@ public class ParamPlotForm extends ActionForm
     private int param1 = -1;
     private int param2 = -1;
     private String submit = "";
+    private String orfType = "current"; 
+    boolean plotTargetORF = true;
+    boolean plotUserORF = true;
     
+    public boolean isPlotTargetORF()
+    {
+        return plotTargetORF;
+    }
+    public void setPlotTargetORF(boolean plotTargetORF)
+    {
+        this.plotTargetORF = plotTargetORF;
+    }
+    public boolean isPlotUserORF()
+    {
+        return plotUserORF;
+    }
+    public void setPlotUserORF(boolean plotUserORF)
+    {
+        this.plotUserORF = plotUserORF;
+    }
     static private List<MorphParameter> paramList = new LinkedList<MorphParameter>();
 
     static public void init()
@@ -147,6 +166,14 @@ public class ParamPlotForm extends ActionForm
     public String getCgiArgument()
     {
         return CGIUtil.getCGIArgument(getArgumentMap());
+    }
+    public String getOrfType()
+    {
+        return orfType;
+    }
+    public void setOrfType(String orfType)
+    {
+        this.orfType = orfType;
     }
 }
 

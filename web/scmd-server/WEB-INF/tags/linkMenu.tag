@@ -12,7 +12,7 @@
 <table width="${width}">
 </logic:notEqual>
 <logic:equal name="width" value="">
-<table width="730">
+<table width="500">
 </logic:equal>
 <tr><td>
 </logic:equal>
@@ -38,11 +38,13 @@
 [ <html:link page="/sitemap.jsp"> site map </html:link> ] 
 [ <html:link page="/"> top </html:link> ] 
 </span>
+<%--
 <span class=small>
 ( links to: 
 <a href="http://mips.gsf.de/genre/proj/yeast/searchEntryAction.do?text=${orf}" target=_blank>CYGD</a>
 <a href="http://genome-www4.stanford.edu/cgi-bin/SGD/locus.pl?locus=${orf}" target=_blank>SGD</a> )
 </span>
+--%>
 <logic:equal name="logo" value="on">
 </td>
 <td><html:link page="/"><html:img page="/image/scmd_logo_grad.png" border="0"/></html:link></td>

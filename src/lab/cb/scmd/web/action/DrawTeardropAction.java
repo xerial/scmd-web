@@ -84,7 +84,8 @@ public class DrawTeardropAction extends Action
         Set<String> orfSet = new TreeSet<String>();
         if(input.isPlotTargetORF())
             orfSet.add(view.getOrf().toUpperCase());
-        orfSet.addAll(selection.getSelection());
+        if(input.isPlotUserORF())
+            orfSet.addAll(selection.getSelection());
         List<TeardropPoint> plotList;
         if(orfSet.isEmpty())
             plotList = new LinkedList<TeardropPoint>();

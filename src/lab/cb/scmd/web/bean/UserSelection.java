@@ -49,6 +49,7 @@ public class UserSelection
 
     private TreeSet<String> _selection = new TreeSet<String>();
     private TreeMap<String, String> _colorMap = new TreeMap<String, String>();
+
     /**
      * 
      */
@@ -93,6 +94,24 @@ public class UserSelection
     {
         _colorMap.put(orf.toUpperCase(), colorName);
     }
+    
+    /**
+     * @return Ç»ÇÈÇ◊Ç≠Ç©Ç‘ÇÁÇ»Ç¢êFÇï‘Ç∑
+     */
+    public String randomColor()
+    {
+        Vector<PlotColor> colorList = PlotColor.getDefaultPlotColorList();
+        TreeSet<String> usedColorSet = new TreeSet<String>();
+        for(String s : _colorMap.values())
+            usedColorSet.add(s);
+        for(PlotColor pc : colorList)
+        {
+            if(!usedColorSet.contains(pc.getColorName()))
+                return pc.getColorName();
+        }
+        return "skyblue";
+    }
+    
     public String getColor(String orf)
     {
         if(orf == null)

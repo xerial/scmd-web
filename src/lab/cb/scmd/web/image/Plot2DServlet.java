@@ -69,8 +69,10 @@ public class Plot2DServlet extends HttpServlet
         CellViewerForm view = SCMDSessionManager.getCellViewerForm(request);
         UserSelection selection = SCMDSessionManager.getUserSelection(request);
         TreeSet<String> selectedORFSet = new TreeSet<String>();
-        selectedORFSet.addAll(selection.orfSet());
-        if(selectedORFSet.isEmpty())
+        
+        if(plotForm.isPlotUserORF())
+            selectedORFSet.addAll(selection.orfSet());
+        if(selectedORFSet.isEmpty() || plotForm.isPlotTargetORF())
             selectedORFSet.add(view.getOrf().toUpperCase());
         
         TableQuery query = SCMDConfiguration.getTableQueryInstance();

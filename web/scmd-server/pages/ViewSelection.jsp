@@ -79,7 +79,7 @@
 </table>
 <html:submit value="apply color changes" property="button"/>
 <p align="center" class="menubutton"> 
-[ <html:link page="/View2DPlot.do"> Display 2D plot of these mutants</html:link> ] 
+[ <html:link page="/View2DPlot.do?orfType=user"> Display 2D plot of these mutants</html:link> ] 
 </p>
 </html:form>
 
@@ -87,7 +87,7 @@
 <html:form action="ViewSelection.do" method="POST" enctype="multipart/form-data">
 <table>
 <tr>
-<td class="small" valign="center"><b>input ORFs manually</b> : <br> (ex. yor202w, yal002w, ...) </td>
+<td class="small" valign="center"><b>input ORFs manually</b> : <br> (ex. yor202w, yal002w, rad51, ...) </td>
 <td><textarea name="orfList" rows="5" cols="15"></textarea> </td>
 </td>
 </tr>

@@ -10,7 +10,6 @@
 <jsp:useBean id="view"  scope="session" class="lab.cb.scmd.web.bean.CellViewerForm"/>
 <jsp:useBean id="gene"  scope="request" class="lab.cb.scmd.web.bean.YeastGene"/>
 <jsp:useBean id="userSelection"  scope="session" class="lab.cb.scmd.web.bean.UserSelection"/>
-
 <scmd-base:header title="2D Plot ${view.orf}"/>
 
 <%--
@@ -73,16 +72,14 @@ function writeRegion(e)
 
 <c:if test="${addViewORF}">
 <scmd-tags:orfInfo  orf="${gene.orf}" 
-	stdname="${gene.standardName}" annot="${gene.annotation}" 
-	title="2D Plot"  />
+	stdname="${gene.standardName}" annot="${gene.annotation}"/>
 </c:if>
-<c:if test="${!addViewORF}">
 <p class="title">2D Plot</p>
-</c:if>
 
 <table>
 <tr>
 <td>
+<c:if test="${!addViewORF}">
 <table>
 <logic:iterate id="orf" name="userSelection" property="selection" type="java.lang.String">
 <tr>
@@ -94,14 +91,16 @@ function writeRegion(e)
 </tr>
 </logic:iterate>
 </table>
+</c:if>
 </td>
+
 <td align="center">
 <c:if test="${plotForm.param2 != -1}">
-<a href="ViewORFParameter.do?paramID=${plotForm.param2}&sortspec=${plotForm.param2}&columnType=input"><img src="DrawTeardrop.do?paramID=${plotForm.param2}&orientation=vertical&plotTargetORF=${addViewORF}" border="0"/></a>
+<a href="ViewORFParameter.do?paramID=${plotForm.param2}&sortspec=${plotForm.param2}&columnType=input"><img src="DrawTeardrop.do?paramID=${plotForm.param2}&orientation=vertical&plotTargetORF=${addViewORF}&plotUserORF=${!addViewORF}" border="0"/></a>
 </c:if>
 </td>
 <td>
-<img id="plot" class="plotview" src="Write2DPlot.do?${plotForm.cgiArgument}" width="320" height="320"/>
+<img id="plot" class="plotview" src="Write2DPlot.do?${plotForm.cgiArgument}&plotTargetORF=${addViewORF?"true":"false"}&plotUserORF=${addViewORF?"false":"true"}" width="320" height="320"/>
 </td>
 </tr>
 <tr>
@@ -109,7 +108,7 @@ function writeRegion(e)
 <td/>
 <td align="center">
 <c:if test="${plotForm.param1 != -1}">
-<a href="ViewORFParameter.do?paramID=${plotForm.param1}&sortspec=${plotForm.param1}&columnType=input"><img src="DrawTeardrop.do?paramID=${plotForm.param1}&plotTargetORF=${addViewORF}" border="0"/></a>
+<a href="ViewORFParameter.do?paramID=${plotForm.param1}&sortspec=${plotForm.param1}&columnType=input"><img src="DrawTeardrop.do?paramID=${plotForm.param1}&plotTargetORF=${addViewORF}&plotUserORF=${!addViewORF}" border="0"/></a>
 </c:if>
 </td>
 </tr>

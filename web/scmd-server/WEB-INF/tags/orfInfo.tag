@@ -12,6 +12,11 @@
 <span class="orf"> ${orf} </span> 
 <span class="genename"> ${stdname} </span>
 <span class="annotation"> ${annot} </span>
+<span class="small">
+( links to: 
+<a href="http://mips.gsf.de/genre/proj/yeast/searchEntryAction.do?text=${orf}" target=_blank>CYGD</a>
+<a href="http://genome-www4.stanford.edu/cgi-bin/SGD/locus.pl?locus=${orf}" target=_blank>SGD</a> )
+</span>
 </td>
 <td align="right">
 <p align="absbottom">

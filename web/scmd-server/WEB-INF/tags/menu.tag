@@ -76,7 +76,7 @@
 <li> <a href="SelectShape.do">Morphology Search </a></li>
 <li> <a href="ORFTeardrop.do?orf=${orf}">Teardrop View of ORF Parameters </a></li>
 <li> <a href="ViewORFParameter.do">ORF Parameter Datasheet</a></li>
-<li><a href="View2DPlot.do">2D Plot</a></li>
+<li><a href="View2DPlot.do?orfType=current">2D Plot</a></li>
 <li> <a href="ViewStats.do?orf=${orf}">Average Shapes</a> </li>
 <li>Teardrop View of Average Shapes Grouped by</li>
 <ul>

@@ -33,6 +33,7 @@ import lab.cb.scmd.web.bean.CellViewerForm;
 import lab.cb.scmd.web.bean.ParamPlotForm;
 import lab.cb.scmd.web.bean.UserSelection;
 import lab.cb.scmd.web.common.SCMDConfiguration;
+import lab.cb.scmd.web.common.SCMDSessionManager;
 import lab.cb.scmd.web.table.ColLabelIndex;
 import lab.cb.scmd.web.table.Table;
 
@@ -56,26 +57,21 @@ public class ParamPlotAction extends Action
     {
         ParamPlotForm plotForm = (ParamPlotForm) form;
         // sessionÇ©ÇÁÅAëIëÇ≥ÇÍÇƒÇ¢ÇÈorfÇéÊìæ
-        HttpSession session = request.getSession(true);
-        UserSelection userSelection = (UserSelection) session.getAttribute("userSelection");
-        if(userSelection == null) 
-            userSelection = new UserSelection();
-        
-        CellViewerForm view = (CellViewerForm) session.getAttribute("view");
-        if(view == null)
-            view = new CellViewerForm();
+        UserSelection userSelection = SCMDSessionManager.getUserSelection(request);
+        CellViewerForm view = SCMDSessionManager.getCellViewerForm(request);
 
-        //ç°ëIÇŒÇÍÇΩorfÇéÊìæ
-        String orf = view.getOrf();
-
+        request.setAttribute("addViewORF", false);
         TreeSet selectedORFSet = (TreeSet)userSelection.orfSet();
-        if(selectedORFSet.isEmpty())
+        if(selectedORFSet.isEmpty() || plotForm.getOrfType().equals("current"))
         {
+            selectedORFSet.clear();
+            String orf = view.getOrf();
             selectedORFSet.add(orf.toUpperCase());
-            request.setAttribute("addViewORF", true);
+            if(selectedORFSet.size() == 1)
+                request.setAttribute("addViewORF", true);
+            request.setAttribute("gene", DBUtil.getGeneInfo(orf));
         }
-        else
-            request.setAttribute("addViewORF", false);
+
 
         if(plotForm.getParam1() == -1 && plotForm.getParam2() == -1) {
             String[] orfs = new String[selectedORFSet.size()];
@@ -85,8 +81,6 @@ public class ParamPlotAction extends Action
             }
             selectMaximumInterclassVarianceCorrdinates(plotForm,  orfs, SCMDConfiguration.getTableQueryInstance());
         }
-        
-        request.setAttribute("gene", DBUtil.getGeneInfo(orf));
         
         return mapping.findForward("success");
     }
