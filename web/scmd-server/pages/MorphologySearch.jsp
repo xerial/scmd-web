@@ -39,7 +39,7 @@
 <!--
 function help(){
     helpWin = window.open
-	('/help/morphParamHelp.html', 'help',
+	('help/morphParamHelp.html', 'help',
 	 'width=330, height=380, status=no, menuber=no, scrollbar=yes'); 
     helpWin.focus();
 }
