@@ -95,26 +95,6 @@ public class ViewORFListAction extends Action {
         }
         
         
-        // ORFのチェックボックスの状態を通知
-        HttpSession session = request.getSession(true);
-        UserSelection selection = (UserSelection) session.getAttribute("userSelection");
-        if(selection == null)
-            selection = new UserSelection();
-        
-        ORFSelectionForm selectionForm = new ORFSelectionForm();
-        Set exisitngSelection = selection.getSelection();
-        if(exisitngSelection.size() > 0)
-        {
-            TreeSet selectedOrfList = new TreeSet();
-            for(Iterator it = exisitngSelection.iterator(); it.hasNext();  )
-            {
-                String gene = (String) it.next();
-                if(orfListInThePage.contains(gene))
-                    selectedOrfList.add(gene);
-            }
-            selectionForm.setSelectedORFList(selectedOrfList);
-        }
-        request.setAttribute("selection", selectionForm);
 
         return mapping.findForward("success");
     }

@@ -14,6 +14,8 @@ package lab.cb.scmd.web.action;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +29,7 @@ import org.apache.struts.upload.FormFile;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.xerial.util.xml.bean.XMLBeanUtil;
 
 import lab.cb.scmd.db.common.XMLQuery;
 import lab.cb.scmd.exception.SCMDException;
@@ -38,6 +41,7 @@ import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.common.SCMDSessionManager;
 import lab.cb.scmd.web.xml.DOMParser;
 import lab.cb.scmd.web.xml.XMLReaderThread;
+import lab.cb.scmd.web.xmlbean.Selection;
 
 /**
  * @author leo
@@ -61,15 +65,11 @@ public class ViewSelectionAction extends Action
     {
 	    
 	    ORFSelectionForm selection = (ORFSelectionForm) form;
-	    String orf = selection.getInput();
 	    
 	    // sessionを取得
-	    HttpSession session = request.getSession(true);
 	    UserSelection userSelection = SCMDSessionManager.getUserSelection(request);
 	    CellViewerForm view = SCMDSessionManager.getCellViewerForm(request);
 	    
-
-        String[] inputList = selection.getInputList();
         
         if(selection.getButton().equals("save"))
         {
@@ -79,54 +79,60 @@ public class ViewSelectionAction extends Action
             return super.execute(mapping, form, request, response);
         }
         
+        
         if(selection.getButton().equals("remove all"))
         {
             userSelection.clear();
         }
-        else
+        
+
+        TreeSet<String> inputtedORFSet = new TreeSet<String>();
+        TreeMap<String, String> colorMap = new TreeMap<String, String>();
+        
+        int numInput = 0; 
+        for(String s : selection.getInputList())  
         {
-            if(selection.getButton().equals("remove"))
-            {
-                // ユーザーの入力を消去
-                for(String s : inputList)
-                    userSelection.removeSelection(s);
-            }
-            else
-            {
-                if(selection.getButton().equals("load"))
-                {
-                    // ユーザーの入力を追加
-                    FormFile inputXMLFile = selection.getFile();
-                    if(inputXMLFile != null)
-                    {
-                        // XMLファイルから読み込み
-                        userSelection.loadFromXML(inputXMLFile);
-                    }
-                }
-                else 
-                {
-                    if(orf != null)
-                    {
-                        userSelection.addSelection(orf);
-                        userSelection.setColor(orf, "skyblue");
-                    }
-                    for(String s : inputList)
-                    {
-                        userSelection.addSelection(s);
-                        userSelection.setColor(s, "skyblue");
-                    }
-                }
-            }
+            if(numInput++ > 20) // 入力の個数を制限
+                break;
+            inputtedORFSet.add(s);
         }
 
+        if(selection.getButton().equals("load"))
+        {
+            FormFile inputXMLFile = selection.getFile();
+            if(inputXMLFile != null)
+            {
+                // XMLファイルから読み込み
+                userSelection.loadFromXML(inputXMLFile);
+            }
+        }
+        
+        if(selection.getButton().equals("remove"))
+        {
+            // ユーザーの入力を消去
+            for(String s : inputtedORFSet)
+                userSelection.removeSelection(s);
+        }
+        else
+        {
+            // ユーザーの入力を追加
+            for(String s : inputtedORFSet)
+            {
+                userSelection.addSelection(s);
+                userSelection.setColor(s, "skyblue");
+            }                        
+        }
 
         // 色名(ORF_color)を<ORF,color> のHashに入れる。
-        for(String colorMap : selection.getColorList())
+        for(String orfAndColor : selection.getColorList())
         {
-            String[] orfColorSet = colorMap.split("_");
+            String[] orfColorSet = orfAndColor.split("_");
             if(orfColorSet.length == 2 )
                 userSelection.setColor(orfColorSet[0], orfColorSet[1]);
         }
+
+        userSelection.validateORFs();
+        
         
 	    LinkedList orfList = new LinkedList();
 	    
@@ -169,8 +175,8 @@ public class ViewSelectionAction extends Action
 	    
 	    return mapping.findForward("success");
 	}
-    
-    
+
+
     
 }
 

@@ -20,7 +20,6 @@
 
 <jsp:useBean id="groupList" scope="request" type="java.util.List"/>
 <jsp:useBean id="listPage" scope="session" class="lab.cb.scmd.web.bean.ORFListViewForm"/>
-<jsp:useBean id="selection" scope="request" class="lab.cb.scmd.web.bean.ORFSelectionForm"/>
 
 <html:form action="ViewSelection.do" method="GET">
 <table width="750">
@@ -51,7 +50,7 @@
 </tr>
 <logic:iterate id="yeastGene" name="group" property="orfList" type="lab.cb.scmd.web.bean.YeastGene">
 <tr class="small"> 
-<td align="left" width="15"><p align="center"><html:multibox name="selection" property="inputList" value="<%= yeastGene.getOrf().toLowerCase()%>"/></p></td>
+<td align="left" width="15"><p align="center"><html:multibox property="inputList" value="<%= yeastGene.getOrf().toLowerCase()%>"/></p></td>
 <td align="left" class="orf" width="90"> 
 <html:link page="/ViewStats.do?orf=${yeastGene.orf}"> ${yeastGene.orf}  </html:link> 
 </td> 

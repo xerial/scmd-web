@@ -21,21 +21,19 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.upload.FormFile;
 
 /**
+ * ユーザからのORFの入力を受け取るform
  * @author leo
  *
  */
 public class ORFSelectionForm extends ActionForm
 {
-
-    String _input;
     String[] _inputList = new String[0];
     String[] _colorList = new String[0];
     String _button = "add selections";
     
     FormFile file = null;
     
-    //Set _removeList = new TreeSet();
-    //Set _previousSet = new TreeSet();
+
     /**
      * 
      */
@@ -48,7 +46,6 @@ public class ORFSelectionForm extends ActionForm
 
     public void reset(ActionMapping arg0, HttpServletRequest arg1) {
         _inputList = new String[0];
-        //_colorList = new String[0];
         file = null;
     }
     
@@ -64,13 +61,6 @@ public class ORFSelectionForm extends ActionForm
     }
     
 
-    public String getInput() {
-        return _input;
-    }
-    
-    public void setInput(String input) {
-        this._input = input.toLowerCase();
-    }
     
     public String[] getInputList()
     {
@@ -82,64 +72,23 @@ public class ORFSelectionForm extends ActionForm
         return _colorList;
     }
     
-    /*
-    public Set getRemoveList()
-    {
-        return _removeList;
-    }
-    */
-    
     public void setInputList(String[] inputList)
     {
-        /*
-        // _previousSetに既にあるものが、inputListになければ、選択から外す意図として、removeListに追加する
-        TreeSet inputSet = new TreeSet();
-        for (int i = 0; i < inputList.length; i++)
-        {
-            inputSet.add(inputList[i]);
-        }
-        for (Iterator it = _previousSet.iterator(); it.hasNext();)
-        {
-            String element = (String) it.next();
-            if(!inputSet.contains(element))
-                _removeList.add(element);
-        }
-        */
         _inputList = inputList;
     }
     public void setColorList(String[] colorList) {
         _colorList = colorList;
     }
     
-    public void setSelectedORFList(Set orfSet)
-    {
-        //_previousSet = orfSet;
-        _inputList = new String[orfSet.size()];
-        int i =0;
-        for(Iterator it = orfSet.iterator(); it.hasNext(); )
-        {
-            _inputList[i++] = (String) it.next();
-        }
-    }
     
     public void setOrfList(String orfListText)
     {
         String[]  orfList = orfListText.trim().split("[ ,\t\n\r]+");
         if(orfList.length > 0) 
+        {
             setInputList(orfList);
+        }
     }
-    
-//    public String getOrfList()
-//    {
-////        StringBuilder orfList = new StringBuilder();
-////        for(String s : _inputList)
-////        {
-////            orfList.append(s);
-////            orfList.append("\n");
-////        }
-////        return orfList.toString();
-//        return "";
-//    }
     
     public void setButton(String buttonName)
     {

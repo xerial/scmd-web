@@ -2,6 +2,6 @@
 <%@ attribute name="orf" required="true" %>
 
 <html:form action="ViewSelection.do" method="POST">
-<html:hidden property="input" value="${orf}"/>
+<html:hidden property="inputList" value="${orf}"/>
 <html:submit value="select this mutant"/>
 </html:form>

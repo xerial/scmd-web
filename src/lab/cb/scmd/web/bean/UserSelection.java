@@ -14,18 +14,25 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
+import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
 
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.struts.upload.FormFile;
+import org.omg.stub.java.rmi._Remote_Stub;
+import org.xerial.util.Pair;
 import org.xerial.util.XMLParserException;
 import org.xerial.util.xml.InvalidXMLException;
 import org.xerial.util.xml.bean.XMLBeanException;
 import org.xerial.util.xml.bean.XMLBeanUtil;
 
+import lab.cb.scmd.db.connect.ConnectionServer;
+import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.design.PlotColor;
 import lab.cb.scmd.web.xmlbean.Item;
 import lab.cb.scmd.web.xmlbean.Selection;
@@ -64,6 +71,7 @@ public class UserSelection
     public void removeSelection(String orf)
     {
         _selection.remove(orf.toUpperCase());
+        _colorMap.remove(orf.toUpperCase());
     }
     
     public Set<String> orfSet()
@@ -111,6 +119,60 @@ public class UserSelection
        _colorMap.clear();
     }
     
+    public void validateORFs()
+    {
+        // DBÇ…Ç»Ç¢ORFÇ™Ç†ÇÍÇŒè¡ãé, standardname, aliasÇÕORFÇ…ïœä∑
+        LinkedList<String> deleteTarget = new LinkedList<String>();
+        LinkedList<Pair<String, String>> replacePair = new LinkedList<Pair<String, String>>();
+        for(String gene : _selection)
+        {
+            String orf = lookupORF(gene);
+            if(orf == null)
+                deleteTarget.add(gene);
+            else
+            {
+                if(!gene.equalsIgnoreCase(orf))
+                    replacePair.add(new Pair<String, String>(gene, orf));
+            }
+        }
+        
+        // delete
+        for(String gene : deleteTarget)
+            removeSelection(gene);
+        
+        // replace
+        for(Pair<String, String> replaceDirective : replacePair)
+        {
+            String color = _colorMap.get(replaceDirective.getFirst());
+            removeSelection(replaceDirective.getFirst());
+            addSelection(replaceDirective.getSecond());
+            if(color != null)
+                setColor(replaceDirective.getSecond(), color);
+        }
+    }
+    
+    /** genenameÇ…ëŒâûÇ∑ÇÈORFñºÇí≤Ç◊ÇÈ
+     * @param genename
+     * @return ORFñºÅBäYìñÇ∑ÇÈÇ‡ÇÃÇ™Ç»Ç¢èÍçáÇÕnullÅ@
+     */
+    private static String lookupORF(String genename)
+    {
+        try
+        {
+            Object result = ConnectionServer.query(new ScalarHandler("orf"),
+                    "select orf from $1 where alias ilike '$2'",
+                    SCMDConfiguration.getProperty("DB_ORFALIASNAME", "orfaliasname_20040719"),
+                    genename                            
+            );
+            if(result != null)
+                return result.toString();
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
     
     public void outputXML(OutputStream out)
     {
@@ -146,8 +208,11 @@ public class UserSelection
             Selection selection = XMLBeanUtil.newInstance(Selection.class, file.getInputStream());
             _selection.clear();
             _colorMap.clear();
+            int numItem = 0;
             for(Item item : selection.getItem())
             {
+                if(numItem++ > 20)
+                    break;
                 addSelection(item.getOrf());
                 setColor(item.getOrf(), item.getColor());
             }
