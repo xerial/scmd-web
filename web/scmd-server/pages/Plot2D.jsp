@@ -97,7 +97,7 @@ function writeRegion(e)
 </td>
 <td align="center">
 <c:if test="${plotForm.param2 != -1}">
-<a href="ORFDataSheet.do?paramID=${plotForm.param2}"><img src="DrawTeardrop.do?paramID=${plotForm.param2}&orientation=vertical&plotTargetORF=${addViewORF}" border="0"/></a>
+<a href="ViewORFParameter.do?paramID=${plotForm.param2}&sortspec=${plotForm.param2}&columnType=input"><img src="DrawTeardrop.do?paramID=${plotForm.param2}&orientation=vertical&plotTargetORF=${addViewORF}" border="0"/></a>
 </c:if>
 </td>
 <td>
@@ -109,7 +109,7 @@ function writeRegion(e)
 <td/>
 <td align="center">
 <c:if test="${plotForm.param1 != -1}">
-<a href="ORFDataSheet.do?paramID=${plotForm.param1}"><img src="DrawTeardrop.do?paramID=${plotForm.param1}&plotTargetORF=${addViewORF}" border="0"/></a>
+<a href="ViewORFParameter.do?paramID=${plotForm.param1}&sortspec=${plotForm.param1}&columnType=input"><img src="DrawTeardrop.do?paramID=${plotForm.param1}&plotTargetORF=${addViewORF}" border="0"/></a>
 </c:if>
 </td>
 </tr>
