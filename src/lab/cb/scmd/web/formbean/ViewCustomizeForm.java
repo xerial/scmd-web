@@ -10,21 +10,14 @@
 package lab.cb.scmd.web.formbean;
 
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import lab.cb.scmd.db.common.TableQuery;
-import lab.cb.scmd.db.connect.ConnectionServer;
 import lab.cb.scmd.db.connect.SCMDTableQuery;
 import lab.cb.scmd.db.scripts.bean.Parameter;
-import lab.cb.scmd.db.sql.SQLExpression;
-import lab.cb.scmd.web.action.ViewCellInfoAction;
-import lab.cb.scmd.web.common.ConfigObserver;
 import lab.cb.scmd.web.table.Table;
 
-import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
@@ -43,7 +36,7 @@ public class ViewCustomizeForm extends ActionForm
         SCMDTableQuery query = new SCMDTableQuery();
         _cellParameterList = query.getParameterList("cell", "num");
         _orfParameterList = query.getParameterList("orf", "double");
-//        Table table = ConnectionServer.retrieveTable(sql, "orf");
+        //Table table = query.getParameterTable();
          
         System.out.println("[scmd-server] ViewCustomizeForm is initialized");
     }
@@ -66,7 +59,6 @@ public class ViewCustomizeForm extends ActionForm
     public ViewCustomizeForm()
     {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     public List<Parameter> getCellParameterList()

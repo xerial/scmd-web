@@ -16,12 +16,45 @@
 <%@ taglib prefix="html" uri="/WEB-INF/struts-html.tld" %>
 <%@ taglib prefix="bean" uri="/WEB-INF/struts-bean.tld" %>
 
+<jsp:useBean id="cellParameterList" scope="request" type="java.util.List"/>
+<jsp:useBean id="orfParameterList" scope="request" type="java.util.List"/>
+
 <scmd-base:header title="Customize View" css="/css/tabsheet.css"/>
 <body>
 <center>
 <scmd-tags:menu toolbar="on" searchframe="on"/>
 
-
+<table>
+<tr><td align="top">
+<!-- selected cell params -->
+<p class="title"> Selected Cell Detail Parametes </p>
+<table class="small">
+<tr><td>Abbreviated Name</td><td>Name</td></tr>
+<logic:iterate id="morphParam" name="cellParameterList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
+<tr><td>
+${morphParam.shortName}
+</td><td>
+${morphParam.name}
+</td></tr>
+</logic:iterate>
+</table>
+</td>
+<td align="top">
+<!-- selected cell params -->
+<p class="title"> Selected Average/SD Parametes </p>
+<table class="small">
+<tr><td>Abbreviated Name</td><td>Name</td></tr>
+<logic:iterate id="morphParam" name="orfParameterList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
+<tr><td>
+${morphParam.shortName}
+</td><td>
+${morphParam.name}
+</td></tr>
+</logic:iterate>
+</table>
+<!-- -->
+</td></tr>
+</table>
 
 <html:form action="CustomizeView.do" method="GET">
 
@@ -51,7 +84,7 @@ col++;
 <% if((col % 10) == 0){%>
 <tr>
 <%}%>
-<td><html:multibox property="selectedCellParameter"><%= param.getId()%></html:multibox> </td>
+<td><html:multibox property="selectedORFParameter"><%= param.getId()%></html:multibox> </td>
 <td><%= param.getShortname() %></td>
 <% if((col % 10) == 9){%>
 </tr>

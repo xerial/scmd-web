@@ -10,10 +10,14 @@
 
 package lab.cb.scmd.db.common;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import lab.cb.scmd.db.scripts.bean.Parameter;
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.web.datagen.ParamPair;
+import lab.cb.scmd.web.sessiondata.MorphParameter;
 import lab.cb.scmd.web.table.Table;
 
 /**
@@ -93,6 +97,8 @@ public interface TableQuery
 
     public Table getAnalysisAVGandSD();
     public Table getSelectedAnalysisValue(String[] orf);
+
+    public List<MorphParameter> getParameterInfo(Set<Integer> parameter);
     
 }
 

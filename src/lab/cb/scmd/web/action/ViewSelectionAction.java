@@ -13,6 +13,7 @@ package lab.cb.scmd.web.action;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -136,6 +137,7 @@ public class ViewSelectionAction extends Action
 	    
 	    return mapping.findForward("success");
 	}
+    
 }
 
 

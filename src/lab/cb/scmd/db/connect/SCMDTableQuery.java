@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
 
@@ -25,6 +26,7 @@ import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.common.StainType;
 import lab.cb.scmd.web.datagen.ParamPair;
 import lab.cb.scmd.web.exception.InvalidSQLException;
+import lab.cb.scmd.web.sessiondata.MorphParameter;
 import lab.cb.scmd.web.table.RowLabelIndex;
 import lab.cb.scmd.web.table.Table;
 
@@ -295,16 +297,44 @@ public class SCMDTableQuery implements TableQuery {
         return evalSQL(sql);
     }
 
-    /**
-     * @param string
-     * @param string2
-     * @return
-     */
-    public List<Parameter> getParameterList(String string, String string2) throws SQLException {
-        String sql = "select id, name, shortname, scope, datatype from parameterlist where scope='$1' and datatype='$2' order by id";
-        List<Parameter> result = (List<Parameter>) ConnectionServer.query(new BeanListHandler(Parameter.class), sql, "cell", "num");
+    public List<Parameter> getParameterList(String scope, String datatype) throws SQLException {
+        String sql = "select id, name, shortname, scope, datatype from " + SCMDConfiguration.getProperty("DB_PARAMETERLIST") + " where scope='$1' and datatype='$2' order by id";
+        List<Parameter> result = (List<Parameter>) ConnectionServer.query(new BeanListHandler(Parameter.class), sql, scope, datatype);
         return result;
     }
+
+    public List<MorphParameter> getParameterInfo(Set<Integer> parameter) {
+        String sql = "SELECT id, name, shortname, scope, datatype FROM " 
+            + SCMDConfiguration.getProperty("DB_PARAMETERLIST");
+        String sql_where = "";
+        for(Object param: parameter) {
+            if(sql_where.length() == 0 )
+                sql_where = " WHERE";
+            else
+                sql_where += " OR";
+            sql_where += " id='"+ param + "'";
+        }
+        sql += sql_where + " order by id";
+        List<MorphParameter> result = null;
+        try {
+            result = (List<MorphParameter>) ConnectionServer.query(new BeanListHandler(MorphParameter.class), sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
+    public Table getParameterTable() {
+        String sql = "select id, name, shortname, scope, datatype from " + SCMDConfiguration.getProperty("DB_PARAMETERLIST") + " where scope='$1' and datatype='$2' order by id";
+        Table table = null;
+        try {
+            table = ConnectionServer.retrieveTable(sql, "orf");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return table;
+    }
+
 
 
 }

@@ -11,8 +11,10 @@
 package lab.cb.scmd.db.mock;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.TreeMap;
 
 import lab.cb.scmd.db.common.QueryRange;
@@ -24,6 +26,7 @@ import lab.cb.scmd.util.table.FlatTable;
 import lab.cb.scmd.util.table.TableIterator;
 import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.datagen.ParamPair;
+import lab.cb.scmd.web.sessiondata.MorphParameter;
 import lab.cb.scmd.web.table.Table;
 
 /**
@@ -208,7 +211,9 @@ public class MockTableQuery extends MockQueryAPI implements TableQuery
     public Table getSelectedAnalysisValue(String[] orf) {
         return null;
     }
-
+    public List<MorphParameter> getParameterInfo(Set<Integer> parameter){
+        return null;
+    }
 
 }
 
