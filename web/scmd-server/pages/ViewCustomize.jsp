@@ -28,24 +28,58 @@
 <html:form action="CustomizeView.do" method="GET">
 
 Back to <a href="ViewDataSheet.do">datasheet</a> page.
-<p class="title"> Individual Cell Parameters </p>
-<!--
-<table class="small">
-<% int col = 0; %>
-<logic:iterate id="param" name="viewConfigForm" property="cellParameterList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
-<% if((col % 10) == 0){%>
-<tr>
-<%}%>
-<td><html:multibox property="selectedCellParameter"><%= param.getId()%></html:multibox> </td>
-<td><%= param.getShortName() %></td>
-<% if((col % 10) == 9){%>
-</tr>
-<%}
-col++;
-%>
+
+<table width="500">
+<tr><td align="right">
+<html:submit value="remove" property="button"/>
+<html:submit value="remove all" property="button"/>
+</td></tr>
+</table>
+
+<table>
+<tr><td align="top">
+<!-- show selected cell params -->
+<p class="title"> Selected Cell Detail Parametes </p>
+<table class="small" border="0" cellspacing="0" cellpadding="0">
+<tr nowrap="nowrap">
+<td class="sheetlabel"> </td>
+<td class="sheetlabel">Abbreviated Name</td>
+<td class="sheetlabel">Name</td></tr>
+<logic:iterate id="morphParam" name="cellParameterList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
+<tr><td>
+<html:multibox name="viewConfigForm" property="removeCellParamList" value="<%= morphParam.getIdStr() %>"/>
+</td><td>
+${morphParam.shortName}
+</td><td>
+${morphParam.displayname}
+</td></tr>
 </logic:iterate>
 </table>
--->
+</td>
+<td align="top">
+<!-- show selected cell params -->
+<p class="title"> Selected Average/SD Parametes </p>
+<table class="small" border="0" cellspacing="0" cellpadding="0">
+<tr nowrap="nowrap">
+<td class="sheetlabel"> </td>
+<td class="sheetlabel">Abbreviated Name</td>
+<td class="sheetlabel">Name</td></tr>
+<logic:iterate id="morphParam" name="orfParameterList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
+<tr><td>
+<html:multibox name="viewConfigForm" property="removeORFParamList" value="<%= morphParam.getIdStr() %>"/>
+</td><td>
+${morphParam.shortName}
+</td><td>
+${morphParam.name}
+</td></tr>
+</logic:iterate>
+</table>
+<!-- -->
+</td></tr>
+</table>
+
+
+<p class="title"> Individual Cell Parameters </p>
 
 <table>
 <tr><td>Category</td><td></td><td>Parameter Name</td></tr>
@@ -64,28 +98,11 @@ col++;
 </logic:iterate>
 </html:select>
 </td><td>
-<html:submit value="set" property="button"/>
+<html:submit value="add" property="button"/>
 </td></tr>
 </table>
 
 <p class="title"> ORF Unit Parameters </p>
-<!--
-<table class="small">
-<% col = 0; %>
-<logic:iterate id="param" name="viewConfigForm" property="ORFParameterList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
-<% if((col % 10) == 0){%>
-<tr>
-<%}%>
-<td><html:multibox property="selectedORFParameter"><%= param.getId()%></html:multibox> </td>
-<td><%= param.getShortName() %></td>
-<% if((col % 10) == 9){%>
-</tr>
-<%}
-col++;
-%>
-</logic:iterate>
-</table>
--->
 <table>
 <tr><td>Category</td><td></td><td>Parameter Name</td></tr>
 <tr><td>
@@ -103,44 +120,11 @@ col++;
 </logic:iterate>
 </html:select>
 </td><td>
-<html:submit value="set" property="button"/>
+<html:submit value="add" property="button"/>
 </td></tr>
 </table>
 
 </html:form>
-
-<table>
-<tr><td align="top">
-<!-- show selected cell params -->
-<p class="title"> Selected Cell Detail Parametes </p>
-<table class="small">
-<tr><td>Abbreviated Name</td><td>Name</td></tr>
-<logic:iterate id="morphParam" name="cellParameterList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
-<tr><td>
-${morphParam.shortName}
-</td><td>
-${morphParam.displayname}
-</td></tr>
-</logic:iterate>
-</table>
-</td>
-<td align="top">
-<!-- show selected cell params -->
-<p class="title"> Selected Average/SD Parametes </p>
-<table class="small">
-<tr><td>Abbreviated Name</td><td>Name</td></tr>
-<logic:iterate id="morphParam" name="orfParameterList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
-<tr><td>
-${morphParam.shortName}
-</td><td>
-${morphParam.name}
-</td></tr>
-</logic:iterate>
-</table>
-<!-- -->
-</td></tr>
-</table>
-
 
 </center>
 </body>
