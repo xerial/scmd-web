@@ -66,7 +66,7 @@
 <td align="center"> 
 <html:select name="userSelection" property="colorList">
 <logic:iterate id="plotColor" collection="<%= lab.cb.scmd.web.design.PlotColor.getDefaultPlotColorList()%>" type="lab.cb.scmd.web.design.PlotColor">
-<html:option style="color:#${plotColor.colorCode}; background:#${plotColor.colorCode};" value="${yeastGene.lowerCaseOrf}_${plotColor.colorName}">${plotColor.colorName}</html:option>
+<html:option style="color:#${plotColor.colorCode}; background:#${plotColor.colorCode};" value="${yeastGene.upperCaseOrf}_${plotColor.colorName}">${plotColor.colorName}</html:option>
 </logic:iterate>
 </html:select>
 </td>

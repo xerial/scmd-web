@@ -168,9 +168,9 @@ public class YeastGene
         return orf;
     }
 
-    public String getLowerCaseOrf()
+    public String getUpperCaseOrf()
     {
-        return orf.toLowerCase();
+        return orf.toUpperCase();
     }
     
     static public String formatedOrf(String orf)

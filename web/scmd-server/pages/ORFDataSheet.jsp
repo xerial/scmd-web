@@ -66,7 +66,7 @@
 <td align="left"><p align="center"><html:multibox name="selection" property="inputList" value="${data.orf}"/></p></td>
 <td class="orf"><a href="ViewStats.do?orf=${data.orf}">${data.orf}</a></td>
 <td class="genename">${data.standardname}</td>
-<td>
+<td align="right">
 ${data.data}
 </td>
 </tr>

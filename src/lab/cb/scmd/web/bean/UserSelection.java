@@ -69,14 +69,14 @@ public class UserSelection
     
     public void setColor(String orf, String colorName)
     {
-        _colorMap.put(orf.toLowerCase(), colorName);
+        _colorMap.put(orf.toUpperCase(), colorName);
     }
     public String getColor(String orf)
     {
         if(orf == null)
             return "white";
         
-        PlotColor pc = getPlotColor(orf);
+        PlotColor pc = getPlotColor(orf.toUpperCase());
         if(pc != null)
             return "#" + pc.getColorCode();
         else
