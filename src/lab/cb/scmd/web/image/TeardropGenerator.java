@@ -10,6 +10,11 @@
 
 package lab.cb.scmd.web.image;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,6 +26,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.imageio.ImageIO;
+
+import sun.awt.image.PNGImageDecoder;
+
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGImageDecoder;
 
 import lab.cb.scmd.exception.UnfinishedTaskException;
 import lab.cb.scmd.util.ProcessRunner;
@@ -46,8 +58,8 @@ public class TeardropGenerator extends ImageConverter {
 		_teardropURI = uri;
 	}
 	
-    public void drawTeardrop(PrintStream out, String param, TeardropPoint[] teardropPoint, TeardropStatistics tds )
-	throws UnfinishedTaskException
+    public void drawTeardrop(PrintStream out, int paramID, int groupID, TeardropPoint[] teardropPoint, TeardropStatistics tds )
+	throws UnfinishedTaskException, IOException
 	{
     	// mother #408090 daughtor #70B0B0 (旧配色)
 //    	String motherCellDrawCommand =  "-fill \"#72ADC5\" -affine \"1,0,0,1," + xCenter + "," + yCenter + 
@@ -59,35 +71,53 @@ public class TeardropGenerator extends ImageConverter {
 //    	File bgFile = new File(new URL(photoDIRURL, photoPath);)
 //    
 //    	String cmd  =  getConvertProgram() + " " + motherCellDrawCommand + " " + budCellDrawCommand + " " + plateFile + " -";
-    	
-
-    	String drawCommand = " ";
+    	       
+        URL imageURL = new URL(_teardropURI + "/td_" + paramID + "_" + groupID + ".png");
+        BufferedImage teardrop = ImageIO.read(imageURL);
+        int height = teardrop.getHeight();
+        int width = teardrop.getWidth();
+        Graphics2D g = (Graphics2D) teardrop.getGraphics();
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     	int centerindex = tds.getIndex(tds.getAvg());
-    	int avgPos = IMAGEHEIGHT / 2;
-    	drawCommand = " -fill \"#A0E0F0\"";
-    	// 平均値に線を引く
-    	drawCommand += " -draw \"line 0," + avgPos + " " + IMAGEWIDTH + "," + avgPos + "\"";
-    	int[] xpos = computeXpositionOfPoints(teardropPoint, tds);
+    	int avgPos = width / 2;
+    	//drawCommand = " -fill \"#A0E0F0\"";
+    	//drawCommand += " -draw \"line 0," + avgPos + " " + IMAGEWIDTH + "," + avgPos + "\"";
+        // 平均値に線を引く
+        g.setColor(new Color(0xA0E0F0));
+        g.drawLine(avgPos, 0, avgPos, height);
+        
+        int barWidth = 1;
+        int dotRadius = 3;
+        
+    	int[] ypos = computeYpositionOfPoints(teardropPoint, tds, width, height, dotRadius);
     	// 点を打つ
     	for( int i = 0; i < teardropPoint.length; i++ ) {
-    	    int ypos = computeYposition(teardropPoint[i], tds, centerindex);
-        	drawCommand += " -fill \"" + teardropPoint[i].getColor() + "\"";
-        	drawCommand += " -draw \"circle " + xpos[i] +  "," + ypos + " ";
-       		drawCommand += (xpos[i] + DOTRADIUS) + "," + (ypos + DOTRADIUS) + "\"";
+    	    int xpos = computeXposition(teardropPoint[i], tds, centerindex, width, barWidth, dotRadius);
+            g.setColor(teardropPoint[i].getColor());
+            g.fillOval(xpos, ypos[i], dotRadius * 2, dotRadius * 2);
+            
+//            drawCommand += " -fill \"" + teardropPoint[i].getColor() + "\"";
+//        	drawCommand += " -draw \"circle " + xpos[i] +  "," + ypos + " ";
+//       		drawCommand += (xpos[i] + DOTRADIUS) + "," + (ypos + DOTRADIUS) + "\"";
     	}
+        
+        // output
+        ImageIO.write(teardrop, "png", out);
+
+        
     	// 向きを90度回転させる
-  		drawCommand += " -resize 30x128 -rotate 90 -sharpen 1.1";
-    	try {
-        	String cmd  =  getConvertProgram() + " " + drawCommand + " - -";
-    		String url = _teardropURI + "/td_" + param + ".png";
-			InputStream in = new URL(url).openStream();
-	        ProcessRunner.run(in, out, cmd);
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    	
+//  		drawCommand += " -resize 30x128 -rotate 90 -sharpen 1.1";
+//    	try {
+//        	String cmd  =  getConvertProgram() + " " + drawCommand + " - -";
+//    		String url = _teardropURI + "/td_" + param + ".png";
+//			InputStream in = new URL(url).openStream();
+//	        ProcessRunner.run(in, out, cmd);
+//		} catch (MalformedURLException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//    	*/
     
 	}
 
@@ -95,22 +125,22 @@ public class TeardropGenerator extends ImageConverter {
      * @param point
      * @return
      */
-    private int computeYposition(TeardropPoint point, TeardropStatistics tds, int centerindex) {
-    	int yindex = tds.getIndex(point.getValue());
-    	int ypos = ( centerindex - yindex ) * BARHEIGHT + IMAGEHEIGHT /2 ;
-    	if( ypos < 0 )
-    	    ypos = 0;
-    	if( ypos > IMAGEHEIGHT )
-    	    ypos = IMAGEHEIGHT - DOTRADIUS;
-    	return ypos; 
+    private int computeXposition(TeardropPoint point, TeardropStatistics tds, int centerindex, int width, int barWidth, int dotRadius) {
+    	int xindex = tds.getIndex(point.getValue());
+    	int xpos = ( centerindex - xindex ) * barWidth + width /2 ;
+    	if( xpos < 0 )
+    	    xpos = 0;
+    	if( xpos > width )
+    	    xpos = width - dotRadius;
+    	return xpos; 
     }
 
-    private int[] computeXpositionOfPoints(TeardropPoint[] teardropPoint, TeardropStatistics tds) {
+    private int[] computeYpositionOfPoints(TeardropPoint[] teardropPoint, TeardropStatistics tds, int width, int height, int dotRadius) {
         int size = teardropPoint.length;
-        int[] xpos = new int [size];
+        int[] ypos = new int [size];
         HashMap indexMap = new HashMap();
         for( int i = 0 ; i < size; i++ ) {
-            xpos[i] = IMAGEWIDTH / 2 - DOTRADIUS;
+            ypos[i] = height / 2 - dotRadius;
             Integer hindex = new Integer(tds.getIndex(teardropPoint[i].getValue()));
             if( indexMap.containsKey(hindex) ) {
                 List indexes = (List)indexMap.get(hindex);
@@ -130,10 +160,10 @@ public class TeardropGenerator extends ImageConverter {
             double midindex = (indexes.size() - 1) * 0.5;
             for( int i = 0; i < indexes.size(); i++ ) {
                 int hindex = ((Integer)indexes.get(i)).intValue();
-                xpos[hindex] += 4 * ( i - midindex ) * DOTRADIUS;
+                ypos[hindex] += 4 * ( i - midindex ) * dotRadius;
             }
         }
-        return xpos;
+        return ypos;
     }
 
 }

@@ -39,7 +39,7 @@ public class TeardropPainter extends HttpServlet{
 		{
         	//TODO use SCMDConfiguration
 			_teardropGenerator = new TeardropGenerator(new File(convertProgram),
-			        SCMDConfiguration.getProperty(SCMDConfiguration.TEARDROP_URI));
+			        SCMDConfiguration.getProperty("TEARDROP_H_URI"));
 		}
 		catch (FileNotFoundException e)
 		{
@@ -60,6 +60,9 @@ public class TeardropPainter extends HttpServlet{
 			double sd  = getParameter(request, "sd");
 			double max  = getParameter(request, "max");
 			double min  = getParameter(request, "min");
+            
+            int paramID = Integer.parseInt(request.getParameter("paramID"));
+            int groupID = Integer.parseInt(request.getParameter("groupID"));
 			//request.getP
 			//
 			TeardropStatistics tds = new TeardropStatistics();
@@ -72,7 +75,7 @@ public class TeardropPainter extends HttpServlet{
 			try
 			{
 				response.setContentType("image/png");
-				_teardropGenerator.drawTeardrop(new PrintStream(response.getOutputStream()), parameter, values, tds);
+				_teardropGenerator.drawTeardrop(new PrintStream(response.getOutputStream()), paramID, groupID,  values, tds);
 			}
 			catch (IOException e)
 			{

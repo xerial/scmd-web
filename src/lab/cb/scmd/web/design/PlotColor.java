@@ -50,9 +50,9 @@ public class PlotColor
     static public PlotColor getPlotColor(String name)
     {
         if(name == null)
-            return new PlotColor("black", 0x333333);
+            return new PlotColor("default", 0xFFB0C0);
         PlotColor plotColor = plotColorMap.get(name);
-        return plotColor == null ? new PlotColor("black", 0x333333) : plotColor;
+        return plotColor == null ? new PlotColor("default", 0xFFB0C0) : plotColor;
     }
     
     /**
@@ -66,7 +66,7 @@ public class PlotColor
     
     public String getColorCode()
     {
-        return "#" + Integer.toString(colorCode, 16);
+        return Integer.toString(colorCode, 16);
     }
     
     public Color getColor()

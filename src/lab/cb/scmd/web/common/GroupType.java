@@ -17,11 +17,17 @@ package lab.cb.scmd.web.common;
 public class GroupType
 {
     public final static String[][] GROUP_NAME = new String[][]
-                                                {
-            {"no", "small", "medium", "large"},
-            {"A", "A1", "B", "C", "D", "E", "F"},
-            {"A", "B", "api", "iso", "E", "F"}
-                                                };
+                                                             {
+                         {"no", "small", "medium", "large"},
+                         {"A", "A1", "B", "C", "D", "E", "F"},
+                         {"A", "B", "api", "iso", "E", "F"}
+                                                             };
+    public final static int[][] GROUP_PARAM_ID = new int[][]
+                                                             {
+                         {1, 2, 3, 4},
+                         {7, 8, 9, 10, 11, 12, 13, 14},
+                         {16, 17, 18, 19, 20, 21}
+                                                             };
     
     public final static String[] STAIN_GROUP 
     = {"Bud Size", "Nucleus Localization", "Actin Distribution"}; 

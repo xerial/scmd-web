@@ -10,33 +10,38 @@
 
 package lab.cb.scmd.web.image;
 
+import java.awt.Color;
+
 public class TeardropPoint {
 
 	private String _name = "";
 	private double _value;
-	private String _color;
+	private Color color = new Color(0xFF8888);
 	
 	public TeardropPoint(String param, double point, String color) {
 		_name = param;
 		_value = point;
-		_color = color;
+        setColor(color);
 	}
-	
-	
 
 	/**
 	 * @return Returns the _color.
 	 */
-	public String getColor() {
-		if( _color.equals("") )
-			return "#FF8888";
-		return _color;
+	public Color getColor() {
+	    return color;
 	}
 	/**
 	 * @param _color The _color to set.
 	 */
 	public void setColor(String _color) {
-		this._color = _color;
+        try
+        {
+           color = new Color(Integer.parseInt(_color, 16));
+        }
+        catch(NumberFormatException e)
+        {
+            // use default color
+        }
 	}
 	/**
 	 * @return Returns the _param.

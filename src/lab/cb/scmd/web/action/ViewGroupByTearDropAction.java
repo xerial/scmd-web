@@ -81,7 +81,7 @@ public class ViewGroupByTearDropAction extends Action
         int stainType = sheetForm.getStainType();
         for (int i = 0; i < GroupType.GROUP_NAME[stainType].length; i++)
         {
-            tableList.add(getTearDropSheet(query, sheetForm, orfSet, GroupType.GROUP_NAME[stainType][i]));
+            tableList.add(getTearDropSheet(selection, query, sheetForm, orfSet, GroupType.GROUP_NAME[stainType][i], GroupType.GROUP_PARAM_ID[stainType][i]));
         }
 
 
@@ -91,11 +91,11 @@ public class ViewGroupByTearDropAction extends Action
         return mapping.findForward("success");
     }
 
-    public Table getTearDropSheet(TableQuery query, GroupByDatasheetForm sheetForm, Set orfSet, String group) {
+    public Table getTearDropSheet(UserSelection selection, TableQuery query, GroupByDatasheetForm sheetForm, Set orfSet, String group, int groupParamID) {
         Table datasheet = new Table();
         final String[] label = { "Long Axis", "Roundness", "Bud Neck Position", "Bud Growth Direction",
                 "Daughtor / Mother"};
-
+        final int[] paramID = { 31, 43, 33, 34, 46};
         final String[] cellShapeParam = new String[] { "longAxis", "roundness", "budNeckPosition",
                 "budGrowthDirection", "areaRatio"};
 
@@ -124,6 +124,7 @@ public class ViewGroupByTearDropAction extends Action
             }
         }
 
+        
         // ‰æ‘œ‚Ì—á‚ð•\Ž¦
         CellShape cellShape = new CellShape();
 
@@ -174,7 +175,7 @@ public class ViewGroupByTearDropAction extends Action
                 }
 
                 pointArg += orf + ":" + v.toString();
-                pointArg += ":" + "%2330F0C0,";
+                pointArg += ":" + selection.getPlotColor(orf).getColorCode() + ",";
             }
 
             // Œ»ÝŒ©‚Ä‚¢‚éORF‚Ì“_‚ð’Ç‰Á
@@ -191,7 +192,7 @@ public class ViewGroupByTearDropAction extends Action
                     {
                         double areaRatio = Double.parseDouble(areaRatioStr);
                         if(areaRatio != 0.0)
-                            pointArg += sheetForm.getOrf() + ":" + paramValue + ":" + "%23FFB0C0";
+                            pointArg += sheetForm.getOrf() + ":" + paramValue + ":" + "FFB0C0";
                         else
                             displayValueFlag = false;
                     }
@@ -199,12 +200,14 @@ public class ViewGroupByTearDropAction extends Action
                         displayValueFlag = false;
                 }
                 else
-                    pointArg += sheetForm.getOrf() + ":" + paramValue + ":" + "%23FFB0C0";
+                    pointArg += sheetForm.getOrf() + ":" + paramValue + ":" + "FFB0C0";
             }
 
             TreeMap argMap = new TreeMap();
             argMap.put("param", paramName);
             argMap.put("value", pointArg);
+            argMap.put("paramID", paramID[i]);
+            argMap.put("groupID", groupParamID);
 
             try
             {
