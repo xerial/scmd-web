@@ -9,22 +9,27 @@
 //--------------------------------------
 package lab.cb.scmd.web.image;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.exception.UnfinishedTaskException;
 import lab.cb.scmd.db.scripts.TeardropStatistics;
 import lab.cb.scmd.web.common.SCMDConfiguration;
+import lab.cb.scmd.web.image.teaddrop.Teardrop;
 
 public class TeardropPainter extends HttpServlet{
 	TeardropGenerator	_teardropGenerator;
@@ -55,7 +60,7 @@ public class TeardropPainter extends HttpServlet{
 		{
 
 			String parameter = request.getParameter("param");
-			TeardropPoint[] values = getParameterArray(request, "value");
+		
 			double avg = getParameter(request, "avg");
 			double sd  = getParameter(request, "sd");
 			double max  = getParameter(request, "max");
@@ -63,25 +68,17 @@ public class TeardropPainter extends HttpServlet{
             
             int paramID = Integer.parseInt(request.getParameter("paramID"));
             int groupID = Integer.parseInt(request.getParameter("groupID"));
-			//request.getP
-			//
-			TeardropStatistics tds = new TeardropStatistics();
-			tds.setAvg(avg);
-			tds.setSD(sd);
-			tds.setMax(max);
-			tds.setMin(min);
-			//
-
+            
+            List<TeardropPoint> points = getParameterArray(request, "value");                        
+            Teardrop teardrop = new Teardrop(paramID, groupID, avg, sd, min, max);            
+            teardrop.setOrientation(Teardrop.Orientation.horizontal);
+            BufferedImage image = teardrop.drawImage(points);
 			try
 			{
 				response.setContentType("image/png");
-				_teardropGenerator.drawTeardrop(new PrintStream(response.getOutputStream()), paramID, groupID,  values, tds);
+				ImageIO.write(image, "png", response.getOutputStream());
 			}
 			catch (IOException e)
-			{
-				log(e.getMessage());
-			}
-			catch (UnfinishedTaskException e)
 			{
 				log(e.getMessage());
 			}
@@ -91,6 +88,11 @@ public class TeardropPainter extends HttpServlet{
 			log(e.getMessage());
 			printWhiteBoard(request, response);
 		}
+        catch(SCMDException e)
+        {
+            log(e.getMessage());
+            printWhiteBoard(request, response);            
+        }
 
 	}
 
@@ -114,10 +116,12 @@ public class TeardropPainter extends HttpServlet{
 	
 	// value = paramname:point[:color],
 	// color ‚ÍƒIƒvƒVƒ‡ƒ“
-	TeardropPoint[] getParameterArray(HttpServletRequest request, String parameterNamePrefix) {
+	List<TeardropPoint> getParameterArray(HttpServletRequest request, String parameterNamePrefix) {
+        Vector<TeardropPoint> list = new Vector<TeardropPoint>();
 		String value = request.getParameter("value");
 		if(value == null)
-		    return new TeardropPoint[0];
+            return list;
+		    
 		String[] tdvalues = value.split(",");
 		
 		Vector tearDropPointList = new Vector();
@@ -130,16 +134,10 @@ public class TeardropPainter extends HttpServlet{
 			String color = "";
 			if( tdvalue.length > 2 )
 				color = tdvalue[2];
-			tearDropPointList.add(new TeardropPoint(name, Double.parseDouble(point), color));
+			list.add(new TeardropPoint(name, Double.parseDouble(point), color));
 		}
 
-		TeardropPoint[] result = new TeardropPoint[tearDropPointList.size()];
-		int i=0;
-		for(Iterator it = tearDropPointList.iterator(); it.hasNext(); )
-		{
-		    result[i++] = (TeardropPoint) it.next();
-		}
-		return result;
+		return list;
 	}
 
 }

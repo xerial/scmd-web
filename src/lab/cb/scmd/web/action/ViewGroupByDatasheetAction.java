@@ -138,9 +138,9 @@ public class ViewGroupByDatasheetAction extends Action
                 datasheet.addRow(elementList);
             }
 
-            PhotoClippingProcess photoClippingProcess = new PhotoClippingProcess(imageCache, cellsInTheDisplay, view.getPhotoType(), StainType.getStainTypes());
-            SCMDThreadManager.addTask(photoClippingProcess);
             
+            SCMDThreadManager.addTask(new PhotoClippingProcess(imageCache, cellsInTheDisplay, view.getPhotoType(), StainType.getStainTypes()));
+            SCMDThreadManager.addTask(new ImageCache.ImageRecallProcess(imageCache, 20));            
             for (int i = 0; i < StainType.STAIN_MAX; i++)
             {
                 datasheet.decollateCol(i, new AttributeDecollator("bgcolor", "black"));

@@ -220,9 +220,9 @@ public class GroupViewAction extends Action
             }   
             table.addRow(row);
         }
-        PhotoClippingProcess photoClippingProcess = new PhotoClippingProcess(imageCache, cellsInThePage, view.getPhotoType(), new int[] { sheetForm.getStainType() } );
-        SCMDThreadManager.addTask(photoClippingProcess);
-        
+        SCMDThreadManager.addTask(new PhotoClippingProcess(imageCache, cellsInThePage, view.getPhotoType(), new int[] { sheetForm.getStainType() } ));
+        SCMDThreadManager.addTask(new ImageCache.ImageRecallProcess(imageCache, 20));
+
         table.decollateCol(0, new StyleDecollator("title"));
         table.decollateCol(0, new AttributeDecollator("width", "40"));
         table.decollateCol(1, new StyleDecollator("small"));

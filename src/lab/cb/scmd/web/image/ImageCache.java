@@ -10,6 +10,7 @@
 package lab.cb.scmd.web.image;
 
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ public class ImageCache
 {
     public final static String IMAGA_CACHE = "imageCache"; 
     
-    private enum ImageStatus { not_ready, ready, not_available} 
+    private enum ImageStatus { not_ready, ready, not_available, removable} 
     private TreeMap<String, BufferedImage> cache = new TreeMap<String, BufferedImage>();
     private TreeMap<String, ImageStatus> imageRegistory = new TreeMap<String, ImageStatus>();
     
@@ -64,34 +65,55 @@ public class ImageCache
                     int loopTimes = 0;
                     while(imageRegistory.get(imageID) == ImageStatus.not_ready && imageRegistory.get(imageID) != null)
                     {
-                        wait(1000); // timeout 1•b
-                        loopTimes++;
-                        if(loopTimes >= 2)
-                            break;
+                        wait(10 * 1000); // timeout 10•b
                     }
-                    
+                    return getImage(imageID);
                 }
                 catch(InterruptedException e)
                 {
                     // image is not available
                 }
-                break;
+                return null;
+            case removable:
+                return cache.get(imageID);
             case ready:
                 image = cache.get(imageID);
-                break;
             case not_available:
-                break;        
+                break;
             }
         }
 
-        removeEntry(imageID);
+        setAsRemovable(imageID);
+        notifyAll();
         return image;
     }
     
-    private void removeEntry(String imageID)
+    private void setAsRemovable(String imageID)
     {
-        cache.remove(imageID);
-        imageRegistory.remove(imageID);
+        //cache.remove(imageID);
+        imageRegistory.put(imageID, ImageStatus.removable);
+    }
+    
+    synchronized void recallImages()
+    {
+        LinkedList<String> removeList = new LinkedList<String>(); 
+        for(String imageID : imageRegistory.keySet())
+        {
+            ImageStatus status = imageRegistory.get(imageID);
+            switch(status)
+            {
+            case not_available:
+            case removable:
+                removeList.add(imageID);
+            default:
+                continue;
+            }
+        }
+        for(String imageID : removeList)
+        {
+            imageRegistory.remove(imageID);
+            cache.remove(imageID);
+        }        
     }
     
     /**
@@ -123,9 +145,36 @@ public class ImageCache
         ImageCache imageCache = getImageCache(request);
         imageCache.addImage(imageID, image);
     }
+
     
-
-
+    static public class ImageRecallProcess implements Runnable
+    {
+        private ImageCache imageCache;
+        private int sec = 30; 
+        
+        public ImageRecallProcess(ImageCache imageCache, int sec)
+        {
+            this.imageCache = imageCache;
+            this.sec = sec;
+        }
+        
+        // @see java.lang.Runnable#run()
+        public void run()
+        {
+            synchronized(this)
+            {
+                try
+                {
+                    wait(sec * 1000);
+                }
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+                imageCache.recallImages();
+            }            
+        }
+    }
 }
 
 

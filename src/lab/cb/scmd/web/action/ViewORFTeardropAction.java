@@ -9,6 +9,7 @@
 //--------------------------------------
 package lab.cb.scmd.web.action;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -134,17 +135,21 @@ public class ViewORFTeardropAction extends Action
 
         Vector<TableElement> labelRow = new Vector<TableElement>();
         Vector<String> minRow = new Vector<String>();
+        Vector<TableElement> valRow = new Vector<TableElement>();
         Vector<String> maxRow = new Vector<String>();
         Vector<TableElement> teardropRow = new Vector<TableElement>();
         LinkedList<Pair<Teardrop, List<TeardropPoint>>> teardropList = new LinkedList<Pair<Teardrop, List<TeardropPoint>>>();
         NumberFormat format = NumberFormat.getIntegerInstance();
-        format.setMaximumFractionDigits(2);
-        format.setMinimumFractionDigits(2);
+        format.setMaximumFractionDigits(3);
+        format.setMinimumFractionDigits(3);
+        NumberFormat roughFormat = NumberFormat.getIntegerInstance();
+        roughFormat.setMaximumFractionDigits(2);
+        format.setMinimumFractionDigits(2);        
         
         for(MorphParameter param : parameterList)
         {
             int paramID = param.getId();
-            StringElement label = new StringElement(param.getDisplayname());
+            StringElement label = new StringElement(param.getShortName());
             labelRow.add(new AttributeDecollation(label, "title", param.getDisplayname()));
 
             String sql2 = SQLExpression.assignTo("select paramid, groupid, average, sd, min, max from $1 where groupid=0 and paramid=$2", 
@@ -154,8 +159,8 @@ public class ViewORFTeardropAction extends Action
             teardrop.setParamid(paramID);
             teardrop.setOrientation(Teardrop.Orientation.horizontal);
             
-            minRow.add(format.format(teardrop.getMin()));
-            maxRow.add(format.format(teardrop.getMax()));
+            minRow.add(roughFormat.format(teardrop.getMin()));
+            maxRow.add(roughFormat.format(teardrop.getMax()));
             
             // Teardrop上の点の位置情報を取得
             String sql3 = SQLExpression.assignTo("select strainname, average from $1 where groupid='0' and strainname in ($2) and paramid=$3",
@@ -164,6 +169,39 @@ public class ViewORFTeardropAction extends Action
                         paramID
                 );
             List<TeardropPoint> plotList = (List<TeardropPoint>) ConnectionServer.query(sql3, new BeanListHandler(TeardropPoint.class));
+            double value = -1;
+            for(TeardropPoint tp : plotList)
+            {
+                String orf = tp.getParamName();
+                tp.setColor(userSelection.getPlotColor(orf).getColor());
+                if(orf.toUpperCase().equals(teardropForm.getOrf().toUpperCase()))
+                {
+                    value = tp.getValue();
+                }
+            }
+            if(value != -1)
+            {
+                double ave = teardrop.getAverage();
+                double sd = teardrop.getSD();
+                if(sd > 0)
+                {
+                    double diff  = (value - ave) / sd;
+                    double absDiff = Math.abs(diff);
+                    double strength = absDiff / 5.0;
+                    if(strength > 1.0) 
+                        strength = 1.0;
+                    if(strength < -1.0)
+                        strength = -1.0;
+                    double score = (diff < 0) ? -strength : strength;
+                    valRow.add(new AttributeDecollation(new StringElement(format.format(value)), "bgcolor", 
+                            getShadingColorColde(new Color(0x0F357D), new Color(0xFFFFFF), new Color(0xFFAA0B), score)));
+                }
+                else
+                    valRow.add(new StringElement(format.format(value)));
+            }
+            else
+                valRow.add(new StringElement(""));
+            
             teardropList.add(new Pair<Teardrop, List<TeardropPoint>>(teardrop, plotList));
             
             String imageID = teardrop.getImageID();
@@ -181,20 +219,23 @@ public class ViewORFTeardropAction extends Action
         SCMDThreadManager.addTask(new DrowTeardropTask(teardropList, imageCache));
         
         teardropSheet.addCol(labelRow);
+        teardropSheet.addCol(valRow);
         teardropSheet.addCol(minRow);
         teardropSheet.addCol(teardropRow);
         teardropSheet.addCol(maxRow);
         
         //teardropSheet.decollateCol(1, new NumberFormatDecollator(3));
         teardropSheet.decollateCol(1, new AttributeDecollator("align", "right"));
+        teardropSheet.decollateCol(2, new AttributeDecollator("align", "right"));
         //teardropSheet.decollateCol(3, new NumberFormatDecollator(3));
-        teardropSheet.decollateCol(3, new AttributeDecollator("align", "right"));
+        teardropSheet.decollateCol(4, new AttributeDecollator("align", "right"));
         teardropSheet.decollateCol(0, new StyleDecollator("tablelabel"));
         
         Table label = new Table();
-        label.insertRow(0, new String[] {"parameter", "min", "Teardrop", "max"});
+        label.insertRow(0, new String[] {"parameter", "value", "min", "Teardrop", "max"});
         label.decollate(0, 1, new AttributeDecollator("width", "70"));
-        label.decollate(0, 3, new AttributeDecollator("width", "70"));
+        label.decollate(0, 2, new AttributeDecollator("width", "70"));
+        label.decollate(0, 4, new AttributeDecollator("width", "70"));
         label.setProperty("class", "datasheet");        
         label.decollateRow(0, new StyleDecollator("sheetlabel"));
         
@@ -229,6 +270,29 @@ public class ViewORFTeardropAction extends Action
 
 
         return mapping.findForward("success");        
+    }
+    
+    /**
+     * @param low 低いscoreの方の色
+     * @param middle 中間色
+     * @param high 高いscoreの方の色
+     * @param score -1.0 から 1.0の値
+     * @return カラーコード
+     */
+    public String getShadingColorColde(Color low, Color middle, Color high, double score)
+    {
+        if(score >= 0)
+            return getShade(middle, high, score);
+        else
+            return getShade(middle, low, -score);
+    }
+    
+    private String getShade(Color base, Color target, double score)
+    {
+        int r = (int) ((target.getRed() - base.getRed()) * score + base.getRed());
+        int g = (int) ((target.getGreen() - base.getGreen()) * score + base.getGreen());
+        int b = (int) ((target.getBlue() - base.getBlue()) * score + base.getBlue());
+        return "#" + Integer.toString(r, 16) + Integer.toString(g, 16) + Integer.toString(b, 16);        
     }
     
     class DrowTeardropTask implements Runnable

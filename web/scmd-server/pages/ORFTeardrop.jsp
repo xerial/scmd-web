@@ -13,7 +13,7 @@
 <scmd-base:header title="Teardrop View of ${view.orf}" css="/css/tabsheet.css"/>
 <body>
 <center>
-<scmd-tags:menu  toolbar="on"/>
+<scmd-tags:menu  toolbar="on" searchframe="on"/>
 
 <scmd-tags:linkMenu orf="${gene.orf}" logo="on"/> 
 

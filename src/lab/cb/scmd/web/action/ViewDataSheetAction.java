@@ -191,8 +191,9 @@ public class ViewDataSheetAction extends Action {
                 table.paste(table.getRowSize()-1, StainType.STAIN_MAX, datasheet.getRow(correspondingRowNum));
         }
         
-        PhotoClippingProcess photoClippingProcess = new PhotoClippingProcess(imageCache, cellsInTheDisplay, view.getPhotoType(), StainType.getStainTypes());
-        SCMDThreadManager.addTask(photoClippingProcess);
+
+        SCMDThreadManager.addTask(new PhotoClippingProcess(imageCache, cellsInTheDisplay, view.getPhotoType(), StainType.getStainTypes()));
+        SCMDThreadManager.addTask(new ImageCache.ImageRecallProcess(imageCache, 20));            
 
         
         table.appendToBottom(table.getRow(0));

@@ -59,7 +59,10 @@ public class SCMDImageServer extends HttpServlet
         
         BufferedImage image = imageCache.getImage(imageID);
         if(image == null)
+        {
+            System.err.println("[scmd-server] cannot get " + imageID);
             return;
+        }
         
         try
         {
