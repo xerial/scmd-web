@@ -26,7 +26,7 @@ usage: ant (-Dconf=build.properties)
 	<property name="lib" value="lib"/>
 	<property name="web" value="web"/>
 	<property name="server.name" value="scmd-server"/>
-	<property name="webinf" value="${web}/${sever.name}/WEB-INF"/>
+	<property name="webinf" value="${web}/${server.name}/WEB-INF"/>
 	<property name="war.name" value="${server.name}.war"/>
 	<property name="dir.deploy" value="webapps"/>
 	<property name="TOMCAT_HOME" value="${env.TOMCAT_HOME}"/>
@@ -108,7 +108,7 @@ usage: ant (-Dconf=build.properties)
 	    	</classpath>
 		</taskdef>
 		<deploy 
-		   	url="${url.manager}" username="${username.manager}" password="${password.manager}" path="/${webapp.context.name}"
+			url="${manager.url}" username="${manager.username}" password="${manager.password}" path="/${server.name}"
 		   	update="true" war="${build}/${war.name}"/>
 	</target>
 
@@ -130,7 +130,7 @@ usage: ant (-Dconf=build.properties)
 	
 	
 	<target name="confirm.context">
-		<available file="${dir.resources.tomcat}/META-INF/context.xml"  property="is.set.context"/>
+		<available file="${web}/${server.name}/META-INF/context.xml"  property="is.set.context"/>
 		<fail unless="is.set.context">
 			please edit	a file scmd-server/META-INF/context.xml after the model of "context.xml.sample"
 		</fail>

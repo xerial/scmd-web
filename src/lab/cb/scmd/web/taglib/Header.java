@@ -12,6 +12,7 @@ package lab.cb.scmd.web.taglib;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -56,14 +57,15 @@ public class Header extends TagSupport
     
     public String getCss()
     {
-        return css;
+        HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
+        return request.getContextPath() + css;   
     }
     public void setCss(String css)
     {
         this.css = css;
     }
     String title = "";
-    String css = "scmd.css";
+    String css = "/css/scmd.css";
     
 }
 

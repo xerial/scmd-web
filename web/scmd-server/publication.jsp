@@ -18,7 +18,7 @@
 <%@ taglib prefix="logic" uri="/WEB-INF/struts-logic.tld" %>
 <%@ taglib prefix="scmd-tags" tagdir="/WEB-INF/tags" %>
 
-<scmd-base:header title="Publications" css="css/toppage.css"/>
+<scmd-base:header title="Publications" css="/css/toppage.css"/>
 
 <body class="toppage">
 <scmd-tags:menu searchframe="on" top="true"/>

@@ -1,10 +1,10 @@
-@import url(/css/scmd.css);
+@import url(scmd.css);
 
 .imagetab 
 {
 	color: white;
     background: #e0a0c0;
-    background-image: url("/image/tab.png");
+    background-image: url("../image/tab.png");
 	font-size: 9pt;
 	text-align: center;
 }
@@ -16,7 +16,7 @@
 {
 	color: white;
     background: #80a0c0;
-    background-image: url("/image/tabselected.png");
+    background-image: url("../image/tabselected.png");
 	font-size: 9pt;
 	text-align: center;
 	font-weight: bold;

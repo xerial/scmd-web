@@ -8,16 +8,16 @@
 <table width="700" border="0" cellspacing=0 cellpadding=0>
 <tr>
 <logic:equal name="top" value="true"> 
-<td width="110"><a href="/"><html:img src="/image/scmd_logo.png" alt="SCMD" border="0"></a></td>
+<td width="110"><html:link page="/"><html:img page="/image/scmd_logo.png" alt="SCMD" border="0"/></html:link></td>
 </logic:equal>
 <logic:notEqual name="top" value="true"> 
-<td width="110"><a href="/"><html:img src="/image/scmd_logo_grad.png" alt="SCMD" border="0"></a></td>
+<td width="110"><html:link page="/"><html:img page="/image/scmd_logo_grad.png" alt="SCMD" border="0"/></html:link></td>
 </logic:notEqual>
 <td width="540" valign="bottom" align="center"> 
- <a href="/">
-   <html:img src="/image/scmd_title.png" align="absbottom" width="467" height="22" 
-   alt="Saccharomyces Cerevisiae Morphological Database" border="0">
- </a>
+ <html:link page="/">
+   <html:img page="/image/scmd_title.png" align="absbottom" width="467" height="22" 
+   alt="Saccharomyces Cerevisiae Morphological Database" border="0"/>
+ </html:link>
 </td>
 </tr>
 </table>

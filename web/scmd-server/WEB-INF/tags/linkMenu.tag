@@ -36,7 +36,7 @@
 </span>
 <logic:equal name="logo" value="on">
 </td>
-<td><a href="/"><html:img src="/image/scmd_logo_grad.png" border="0"/></a></td>
+<td><html:link page="/"><html:img page="/image/scmd_logo_grad.png" border="0"/></html:link></td>
 </tr>
 </table>
 </logic:equal>
