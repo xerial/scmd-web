@@ -3,7 +3,7 @@
 <%@ taglib prefix="scmd-base"  uri="http://scmd.gi.k.u-tokyo.ac.jp/taglib/scmd-base"%>
 <%@ taglib prefix="scmd-tags" tagdir="/WEB-INF/tags"  %>
 
-<scmd-base:header title="404 Error Page" css="/css/toppage.css"/>
+<scmd-base:header title="404 Error Page" css="css/toppage.css"/>
 	<body>
 		<blockquote>
 		<center>

@@ -30,9 +30,9 @@ usage: ant (-Dconf=build.properties)
 	<property name="war.name" value="${server.name}.war"/>
 	<property name="dir.deploy" value="webapps"/>
 	<property name="TOMCAT_HOME" value="${env.TOMCAT_HOME}"/>
-	<property name="url.manager" value="http://localhost:8080/manager"/>
-	<property name="username.manager" value="tomcat"/>
-	<property name="password.manager" value="tomcat"/>
+	<property name="manager.url" value="http://localhost:8080/manager"/>
+	<property name="manager.username" value="tomcat"/>
+	<property name="manager.password" value="tomcat"/>
 	
 	<!-- ================================= 
           target: default              
@@ -70,20 +70,16 @@ usage: ant (-Dconf=build.properties)
 	</target>
 
 
-    <target name="SCMDProject" description="build SCMDProject.jar">
-	   <ant dir="../SCMDProject" target="jar" inheritAll="false"/>
-       <copy file="../SCMDProject/SCMDProject.jar" todir="${JAR_DIR}"/>
+    <target name="scmd" description="build scmd.jar">
+	   <ant dir="../SCMD" target="jar" inheritAll="false"/>
+       <copy file="../SCMD/scmd.jar" todir="${webinf}/lib"/>
 	</target>
   
     <target name="jar" depends="compile" description="create SCMDWeb.jar">
-	   <jar basedir="${dest}" destfile="SCMDServer.jar"/>
+       <mkdir dir="${build}/lib/SCMDWeb.jar"/>
+	   <jar basedir="${webinf}/classes" destfile="${build}/lib/SCMDWeb.jar"/>
 	</target>
 	
-	<target name="init">
-		<condition property="is.webapp.deployed">
-			<http url="http://${host}:${port}/${webapp.context.name}"/>
-		</condition>
-	</target>
 	
 	<target name="reload">
 	    <taskdef name="reload" classname="org.apache.catalina.ant.ReloadTask">
@@ -91,11 +87,10 @@ usage: ant (-Dconf=build.properties)
 	    		<path location="${lib}/catalina-ant.jar"/>
 	    	</classpath>
 		</taskdef>
-	  	<fail unless="url.manager">Please set Tomcat Manger URL('url.manager') in build.properties</fail>
-      	<reload url="${url.manager}" username="leo" password="leoleo" path="/${server.name}"/>
+      	<reload url="${manager.url}" username="${manager.username}" password="${manager.password}" path="/${server.name}"/>
     </target>
 
-	<target name="undeploy" depends="init" if="is.webapp.deployed">
+	<target name="undeploy">
 	    <taskdef name="undeploy" classname="org.apache.catalina.ant.UndeployTask">
 	    	<classpath>
 	    		<path location="${lib}/catalina-ant.jar"/>
@@ -103,21 +98,18 @@ usage: ant (-Dconf=build.properties)
 		</taskdef>
 		
 		<undeploy 
-		    url="${url.manager}" username="${username.manager}" password="${password.manager}"
-		    path="/${webapp.context.name}"/>		
+			url="${manager.url}" username="${manager.username}" password="${manager.password}" path="/${server.name}"/>
 	</target>
 	
 	<target name="deploy" depends="war,confirm.context" description="deplay .war file into TOMCAT_HOME/${dir.deploy}">
-
 	    <taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask">
 	    	<classpath>
 	    		<path location="${lib}/catalina-ant.jar"/>
 	    	</classpath>
 		</taskdef>
 		<deploy 
-		   url="${url.manager}" username="${username.manager}" password="${password.manager}"
-		   update="true" 
-		   path="/${webapp.context.name}" war="${build}/${war.name}"/>
+		   	url="${url.manager}" username="${username.manager}" password="${password.manager}" path="/${webapp.context.name}"
+		   	update="true" war="${build}/${war.name}"/>
 	</target>
 
 	<target name="jsp.precompile">

@@ -1,4 +1,5 @@
 <%@ taglib prefix="logic" uri="/WEB-INF/struts-logic.tld" %>
+<%@ taglib prefix="html" uri="/WEB-INF/struts-html.tld" %>
 <%@ taglib prefix="scmd-tags" tagdir="/WEB-INF/tags" %>
 <%@ attribute name="toolbar" required="false" %>
 <%@ attribute name="searchframe" required="false" %>
@@ -7,14 +8,14 @@
 <table width="700" border="0" cellspacing=0 cellpadding=0>
 <tr>
 <logic:equal name="top" value="true"> 
-<td width="110"><a href="/"><img src="/image/scmd_logo.png" alt="SCMD" border="0"></a></td>
+<td width="110"><a href="/"><html:img src="/image/scmd_logo.png" alt="SCMD" border="0"></a></td>
 </logic:equal>
 <logic:notEqual name="top" value="true"> 
-<td width="110"><a href="/"><img src="/image/scmd_logo_grad.png" alt="SCMD" border="0"></a></td>
+<td width="110"><a href="/"><html:img src="/image/scmd_logo_grad.png" alt="SCMD" border="0"></a></td>
 </logic:notEqual>
 <td width="540" valign="bottom" align="center"> 
  <a href="/">
-   <img src="/image/scmd_title.png" align="absbottom" width="467" height="22" 
+   <html:img src="/image/scmd_title.png" align="absbottom" width="467" height="22" 
    alt="Saccharomyces Cerevisiae Morphological Database" border="0">
  </a>
 </td>
