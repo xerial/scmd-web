@@ -61,7 +61,7 @@ public class CustomizeViewAction extends Action
             paramSelection.resetCellParam();
             paramSelection.resetOrfParam();
         }
-        else if (selection.getButton().equals("add"))
+        else if (selection.getButton().equals("add") || selection.getButton().equals("change"))
         {
             Integer[] inputCellParam = selection.getSelectedCellParameter();
             Integer[] inputORFParam  = selection.getSelectedORFParameter();
