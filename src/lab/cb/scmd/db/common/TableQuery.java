@@ -90,6 +90,9 @@ public interface TableQuery extends QueryAPI
 
     public Table getShapeZScoreTable(ParamPair[] paramSets);
     public Table getGroupAvgSDTable(ParamPair[] paramSets);
+
+    public Table getAnalysisAVGandSD();
+    public Table getSelectedAnalysisValue(String[] orf);
     
 }
 

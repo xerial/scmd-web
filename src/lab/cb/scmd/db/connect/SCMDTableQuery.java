@@ -276,5 +276,21 @@ public class SCMDTableQuery extends ConnectionHolder implements TableQuery {
     public String quote(String str) {
         return "\"" + str + "\"";
     }
+    
+    public Table getAnalysisAVGandSD() {
+        String sql = "SELECT paramname, average, sd FROM analysiszscore";
+        return evalSQL(sql);
+    }
+    public Table getSelectedAnalysisValue(String[] orf) {
+        String sql = "SELECT * FROM analysisdata_20050131 WHERE ";
+        for(int i = 0; i < orf.length; i++ ) {
+            if( i != 0 ) {
+                sql += " OR ";
+            }
+            sql += "strainname='" + orf[i].toUpperCase() + "'";
+        }
+        return evalSQL(sql);
+    }
+
 
 }

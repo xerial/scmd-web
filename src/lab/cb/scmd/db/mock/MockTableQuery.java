@@ -202,6 +202,14 @@ public class MockTableQuery extends MockQueryAPI implements TableQuery
         return null;
     }
 
+    public Table getAnalysisAVGandSD() {
+        return null;
+    }
+    public Table getSelectedAnalysisValue(String[] orf) {
+        return null;
+    }
+
+
 }
 
 //--------------------------------------
