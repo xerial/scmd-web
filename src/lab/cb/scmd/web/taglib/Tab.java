@@ -37,15 +37,19 @@ public class Tab extends BodyTagSupport{
             JspWriter out = pageContext.getOut();
             if(name.equals(tabList.getSelected()))
             {
-                out.println("<td class=\"selected\"");
+                out.print("<td class=\"selected\"");
+                //out.print(" onMouseOver=\"switchStyle(this, 'selected_hover');\"");
+                //out.print(" onMouseOut=\"switchStyle(this, 'selected');\"");
             }
             else
             {
-                out.println("<td class=\"imagetab\"");                
+                out.print("<td class=\"imagetab\"");                
+                //out.print(" onMouseOver=\"switchStyle(this, 'imagetab_hover');\"");
+                //out.print(" onMouseOut=\"switchStyle(this, 'imagetab');\"");
             }
             if(width > 0)
             {
-                out.println(" width=\"" + width + "\"");
+                out.print(" width=\"" + width + "\"");
             }
             out.println(">");
         }
@@ -87,6 +91,8 @@ public class Tab extends BodyTagSupport{
     public void setWidth(int width) {
         this.width = width;
     }
+    
+    
 }
 
 

@@ -11,6 +11,12 @@
 .imagetab a:link { text-decoration: none; color: white; }
 .imagetab a:visited { text-decoration: none; color: white; }
 .imagetab a:hover { text-decoration: none; color:white; background: #F0A0C0; }
+.imagetab_hover { 
+    text-decoration: none; 
+    color:white; background: #F0A0C0; 
+	font-size: 9pt;
+	text-align: center;
+}
 
 .selected 
 {
@@ -24,3 +30,8 @@
 .selected a:link { text-decoration: none; color: white; }
 .selected a:visited { text-decoration: none; color: white; }
 .selected a:hover { text-decoration: none; color: white; background: #70D0FF; }
+.selected_hover { text-decoration: none; color: white; background: #70D0FF; 
+	font-size: 9pt;
+	text-align: center;
+	font-weight: bold;
+}

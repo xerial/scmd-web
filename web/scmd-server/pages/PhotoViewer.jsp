@@ -28,14 +28,6 @@
 
 <scmd-base:header title="Cell Viewer ${gene.orf}" css="/css/tabsheet.css"/>
 
-<script language="JavaScript">
-<!--
-function setStyle(idname, c)
-{
-   document.getElementById(idname).className=c;
-}
-//-->
-</script>
 
 <body>
 <center> 
