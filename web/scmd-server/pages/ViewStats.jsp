@@ -38,10 +38,7 @@ function help(url)
 
 <body>
 <center>
-<scmd-tags:menu searchframe="on" toolbar="on"/>
-
-
-<scmd-tags:linkMenu orf="${view.orf}" logo="on"/> 
+<scmd-tags:menu searchframe="on" toolbar="on" orf="${gene.orf}"/>
 
 
 <table width="750">

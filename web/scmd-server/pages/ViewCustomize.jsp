@@ -23,8 +23,7 @@
 <scmd-base:header title="Customize View" css="/css/tabsheet.css"/>
 <body>
 <center>
-<scmd-tags:menu toolbar="on" searchframe="on"/>
-<scmd-tags:linkMenu orf="${gene.orf}" logo="on"/> 
+<scmd-tags:menu toolbar="on" searchframe="on" orf="${view.orf}"/>
 <html:form action="CustomizeView.do" method="GET">
 
 Back to <a href="ViewDataSheet.do">Photo Datasheet</a>, <a href="ORFTeardrop.do">ORF Teardrop</a> or 

@@ -11,7 +11,7 @@
 <scmd-base:header title="Yeast Mutants"/>
 <body>
 <center>
-<scmd-tags:menu searchframe="on" toolbar="on"/>
+<scmd-tags:menu searchframe="on" toolbar="on" orf="${gene.orf}/>
 
 <%@page import="lab.cb.scmd.web.bean.*"%>
 <%@page import="java.util.*"%>

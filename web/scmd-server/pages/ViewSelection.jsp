@@ -23,7 +23,7 @@
 <scmd-base:header title="Your Selection" css="/css/tabsheet.css"/>
 <body>
 <center>
-<scmd-tags:menu toolbar="on" searchframe="on"/>
+<scmd-tags:menu toolbar="on" searchframe="on" orf="${gne.orf}"/>
 [ <html:link page="/View2DPlot.do"> 2D plot </html:link> ] 
 
 <scmd-tags:linkMenu orf="${gene.orf}" logo="on"/> 

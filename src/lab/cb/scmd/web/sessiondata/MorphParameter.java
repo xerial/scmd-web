@@ -84,6 +84,8 @@ public class MorphParameter {
     }
     
     public String getStainType() {
+        if(name == null || name.length() < 1)
+            return "";
         if(name.charAt(0) == 'A' ) {
             return "Actin";
         } else if(name.charAt(0) == 'D') {

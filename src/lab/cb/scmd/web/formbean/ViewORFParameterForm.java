@@ -34,14 +34,14 @@ public class ViewORFParameterForm extends ActionForm
     Integer[] paramID = new Integer[] {}; // データシートに表示するparameter ID
     ColumnType columnType = ColumnType.custom;
     int page = 0;
-    
-    
+    int sortspec = -1;
    
     
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request)    
     {
         if(page < 0)
             page = 0;
+        
         return super.validate(mapping, request);
     }
     
@@ -106,5 +106,14 @@ public class ViewORFParameterForm extends ActionForm
     public void setColumnType(String columnType)
     {
         this.columnType = ColumnType.valueOf(columnType);
+    }
+    
+    public int getSortspec()
+    {
+        return sortspec;
+    }
+    public void setSortspec(int sortspec)
+    {
+        this.sortspec = sortspec;
     }
 }

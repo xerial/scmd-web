@@ -29,6 +29,7 @@ import lab.cb.scmd.db.connect.ConnectionServer;
 import lab.cb.scmd.db.sql.SQLUtil;
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.util.table.TableIterator;
+import lab.cb.scmd.web.bean.Range;
 import lab.cb.scmd.web.bean.YeastGene;
 import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.common.SCMDSessionManager;
@@ -60,7 +61,7 @@ public class ViewORFParameterAction extends Action
             HttpServletRequest request, HttpServletResponse response) throws Exception
     {
         ViewORFParameterForm input = (ViewORFParameterForm) form;
-        
+               
         List<MorphParameter> selectedORFParameter = null;
         switch(input.columnType())
         {
@@ -92,12 +93,15 @@ public class ViewORFParameterAction extends Action
         Vector<String> sqlCondition = new Vector<String>(selectedORFParameter.size());
         StringBuilder sqlTable = new StringBuilder();
         int count = 0;
+        String sortParamName = "strainname";
         for(MorphParameter p : selectedORFParameter)
         {
             paramIDs.add(p.getId());
-            paramShortNames.add(p.getShortName());
+            paramShortNames.add(p.getName());
             String tableAlias = "t" + count;
-            sqlParamList.add(SQLUtil.doubleQuote(p.getName()) + " as " + SQLUtil.doubleQuote(p.getShortName()));
+            sqlParamList.add(SQLUtil.doubleQuote(p.getName()));
+            if(input.getSortspec() == p.getId())
+                sortParamName = p.getName();
 //            sqlCondition.add(tableAlias + ".paramid=" + p.getId());
 //            if(count == 0)
 //                sqlTable.append(dbTable + " as " + tableAlias);
@@ -119,7 +123,7 @@ public class ViewORFParameterAction extends Action
         String format = input.getFormat();
         if(format.equals("xml"))
         {
-            geneList = retrieveYeastGeneList(selectedORFParameter, -1, 0, sqlParamList);                       
+            geneList = retrieveYeastGeneList(selectedORFParameter, -1, 0, sqlParamList, sortParamName);                       
             
             // output xml data
             response.setContentType("application/octet-stream");
@@ -136,7 +140,7 @@ public class ViewORFParameterAction extends Action
                 for(MorphParameter p : selectedORFParameter)
                 {
                     xout.startTag("param", new XMLAttribute().add("name", p.getShortName()));
-                    xout.text(gene.getParameter(p.getShortName()).toString());
+                    xout.text(gene.getParameter(p.getName()).toString());
                     xout.endTag();
                 }
                 xout.endTag();
@@ -148,7 +152,7 @@ public class ViewORFParameterAction extends Action
         
         if(format.equals("tab"))
         {
-            geneList = retrieveYeastGeneList(selectedORFParameter, -1, 0, sqlParamList);                       
+            geneList = retrieveYeastGeneList(selectedORFParameter, -1, 0, sqlParamList, sortParamName);                       
 
             // output tab-separated data
             response.setContentType("application/octet-stream");
@@ -162,7 +166,7 @@ public class ViewORFParameterAction extends Action
                 line.add(gene.getOrf());
                 line.add(gene.getStandardName());
                 for(MorphParameter p : selectedORFParameter)
-                    line.add(gene.getParameter(p.getShortName()).toString());
+                    line.add(gene.getParameter(p.getName()).toString());
                 out.println(SQLUtil.separatedList(line, "\t", SQLUtil.QuotationType.none));
         
             }
@@ -177,28 +181,44 @@ public class ViewORFParameterAction extends Action
         if(input.getPage() > maxPage)
             input.setPage(0);
         int offset = numRows * input.getPage();                 
-        geneList = retrieveYeastGeneList(selectedORFParameter, numRows, offset, sqlParamList);
+        geneList = retrieveYeastGeneList(selectedORFParameter, numRows, offset, sqlParamList, sortParamName);
+        
+        if(selectedORFParameter.size() == 1)
+        {
+            MorphParameter targetParam = selectedORFParameter.get(0);
+            request.setAttribute("targetParam", targetParam);
+            double begin = 0, end=0;        
+            if(!geneList.isEmpty())
+            {
+                begin = Double.parseDouble(geneList.get(0).getParameter(targetParam.getName()).toString());
+                end = Double.parseDouble(geneList.get(geneList.size()-1).getParameter(targetParam.getName()).toString());
+            }
+            Range range = new Range(begin, end);
+            request.setAttribute("range", range);
+        }
         
         request.setAttribute("geneList", geneList);
         request.setAttribute("paramNames", paramShortNames);
         request.setAttribute("pageStatus", new PageStatus(input.getPage()+1, maxPage));
         request.setAttribute("paramIDs", paramIDs);
+        request.setAttribute("sortspec", input.getSortspec());
         
         return mapping.findForward("success");
     }
     
-    private LinkedList<YeastGene> retrieveYeastGeneList(List<MorphParameter> selectedORFParameter, int numRows, int offset, Vector<String> sqlParamList) throws SQLException
+    private LinkedList<YeastGene> retrieveYeastGeneList(List<MorphParameter> selectedORFParameter, int numRows, int offset, Vector<String> sqlParamList, String sortParamName) throws SQLException
     {
         // retrieve datasheet
         Table datasheet = ConnectionServer.retrieveTable(
                 numRows!=-1 ? // -1 Ç»ÇÁëSçséÊìæÇ∑ÇÈ
-                        "select strainname as \"ORF\",primaryname, aliasname, annotation, $1 from $2 left join $5 on strainname = systematicname order by strainname limit $3 offset $4" :
-                        "select strainname as \"ORF\",primaryname, aliasname, annotation, $1 from $2 left join $5 on strainname = systematicname order by strainname",                    
+                        "select strainname as \"ORF\",primaryname, aliasname, annotation, $1 from $2 left join $5 on strainname = systematicname order by $6 limit $3 offset $4" :
+                        "select strainname as \"ORF\",primaryname, aliasname, annotation, $1 from $2 left join $5 on strainname = systematicname order by $6",                    
                 SQLUtil.commaSeparatedList(sqlParamList, SQLUtil.QuotationType.none),               
                 SCMDConfiguration.getProperty("DB_ANALYSISDATA", "analysisdata_20050131"),
                 numRows,
                 offset,
-                SCMDConfiguration.getProperty("DB_GENENAME")
+                SCMDConfiguration.getProperty("DB_GENENAME"),
+                SQLUtil.doubleQuote(sortParamName)
         );
         
         ColLabelIndex colIndex = new ColLabelIndex(datasheet);        
@@ -212,7 +232,7 @@ public class ViewORFParameterAction extends Action
             gene.setAlias(colIndex.get(i, "aliasname").toString());
             for(MorphParameter p : selectedORFParameter)
             {
-                String param = p.getShortName();
+                String param = p.getName();
                 BigDecimal value = new BigDecimal(colIndex.get(i, param).toString(), new MathContext(3));
                 gene.setParameter(param, value.toEngineeringString());
             }

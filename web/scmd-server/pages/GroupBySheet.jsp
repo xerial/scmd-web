@@ -29,8 +29,7 @@ function help(url)
 
 <body>
 <center>
-<scmd-tags:menu  toolbar="on" searchframe="on"/>
-<scmd-tags:linkMenu orf="${view.orf}" logo="on"/> 
+<scmd-tags:menu  toolbar="on" searchframe="on" orf="${gene.orf}"/>
 <scmd-tags:orfInfo  orf="${gene.orf}" 
 	stdname="${gene.standardName}" annot="${gene.annotation}" 
 	title="<%= groupTitle %>" />

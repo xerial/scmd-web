@@ -4,18 +4,19 @@
 <%@ taglib prefix="bean" uri="/WEB-INF/struts-bean.tld" %>
 <%@ taglib prefix="html" uri="/WEB-INF/struts-html-el.tld" %>
 <%@ taglib prefix="logic" uri="/WEB-INF/struts-logic-el.tld" %>
+<%@ taglib prefix="logic-nonel" uri="/WEB-INF/struts-logic.tld" %>
 <%@ taglib prefix="scmd-tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <jsp:useBean id="view"  scope="session" class="lab.cb.scmd.web.bean.CellViewerForm"/>
 <jsp:useBean id="pageStatus"  scope="request" class="lab.cb.scmd.db.common.PageStatus"/>
 <jsp:useBean id="paramIDs" scope="request" type="java.util.List"/>
+<jsp:useBean id="sortspec" scope="request" type="java.lang.Integer"/>
 
 <scmd-base:header title="ORF Parameter Sheet" css="/css/tabsheet.css"/>
 <body>
 <center>
-<scmd-tags:menu  toolbar="on" searchframe="on"/>
-<scmd-tags:linkMenu logo="on"/>
+<scmd-tags:menu  toolbar="on" searchframe="on" orf="${view.orf}"/>
 
 <p class="title">ORF Parameter Sheet </p>
 
@@ -25,6 +26,29 @@
 <p align="right"><html:submit value="add selections"/></p>
 </td></tr>
 </table>
+
+<logic-nonel:present name="targetParam" scope="request">
+<table>
+<tr>
+<td width="150"><img src="DrawTeardrop.do?paramID=${targetParam.id}&rangeBegin=${range.min}&rangeEnd=${range.max}&plotTargetORF=false"/></td>
+<td>
+<table>
+<tr><td class="small">Parameter Name:</td><td class="genename">${targetParam.name}</td></tr>
+<%--<tr><td class="small">Short Name:</td><td class="small">${targetParam.shortName}</td></tr>--%>
+<tr><td class="small">Stain Type:</td><td class="small">${targetParam.stainType}</td></tr>
+<tr><td class="small">Nucleus Status:</td><td class="small">${targetParam.nucleusStatus} </td></tr>
+<tr><td class="small">Parameter Type:</td><td class="small">${targetParam.parameterType}</td></tr>
+<tr><td class="small">Description:</td><td class="small" width="250">${targetParam.displayname}</td></tr>
+</table>
+</td>
+<td>
+<img id="param" class="paramview" width="250" height="175" src="paramfig.png?param=${targetParam.name}">
+</td>
+</tr>
+</table>
+</logic-nonel:present>
+
+
 <span class="small">
 <%
 	int numParam = paramIDs.size();
@@ -32,14 +56,15 @@
 	for(java.util.Iterator it = paramIDs.iterator(); it.hasNext(); )
 		pid += "paramID=" + it.next().toString() + "&";
 	pid += "columnType=input";
+	pid += "&sortspec=" + sortspec;	
 %>
 <scmd-base:pagemover page="ViewORFParameter.do" parameter="<%= pid%>" target="${group.groupName}" currentPage="<%= pageStatus.getCurrentPage() %>" maxPage="<%= pageStatus.getMaxPage() %>"/>
 </span>
-<span class="small">Download all data as 
-[<a href="ViewORFParameter.do?<%=pid%>&format=xml"> XML </a> ]
-[<a href="ViewORFParameter.do?<%=pid%>&format=tab"> Tab-separated Sheet</a> ]
+<span class="small">Download all data as an
+[<a href="ViewORFParameter.do?<%=pid%>&format=xml"> XML </a> ] or 
+[<a href="ViewORFParameter.do?<%=pid%>&format=tab"> Tab-separated sheet</a> ]
+format. 
 </span>
- 
 <table class="datasheet" cellpadding="0" cellspacing="0">
 <tr>
 <td class="sheetlabel" align="center">ORF</td>
@@ -54,7 +79,7 @@
 <tr>
 <td>
 <html:multibox name="selection" property="inputList" value="<%= gene.getOrf().toLowerCase()%>"/>
-<span class="orf"><html:link page="/ViewStats.do?orf=${yeastGene.orf}"> ${gene.orf} </html:link> </span>
+<span class="orf"><html:link page="/ViewStats.do?orf=${gene.orf}"> ${gene.orf} </html:link> </span>
 </td>
 <td class="genename" align="center">${gene.standardName}</td>
 <td></td>
@@ -69,6 +94,12 @@
 </logic:iterate>
 </table>
 
+<span class="small">
+<scmd-base:pagemover page="ViewORFParameter.do" parameter="<%= pid%>" target="${group.groupName}" currentPage="<%= pageStatus.getCurrentPage() %>" maxPage="<%= pageStatus.getMaxPage() %>"/>
+</span>
+
 </html:form>
+
+
 </center>
 <scmd-base:footer/>

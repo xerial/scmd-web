@@ -13,6 +13,7 @@
 
 <script language="javascript" src="js/styleutil.js"></script>
 
+
 <table width="700" border="0" cellspacing=0 cellpadding=0>
 <tr>
 <logic:equal name="top" value="true"> 
@@ -30,21 +31,13 @@
 </tr>
 </table>
 <table width="700" border="0" cellpadding="0" cellspacing="0">
-  <tr class="menubar">  
-    <td align="center" onMouseOver="selectMenu('yeastmenu');" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="ViewORFList.do">Yeast Mutant</a></td>
-    <td align="center" onMouseOver="selectMenu('photomenu');" onMouseOut="switchStyle(this, 'menu_bar'); "> <a href="ViewPhoto.do">Photo</a> </td>
-    <td align="center" onMouseOver="selectMenu('dataminingmenu');" onMouseOut="switchStyle(this, 'menu_bar');"> Data Mining </td>
-<%--    <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="ViewStats.do"> Average Shape </a> </td>     --%>
-    <td align="center" onMouseOver="selectMenu('customizemenu');" onMouseOut="switchStyle(this, 'menu_bar');"> Customization </td>     
-    <td align="center" onMouseOver="selectMenu('helpmenu');" onMouseOut="switchStyle(this, 'menu_bar');"> Help</td>     
-    <td align="center" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="publication.jsp">Publications</a> </td>
-    <td align="center" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="about.jsp">About SCMD</a> </td>
-</tr>
-<tr>
-<td></td>
+<tr class="menubar" >  
+<td align="center" id="yeast" onMouseOver="closeAllMenu();"><a href="ViewORFList.do">Yeast Mutant</a></td>
 
-<td>
-<table width="200" class="dropdownmenu" id="photomenu">
+<td align="center" id="photo" onMouseOver="selectMenu('photomenu');">
+<div onMouseOut="detectMouseOut(event,this);">
+<a href="ViewPhoto.do">Photo</a>
+<table width="200" id="photomenu" class="dropdownmenu">
 <tr>
 <td>
 <ul>
@@ -59,10 +52,12 @@
 </ul>
 </td>
 </tr>
-</table>
+</table>   
+</div>
 </td>
-
-<td>
+    
+<td align="center" id="data" onMouseOver="selectMenu('dataminingmenu');" onMouseOut="detectMouseOut(event,this);">
+<a href=".">Data Mining</a> 
 <table width="300" class="dropdownmenu" cellpadding="0" id="dataminingmenu">
 <tr>
 <td>
@@ -84,7 +79,8 @@
 </table>
 </td>
 
-<td>
+<td align="center" id="customize" onMouseOver="selectMenu('customizemenu');" onMouseOut="detectMouseOut(event,this);">
+<a href="."> Customization</a>     
 <table border="0" width="180" class="dropdownmenu" cellpadding="0" id="customizemenu">
 <tr>
 <td>
@@ -94,10 +90,12 @@
 </ul>
 </td>
 </tr>
-</table>
-</td>
-
-<td>
+</table>    
+</td>     
+    
+    
+<td align="center" id="help" onMouseOver="selectMenu('helpmenu');" onMouseOut="detectMouseOut(event,this);">
+<a href="."> Help </a>
 <table border="0" width="180" class="dropdownmenu" cellpadding="0" id="helpmenu">
 <tr><td> 
 <ul>
@@ -106,10 +104,10 @@
 </ul>
 </td></tr>
 </table>
-</td>
+</td>     
 
-
-
+    <td align="center" onMouseOver="closeAllMenu();"> <a href="publication.jsp">Publications</a> </td>
+    <td align="center" onMouseOver="closeAllMenu();"> <a href="about.jsp">About SCMD</a> </td>
 </tr>
 </table>
 

@@ -13,9 +13,8 @@
 <scmd-base:header title="Teardrop View of ${view.orf}" css="/css/tabsheet.css"/>
 <body>
 <center>
-<scmd-tags:menu  toolbar="on" searchframe="on"/>
+<scmd-tags:menu  toolbar="on" searchframe="on" orf="${view.orf}"/>
 
-<scmd-tags:linkMenu orf="${gene.orf}" logo="on"/> 
 
 <scmd-tags:orfInfo  orf="${gene.orf}" 
 	stdname="${gene.standardName}" annot="${gene.annotation}" 

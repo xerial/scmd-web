@@ -5,6 +5,33 @@ function switchStyle(node, stylename)
 
 var openedTabID = "";
 
+function closeAllMenu()
+{
+	closeMenu(openedTabID);
+}
+
+
+function detectMouseOut(event, obj)
+{
+	var current, related;
+	if (window.event)
+	{
+		current = obj;
+		related = window.event.toElement;
+	}
+	else
+	{
+		current = event.currentTarget;
+		related = event.relatedTarget;
+	}
+	if (current != related)
+	{
+		closeMenu(openedTabID);
+	}
+}
+
+
+
 function selectMenu(nodeID)
 {
 	if(document.getElementById)
@@ -42,7 +69,9 @@ function switchVisibility(nodeID)
 
 function openMenu(nodeID)
 {
-	document.getElementById(nodeID).style.display = "block";
+	var s = document.getElementById(nodeID).style;
+	if(s.display)
+		s.display = "block";
 }
 
 function closeMenu(nodeID)
@@ -50,5 +79,7 @@ function closeMenu(nodeID)
 	if(nodeID.length != 0)
 	{
 		document.getElementById(nodeID).style.display = "none";
+		openedTabID = "";
+		pointingMenuID = "";		
 	}
 }

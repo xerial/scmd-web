@@ -34,13 +34,9 @@ a:visited { color: #666666; }
 	color: white;
 	background-image: url("../image/border.png");	
 }
-.menubar a:link { 	
-	display: block;
-	text-decoration: none; color: white; }
-.menubar a:visited { 	display: block;
-text-decoration: none; color: white; }
-.menubar a:hover { 	display: block;
-text-decoration: none; color: white; background: #10D0F0; }
+.menubar a:link { display: block; text-decoration: none; color: white; }
+.menubar a:visited { display: block; text-decoration: none; color: white; }
+.menubar a:hover { 	display: block; text-decoration: none; color: white; background: #10D0F0; }
 
 .dropdownmenu
 { 
