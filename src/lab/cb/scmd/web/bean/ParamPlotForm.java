@@ -45,7 +45,7 @@ public class ParamPlotForm extends ActionForm
         try
         {
             paramList = (List<MorphParameter>) ConnectionServer.query(new BeanListHandler(MorphParameter.class), 
-                    "select id, name, shortname, displayname from $1 where scope='orf' and datatype in ('double', 'cv')",
+                    "select id, name, shortname, displayname from $1 where scope='orf' and datatype in ('double', 'cv') order by id",
                     SCMDConfiguration.getProperty("DB_PARAMETERLIST", "parameterlist"));
         }
         catch (SQLException e)

@@ -67,7 +67,7 @@ public class Plot2DServlet extends HttpServlet
             session.setAttribute("userSelection", selection);
         }
         TreeSet selectedORFSet = new TreeSet();
-        selectedORFSet.add(view.getOrf().toLowerCase());
+        selectedORFSet.add(view.getOrf().toUpperCase());
         for(Object orf : selection.orfSet())
         {
             selectedORFSet.add(orf);
