@@ -85,6 +85,10 @@ public class ViewORFTeardropAction extends Action
         
         request.setAttribute("gene", DBUtil.getGeneInfo(teardropForm.getOrf()));
         
+        String inputtedOrf = teardropForm.getOrf();
+        view.setOrf(inputtedOrf);
+        
+        
         int sheetType = teardropForm.getSheetType();
         if(sheetType < 0)
             sheetType = view.getOrfSheetType();
@@ -130,6 +134,8 @@ public class ViewORFTeardropAction extends Action
             orfSet.add(orf.toUpperCase());    
         }        
         orfSet.add(teardropForm.getOrf().toUpperCase());
+        
+        
 
 
         ImageCache imageCache = ImageCache.getImageCache(request);
