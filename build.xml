@@ -148,7 +148,7 @@ usage: ant (-Dconf=build.properties)
     		<fileset dir="${lib}"/>
 	      </classpath>
 	   </taskdef>
-	   <svn username="${user.name}">
+	   <svn>
 		 <update/>
 	   </svn>
 	</target>
