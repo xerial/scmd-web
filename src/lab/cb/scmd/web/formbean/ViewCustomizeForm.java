@@ -176,7 +176,7 @@ public class ViewCustomizeForm extends ActionForm
     public List<MorphParameter> getORFDetailCategoryList() {
         TableQuery query = SCMDConfiguration.getTableQueryInstance();
         Set<Integer> category = null;
-        if( getCellCategory().equals("Cell Wall") ) {
+        if( getOrfCategory().equals("Cell Wall") ) {
             category = new TreeSet<Integer> ();
             for(int i = 221; i < 228; i++ ) {
                 category.add(i);
@@ -194,7 +194,7 @@ public class ViewCustomizeForm extends ActionForm
                 category.add(i);
             }
             
-        } else if( getCellCategory().equals("Actin") ) {
+        } else if( getOrfCategory().equals("Actin") ) {
             category = new TreeSet<Integer> ();
             for(int i = 228; i < 243; i++ ) {
                 category.add(i);
