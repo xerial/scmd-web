@@ -63,7 +63,7 @@ public class SCMDImageServer extends HttpServlet
         
         try
         {
-            response.setContentType("image" + imageEncoding);
+            response.setContentType("image/" + imageEncoding);
             if(imageEncoding.equals("jpeg"))
             {
                 JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(response.getOutputStream());

@@ -158,6 +158,7 @@
 		<form-bean name="sheetForm" type="lab.cb.scmd.web.bean.GroupByDatasheetForm"/>
 		<form-bean name="plotForm" type="lab.cb.scmd.web.bean.ParamPlotForm"/>
 		<form-bean name="viewConfigForm" type="lab.cb.scmd.web.formbean.ViewCustomizeForm"/>
+		<form-bean name="orfTeardropForm" type="lab.cb.scmd.web.formbean.ViewORFTeardropForm"/>
     </form-beans>
 
 
@@ -391,6 +392,15 @@
 	    		type="lab.cb.scmd.web.action.CustomizeViewAction"
 	    		input="/error.jsp">
 	    	<forward name="success" path="/pages/ViewCustomize.jsp"/>
+   		</action>
+
+	    <action path="/ORFTeardrop"
+	    		name="orfTeardropForm"
+	    		scope="request"
+	    		validate="true"
+	    		type="lab.cb.scmd.web.action.ViewORFTeardropAction"
+	    		input="/error.jsp">
+	    	<forward name="success" path="/pages/ORFTeardrop.jsp"/>
    		</action>
 				
     <!-- sample input and input submit actions

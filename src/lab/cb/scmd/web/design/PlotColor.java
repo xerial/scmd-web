@@ -24,7 +24,8 @@ public class PlotColor
     static private TreeMap<String, PlotColor> plotColorMap = new TreeMap<String, PlotColor>();
     static
     {
-        plotColorList.add(new PlotColor("pink",    0xFF90A0));
+        plotColorList.add(new PlotColor("navyblue",    0x113377));
+        plotColorList.add(new PlotColor("pink",    0xFF7090));
         plotColorList.add(new PlotColor("skyblue", 0x80C0FF));
         plotColorList.add(new PlotColor("red",     0xFF5050));
         plotColorList.add(new PlotColor("gray",    0xA0A0A0));

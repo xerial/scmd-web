@@ -23,7 +23,22 @@ public class TeardropPoint {
 		_value = point;
         setColor(color);
 	}
+    public TeardropPoint()
+    {
+        
+    }
 
+    
+    public void setStrainname(String strainname)
+    {
+        _name = strainname;
+    }
+    public void setAverage(double average)
+    {
+        _value = average;
+    }
+    
+    
 	/**
 	 * @return Returns the _color.
 	 */
@@ -43,6 +58,11 @@ public class TeardropPoint {
             // use default color
         }
 	}
+    public void setColor(Color color)
+    {
+        this.color = color; 
+    }
+    
 	/**
 	 * @return Returns the _param.
 	 */

@@ -17,58 +17,36 @@
 
 <scmd-tags:linkMenu orf="${gene.orf}" logo="on"/> 
 
-<table width="700">
-<tr><td align="left">
-<span class="orf"> ${gene.orf} </span> 
-<span class="genename"> ${gene.standardName} </span>
-</td>
-<td align="right">
-<p align="absbottom">
-<scmd-tags:selectorf orf="${gene.orf}"/>
-</p>
-</td>
-</tr>
-</table>
-
-
-<table><tr><td>
-<scmd-tags:pageMoveButton actionURL="ViewDataSheet.do" currentPage="${view.photoPage}" maxPage="${view.photoPageMax}"/>
-</tr></td></table>
+<scmd-tags:orfInfo  orf="${gene.orf}" 
+	stdname="${gene.standardName}" annot="${gene.annotation}" 
+	title="ORF Teardrop Sheet" />
 
 <%-- データシート切り替えTab --%>
-<table border="0" cellspacing="0" cellpadding="0">
+<table border="0">
 <tr>
 <td align="left">
 <table border="0">
 <tr>
 <scmd-base:tablist selected="${view.sheetType}">
-<logic:iterate id="tab" name="tabName" indexId="i">
+<logic:iterate id="tab" name="orfTeardropForm" property="sheetTypeList" indexId="i">
 <scmd-base:tab name="${i}" width="80"> 
-<html:link page="/ViewDataSheet.do?sheetType=${i}"> <span class="small"> ${tab}</span>  </html:link> 
+<html:link page="/ORFTeardrop.do?orf=${view.orf}&sheetType=${i}"> <span class="small"> ${tab}</span>  </html:link> 
 </scmd-base:tab>
 </logic:iterate>
 </scmd-base:tablist>
 </tr>
-</table></td></tr>
-
-<tr><td>
-<scmd-base:table name="datasheet"/>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<scmd-base:table name="teardropSheet"/> 
 </td>
 </tr>
 </table>
 
-<table><tr><td>
-<scmd-tags:pageMoveButton actionURL="ViewDataSheet.do" currentPage="${view.photoPage}" maxPage="${view.photoPageMax}"/>
-</tr></td></table>
-
 <scmd-tags:linkMenu orf="${gene.orf}" logo="on"/> 
 
-
-<table>
-<html:form action="ViewDataSheet.do" method="POST">
-<tr><td> <scmd-tags:photoTypeSwitch/> </td></tr>
-</html:form> 
-</table>
 <scmd-tags:searchframe/>
 
 </center>

@@ -68,7 +68,7 @@ function writeRegion(e)
 
 <body>
 <center>
-<scmd-tags:menu  toolbar="on"/>
+<scmd-tags:menu  toolbar="on" searchframe="on"/>
 <scmd-tags:linkMenu orf="${view.orf}" logo="on"/> 
 <scmd-tags:orfInfo  orf="${gene.orf}" 
 	stdname="${gene.standardName}" annot="${gene.annotation}" 
@@ -83,7 +83,7 @@ function writeRegion(e)
 <td bgcolor="<%= userSelection.getColor(orf) %>" width="25"></td>
 <td width="5"></td>
 <td class="orf" width="100" align="left">
-<a href="/scmd-server/ViewStats.do?orf=${orf}"><%= orf.toUpperCase() %></a> 
+<a href="/scmd-server/ViewStats.do?orf=${orf}"><%= lab.cb.scmd.web.bean.YeastGene.formatedOrf(orf) %></a> 
 </td>
 </tr>
 </logic:iterate>
@@ -96,6 +96,7 @@ width="300" height="300" onclick="clk(event)" onmousemove="writeRegion(event)"
 </td>
 </tr>
 </table>
+
 <%--<embed src="Write2DPlot.do?${plotForm.cgiArgument}" width="300" height="300" class="plotview"/>--%>
 <br/>
 <img id="b_n" style="position:absolute;" src="/image/dot.gif" width="0" height="0"/>

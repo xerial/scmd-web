@@ -18,6 +18,7 @@ import lab.cb.scmd.db.common.TableQuery;
 import lab.cb.scmd.web.common.SCMDConfiguration;
 
 /**
+ * parameterの選択状態を記すクラス
  * @author sesejun
  * 
  */

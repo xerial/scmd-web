@@ -10,9 +10,12 @@
 
 package lab.cb.scmd.db.common;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.xerial.util.Pair;
 
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.web.datagen.ParamPair;
@@ -100,6 +103,7 @@ public interface TableQuery
 
     public List<MorphParameter> getParameterInfo(Set<Integer> parameter);
     
+
 }
 
 //--------------------------------------

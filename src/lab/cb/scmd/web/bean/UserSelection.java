@@ -41,7 +41,7 @@ public class UserSelection
         _selection.add(orf.toLowerCase());
     }
     
-    public Set getSelection()
+    public Set<String> getSelection()
     {
         return _selection;
     }
