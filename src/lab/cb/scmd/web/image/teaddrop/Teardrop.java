@@ -223,10 +223,10 @@ public class Teardrop
             break;
         }
         
-        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.DST_OVER);
-        g.setComposite(ac);
-        g.setColor(new Color(0xFFFFFF));
-        g.fillRect(0, 0, teardrop.getWidth(), teardrop.getHeight());
+//        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.DST_OVER);
+//        g.setComposite(ac);
+//        g.setColor(new Color(0xFFFFFF));
+//        g.fillRect(0, 0, teardrop.getWidth(), teardrop.getHeight());
         return teardrop;        
     }
     
