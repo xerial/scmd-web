@@ -78,7 +78,7 @@
 </logic:iterate>
 </table>
 <html:submit value="apply color changes" property="button"/>
-<p align="center" class="linkmenu"> 
+<p align="center" class="menubutton"> 
 [ <html:link page="/View2DPlot.do"> Display 2D plot of these mutants</html:link> ] 
 </p>
 </html:form>
@@ -94,8 +94,8 @@
 </table>
 <html:submit value="update" property="button"/>
 
-<p>Save as an XML file : <html:submit value="save" property="button"/></p>
-<p>Load from an XML file : <html:file property="file" /> <html:submit value="load" property="button"/></p>
+<p class="small">Save the above list of ORFs as an XML file : <html:submit value="save" property="button"/></p>
+<p class="small">Load an ORF list from an XML file : <html:file property="file" /> <html:submit value="load" property="button"/></p>
 </html:form> 
 
 </center>

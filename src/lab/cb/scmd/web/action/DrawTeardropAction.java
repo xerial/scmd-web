@@ -113,7 +113,7 @@ public class DrawTeardropAction extends Action
         try
         {
             teardropImage = teardrop.drawImage(plotList); 
-            if(input.getRangeBegin() > 0)
+            if(input.getRangeBegin() >= 0)
                 teardrop.drawRange(teardropImage, input.getRangeBegin(), input.getRangeEnd());
             response.setContentType("image/png");
             ImageIO.write(teardropImage, "png", response.getOutputStream());        

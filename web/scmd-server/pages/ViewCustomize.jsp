@@ -19,6 +19,7 @@
 <jsp:useBean id="cellParameterList" scope="request" type="java.util.List"/>
 <jsp:useBean id="orfParameterList" scope="request" type="java.util.List"/>
 <jsp:useBean id="gene"  scope="request" class="lab.cb.scmd.web.bean.YeastGene"/>
+<jsp:useBean id="viewConfigForm"  scope="session" class="lab.cb.scmd.web.formbean.ViewCustomizeForm"/>
 
 <scmd-base:header title="My Parameter List (Customization)" css="/css/tabsheet.css"/>
 <body>
@@ -78,7 +79,7 @@ ${morphParam.displayname}
 </td></tr>
 </logic:iterate>
 </table>
-<table>
+<table align="center">
 <tr>
 <td class="menubutton" align="center">
 [<a href="ViewORFParameter.do">Display Datasheet</a>]
@@ -104,14 +105,12 @@ download as [<a href="ViewORFParameter.do?format=xml">XML</a>] [<a href="ViewORF
 
 
 <p class="title"> Cell Parameters </p>
-<p class="small"> Select and add parameters below</p>
+<p class="small"> Select and add parameters below (press CTRL or SHIFT key to choose multiple items) </p>
 <table>
 <tr><td>Category</td><td></td><td>Parameter Description</td></tr>
 <tr><td>
 <html:select onchange="submit();" property="cellCategory" size="10">
-<logic:iterate id="param" name="viewConfigForm" property="cellCategoryList" type="java.lang.String">
-<html:option value="<%= param %>"><%= param %></html:option>
-</logic:iterate>
+<html:options property="cellCategoryList"/>
 </html:select>
 </td><td align="center">
 &gt; &gt; <br>
@@ -128,14 +127,12 @@ download as [<a href="ViewORFParameter.do?format=xml">XML</a>] [<a href="ViewORF
 </table>
 
 <p class="title"> ORF Parameters </p>
-<p class="small"> Select and add parameters below</p>
+<p class="small"> Select and add parameters below. (press CTRL or SHIFT key to choose multiple items)</p>
 <table>
 <tr><td>Category</td><td></td><td>Parameter Description</td></tr>
 <tr><td>
 <html:select onchange="submit();" property="orfCategory" size="10">
-<logic:iterate id="param" name="viewConfigForm" property="ORFCategoryList" type="java.lang.String">
-<html:option value="<%= param %>"><%= param %></html:option>
-</logic:iterate>
+<html:options property="ORFCategoryList"/>
 </html:select>
 </td><td align="center">
 &gt; &gt; <br>

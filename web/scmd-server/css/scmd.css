@@ -156,20 +156,17 @@ a:visited { color: #666666; }
 	font-weight: bold; 
 	text-align: center;
 }
-.tool a:link { text-decoration: none; font-weight: bold; color: white; }
-.tool a:visited { text-decoration: none; font-weight: bold; color: white; }
-.tool a:hover { font-weight: bold; background: #F0A040; }
-.tool_on
+.tool a:link, .tool a:visited
 { 
-	color: white;
-	background: #FDA040;
-	font-size: 10pt; 
-	font-weight: bold; 
-	text-align: center;
+	text-decoration: none; font-weight: bold; color: white; 
+	display: block;
+	width: 100%;	
 }
-.tool_on a:link { text-decoration: none; font-weight: bold; color: white; }
-.tool_on a:visited { text-decoration: none; font-weight: bold; color: white; }
-.tool_on a:hover { font-weight: bold; background: #F0A040; }
+.tool a:hover 
+{ font-weight: bold; background: #F0A040; 
+	display: block;
+	width: 100%;	
+}
 
 .button 
 { 

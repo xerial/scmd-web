@@ -34,8 +34,7 @@
 <tr class="menubar" >  
 <td align="center" id="yeast" onMouseOver="closeAllMenu();"><a href="ViewORFList.do">Yeast Mutant</a></td>
 
-<td align="center" id="photo" onMouseOver="selectMenu('photomenu');">
-<div onMouseOut="detectMouseOut(event,this);">
+<td align="center" id="photo" onMouseOver="selectMenu('photomenu');" onMouseOut="detectMouseOut(event,this);">
 <a href="ViewPhoto.do">Photo</a>
 <table width="200" id="photomenu" class="dropdownmenu">
 <tr>
@@ -53,7 +52,6 @@
 </td>
 </tr>
 </table>   
-</div>
 </td>
     
 <td align="center" id="data" onMouseOver="selectMenu('dataminingmenu');" onMouseOut="detectMouseOut(event,this);">
@@ -118,8 +116,8 @@
    <td align="right">
     <table>
      <tr align="top">
-	    <td class="tool" width="150" onMouseOver="switchStyle(this,'tool_on')" onMouseOut="switchStyle(this,'tool')"> <a href="ViewSelection.do">My Gene List</a> </td>
-    	<td class="tool" width="150" onMouseOver="switchStyle(this,'tool_on')" onMouseOut="switchStyle(this,'tool')"> <a href="CustomizeView.do">My Parameter List</a></td>
+	    <td class="tool" width="150"> <a href="ViewSelection.do">My Gene List</a> </td>
+    	<td class="tool" width="150"> <a href="CustomizeView.do">My Parameter List</a></td>
      </tr>
 	</table>    
    </td>

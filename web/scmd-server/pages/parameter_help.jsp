@@ -5,7 +5,8 @@
 <%@ taglib prefix="html" uri="/WEB-INF/struts-html-el.tld" %>
 <%@ taglib prefix="logic" uri="/WEB-INF/struts-logic.tld" %>
 
-<jsp:useBean id="paramList"  scope="request" type="java.util.List"/>
+<jsp:useBean id="orfParamList"  scope="request" type="java.util.List"/>
+<jsp:useBean id="cellParamList"  scope="request" type="java.util.List"/>
 
 <scmd-base:header title="Parameter Help"/>
 <body>
@@ -14,9 +15,18 @@
 
 <p align=center class=header> Parameter Help </p>
 
+<span class="menubutton">
+[<a href="#cellshapeparam">Cell Shape Parameters</a>] 
+[<a href="#ngroup">Nucleus Location Groups</a>]
+[<a href="#agroup">Actin Localization Groups</a>]
+[<a href="#cellparam">Cell Parameter List</a>] 
+[<a href="#orfparam">ORF Parameter List</a>] 
+</span>
+
+<p></p>
   <table width=500 border=0>
     <tr>
-      <td colspan=3 class=tablelabel> Cell Shape Parameters </td>
+      <td colspan=3 class=tablelabel><a name="cellshapeparam">Cell Shape Parameters</a> </td>
     </tr>
     <tr>
       <td> <html:img page="/help/paramimage/longaxis.gif" width="74" height="53"/></td>
@@ -36,9 +46,6 @@
     </tr>
 	<tr> <td class=notation colspan=3> In SCMD, the unit of displayed axis lengths is a <i> pixel </i> (= 0.129512 micrometer) on the images, and the unit of areas of cells is its square, pixel x pixel (= 0.016773358144). </td> </tr>
  <tr> <td height=30> </td></tr>
-     <tr>
-	      <td colspan=3 class=tablelabel> Other Parameters </td>
-    </tr>
 	<tr>
       <td class=tablelabel> Fitness : </td> 
       <td class=notation colspan=2> This value shows how well does an ellipse fit to the outline of the cell. The smaller the better. <br>
@@ -51,7 +58,7 @@
 
 
    <tr>
-   <td colspan=3 class=tablelabel> Nucleus Location Groups </td>
+   <td colspan=3 class=tablelabel><a name="ngroup">Nucleus Location Groups</a> </td>
    </tr>
 
 <tr> 
@@ -95,7 +102,7 @@
 
 
    <tr>
-   <td colspan=3 class=tablelabel> Actin Localization Groups </td>
+   <td colspan=3 class=tablelabel><a name="agroup">Actin Localization Groups</a> </td>
    </tr>
 
 <tr> 
@@ -132,28 +139,44 @@
 
 </table>
 
-<p class="title"> Morphological Parameter List </p>
+<a name="cellparam">
+<p class="title"> Cell Parameter List </p>
+</a>
 
 <table class="datasheet">
 <tr class="sheetlabel">
 <td>parameter name</td>
 <td>description</td>
-<td>scope</td>
+<td>category</td>
+</tr>
+<logic:iterate id="p" name="cellParamList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
+<tr>
+<td>
+${p.name}
+</td>
+<td bgcolor="#FFEFEF">${p.displayname} </td>
+<td bgcolor="#EFEFEF" align="center">${p.stain} </td>
+</tr>
+</logic:iterate>
+</table>
+
+<a name="orfparam">
+<p class="title"> ORF Parameter List </p>
+</a>
+
+<table class="datasheet">
+<tr class="sheetlabel">
+<td>parameter name</td>
+<td>description</td>
 <td>category</td>
 <td>targeted group</td>
 </tr>
-<logic:iterate id="p" name="paramList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
+<logic:iterate id="p" name="orfParamList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
 <tr>
 <td>
-<logic:equal name="p" property="scope" value="orf">
 <a href="ORFDataSheet.do?paramID=${p.id}">${p.name}</a>
-</logic:equal>
-<logic:notEqual name="p" property="scope" value="orf">
-${p.name}
-</logic:notEqual>
 </td>
 <td bgcolor="#FFEFEF">${p.displayname} </td>
-<td bgcolor="#EFEFFF" align="center">${p.scope} </td>
 <td bgcolor="#EFEFEF" align="center">${p.stain} </td>
 <td bgcolor="#EFFFEF" align="center">${p.groupName} </td>
 </tr>

@@ -143,7 +143,7 @@ public class ViewORFParameterAction extends Action
                 xout.startTag("orfdata", orfAttrib);
                 for(MorphParameter p : selectedORFParameter)
                 {
-                    xout.startTag("param", new XMLAttribute().add("name", p.getShortName()));
+                    xout.startTag("param", new XMLAttribute().add("name", p.getName()));
                     xout.text(gene.getParameter(p.getName()).toString());
                     xout.endTag();
                 }
@@ -192,14 +192,17 @@ public class ViewORFParameterAction extends Action
             if(targetParam == null)
                 targetParam = selectedORFParameter.get(0);
             request.setAttribute("targetParam", targetParam);
-            double begin = 0, end=0;        
-            if(!geneList.isEmpty())
+            if(input.getSortspec() != -1)
             {
+                double begin = 0, end=0;        
+                if(!geneList.isEmpty())
+                {
                 begin = Double.parseDouble(geneList.get(0).getParameter(targetParam.getName()).toString());
                 end = Double.parseDouble(geneList.get(geneList.size()-1).getParameter(targetParam.getName()).toString());
+                }
+                Range range = new Range(begin, end);
+                request.setAttribute("range", range);
             }
-            Range range = new Range(begin, end);
-            request.setAttribute("range", range);
         }
         
         request.setAttribute("geneList", geneList);

@@ -30,7 +30,14 @@
 <logic-nonel:present name="targetParam" scope="request">
 <table>
 <tr>
-<td width="150"><img src="DrawTeardrop.do?paramID=${targetParam.id}&rangeBegin=${range.min}&rangeEnd=${range.max}&plotTargetORF=false"/></td>
+<td width="150">
+<logic-nonel:present name="range" scope="request">
+<img src="DrawTeardrop.do?paramID=${targetParam.id}&rangeBegin=${range.min}&rangeEnd=${range.max}&plotTargetORF=false"/>
+</logic-nonel:present>
+<logic-nonel:notPresent name="range" scope="request">
+<img src="DrawTeardrop.do?paramID=${targetParam.id}&plotTargetORF=false"/>
+</logic-nonel:notPresent>
+</td>
 <td>
 <table>
 <tr><td class="small">Parameter Name:</td><td class="genename">${targetParam.name}</td></tr>
@@ -66,7 +73,8 @@
 [<a href="ViewORFParameter.do?<%=pid%>&format=tab"> Tab-separated sheet</a> ]
 format. 
 </span>
-<table class="datasheet" cellpadding="0" cellspacing="0">
+
+<table class="datasheet" cellpadding="0" cellspacing="1">
 <tr>
 <td class="sheetlabel" align="center"><a href="ViewORFParameter.do?sortspec=-1">ORF</a></td>
 <td class="sheetlabel" align="center">Std. Name</td>
@@ -78,7 +86,7 @@ format.
 </tr>
 <logic:iterate id="gene" name="geneList" scope="request" type="lab.cb.scmd.web.bean.YeastGene">
 <tr>
-<td>
+<td nowrap="nowrap">
 <html:multibox name="selection" property="inputList" value="<%= gene.getOrf().toLowerCase()%>"/>
 <span class="orf"><html:link page="/ViewStats.do?orf=${gene.orf}"> ${gene.orf} </html:link> </span>
 </td>

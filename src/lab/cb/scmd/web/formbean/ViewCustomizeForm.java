@@ -50,8 +50,8 @@ public class ViewCustomizeForm extends ActionForm
     private List<String> _orfCategoryList = new LinkedList<String> ();
     private Integer[] selectedCellParameter = new Integer[] {};
     private Integer[] selectedORFParameter = new Integer[] {};
-    private String cellCategory = "";
-    private String orfCategory = "";
+    private String cellCategory = "Cell Wall";
+    private String orfCategory = "Cell Wall";
     private Integer[] removeCellParamList = new Integer[0];
     private Integer[] removeORFParamList = new Integer[0];
     

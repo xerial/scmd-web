@@ -21,7 +21,7 @@
 
 <p class="notice"> No ORF parameter is selected.
 <br> Please select some ORF parameters in the
-<a href="CustomizeView.do"> customize page </a>
+<a href="CustomizeView.do">My Parameter List</a> page.
 </p>
 
 
