@@ -42,6 +42,7 @@ import lab.cb.scmd.web.sessiondata.MorphParameter;
 import lab.cb.scmd.web.sessiondata.ParamUserSelection;
 import lab.cb.scmd.web.table.ColLabelIndex;
 import lab.cb.scmd.web.table.ImageElement;
+import lab.cb.scmd.web.table.Link;
 import lab.cb.scmd.web.table.StringElement;
 import lab.cb.scmd.web.table.Table;
 import lab.cb.scmd.web.table.TableElement;
@@ -101,7 +102,7 @@ public class ViewORFTeardropAction extends Action
             // stainType‚ÉŠY“–‚·‚éparameter ID‚ÌƒŠƒXƒg‚ðŽæ“¾
             final String[] stainName = {"cell wall", "nucleus", "actin"};
             sql = SQLExpression.assignTo(
-                    "select id, displayname, shortname from $1 where scope='orf' and datatype in ('double', 'cv') and stain = '$2' order by id",
+                    "select id, name, displayname, shortname from $1 where scope='orf' and datatype in ('double', 'cv') and stain = '$2' order by id",
                     SCMDConfiguration.getProperty("DB_PARAMETERLIST", "parameterlist"),
                     stainName[stainType]
             );        
@@ -114,7 +115,7 @@ public class ViewORFTeardropAction extends Action
             if(paramIDSet.isEmpty())
                 return mapping.findForward("success");
             sql = SQLExpression.assignTo(
-                    "select id, displayname, shortname from $1 where scope='orf' and datatype in ('double', 'cv') and id in ($2)",
+                    "select id, name, displayname, shortname from $1 where scope='orf' and datatype in ('double', 'cv') and id in ($2)",
                     SCMDConfiguration.getProperty("DB_PARAMETERLIST", "parameterlist"),
                     SQLUtil.commaSeparatedList(paramIDSet, SQLUtil.QuotationType.none)
             );
@@ -157,7 +158,9 @@ public class ViewORFTeardropAction extends Action
         for(MorphParameter param : parameterList)
         {
             int paramID = param.getId();
-            StringElement label = new StringElement(param.getShortName());
+            //StringElement label = new StringElement(param.getShortName());
+            Link label = new Link("ParamSheet.do?param=" + param.getName(), param.getShortName());
+            //labelRow.add(new AttributeDecollation(label, "title", param.getDisplayname()));
             labelRow.add(new AttributeDecollation(label, "title", param.getDisplayname()));
 
             String sql2 = SQLExpression.assignTo("select paramid, groupid, average, sd, min, max from $1 where groupid=0 and paramid=$2", 
