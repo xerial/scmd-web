@@ -108,7 +108,8 @@ public class SCMDDBConnect extends DBConnect {
 //            	individualTableSQL += "AND cell_local_id = " + cellID;
 //            
 //            bt = query(individualTableSQL, "cell_id");
-    		String cellBoxSQL = "SELECT cell_id, ";
+    		//String cellBoxSQL = "SELECT cell_id, ";
+            String cellBoxSQL = "SELECT ";
     		String sql_columns = "";
     		if( columns.length > 0)
     			sql_columns = columns[0];

@@ -56,8 +56,9 @@ public class CellBox extends IndividualBox
 		int size = bt.getRowSize();
 		for(int i = 0; i < size; i++)
 		{
-			Cell id = bt.getCell(i, "cell_id");
-			CellIndividual cell = new CellIndividual(id.toString());
+			//Cell id = bt.getCell(i, "cell_id");
+			//CellIndividual cell = new CellIndividual(id.toString());
+            CellIndividual cell = new CellIndividual(i + "");
 			Cell x1 = bt.getCell(i, "x1");
 			cell.setX1(Integer.parseInt(x1.toString()));
 			Cell y1 = bt.getCell(i, "y1");
