@@ -17,7 +17,7 @@ public class MorphParameter {
     String datatype = "";
     String displayname = "";
     String stain = "";
-    String groupid = ""; 
+    String groupid = "";
 
     public MorphParameter() {
         
@@ -65,5 +65,27 @@ public class MorphParameter {
     }
     public void setDisplayname(String displayname) {
         this.displayname = displayname;
+    }
+    
+    public String getNucleusStatus() {
+        String[] names = name.split("_");
+        if( names.length == 1 )
+            return "none";
+        return names[1];
+    }
+    
+    public String getParameterType() {
+        if(name.matches("^[ACD]CV.+"))
+            return "Coefficient of Variation";
+        return "Average";
+    }
+    
+    public String getStainType() {
+        if(name.charAt(0) == 'A' ) {
+            return "Actin";
+        } else if(name.charAt(0) == 'D') {
+            return "Nucleus";
+        }
+        return "Cell Wall";
     }
 }
