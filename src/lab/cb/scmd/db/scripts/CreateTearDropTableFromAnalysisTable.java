@@ -52,7 +52,7 @@ public class CreateTearDropTableFromAnalysisTable {
 
     private enum Opt {
         help, verbose, outfile, avgoutfile, server, port, user, passwd, dbname, 
-        table, paramlist
+        table, paramlist, update
     }
 
     private OptionParser<Opt> optionParser = new OptionParser<Opt>();
@@ -84,6 +84,7 @@ public class CreateTearDropTableFromAnalysisTable {
     {
         optionParser.addOption(Opt.help, "h", "help", "display help messages");
         optionParser.addOption(Opt.verbose, "v", "verbose", "display verbose messages");
+        optionParser.addOption(Opt.update, "", "update", "output update script");
         optionParser.addOptionWithArgment(Opt.outfile, "o", "output", "FILE", "output file name. defalut=zscore.txt", "zscore.txt");
         optionParser.addOptionWithArgment(Opt.server, "s", "server", "SERVER", "postgres server name. defalut=localhost", "localhost");
         optionParser.addOptionWithArgment(Opt.port, "p", "port", "PORT", "port number. defalut=5432", "5432");
@@ -92,6 +93,7 @@ public class CreateTearDropTableFromAnalysisTable {
         optionParser.addOptionWithArgment(Opt.dbname, "d", "db", "NAME", "database name. defalut=scmd", "scmd");        
         optionParser.addOptionWithArgment(Opt.table, "t", "table", "TABLE", "table name", "table");
         optionParser.addOptionWithArgment(Opt.paramlist, "l", "paramlist", "PARAMLIST", "parameter list", "parameterlist_avg.xls");
+        
         initDB();
     }
 
@@ -158,9 +160,12 @@ public class CreateTearDropTableFromAnalysisTable {
                 String orfname = itrow.next().toString();
                 int row = rowLabelIndex.getRowIndex(orfname);
                 
-                //outFile.println(orfname + "\t" + paramid + "\t0\t" + sheet.get(row, col) + "\t0\t0\t0");
-                outFile.println("update paramstat set average=" + sheet.get(row, col) 
-                        + " where strainname='" + orfname + "' and paramid='" + paramid + "' and groupid='0';");
+                if(optionParser.isSet(Opt.update)) {
+                    outFile.println("update paramstat set average=" + sheet.get(row, col) 
+                            + " where strainname='" + orfname + "' and paramid='" + paramid + "' and groupid='0';");
+                } else {
+                    outFile.println(orfname + "\t" + paramid + "\t0\t" + sheet.get(row, col) + "\t0\t0\t0\t" + (colList.size() - 1));
+                }
             }
             System.out.println( (n++) + "\t" + paramid + "\t" + paramname );
         }
