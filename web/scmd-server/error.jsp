@@ -13,4 +13,4 @@
 		</blockquote>
 		<p align="center"> <a href="/"> SCMD TOP </a> </p>
 	</body>
-</scmd-base:footer>
+<scmd-base:footer />
