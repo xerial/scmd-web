@@ -15,6 +15,7 @@ import java.util.AbstractMap;
 import java.util.Collection;
 
 import lab.cb.scmd.exception.SCMDException;
+import lab.cb.scmd.web.bean.SelectedShape;
 
 
 /**
@@ -40,6 +41,7 @@ public interface XMLQuery extends QueryAPI
 	int GROUP_NUCLEUS = 1;
 	int GROUP_ACTIN = 2;
 	//void getGroupBySheet(OutputStream out, String orf, int groupType, int page);
+
 	
 }
 

@@ -13,6 +13,7 @@ package lab.cb.scmd.db.common;
 import java.util.Map;
 
 import lab.cb.scmd.exception.SCMDException;
+import lab.cb.scmd.web.datagen.ParamPair;
 import lab.cb.scmd.web.table.Table;
 
 /**
@@ -86,6 +87,8 @@ public interface TableQuery extends QueryAPI
     
     public Table getAveragePlot(String param1, String param2);
     public Table getAveragePlot(String param1, QueryRange range1, String param2, QueryRange range2);
+
+    public Table getShapeZScoreTable(ParamPair[] paramSets);
     
 }
 
