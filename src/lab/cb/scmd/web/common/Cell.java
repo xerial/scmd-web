@@ -37,13 +37,29 @@ public class Cell
         
         boundingRectangle = boundingRectangle_;
     }
+    
+    public String getImageID(int photoType, int stainType)
+    {
+        StringBuilder imageID = new StringBuilder();
+        imageID.append("C_");
+        imageID.append(photo.getOrf().toLowerCase());
+        imageID.append("_");
+        imageID.append(photoType);
+        imageID.append("_");
+        imageID.append(stainType);
+        imageID.append("_");
+        imageID.append(photo.getPhotoNum());
+        imageID.append("_");
+        imageID.append(cellID);
+        return imageID.toString();
+    }
 
     public BoundingRectangle getBoundingRectangle()
     {
         return boundingRectangle;
     }
     
-    public Photo getPhoto() throws InvalidParameterException 
+    public Photo getPhoto() 
     {
         return photo;
     }

@@ -10,9 +10,16 @@
 
 package lab.cb.scmd.web.action;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,16 +29,26 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGImageDecoder;
 
 
+
+
+
+import lab.cb.scmd.exception.InvalidParameterException;
+import lab.cb.scmd.util.image.BoundingRectangle;
 import lab.cb.scmd.web.action.logic.ActionLogic;
 import lab.cb.scmd.web.action.logic.DBUtil;
 import lab.cb.scmd.web.bean.CellList;
 import lab.cb.scmd.web.bean.CellViewerForm;
 import lab.cb.scmd.web.common.Cell;
 import lab.cb.scmd.web.common.DataSheetType;
+import lab.cb.scmd.web.common.PhotoType;
 import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.common.StainType;
+import lab.cb.scmd.web.image.ImageCache;
+import lab.cb.scmd.web.image.SCMDImageServer;
 import lab.cb.scmd.web.table.ColLabelIndex;
 import lab.cb.scmd.web.table.ImageElement;
 import lab.cb.scmd.web.table.RowLabelIndex;
@@ -41,6 +58,7 @@ import lab.cb.scmd.web.table.decollation.AttributeDecollation;
 import lab.cb.scmd.web.table.decollation.AttributeDecollator;
 import lab.cb.scmd.web.table.decollation.NumberFormatDecollator;
 import lab.cb.scmd.web.table.decollation.StyleDecollator;
+import lab.cb.scmd.web.viewer.Photo;
 
 /**
  * @author leo
@@ -98,15 +116,20 @@ public class ViewDataSheetAction extends Action {
 //        for(int i=0; i<height.length; i++)
 //            height[i] = 0;
         
+        
+        ImageCache imageCache = ImageCache.getImageCache(request);
         int rowNum = 0;
+        LinkedList<Cell> cellsInTheDisplay = new LinkedList<Cell>();
         for(Iterator it = cellList.iterator(); it.hasNext(); rowNum++)
         {
             LinkedList row = new LinkedList();
             Cell cell = (Cell) it.next();
+            cellsInTheDisplay.add(cell);
             for(int stainType=0; stainType<StainType.STAIN_MAX; stainType++)
             {
-                Map queryMap = cell.getBoundingRectangle().getQueryMap();
-
+                //Map queryMap = cell.getBoundingRectangle().getQueryMap();
+                TreeMap<String, String> queryMap = new TreeMap<String, String>();
+                
                 int w = cell.getBoundingRectangle().getX2() - cell.getBoundingRectangle().getX1() + 4;
 //                if(w > width[stainType])
 //                    width[stainType] = w;
@@ -114,13 +137,19 @@ public class ViewDataSheetAction extends Action {
 //                if(h > height[rowNum])
 //                    height[rowNum] = h;
                 
-                queryMap.put("stainType", Integer.toString(stainType));
                 
-                queryMap.put("photoType", Integer.toString(view.getPhotoType()));
-                queryMap.put("orf", view.getOrf());
-                queryMap.put("photoNum", Integer.toString(view.getPhotoNum()));
-                
-                ImageElement imageCell = new ImageElement("DisplayCell.do", queryMap);
+//                queryMap.put("stainType", Integer.toString(stainType));
+//                
+//                queryMap.put("photoType", Integer.toString(view.getPhotoType()));
+//                queryMap.put("orf", view.getOrf());
+//                queryMap.put("photoNum", Integer.toString(view.getPhotoNum()));
+
+                String imageID = cell.getImageID(view.getPhotoType(), stainType);
+                queryMap.put("imageID", imageID);
+                queryMap.put("encoding", "jpeg");
+                imageCache.registerImage(imageID);                
+                ImageElement imageCell = new ImageElement("scmdimage.img", queryMap);
+
                 imageCell.setProperty("border", "0");
                 imageCell.setProperty("alt", "ID=" + cell.getCellID());
                 imageCell.setProperty("width", Integer.toString(w));
@@ -135,6 +164,10 @@ public class ViewDataSheetAction extends Action {
             if(correspondingRowNum != -1)
                 table.paste(table.getRowSize()-1, StainType.STAIN_MAX, datasheet.getRow(correspondingRowNum));
         }
+        
+        PhotoClippingProcess photoClippingProcess = new PhotoClippingProcess(imageCache, cellsInTheDisplay, view.getPhotoType(), StainType.getStainTypes());
+        photoClippingProcess.process();
+        
         table.appendToBottom(table.getRow(0));
         table.removeCol(StainType.STAIN_MAX); // cell_local_idÇ…ëŒâûÇ∑ÇÈçsÇçÌèú
 
@@ -167,6 +200,108 @@ public class ViewDataSheetAction extends Action {
         return mapping.findForward("success");
     }
 
+   
+}
+
+
+class PhotoClippingProcess implements Runnable
+{
+    TreeMap<String, BufferedImage> photoStorage = new TreeMap<String, BufferedImage>();
+    TreeSet<String> unavailablePhotoIDSet = new TreeSet<String>();
+    ImageCache imageCache = null;
+    Collection<Cell> cellList = null;
+    int photoType = PhotoType.ANALYZED_PHOTO;
+    int stainTypeList[] = new int[] {}; 
+                                  
+    
+    public PhotoClippingProcess(ImageCache imageCache, Collection<Cell> cellList, int photoType, int[] stainTypeList)
+    {
+        this.imageCache = imageCache;
+        this.cellList = cellList;
+        this.photoType = photoType;
+        this.stainTypeList = stainTypeList;
+    }
+    
+    /**
+     * 
+     */
+    public void process()
+    {
+        Thread thread = new Thread(this);
+        thread.start();
+    }
+        
+    
+    public void run()
+    {
+        for(Cell cell : cellList)
+        {
+            Photo photo = cell.getPhoto();
+            for(int stainType : stainTypeList)
+            {
+                String photoID = photo.getImageID(photoType, stainType);
+                BufferedImage photoImage = null;
+                if(photoStorage.containsKey(photoID))
+                {
+                    photoImage = photoStorage.get(photoID);
+                }
+                else
+                {
+                    if(!unavailablePhotoIDSet.contains(photoID))
+                    {
+                        try
+                        {
+                            // load image
+                            URL imageURL = photo.getPhotoURL(photoType, stainType);
+                            JPEGImageDecoder decoder = JPEGCodec.createJPEGDecoder(imageURL.openStream());
+                            // Get jpeg image.
+                            photoImage = decoder.decodeAsBufferedImage();
+                            photoStorage.put(photoID, photoImage);
+                        }
+                        catch (InvalidParameterException e)
+                        {
+                            imageCache.setAsNotAvailable(photoID);
+                            continue;
+                        }
+                        catch (MalformedURLException e)
+                        {
+                            imageCache.setAsNotAvailable(photoID);
+                            continue;
+                        }
+                        catch(IOException e)
+                        {
+                            imageCache.setAsNotAvailable(photoID);
+                            continue;
+                        }                                
+                    }
+                    else
+                        continue; // skip the cell in this photooo
+                }
+
+                // clip the cell 
+                BoundingRectangle br = cell.getBoundingRectangle();
+                int x1 = br.getX1();
+                int x2 = br.getX2();
+                int y1 = br.getY1();
+                int y2 = br.getY2();
+                int borderSize = 2;
+                int xRange = x2 - x1 + borderSize * 2;
+                int yRange = y2 - y1 + borderSize * 2;
+                int xBegin = x1 < borderSize ? 0 : x1 - borderSize;
+                int yBegin = y1 < borderSize ? 0 : y1 - borderSize;
+
+                BufferedImage cellImage = photoImage.getSubimage(xBegin, yBegin, xRange, yRange);                          
+                imageCache.addImage(cell.getImageID(photoType, stainType), cellImage);                             
+            } // for stainType
+        } // for cell
+        
+        
+        
+        // å„énññ
+        photoStorage.clear();
+        unavailablePhotoIDSet.clear();
+    }
+    
 }
 
 //--------------------------------------

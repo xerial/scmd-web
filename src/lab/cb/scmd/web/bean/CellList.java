@@ -26,7 +26,7 @@ import lab.cb.scmd.web.viewer.Photo;
  * @author leo
  *
  */
-public class CellList
+public class CellList implements Iterable<Cell>
 {
     LinkedList _cellList = new LinkedList();
     Photo	_photo = null;

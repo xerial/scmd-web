@@ -103,6 +103,13 @@ public class Photo
         return Photo
                 .getPhotoFilePath(_orfName, stainType, _photoNum, _photoType);
     }
+    
+    public URL getPhotoURL(int photoType, int stainType)
+        throws InvalidParameterException, MalformedURLException
+    {
+        StainType.validateStainType(stainType);
+        return getPhotoURL(_orfName, stainType, _photoNum, photoType);        
+    }
 
     public String getPhotoFilePathOfAnotherPhotoType(int photoType)
     {
@@ -141,6 +148,20 @@ public class Photo
     }
     public void setStainType(int type) {
         _stainType = type;
+    }
+    
+    public String getImageID(int photoType, int stainType)
+    {
+        StringBuilder imageID = new StringBuilder();
+        imageID.append("P_");
+        imageID.append(getOrf().toLowerCase());
+        imageID.append("_");
+        imageID.append(photoType);
+        imageID.append("_");
+        imageID.append(stainType);
+        imageID.append("_");
+        imageID.append(getPhotoNum());
+        return imageID.toString();
     }
     
     int    _photoNum;

@@ -25,13 +25,16 @@ import org.apache.struts.action.ActionMapping;
 
 
 import lab.cb.scmd.db.common.TableQuery;
+import lab.cb.scmd.util.image.BoundingRectangle;
 import lab.cb.scmd.util.xml.XMLUtil;
 import lab.cb.scmd.web.action.logic.DBUtil;
 import lab.cb.scmd.web.bean.CellViewerForm;
 import lab.cb.scmd.web.bean.GroupViewForm;
+import lab.cb.scmd.web.common.Cell;
 import lab.cb.scmd.web.common.DataSheetType;
 import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.common.StainType;
+import lab.cb.scmd.web.image.ImageCache;
 import lab.cb.scmd.web.table.ColLabelIndex;
 import lab.cb.scmd.web.table.ImageElement;
 import lab.cb.scmd.web.table.Link;
@@ -43,6 +46,7 @@ import lab.cb.scmd.web.table.TableElementList;
 import lab.cb.scmd.web.table.decollation.AttributeDecollation;
 import lab.cb.scmd.web.table.decollation.AttributeDecollator;
 import lab.cb.scmd.web.table.decollation.StyleDecollator;
+import lab.cb.scmd.web.viewer.Photo;
 
 /** @deprecated
  * @author leo
@@ -127,6 +131,9 @@ public class GroupViewAction extends Action
         argMap.put("orf", sheetForm.getOrf());
         argMap.put("stainType", Integer.toString(sheetForm.getStainType()));
         argMap.put("page", Integer.toString(sheetForm.getPage()));
+        
+        LinkedList<Cell> cellsInThePage = new LinkedList<Cell>();
+        ImageCache imageCache = ImageCache.getImageCache(request);
         for(int g=0; g<_groupName[stainType].length; g++)
         {
             LinkedList row = new LinkedList();
@@ -177,9 +184,9 @@ public class GroupViewAction extends Action
             
             for(int i=1; i<cellInfo.getRowSize(); i++)
             {
-                TreeMap imageMap = (TreeMap) map.clone();
-                imageMap.put("photoType", Integer.toString(view.getPhotoType()));
-                imageMap.put("photoNum", colIndex.get(i, "image_number"));
+                TreeMap imageMap = new TreeMap();
+                //imageMap.put("photoType", Integer.toString(view.getPhotoType()));
+                //imageMap.put("photoNum", colIndex.get(i, "image_number"));
                 int x1 = Integer.parseInt(colIndex.get(i, "x1").toString());
                 int x2 = Integer.parseInt(colIndex.get(i, "x2").toString());
                 int y1 = Integer.parseInt(colIndex.get(i, "y1").toString());
@@ -191,11 +198,20 @@ public class GroupViewAction extends Action
                 if(h > height[g])
                     height[g] = h;
                 
-                imageMap.put("x1", colIndex.get(i, "x1"));
-                imageMap.put("x2", colIndex.get(i, "x2"));
-                imageMap.put("y1", colIndex.get(i, "y1"));
-                imageMap.put("y2", colIndex.get(i, "y2"));
-                ImageElement img = new ImageElement("DisplayCell.do", imageMap);
+                //imageMap.put("x1", colIndex.get(i, "x1"));
+                //imageMap.put("x2", colIndex.get(i, "x2"));
+                //imageMap.put("y1", colIndex.get(i, "y1"));
+                //imageMap.put("y2", colIndex.get(i, "y2"));
+                
+                Photo photo = new Photo(sheetForm.getOrf(), Integer.parseInt(colIndex.get(i, "image_number").toString()), 
+                        sheetForm.getStainType(), view.getPhotoType());
+                Cell cell = new Cell(photo, Integer.parseInt(colIndex.get(i, "cell_local_id").toString()), new BoundingRectangle(x1, x2, y1, y2));
+                cellsInThePage.add(cell);
+                String imageID = cell.getImageID(view.getPhotoType(), sheetForm.getStainType());
+                imageCache.registerImage(imageID);
+                imageMap.put("imageID", imageID);
+                imageMap.put("encoding", "jpeg");
+                ImageElement img = new ImageElement("scmdimage.img", imageMap);
                 img.setProperty("width", Integer.toString(w));
                 img.setProperty("height", Integer.toString(h));
                 img.setProperty("alt", "cell ID=" + colIndex.get(i, "cell_local_id"));                
@@ -203,7 +219,8 @@ public class GroupViewAction extends Action
             }   
             table.addRow(row);
         }
-        
+        PhotoClippingProcess photoClippingProcess = new PhotoClippingProcess(imageCache, cellsInThePage, view.getPhotoType(), new int[] { sheetForm.getStainType() } );
+        photoClippingProcess.process();
         
         table.decollateCol(0, new StyleDecollator("title"));
         table.decollateCol(0, new AttributeDecollator("width", "40"));

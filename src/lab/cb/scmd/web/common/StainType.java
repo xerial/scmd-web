@@ -23,6 +23,11 @@ public class StainType
     public static final int STAIN_RhPh = 2;
     public static final int STAIN_MAX = 3;
     
+    public static int[] getStainTypes()
+    {
+        return new int[] { STAIN_ConA, STAIN_DAPI, STAIN_RhPh };
+    }
+    
     public static String getStainTypeName(int stainType)
     {
         return STAIN_TYPE[stainType]; 

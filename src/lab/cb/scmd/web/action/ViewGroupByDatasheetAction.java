@@ -24,19 +24,24 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+
 import lab.cb.scmd.db.common.TableQuery;
+import lab.cb.scmd.util.image.BoundingRectangle;
 import lab.cb.scmd.web.action.logic.DBUtil;
 import lab.cb.scmd.web.bean.CellViewerForm;
 import lab.cb.scmd.web.bean.GroupByDatasheetForm;
+import lab.cb.scmd.web.common.Cell;
 import lab.cb.scmd.web.common.DataSheetType;
 import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.common.StainType;
+import lab.cb.scmd.web.image.ImageCache;
 import lab.cb.scmd.web.table.ColLabelIndex;
 import lab.cb.scmd.web.table.ImageElement;
 import lab.cb.scmd.web.table.Table;
 import lab.cb.scmd.web.table.decollation.AttributeDecollator;
 import lab.cb.scmd.web.table.decollation.NumberFormatDecollator;
 import lab.cb.scmd.web.table.decollation.StyleDecollator;
+import lab.cb.scmd.web.viewer.Photo;
 
 /**
  * @author leo
@@ -95,18 +100,13 @@ public class ViewGroupByDatasheetAction extends Action
             int rowEnd = rowBegin + numElementInAPage;
             if(rowEnd > numRow) rowEnd = numRow;
 
+            ImageCache imageCache = ImageCache.getImageCache(request);
+            LinkedList<Cell> cellsInTheDisplay = new LinkedList<Cell>();
             for (int row = rowBegin; row <= rowEnd; row++)
             {
                 LinkedList elementList = new LinkedList();
                 // image
                 TreeMap argMap = new TreeMap();
-                argMap.put("orf", datasheetForm.getOrf());
-                argMap.put("photoType", Integer.toString(view.getPhotoType()));
-                argMap.put("photoNum", colIndex.get(row, "image_number"));
-                argMap.put("x1", colIndex.get(row, "x1"));
-                argMap.put("x2", colIndex.get(row, "x2"));
-                argMap.put("y1", colIndex.get(row, "y1"));
-                argMap.put("y2", colIndex.get(row, "y2"));
                 int x1 = Integer.parseInt(colIndex.get(row, "x1").toString());
                 int x2 = Integer.parseInt(colIndex.get(row, "x2").toString());
                 int y1 = Integer.parseInt(colIndex.get(row, "y1").toString());
@@ -114,10 +114,16 @@ public class ViewGroupByDatasheetAction extends Action
                 int w = x2 - x1 + 4;
                 int h = y2 - y1 + 4;
 
+                Photo photo = new Photo(datasheetForm.getOrf(), Integer.parseInt(colIndex.get(row, "image_number").toString()));
+                Cell cell = new Cell(photo, Integer.parseInt(colIndex.get(row, "cell_local_id").toString()), new BoundingRectangle(x1, x2, y1, y2));
+                cellsInTheDisplay.add(cell);
                 for (int stain = 0; stain < StainType.STAIN_MAX; stain++)
                 {
-                    argMap.put("stainType", Integer.toString(stain));
-                    ImageElement img = new ImageElement("DisplayCell.do", (Map) argMap.clone());
+                    String imageID = cell.getImageID(view.getPhotoType(), stain);
+                    imageCache.registerImage(imageID);
+                    argMap.put("imageID", imageID);
+                    argMap.put("encoding", "jpeg");
+                    ImageElement img = new ImageElement("scmdimage.img", (Map) argMap.clone());
                     img.setProperty("alt", "cell ID=" + colIndex.get(row, "cell_local_id"));
                     img.setProperty("width", Integer.toString(w));
                     img.setProperty("height", Integer.toString(h));
@@ -131,6 +137,9 @@ public class ViewGroupByDatasheetAction extends Action
                 datasheet.addRow(elementList);
             }
 
+            PhotoClippingProcess photoClippingProcess = new PhotoClippingProcess(imageCache, cellsInTheDisplay, view.getPhotoType(), StainType.getStainTypes());
+            photoClippingProcess.process();
+            
             for (int i = 0; i < StainType.STAIN_MAX; i++)
             {
                 datasheet.decollateCol(i, new AttributeDecollator("bgcolor", "black"));
