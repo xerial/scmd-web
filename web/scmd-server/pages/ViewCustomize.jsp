@@ -49,7 +49,7 @@ Back to <a href="ViewDataSheet.do">Photo Datasheet</a>, <a href="ORFTeardrop.do"
 <tr><td>
 <html:multibox name="viewConfigForm" property="removeCellParamList" value="<%= morphParam.getIdStr() %>"/>
 </td><td>
-<html:link page="/ORFDataSheet.do?paramID=${morphParam.id}">${morphParam.shortName}</html:link>
+<html:link page="/ORFDataSheet.do?paramID=${morphParam.id}">${morphParam.name}</html:link>
 </td><td>
 ${morphParam.displayname}
 </td></tr>
@@ -72,9 +72,9 @@ ${morphParam.displayname}
 <tr><td>
 <html:multibox name="viewConfigForm" property="removeORFParamList" value="<%= morphParam.getIdStr() %>"/>
 </td><td>
-<html:link page="/ORFDataSheet.do?paramID=${morphParam.id}">${morphParam.shortName}</html:link>
+<html:link page="/ORFDataSheet.do?paramID=${morphParam.id}">${morphParam.name}</html:link>
 </td><td>
-${morphParam.name}
+${morphParam.displayname}
 </td></tr>
 </logic:iterate>
 </table>

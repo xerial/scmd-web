@@ -13,11 +13,13 @@
 <jsp:useBean id="pageStatus"  scope="request" class="lab.cb.scmd.db.common.PageStatus"/>
 <jsp:useBean id="selection" scope="request" class="lab.cb.scmd.web.bean.ORFSelectionForm"/>
 
-<scmd-base:header title="Parameter Sheet of ${para.shortName}" css="/css/tabsheet.css"/>
+<scmd-base:header title="Parameter Sheet of ${para.name}" css="/css/tabsheet.css"/>
 <body>
 <center>
 <scmd-tags:menu  toolbar="on" searchframe="on"/>
 <scmd-tags:linkMenu orf="${view.orf}" logo="on"/> 
+
+<p class="title">Parameter Sheet of ${para.name} </p>
 
 <html:form action="ViewSelection.do" method="GET">
 <table width="750">

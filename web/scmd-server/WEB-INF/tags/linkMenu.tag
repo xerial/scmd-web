@@ -14,7 +14,7 @@
 </logic:equal>
 <span class="menubutton">
 <logic:equal name="orf" value="">
-[ <html:link page="/ViewPhoto.do"> photo </html:link> ] 
+[ <html:link page="/ViewPhoto.do"> photo viewer </html:link> ] 
 [ <html:link page="/ViewDataSheet.do"> photo datasheet </html:link> ] 
 [<span class="small"> Group by: </span> 
  <html:link page="/ViewGroupBySheet.do?stainType=0"> bud size </html:link>
@@ -25,15 +25,16 @@
  <html:link page="/ViewGroupByTearDrop.do?stainType=1"> nucleus </html:link>
  <html:link page="/ViewGroupByTearDrop.do?stainType=2"> actin </html:link> ] 
 [ <html:link page="/ORFTeardrop.do"> ORF Teardrop </html:link> ] 
-[ <html:link page="/ViewStats.do"> stats </html:link> ] 
+[ <html:link page="/ViewStats.do"> average shape </html:link> ] 
 [ <html:link page="/View2DPlot.do"> 2D plot </html:link> (<html:link page="/View2DPlot.do?param1=-1&param2=-1"> lucky! </html:link>) ] 
 [ <html:link page="/ViewORFParameter.do"> ORF parameter sheet </html:link> ] 
 [ <html:link page="/ViewORFList.do"> yeast mutants </html:link> ] 
 [ <html:link page="/ParameterHelp.do"> parameter help </html:link> ] 
+[ <html:link page="/sitemap.jsp"> site map </html:link> ] 
 [ <html:link page="/"> top </html:link> ] 
 </logic:equal>
 <logic:notEqual name="orf" value="">
-[ <html:link page="/ViewPhoto.do?orf=${orf}"> photo </html:link> ] 
+[ <html:link page="/ViewPhoto.do?orf=${orf}"> photo viewer </html:link> ] 
 [ <html:link page="/ViewDataSheet.do?orf=${orf}"> photo datasheet </html:link> ] 
 [<span class="small"> Group by: </span> 
  <html:link page="/ViewGroupBySheet.do?orf=${orf}&stainType=0"> bud size </html:link>
@@ -44,11 +45,12 @@
  <html:link page="/ViewGroupByTearDrop.do?orf=${orf}&stainType=1"> nucleus </html:link>
  <html:link page="/ViewGroupByTearDrop.do?orf=${orf}&stainType=2"> actin </html:link> ] 
 [ <html:link page="/ORFTeardrop.do?orf=${orf}"> ORF Teardrop </html:link> ] 
-[ <html:link page="/ViewStats.do?orf=${orf}"> stats </html:link> ] 
+[ <html:link page="/ViewStats.do?orf=${orf}"> average shape </html:link> ] 
 [ <html:link page="/View2DPlot.do?orf=${orf}"> 2D plot </html:link> (<html:link page="/View2DPlot.do?param1=-1&param2=-1"> lucky! </html:link>) ] 
 [ <html:link page="/ViewORFParameter.do"> ORF parameter sheet </html:link> ] 
 [ <html:link page="/ViewORFList.do"> yeast mutants </html:link> ] 
 [ <html:link page="/ParameterHelp.do"> parameter help </html:link> ] 
+[ <html:link page="/sitemap.jsp"> site map </html:link> ] 
 [ <html:link page="/"> top </html:link> ] 
 </logic:notEqual>
 </span>
