@@ -90,7 +90,7 @@ function writeRegion(e)
 <td bgcolor="<%= userSelection.getColor(orf) %>" width="25"></td>
 <td width="5"></td>
 <td class="orf" width="100" align="left">
-<a href="/scmd-server/ViewStats.do?orf=${orf}"><%= lab.cb.scmd.web.bean.YeastGene.formatedOrf(orf) %></a> 
+<a href="ViewStats.do?orf=${orf}"><%= lab.cb.scmd.web.bean.YeastGene.formatedOrf(orf) %></a> 
 </td>
 </tr>
 </logic:iterate>
