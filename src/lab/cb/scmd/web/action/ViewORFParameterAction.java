@@ -223,28 +223,23 @@ public class ViewORFParameterAction extends Action
     private LinkedList<YeastGene> retrieveYeastGeneList(List<MorphParameter> selectedORFParameter, int numRows, int offset, Vector<String> sqlParamList, String sortParamName) throws SQLException
     {
         String sql = "";
-        if( numRows!=-1 ) 
+        if( numRows!=-1 || selectedOrfSet.size() == 0) 
         { 
                 sql = "select strainname as \"ORF\",primaryname, aliasname, annotation, $1 from $2 left join $5 on strainname = systematicname order by $6 limit $3 offset $4";
         } else { 
                 // -1 Ç»ÇÁ my gene list ÇÃÇ›ÇéÊìæÇ∑ÇÈ
-                // my gene list Ç…Ç–Ç∆Ç¬Ç‡à‚ì`éqÇ™ñ≥Ç¢Ç∆Ç´Ç…ÇÕÅAtop
                 sql = "select strainname as \"ORF\",primaryname, aliasname, annotation, $1 from $2 left join $5 on strainname = systematicname ";
-                if( selectedOrfSet.size() == 0 ) {
-                    sql += "order by $6 limit $3 offset $4";
-                } else {
-                    boolean flag = false;
-                    for(String orf: selectedOrfSet) {
-                        if( flag ) {
-                            sql += " or";
-                        } else {
-                            sql += " where";
-                            flag = true;
-                        }
-                        sql += " strainname='" + orf.toUpperCase() + "'";
+                boolean flag = false;
+                for(String orf: selectedOrfSet) {
+                    if( flag ) {
+                        sql += " or";
+                    } else {
+                        sql += " where";
+                        flag = true;
                     }
-                    sql += " order by $6";
+                    sql += " strainname='" + orf.toUpperCase() + "'";
                 }
+                sql += " order by $6";
         }
         // retrieve datasheet
         Table datasheet = ConnectionServer.retrieveTable(
