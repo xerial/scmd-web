@@ -6,9 +6,12 @@ package lab.cb.scmd.db.connect;
 
 import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
+
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import sun.jdbc.odbc.ee.ConnectionHandler;
 
@@ -16,6 +19,7 @@ import lab.cb.scmd.algorithm.Algorithm;
 import lab.cb.scmd.db.common.DBConnect;
 import lab.cb.scmd.db.common.QueryRange;
 import lab.cb.scmd.db.common.TableQuery;
+import lab.cb.scmd.db.scripts.bean.Parameter;
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.web.common.DataSheetType;
 import lab.cb.scmd.web.common.SCMDConfiguration;
@@ -293,6 +297,17 @@ public class SCMDTableQuery extends ConnectionHolder implements TableQuery {
             sql += "strainname='" + orf[i].toUpperCase() + "'";
         }
         return evalSQL(sql);
+    }
+
+    /**
+     * @param string
+     * @param string2
+     * @return
+     */
+    public List<Parameter> getParameterList(String string, String string2) throws SQLException {
+        String sql = "select id, name, shortname, scope, datatype from parameterlist where scope='$1' and datatype='$2' order by id";
+        List<Parameter> result = (List<Parameter>) ConnectionServer.query(new BeanListHandler(Parameter.class), sql, "cell", "num");
+        return result;
     }
 
 
