@@ -19,6 +19,8 @@ public class MorphParameter {
     String stain = "";
     String groupid = "";
     String systematicname = "";
+    
+    String groupName = "";
 
     public MorphParameter() {
         
@@ -96,5 +98,23 @@ public class MorphParameter {
     public void setSystematicname(String systematicname)
     {
         this.systematicname = systematicname;
+    }
+    
+    public String getGroupName()
+    {
+        return groupName;
+    }
+    public void setGroupName(String groupName)
+    {
+        this.groupName = groupName;
+    }
+    
+    public String getStain()
+    {
+        return stain;
+    }
+    public void setStain(String stain)
+    {
+        this.stain = stain;
     }
 }

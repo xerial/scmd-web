@@ -27,12 +27,18 @@
   <tr> 
     <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="ViewORFList.do">Yeast Mutant</a></td>
     <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="SelectShape.do">Morphology Search</a> </td>
-    <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="ViewPhoto.do">Photo Viewer</a> </td>
+    <td align="center" onMouseOver="switchStyle(this,'menubar_hover'); switchVisibility('photomenu');" onMouseOut="switchStyle(this, 'menu_bar'); "> <a href="ViewPhoto.do">Photo Viewer</a> </td>
     <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="ORFTeardrop.do">Teardrop View</a> </td>
 <%--    <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="ViewStats.do"> Average Shape </a> </td>     --%>
     <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="sitemap.jsp">Site Map</a> </td>     
     <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="publication.jsp">Publications</a> </td>
     <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="about.jsp">About SCMD</a> </td>
+</tr>
+</table>
+<table width="750" border="0" bgcolor="#70b0b0" class="small" cellpadding="0" id="photomenu">
+<tr>
+<td> Photo Viewer</td>
+<td> Individual Cell Datasheet </td>
 </tr>
 </table>
 

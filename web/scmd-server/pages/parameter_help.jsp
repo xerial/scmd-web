@@ -2,7 +2,10 @@
 
 <%@ taglib prefix="scmd-base" uri="http://scmd.gi.k.u-tokyo.ac.jp/taglib/scmd-base" %>
 <%@ taglib prefix="scmd-tags" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="html" uri="/WEB-INF/struts-html.tld" %>
+<%@ taglib prefix="html" uri="/WEB-INF/struts-html-el.tld" %>
+<%@ taglib prefix="logic" uri="/WEB-INF/struts-logic.tld" %>
+
+<jsp:useBean id="paramList"  scope="request" type="java.util.List"/>
 
 <scmd-base:header title="Parameter Help"/>
 <body>
@@ -127,6 +130,34 @@
  <td class=notation> Localized at bud neck <span class=memo>(budded cell)</span></td> 
 </tr>
 
+</table>
+
+<p class="title"> Morphological Parameter List </p>
+
+<table class="datasheet">
+<tr class="sheetlabel">
+<td>parameter name</td>
+<td>description</td>
+<td>scope</td>
+<td>category</td>
+<td>targeted group</td>
+</tr>
+<logic:iterate id="p" name="paramList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
+<tr>
+<td>
+<logic:equal name="p" property="scope" value="orf">
+<a href="ORFDataSheet.do?paramID=${p.id}">${p.name}</a>
+</logic:equal>
+<logic:notEqual name="p" property="scope" value="orf">
+${p.name}
+</logic:notEqual>
+</td>
+<td bgcolor="#FFEFEF">${p.displayname} </td>
+<td bgcolor="#EFEFFF" align="center">${p.scope} </td>
+<td bgcolor="#EFEFEF" align="center">${p.stain} </td>
+<td bgcolor="#EFFFEF" align="center">${p.groupName} </td>
+</tr>
+</logic:iterate>
 </table>
 
 

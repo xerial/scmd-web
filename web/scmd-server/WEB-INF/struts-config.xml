@@ -227,7 +227,11 @@
             <!-- Forwards to Welcome.jsp -->
 
         <action path="/Welcome" type="org.apache.struts.actions.ForwardAction" parameter="/pages/Welcome.jsp"/>
-        <action path="/ParameterHelp" type="org.apache.struts.actions.ForwardAction" parameter="/pages/parameter_help.jsp"/>
+        
+        
+        <action path="/ParameterHelp" type="lab.cb.scmd.web.action.ParameterHelpAction" input="/error.jsp">
+         <forward name="success" path="/pages/parameter_help.jsp"/>
+        </action>
 
         <action 
         	path="/ViewPhoto" 
