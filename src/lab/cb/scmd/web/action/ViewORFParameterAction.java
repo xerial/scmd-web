@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeSet;
 import java.util.Vector;
 
 import javax.servlet.ServletOutputStream;
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.rowset.spi.XmlWriter;
 
+import lab.cb.scmd.db.common.GeneList;
 import lab.cb.scmd.db.common.PageStatus;
 import lab.cb.scmd.db.connect.ConnectionServer;
 import lab.cb.scmd.db.sql.SQLUtil;
@@ -57,6 +59,8 @@ import org.xerial.util.xml.XMLGenerator;
  */
 public class ViewORFParameterAction extends Action
 {
+    TreeSet<String> selectedOrfSet = new TreeSet<String> ();
+    
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception
     {
@@ -84,6 +88,8 @@ public class ViewORFParameterAction extends Action
         {
             return mapping.findForward("selection");
         }
+
+        selectedOrfSet = (TreeSet<String>) SCMDSessionManager.getUserSelection(request).orfSet();
         
         String dbTable = SCMDConfiguration.getProperty("DB_PARAMSTAT", "paramstat");
         
@@ -216,12 +222,32 @@ public class ViewORFParameterAction extends Action
     
     private LinkedList<YeastGene> retrieveYeastGeneList(List<MorphParameter> selectedORFParameter, int numRows, int offset, Vector<String> sqlParamList, String sortParamName) throws SQLException
     {
+        String sql = "";
+        if( numRows!=-1 ) 
+        { // -1 Ç»ÇÁ my gene list ÇÃÇ›ÇéÊìæÇ∑ÇÈ
+                sql = "select strainname as \"ORF\",primaryname, aliasname, annotation, $1 from $2 left join $5 on strainname = systematicname order by $6 limit $3 offset $4";
+        } else {
+                sql = "select strainname as \"ORF\",primaryname, aliasname, annotation, $1 from $2 left join $5 on strainname = systematicname ";
+                if( selectedOrfSet.size() == 0 ) {
+                    sql += "limit $3 offset $4 order by $6";
+                } else {
+                    boolean flag = false;
+                    for(String orf: selectedOrfSet) {
+                        if( flag ) {
+                            sql += " or";
+                        } else {
+                            sql += " where";
+                            flag = true;
+                        }
+                        sql += " strainname='" + orf.toUpperCase() + "'";
+                    }
+                    sql += " order by $6";
+                }
+        }
         // retrieve datasheet
         Table datasheet = ConnectionServer.retrieveTable(
-                numRows!=-1 ? // -1 Ç»ÇÁëSçséÊìæÇ∑ÇÈ
-                        "select strainname as \"ORF\",primaryname, aliasname, annotation, $1 from $2 left join $5 on strainname = systematicname order by $6 limit $3 offset $4" :
-                        "select strainname as \"ORF\",primaryname, aliasname, annotation, $1 from $2 left join $5 on strainname = systematicname order by $6",                    
-                SQLUtil.commaSeparatedList(sqlParamList, SQLUtil.QuotationType.none),               
+                sql,
+                SQLUtil.commaSeparatedList(sqlParamList, SQLUtil.QuotationType.none),
                 SCMDConfiguration.getProperty("DB_ANALYSISDATA", "analysisdata_20050131"),
                 numRows,
                 offset,
