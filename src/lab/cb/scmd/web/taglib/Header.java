@@ -63,7 +63,7 @@ public class Header extends TagSupport
         this.css = css;
     }
     String title = "";
-    String css = "/css/lab.cb.scmd.css";
+    String css = "/css/scmd.css";
     
 }
 

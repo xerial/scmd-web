@@ -13,11 +13,13 @@ usage: ant (-Dconf=build.properties)
         ant script for building SCMDWeb server.
     </description>
 	
-
-	<property name="dir.src" value="src"/>
-	<property name="dir.test" value="test"/>
-	<property name="dir.build" value="build"/>	
-	<property name="dir.lib" value="lib"/>
+	<property environment="env"/> <!-- load environment variables -->
+	<property name="conf" value="build.properties"/>
+	<property file="${conf}"/>  <!-- load user defined properties -->
+	<property name="src" value="src"/>
+	<property name="test" value="test"/>
+	<property name="build" value="build"/>	
+	<property name="lib" value="lib"/>
 	<property name="dir.resources.apache" value="web"/>
 	<property name="dir.resources.tomcat" value="web/scmd-server"/>
 	<property name="dir.webinf" value="${dir.resources.tomcat}/WEB-INF"/>
@@ -34,14 +36,15 @@ usage: ant (-Dconf=build.properties)
           target: default              
          ================================= -->
     <target name="default"  description="compile and deploy SCMDWeb">
-     <antcall target="compile"/>
+     <antcall target="deploy"/>
+     <antcall target="jsp.precompile"/>
     </target>
 	
 
 	<target name="compile" description="compile java files">
 	   <fail unless="TOMCAT_HOME">Please set the TOMCAT_HOME environment variable</fail>
 	   <mkdir dir="${dir.webinf}/classes"/>
-	   <javac srcdir="${dir.src}" destdir="${dir.webinf}/classes" encoding="SJIS" target="1.5">
+	   <javac srcdir="${src}" destdir="${dir.webinf}/classes" encoding="SJIS" target="1.5">
 	   	   <classpath>
 		     <fileset dir="${dir.webinf}/lib">
 		   	     <include name="*.jar"/>
@@ -56,12 +59,12 @@ usage: ant (-Dconf=build.properties)
     <target name="clean" description="clean .class files">
 	   <delete includeEmptyDirs="true">
 	      <fileset dir="${dir.webinf}/classes" includes="**/*.class"/>   	
-	      <file name="${dir.build}/${war.name}"/>
+	      <file name="${build}/${war.name}"/>
 	   </delete>
     </target>
 	
 	<target name="war" depends="compile" description="create war file">
-	  <war warfile="${dir.build}/${war.name}" webxml="${dir.webinf}/web.xml" basedir="${dir.resources.tomcat}">
+	  <war destfile="${build}/${war.name}" webxml="${dir.webinf}/web.xml" basedir="${dir.resources.tomcat}">
 	  	 <!-- <classes dir="${dir.webinf}/classes"/> -->
 	  </war>
 	</target>
@@ -69,7 +72,7 @@ usage: ant (-Dconf=build.properties)
 	<target name="reload">
 	    <taskdef name="reload" classname="org.apache.catalina.ant.ReloadTask">
 	    	<classpath>
-	    		<path location="${dir.lib}/catalina-ant.jar"/>
+	    		<path location="${lib}/catalina-ant.jar"/>
 	    	</classpath>
 		</taskdef>
 	  	<fail unless="url.tomcat.manager">Please set Tomcat Manger URL('url.tomcat.manager') in build.properties</fail>
@@ -94,7 +97,7 @@ usage: ant (-Dconf=build.properties)
 	<target name="undeploy" depends="init" if="is.webapp.deployed">
 	    <taskdef name="undeploy" classname="org.apache.catalina.ant.UndeployTask">
 	    	<classpath>
-	    		<path location="${dir.lib}/catalina-ant.jar"/>
+	    		<path location="${lib}/catalina-ant.jar"/>
 	    	</classpath>
 		</taskdef>
 		
@@ -107,20 +110,38 @@ usage: ant (-Dconf=build.properties)
 
 	    <taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask">
 	    	<classpath>
-	    		<path location="${dir.lib}/catalina-ant.jar"/>
+	    		<path location="${lib}/catalina-ant.jar"/>
 	    	</classpath>
 		</taskdef>
-		<pathconvert dirsep="/" property="war.dir.fullpath">
-			<path>
-				<pathelement location="${dir.build}/${war.name}"/>
-			</path>
-		</pathconvert>
 		<deploy 
 		   url="${url.manager}" username="${username.manager}" password="${password.manager}"
 		   update="true" 
-		   path="/${webapp.context.name}" war="${dir.build}/${war.name}"/>
+		   path="/${webapp.context.name}" war="${build}/${war.name}"/>
 	</target>
 
+	<target name="jsp.precompile">
+		<junit printsummary="on" showoutput="true" failureproperty="test.failed">
+			<classpath>
+				 <pathelement path="${dir.webinf}/classes"/>
+			     <fileset dir="${dir.webinf}/lib">
+			   	     <include name="*.jar"/>
+				 </fileset>
+				 <fileset dir="${TOMCAT_HOME}/common/lib">
+				     <include name="*.jar"/>
+				 </fileset>
+			</classpath>
+			<formatter type="plain" usefile="false"/>
+		   	<test name="lab.cb.scmd.web.PageTest"/>
+		</junit>
+	</target>
+	
+	<target name="install.junit">
+		<fail unless="junit.installed">
+			junit.jar is installed into ANT_HOME/lib since it is not found in there.
+			In order to make the junit library effective, please run the Ant again.
+		</fail>
+	</target>
+	
 	<target name="update">
 	   <svn username="scmd-dev">
 		 <update/>
