@@ -12,6 +12,8 @@ POSTGRESQL_PORT = 5432
 #POSTGRESQL_DBNAME = scmd_pre_20040714
 POSTGRESQL_DBNAME = scmd
 TEARDROP_URI = http://scmd.gi.k.u-tokyo.ac.jp/database/teardrop/average_shape/
+TEARDROP_H_URI = http://scmd.gi.k.u-tokyo.ac.jp/database/teardrop/paramstats_h
+
 
 # DBÇÃÉeÅ[ÉuÉãÇí«â¡ (2005/02/08)
 DB_GENENAME = genename_20040719
