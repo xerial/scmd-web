@@ -219,6 +219,9 @@ public class MockTableQuery extends MockQueryAPI implements TableQuery
         return null;
     }
 
+    public MorphParameter getOneParameterInfo(String param, String scope) {
+        return null;
+    }
 }
 
 //--------------------------------------

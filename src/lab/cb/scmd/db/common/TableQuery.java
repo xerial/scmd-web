@@ -102,8 +102,9 @@ public interface TableQuery
     public Table getSelectedAnalysisValue(String[] orf);
 
     public List<MorphParameter> getParameterInfo(Set<Integer> parameter);
-    
+    public MorphParameter getOneParameterInfo(String param, String type);
 
+    
 }
 
 //--------------------------------------

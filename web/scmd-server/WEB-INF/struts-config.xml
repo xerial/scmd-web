@@ -159,6 +159,7 @@
 		<form-bean name="plotForm" type="lab.cb.scmd.web.bean.ParamPlotForm"/>
 		<form-bean name="viewConfigForm" type="lab.cb.scmd.web.formbean.ViewCustomizeForm"/>
 		<form-bean name="orfTeardropForm" type="lab.cb.scmd.web.formbean.ViewORFTeardropForm"/>
+		<form-bean name="paramForm" type="lab.cb.scmd.web.formbean.ViewParamSheetForm"/>
     </form-beans>
 
 
@@ -402,6 +403,15 @@
 	    		input="/error.jsp">
 	    	<forward name="success" path="/pages/ORFTeardrop.jsp"/>
    		</action>
+		
+		<action path="/ParamSheet"
+			name="paramForm"
+			scope="request"
+			validate="true"
+			type="lab.cb.scmd.web.action.ViewParamSheetAction"
+			input="/error.jsp">
+			<forward name="success" path="/pages/ParamSheet.jsp" />
+		</action>
 				
     <!-- sample input and input submit actions
 

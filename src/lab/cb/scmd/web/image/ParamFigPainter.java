@@ -38,9 +38,10 @@ public class ParamFigPainter extends HttpServlet {
         
         try{
             String parameter = request.getParameter("param");
-            if( parameter.matches("^[ACD]CV[0-9]")) {
+            if( parameter.matches("^[ACD]CV[0-9].*")) {
                 parameter = parameter.replaceFirst("CV", "");
             }
+            parameter = parameter.replaceFirst("_.*", "");
             String paramFigURI = SCMDConfiguration.getProperty("PARAMFIG_URI");
             
             URL imageURL;

@@ -10,10 +10,15 @@
 
 package lab.cb.scmd.web.action.logic;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import lab.cb.scmd.db.common.TableQuery;
 import lab.cb.scmd.db.common.XMLQuery;
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.web.bean.YeastGene;
 import lab.cb.scmd.web.common.SCMDConfiguration;
+import lab.cb.scmd.web.sessiondata.MorphParameter;
 
 /**
  * @author leo
@@ -46,6 +51,13 @@ public class DBUtil
             gene = new YeastGene(orf);
         }
         return gene;
+    }
+    
+    public static MorphParameter getParamInfo(String param, String type)
+    {
+        TableQuery query = SCMDConfiguration.getTableQueryInstance();
+        MorphParameter morphParam = query.getOneParameterInfo(param, type);
+        return morphParam;
     }
 
 }

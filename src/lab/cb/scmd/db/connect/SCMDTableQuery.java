@@ -352,6 +352,20 @@ public class SCMDTableQuery implements TableQuery {
         return table;
     }
 
+    public MorphParameter getOneParameterInfo(String param, String scope) {
+        String sql = "SELECT id, name, shortname, displayname, scope, datatype,description FROM " 
+            + SCMDConfiguration.getProperty("DB_PARAMETERLIST");
+        sql += " WHERE name='" + param + "' and scope='" + scope + "'";
+        List<MorphParameter> result = null;
+        try {
+            result = (List<MorphParameter>) ConnectionServer.query(new BeanListHandler(MorphParameter.class), sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if( result.size() == 0 )
+            return null;
+        return result.get(0);        
+    }
     
 
 }
