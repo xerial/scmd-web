@@ -23,7 +23,9 @@
 
 <table><tr><td>
 <scmd-tags:pageMoveButton actionURL="ViewDataSheet.do" currentPage="${view.photoPage}" maxPage="${view.photoPageMax}"/>
-</tr></td></table>
+</td><td>
+<a href="CustomizeView.do">Customize Parameters</a>
+</td></tr></table>
 
 <%-- データシート切り替えTab --%>
 <table border="0" cellspacing="0" cellpadding="0">

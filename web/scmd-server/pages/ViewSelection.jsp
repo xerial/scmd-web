@@ -24,6 +24,7 @@
 <body>
 <center>
 <scmd-tags:menu toolbar="on" searchframe="on"/>
+[ <html:link page="/View2DPlot.do"> 2D plot </html:link> ] 
 
 <scmd-tags:linkMenu orf="${gene.orf}" logo="on"/> 
 
