@@ -17,6 +17,7 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.Set;
 import java.util.TreeSet;
@@ -32,6 +33,7 @@ import javax.servlet.http.HttpSession;
 import org.xerial.util.Pair;
 
 import lab.cb.scmd.db.common.TableQuery;
+import lab.cb.scmd.db.connect.ConnectionServer;
 import lab.cb.scmd.util.stat.StatisticsWithMissingValueSupport;
 import lab.cb.scmd.web.bean.CellViewerForm;
 import lab.cb.scmd.web.bean.ParamPlotForm;
@@ -79,18 +81,33 @@ public class Plot2DServlet extends HttpServlet
         
         TableQuery query = SCMDConfiguration.getTableQueryInstance();
         
-        String param1 = plotForm.getParam1();
-        String param2 = plotForm.getParam2();
+        String param1 = plotForm.getParamName(plotForm.getParam1());
+        String param2 = plotForm.getParamName(plotForm.getParam2());
+        String sql = "SELECT t1.strainname, p1, p2 from "
+            + "(select strainname, average as p1 from $1 where paramid=$2 and groupid=0) as t1 "
+            + "left join (select strainname, average as p2 from $1 where paramid=$3 and groupid=0) as t2 "
+            + "on t1.strainname = t2.strainname";
         
-        Table plotTable = query.getAveragePlot(param1, param2);
+        Table plotTable = null;
+        try
+        {
+            plotTable = ConnectionServer.retrieveTable(sql, 
+                            SCMDConfiguration.getProperty("DB_PARAMSTAT", "paramstat"),
+                            plotForm.getParam1(), plotForm.getParam2());
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }            
         if(plotTable == null)
         {
             printNAImage(request, response);
             return;
         }
+ 
         ColLabelIndex colIndex = new ColLabelIndex(plotTable);
-        int param1_col = colIndex.getColIndex(param1);
-        int param2_col = colIndex.getColIndex(param2);
+        int param1_col = colIndex.getColIndex("p1");
+        int param2_col = colIndex.getColIndex("p2");
         int strain_col = colIndex.getColIndex("strainname");
         if(param1_col == -1 || param2_col == -1 || strain_col == -1)
         {
@@ -117,10 +134,10 @@ public class Plot2DServlet extends HttpServlet
         
         StatisticsWithMissingValueSupport stat = new StatisticsWithMissingValueSupport(new String[] {".", "-1", "-1.0"});
         
-        double x_max = stat.getMaxValue(colIndex.getVerticalIterator(param1));
-        double x_min = stat.getMinValue(colIndex.getVerticalIterator(param1));
-        double y_max = stat.getMaxValue(colIndex.getVerticalIterator(param2));
-        double y_min = stat.getMinValue(colIndex.getVerticalIterator(param2));
+        double x_max = stat.getMaxValue(colIndex.getVerticalIterator("p1"));
+        double x_min = stat.getMinValue(colIndex.getVerticalIterator("p1"));
+        double y_max = stat.getMaxValue(colIndex.getVerticalIterator("p2"));
+        double y_min = stat.getMinValue(colIndex.getVerticalIterator("p2"));
         
 //        xmlout.selfCloseTag("rect", new XMLAttribute("x", "0")
 //                            .add("y", "0")
@@ -144,7 +161,7 @@ public class Plot2DServlet extends HttpServlet
                 int xplot = (int) (x * IMAGEWIDTH / x_max);
                 int yplot = (int) (IMAGEWIDTH - (y * IMAGEWIDTH / y_max));
         
-                if(selectedORFSet.contains(orf.toLowerCase()))
+                if(selectedORFSet.contains(orf.toUpperCase()))
                 {
                     selectedORFPointList.add(new Pair<String, Point>(orf, new Point(xplot,yplot)));
                     continue;

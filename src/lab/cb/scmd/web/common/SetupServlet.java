@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 
 import lab.cb.scmd.db.connect.ConnectionServer;
 import lab.cb.scmd.exception.SCMDException;
+import lab.cb.scmd.web.bean.ParamPlotForm;
 import lab.cb.scmd.web.formbean.ViewCustomizeForm;
 
 /**
@@ -101,6 +102,7 @@ public class SetupServlet extends HttpServlet implements ConfigObserver, Servlet
             SCMDThreadManager.initialize(Integer.parseInt(SCMDConfiguration.getProperty("NUM_WORKER_THREAD", "50")),
                     Integer.parseInt(SCMDConfiguration.getProperty("TASK_QUEUE_SIZE", "100")));
             ViewCustomizeForm.loadParameters();
+            ParamPlotForm.init();
         }
         catch(SQLException e)
         {   

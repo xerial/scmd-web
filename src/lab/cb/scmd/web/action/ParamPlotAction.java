@@ -13,6 +13,7 @@ package lab.cb.scmd.web.action;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -25,6 +26,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+
 import lab.cb.scmd.db.common.TableQuery;
 import lab.cb.scmd.web.action.logic.DBUtil;
 import lab.cb.scmd.web.bean.CellViewerForm;
@@ -35,10 +37,9 @@ import lab.cb.scmd.web.table.ColLabelIndex;
 import lab.cb.scmd.web.table.Table;
 
 /**
+ * 2D Plotを作成するAction
  * @author leo
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 public class ParamPlotAction extends Action
 {
@@ -67,7 +68,7 @@ public class ParamPlotAction extends Action
         //今選ばれたorfを取得
         String orf = view.getOrf();
         
-        if(plotForm.getParam1().equals("-1") && plotForm.getParam2().equals("-1")) {
+        if(plotForm.getParam1() == -1 && plotForm.getParam2() == -1) {
             TreeSet selectedORFSet = (TreeSet)userSelection.orfSet();
             selectedORFSet.add(orf.toLowerCase());
             String[] orfs = new String[selectedORFSet.size()];
@@ -101,15 +102,18 @@ public class ParamPlotAction extends Action
         
         // ** rows  and 501 cols
         Table selectedValues = tableQuery.getSelectedAnalysisValue(orf);
-        int rowsize = selectedValues.getRowSize();
-        // ORFが選択されていないときには何もしない
-        if(rowsize <= 1 ) {
-            plotForm.setParam1("");
-            plotForm.setParam2("");
+        if(selectedValues == null || selectedValues.getRowSize() <= 1)
+        {
+            // ORFが選択されていないときには何もしない
+            plotForm.setParam1(-1);
+            plotForm.setParam2(-1);
             return;
         }
+        int rowsize = selectedValues.getRowSize();
         int orfsize = rowsize - 1;
-        String[] options = plotForm.getOptions();
+        List<String> optionList = plotForm.getOptions();
+        String[] options = new String[optionList.size()];
+        plotForm.getOptions().toArray(options);
         int optionSize = options.length + 1;
         double maxvar = 0.0;
         int[] maxcorrdinates = {0,0};
@@ -118,6 +122,8 @@ public class ParamPlotAction extends Action
         for(int i = 1; i < optionSize; i++ ) {
             //１軸目の選択
             int col0 = colLabelIndex.getColIndex(options[i-1]);
+            if(col0 == -1)
+                continue;
             avg[0] = 0.0;
             for(int orfnum = 1; orfnum < rowsize; orfnum++ ) {
                 avg[0] += zvalue(Double.parseDouble(selectedValues.get(orfnum, col0).toString()),
@@ -128,6 +134,8 @@ public class ParamPlotAction extends Action
             for( int j = i + 1; j < optionSize; j++ ) {
                 // 2軸目の選択
                 int col1 = colLabelIndex.getColIndex(options[j-1]);
+                if(col1 == -1)
+                    continue;
                 double var = 0.0;
                 avg[1] = 0.0;
                 for(int orfnum = 1; orfnum < rowsize; orfnum++ ) {
@@ -146,8 +154,8 @@ public class ParamPlotAction extends Action
             }
         }
         //最適な組み合わせをセット
-        plotForm.setParam1(options[maxcorrdinates[0]-1]);
-        plotForm.setParam2(options[maxcorrdinates[1]-1]);
+        plotForm.setParam1(plotForm.getParamID(options[maxcorrdinates[0]-1]));
+        plotForm.setParam2(plotForm.getParamID(options[maxcorrdinates[1]-1]));
     }
     
     private double zvalue(double val, double avg, double sd) {
@@ -156,8 +164,3 @@ public class ParamPlotAction extends Action
     
 }
 
-
-//--------------------------------------
-// $Log:  $
-//
-//--------------------------------------

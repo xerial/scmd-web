@@ -22,6 +22,7 @@ import lab.cb.scmd.algorithm.Algorithm;
 import lab.cb.scmd.db.common.QueryRange;
 import lab.cb.scmd.db.common.TableQuery;
 import lab.cb.scmd.db.sql.SQLExpression;
+import lab.cb.scmd.db.sql.SQLUtil;
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.util.table.Cell;
 import lab.cb.scmd.util.table.TableIterator;
@@ -203,6 +204,7 @@ public class SCMDTableQuery implements TableQuery {
 
     /* (non-Javadoc)
      * @see lab.cb.scmd.db.common.TableQuery#getAveragePlot(java.lang.String, java.lang.String)
+     * @deprecated summary table‚ÍŽg—p‚µ‚È‚¢
      */
     public Table getAveragePlot(String param1, String param2) {
         String sql = "SELECT strainname, " + quoteAttribute(param1) + ", " + quoteAttribute(param2) 
@@ -213,6 +215,7 @@ public class SCMDTableQuery implements TableQuery {
 
     /* (non-Javadoc)
      * @see lab.cb.scmd.db.common.TableQuery#getAveragePlot(java.lang.String, lab.cb.scmd.db.common.QueryRange, java.lang.String, lab.cb.scmd.db.common.QueryRange)
+     * @depracated
      */
     public Table getAveragePlot(String param1, QueryRange range1, String param2, QueryRange range2) {
         String sql = "SELECT strainname, " + quoteAttribute(param1) + ", " + quoteAttribute(param2) 
@@ -304,6 +307,10 @@ public class SCMDTableQuery implements TableQuery {
         return evalSQL(sql);
     }
     public Table getSelectedAnalysisValue(String[] orf) {
+        if(orf.length < 1)
+        {
+            return null;
+        }
         String sql = "SELECT * FROM " + SCMDConfiguration.getProperty("DB_SUMMARY") + " WHERE ";
         for(int i = 0; i < orf.length; i++ ) {
             if( i != 0 ) {

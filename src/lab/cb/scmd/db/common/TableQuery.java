@@ -92,7 +92,21 @@ public interface TableQuery
     public Table getGroupCount(String orf, int stainType);
     
     
+    /**
+     * @param param1
+     * @param param2
+     * @return
+     * @deprecated 
+     */
     public Table getAveragePlot(String param1, String param2);
+    /**
+     * @param param1
+     * @param range1
+     * @param param2
+     * @param range2
+     * @return
+     * @deprecated
+     */
     public Table getAveragePlot(String param1, QueryRange range1, String param2, QueryRange range2);
 
     public Table getShapeZScoreTable(ParamPair[] paramSets);

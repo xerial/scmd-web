@@ -2,18 +2,18 @@
 
 <%@ taglib prefix="scmd-base" uri="http://scmd.gi.k.u-tokyo.ac.jp/taglib/scmd-base" %>
 <%@ taglib prefix="bean" uri="/WEB-INF/struts-bean.tld" %>
-<%@ taglib prefix="html" uri="/WEB-INF/struts-html.tld" %>
-<%@ taglib prefix="logic" uri="/WEB-INF/struts-logic.tld" %>
+<%@ taglib prefix="html" uri="/WEB-INF/struts-html-el.tld" %>
+<%@ taglib prefix="logic" uri="/WEB-INF/struts-logic-el.tld" %>
 <%@ taglib prefix="scmd-tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <jsp:useBean id="view"  scope="session" class="lab.cb.scmd.web.bean.CellViewerForm"/>
-<jsp:useBean id="plotForm"  scope="request" class="lab.cb.scmd.web.bean.ParamPlotForm"/>
 <jsp:useBean id="gene"  scope="request" class="lab.cb.scmd.web.bean.YeastGene"/>
 <jsp:useBean id="userSelection"  scope="session" class="lab.cb.scmd.web.bean.UserSelection"/>
 
 <scmd-base:header title="2D Plot ${view.orf}"/>
 
+<%--
 <script language="javascript">
 <!--
 var x1 = 0;
@@ -65,6 +65,7 @@ function writeRegion(e)
 }
 //-->
 </script>
+--%>
 
 <body>
 <center>
@@ -99,19 +100,21 @@ width="300" height="300" onclick="clk(event)" onmousemove="writeRegion(event)"
 
 <%--<embed src="Write2DPlot.do?${plotForm.cgiArgument}" width="300" height="300" class="plotview"/>--%>
 <br/>
+<%--
 <img id="b_n" style="position:absolute;" src="/image/dot.gif" width="0" height="0"/>
 <img id="b_e" style="position:absolute;" src="/image/dot.gif" width="0" height="0"/>
 <img id="b_s" style="position:absolute;" src="/image/dot.gif" width="0" height="0"/>
 <img id="b_w" style="position:absolute;" src="/image/dot.gif" width="0" height="0"/>
+--%>
 
 <html:form action="/View2DPlot.do" method="GET">
 X-coordinate: 
 <html:select name="plotForm" property="param1">
-<html:options name="plotForm" property="options"/>
+<html:options name="plotForm" property="optionIDs" labelProperty="options"/>
 </html:select>
 Y-coordinate: 
 <html:select name="plotForm" property="param2">
-<html:options name="plotForm" property="options"/>
+<html:options name="plotForm" property="optionIDs" labelProperty="options"/>
 </html:select>
 <html:submit value="plot mutants"/>
 </html:form>
