@@ -1,0 +1,8 @@
+<Context docBase="scmd-server.war"
+          path="/scmd-server" 
+          reloadable="true">        
+    <Environment description="absolute path to the SCMD server root directory" 
+	        name="SCMD_ROOT" 
+	        type="java.lang.String" 
+	        value="c:/cygwin/home/leo/eclipse/workspace/SCMDWeb/web/"/>
+</Context>
