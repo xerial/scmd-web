@@ -57,17 +57,17 @@ href="http://scmd.gi.k.u-tokyo.ac.jp">http://scmd.gi.k.u-tokyo.ac.jp</a>
   </tr>
 <tr> 
  <td width="63%" height="22" class=item> Mutants analyzed:</td>
- <td width="37%" height="22" align=right> 4677 </td>
+ <td width="37%" height="22" align=right> 4780 </td>
 </tr>
 <tr> 
  <td width="63%" height="22" nowrap class=item> 
    Micrographs Processed</td>
- <td width="37%" height="22" align=right> 88541 </td>
+ <td width="37%" height="22" align=right> 91653 </td>
  <td nowrap> (x 3) </td>
 </tr>
 <tr> 
  <td width="63%" height="22" class=item> Cells retrieved:</td>
- <td width="37%" height="22" align=right> 1720491 </td>
+ <td width="37%" height="22" align=right> 1907842 </td>
 </tr>
 <tr height=10><td></td> </tr>
 <tr>
