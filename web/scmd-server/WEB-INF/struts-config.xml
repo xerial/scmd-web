@@ -160,7 +160,6 @@
 		<form-bean name="viewConfigForm" type="lab.cb.scmd.web.formbean.ViewCustomizeForm"/>
 		<form-bean name="orfTeardropForm" type="lab.cb.scmd.web.formbean.ViewORFTeardropForm"/>
 		<form-bean name="paramForm" type="lab.cb.scmd.web.formbean.ViewParamSheetForm"/>
-		<form-bean name="orfDataSheetForm" type="lab.cb.scmd.web.formbean.ViewORFDataSheetForm"/>
 		<form-bean name="drawTeardropForm" type="lab.cb.scmd.web.formbean.DrawTeardropForm"/>
 		<form-bean name="orfParamForm" type="lab.cb.scmd.web.formbean.ViewORFParameterForm"/>
     </form-beans>
@@ -422,14 +421,6 @@
 			<forward name="success" path="/pages/ParamSheet.jsp" />
 		</action>
 
-		<action path="/ORFDataSheet"
-			name= "orfDataSheetForm"
-			scope="request"
-			validate="true"
-			type="lab.cb.scmd.web.action.ViewORFDataSheetAction"
-			input="/error.jsp">
-			<forward name="success" path="/pages/ORFDataSheet.jsp" />
-		</action>
 
 		<action path="/DrawTeardrop"
 			name= "drawTeardropForm"

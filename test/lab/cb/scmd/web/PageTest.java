@@ -21,7 +21,7 @@ import junit.framework.TestCase;
  */
 public class PageTest extends TestCase
 {
-    String serverURL = "http://scmd/scmd-server";
+    String serverURL = "http://localhost:8080/scmd-server";
     
     
     protected void setUp() throws Exception
@@ -33,7 +33,14 @@ public class PageTest extends TestCase
      */
     public void testPagesExist() throws Exception 
     {
-        String[] pagePath = {"", "about.jsp", "ViewPhoto.do", "ViewStats.do", "publication.jsp", "SelectShape.do", "ViewORFList.do", "ViewDataSheet.do"};
+        String[] pagePath = {
+                "", "about.jsp", "ViewPhoto.do", "ViewStats.do",
+                "publication.jsp", "SelectShape.do", "ViewORFList.do",
+                "ViewDataSheet.do", "ParameterHelp.do", "sitemap.jsp",
+                "ViewSelection.do", "CustomizeView.do", "ORFTeardrop.do",
+                "ViewORFParameter.do", "View2DPlot.do", "ViewGroupByTearDrop.do",
+                "ViewGroupBySheet.do"
+        };
         
         for(String path : pagePath)
         {

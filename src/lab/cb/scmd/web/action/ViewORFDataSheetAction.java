@@ -40,6 +40,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * parameter‚²‚Æ‚ÉORF‚Ìˆê——•\¦‚ğ‚·‚é
  * @author leo
+ * @deprecated ViewORFParameterAction‚É“‡
  *
  */
 public class ViewORFDataSheetAction extends Action

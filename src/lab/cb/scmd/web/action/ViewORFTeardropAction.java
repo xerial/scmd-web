@@ -159,7 +159,11 @@ public class ViewORFTeardropAction extends Action
         {
             int paramID = param.getId();
             //StringElement label = new StringElement(param.getShortName());
-            Link label = new Link("ORFDataSheet.do?paramID=" + paramID, param.getName());
+            TreeMap<String, Object> linkMap = new TreeMap<String, Object>();
+            linkMap.put("paramID", paramID);
+            linkMap.put("sortspec", paramID);
+            linkMap.put("columnType", "input");            
+            Link label = new Link("ViewORFParameter.do", linkMap, param.getName());
             //labelRow.add(new AttributeDecollation(label, "title", param.getDisplayname()));
             labelRow.add(new AttributeDecollation(label, "title", param.getSystematicname()));
 
@@ -228,13 +232,9 @@ public class ViewORFTeardropAction extends Action
             ImageElement img = new ImageElement("scmdimage.png", imgArg);
             img.setProperty("alt", "avg. of all mutants = " + format.format(teardrop.getAverage()) + "\navg. of wildtype = " + format.format(teardrop.getWt_average()));            
             img.setProperty("border", "0");
-            img.setProperty("width", "128");            
+            img.setProperty("width", "134");            
             img.setProperty("height", "30");            
             
-            TreeMap<String, Object> linkMap = new TreeMap<String, Object>();
-            linkMap.put("paramID", paramID);
-            linkMap.put("sortspec", paramID);
-            linkMap.put("columnType", "input");            
             teardropRow.add(new Link("ViewORFParameter.do", linkMap, img));
         }
         

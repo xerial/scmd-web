@@ -101,7 +101,7 @@ function writeRegion(e)
 </c:if>
 </td>
 <td>
-<img id="plot" class="plotview" src="Write2DPlot.do?${plotForm.cgiArgument}" width="300" height="300"/>
+<img id="plot" class="plotview" src="Write2DPlot.do?${plotForm.cgiArgument}" width="320" height="320"/>
 </td>
 </tr>
 <tr>

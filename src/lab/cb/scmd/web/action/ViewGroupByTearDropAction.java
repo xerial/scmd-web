@@ -170,7 +170,7 @@ public class ViewGroupByTearDropAction extends Action
 
             // add point
             ImageElement img = new ImageElement("DrawTeardrop.do", argMap);
-            img.setProperty("width", "128");
+            img.setProperty("width", "134");
             img.setProperty("height", "30");
 
             row.add(label[i]);

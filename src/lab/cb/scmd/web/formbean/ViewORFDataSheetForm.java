@@ -14,7 +14,7 @@ import org.apache.struts.action.ActionForm;
 /**
  * ORFごとのparameterのデータシート表示用の、入力を受け取るクラス
  * @author leo
- *
+ * @deprecated ViewORFParameterFormに統合
  */
 public class ViewORFDataSheetForm extends ActionForm
 {

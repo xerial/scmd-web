@@ -50,7 +50,7 @@
 </table>
 <%--<span class="header"> order by ${targetParam.name} </span>--%>
 </logic-nonel:present>
-<span class="memo"> click the labels in order to sort the table</span>
+<span class="memo"> click the datasheet labels in order to sort the table</span>
 
 <table width="750">
 <tr><td>

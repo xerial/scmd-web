@@ -48,7 +48,7 @@
 <tr><td>
 <html:multibox name="viewConfigForm" property="removeORFParamList" value="<%= morphParam.getIdStr() %>"/>
 </td><td>
-<html:link page="/ORFDataSheet.do?paramID=${morphParam.id}">${morphParam.name}</html:link>
+<html:link page="/ViewORFParameter.do?paramID=${morphParam.id}&sortspec=${morphParam.id}&columnType=input">${morphParam.name}</html:link>
 </td><td>
 ${morphParam.displayname}
 </td></tr>

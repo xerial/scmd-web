@@ -287,7 +287,7 @@ class Plot2DCanvas
     private Range yRange;
     private BufferedImage canvas;
     private Graphics2D g;
-    
+    private int margin = 10;
     
     public Plot2DCanvas(Range xRange, Range yRange, int imageWidth)
     {
@@ -295,11 +295,11 @@ class Plot2DCanvas
         this.yRange = yRange;
         this.imageWidth = imageWidth;
         
-        canvas = new BufferedImage(imageWidth, imageWidth, BufferedImage.TYPE_INT_RGB);
+        canvas = new BufferedImage(imageWidth + margin * 2, imageWidth + margin * 2, BufferedImage.TYPE_INT_RGB);
         g = (Graphics2D) canvas.getGraphics();
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setColor(new Color(0xFFFFFF));
-        g.fillRect(0, 0, imageWidth, imageWidth);
+        g.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
     
     public BufferedImage getImage()
@@ -340,8 +340,8 @@ class Plot2DCanvas
         g.setComposite(ac);
         int aveX = calcX(averagePoint);
         int aveY = calcY(averagePoint);
-        g.drawLine(aveX, 0, aveX, imageWidth);
-        g.drawLine(0, aveY, imageWidth, aveY);
+        g.drawLine(aveX, 0, aveX, canvas.getHeight());
+        g.drawLine(0, aveY, canvas.getWidth(), aveY);
         
         g.setComposite(prevComposite);
     }
@@ -349,12 +349,12 @@ class Plot2DCanvas
     
     private int calcX(Point p)
     {
-        return (int) ((p.getX() - xRange.getMin()) * imageWidth / (xRange.getMax() - xRange.getMin()));
+        return (int) ((p.getX() - xRange.getMin()) * imageWidth / (xRange.getMax() - xRange.getMin())) + margin;
     }
     
     private int calcY(Point p)
     {
-        return (int) (imageWidth - ((p.getY() - yRange.getMin()) * imageWidth / (yRange.getMax() - yRange.getMin())));
+        return (int) (imageWidth - ((p.getY() - yRange.getMin()) * imageWidth / (yRange.getMax() - yRange.getMin()))) + margin;
     }
     
 }

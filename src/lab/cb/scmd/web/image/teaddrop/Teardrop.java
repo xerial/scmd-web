@@ -11,8 +11,10 @@ package lab.cb.scmd.web.image.teaddrop;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Composite;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -55,6 +57,8 @@ public class Teardrop
     
     private double wt_average = -1; 
     private double wt_SD = -1;
+    
+    private int margin = 3;
     
     private String teardropURI = SCMDConfiguration.getProperty("TEARDROP_URI");                        
     
@@ -144,18 +148,28 @@ public class Teardrop
     public BufferedImage drawImage(List<TeardropPoint> plotList) throws SCMDException, IOException
     {           
         URL imageURL;
-        BufferedImage teardrop;
+        BufferedImage srcTeardrop;
         try
         {
             imageURL = new URL(teardropURI + "/td_" + paramID + "_" + groupID + ".png");
-            teardrop = ImageIO.read(imageURL);
+            srcTeardrop = ImageIO.read(imageURL);
         }
         catch (MalformedURLException e)
         {
             e.printStackTrace();
             throw new SCMDException(e);
         }
+        
+        BufferedImage teardrop = new BufferedImage(srcTeardrop.getWidth(), srcTeardrop.getHeight() + margin * 2, ColorSpace.TYPE_RGB);
         Graphics2D g = (Graphics2D) teardrop.getGraphics();
+
+        g.setColor(new Color(0xFFFFFF));
+        g.fillRect(0, 0, teardrop.getWidth(), teardrop.getHeight());
+        Composite prevComposite = g.getComposite();
+        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER);
+        g.setComposite(ac);
+        g.drawImage(srcTeardrop, null, 0, margin);
+        g.setComposite(prevComposite);
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         int dotRadius = 3;
@@ -164,18 +178,18 @@ public class Teardrop
         int avgPos;
         int i;
         
-        pollLength = teardrop.getHeight();
-        perpendicularLength = teardrop.getWidth();
+        pollLength = srcTeardrop.getHeight();
+        perpendicularLength = srcTeardrop.getWidth();
         avgPos = pollLength / 2;     
 
         // •½‹Ï’l‚Éü‚ðˆø‚­
         g.setColor(new Color(0x2384CE));
-        g.drawLine(0, avgPos, perpendicularLength / 2, avgPos);
+        g.drawLine(0, avgPos + margin, perpendicularLength / 2, avgPos + margin);
         int[] xpos = computePositionInPerpendicularDirection(plotList, perpendicularLength, pollLength, dotRadius);
         if(wt_average != -1)
         {
             int avgPos_wt = computePositionOnThePoll(wt_average, pollLength);
-            g.drawLine(perpendicularLength/2, pollLength - avgPos_wt, perpendicularLength, pollLength-avgPos_wt);
+            g.drawLine(perpendicularLength/2, pollLength - avgPos_wt + margin, perpendicularLength, pollLength-avgPos_wt + margin);
         }
         
         // “_‚ð‘Å‚Â
@@ -184,14 +198,10 @@ public class Teardrop
         {
             int y = computePositionOnThePoll(tp.getValue(), pollLength) - dotRadius;
             g.setColor(tp.getColor());
-            g.fillOval(xpos[i], pollLength-y - (dotRadius * 2), dotRadius * 2, dotRadius * 2);
+            g.fillOval(xpos[i], pollLength-y - (dotRadius * 2) + margin, dotRadius * 2, dotRadius * 2);
             i++;
         }
               
-        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.DST_OVER);
-        g.setComposite(ac);
-        g.setColor(new Color(0xFFFFFF));
-        g.fillRect(0, 0, teardrop.getWidth(), teardrop.getHeight());
 
         switch(orientation)
         {
@@ -221,23 +231,23 @@ public class Teardrop
         switch(orientation)
         {
         case horizontal:
-            pollLength = teardrop.getWidth();
+            pollLength = teardrop.getWidth() - margin * 2;
             perpendicularLength = teardrop.getHeight();
             begin = computePositionOnThePoll(rangeBegin, pollLength);
             end = computePositionOnThePoll(rangeEnd, pollLength);
             range = (end - begin > 0) ? end - begin : 1;
             
-            g.fillRect(begin, 0, range, perpendicularLength);
+            g.fillRect(begin + margin, 0, range, perpendicularLength);
             break;
         case vertical:
         default:
-            pollLength = teardrop.getHeight();
+            pollLength = teardrop.getHeight() - margin * 2;
             perpendicularLength = teardrop.getWidth();
             begin = computePositionOnThePoll(rangeBegin, pollLength);
             end = computePositionOnThePoll(rangeEnd, pollLength);
             range = (end - begin > 0) ? end - begin : 1;
             
-            g.fillRect(0, begin, perpendicularLength, range);                        
+            g.fillRect(0, begin + margin, perpendicularLength, range);                        
             break;                   
         }
     }
