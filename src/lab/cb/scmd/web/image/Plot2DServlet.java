@@ -18,6 +18,7 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
@@ -32,9 +33,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.xerial.algorithm.Algorithm;
 import org.xerial.util.MinMax;
 import org.xerial.util.Pair;
+import org.xerial.util.Tuple;
 
 import lab.cb.scmd.db.common.TableQuery;
 import lab.cb.scmd.db.connect.ConnectionServer;
+import lab.cb.scmd.util.stat.EliminateOnePercentOfBothSidesStrategy;
+import lab.cb.scmd.util.stat.SampleFilteringStrategy;
+import lab.cb.scmd.util.stat.Statistics;
 import lab.cb.scmd.util.stat.StatisticsWithMissingValueSupport;
 import lab.cb.scmd.web.bean.CellViewerForm;
 import lab.cb.scmd.web.bean.ParamPlotForm;
@@ -98,7 +103,7 @@ public class Plot2DServlet extends HttpServlet
             printNAImage(request, response);
             return;
         }
- 
+        
         
         ColLabelIndex colIndex = new ColLabelIndex(plotTable);
         int param1_col = colIndex.getColIndex("p1");
@@ -110,29 +115,36 @@ public class Plot2DServlet extends HttpServlet
             return;
         }
         ColLabelIndex colIndex_wt = new ColLabelIndex(plotTable_wt);
-        int param1_col_wt = colIndex.getColIndex("p1");
-        int param2_col_wt = colIndex.getColIndex("p2");
+        int param1_col_wt = colIndex_wt.getColIndex("p1");
+        int param2_col_wt = colIndex_wt.getColIndex("p2");
         if(param1_col_wt == -1 || param2_col == -1)
         {
             printNAImage(request, response);
             return;
         }
-        
-        // calculate the image window size 
-        StatisticsWithMissingValueSupport stat = new StatisticsWithMissingValueSupport(new String[] {".", "-1", "-1.0"});        
-        double x_max = stat.getMaxValue(colIndex.getVerticalIterator("p1"));
-        double x_min = stat.getMinValue(colIndex.getVerticalIterator("p1"));
-        double x_ave = stat.calcAverage(colIndex.getVerticalIterator("p1"));
-        double y_max = stat.getMaxValue(colIndex.getVerticalIterator("p2"));
-        double y_min = stat.getMinValue(colIndex.getVerticalIterator("p2"));
-        double y_ave = stat.calcAverage(colIndex.getVerticalIterator("p2"));
+
+        // calculate the image window size
+        Statistics stat = new Statistics();
+        Collection<Double> p1List = stat.filter(colIndex.getVerticalIterator("p1"));
+        Collection<Double> p2List = stat.filter(colIndex.getVerticalIterator("p2"));
+                
+        double x_max = Statistics.getMaxValue(p1List);
+        double x_min = Statistics.getMinValue(p1List);
+        double x_ave = Statistics.calcMean(p1List);
+        double y_max = Statistics.getMaxValue(p2List);
+        double y_min = Statistics.getMinValue(p2List);
+        double y_ave = Statistics.calcMean(p2List);
         
         double canvasWidth = Algorithm.<Double>minmax(x_ave-x_min, x_max-x_ave).max();
         double canvasHeight = Algorithm.<Double>minmax(y_ave-y_min, y_max-y_ave).max();
         
         Plot2DCanvas plotCanvas = new Plot2DCanvas(new Range(x_ave - canvasWidth, x_ave + canvasWidth), 
                                                    new Range(y_ave - canvasHeight, y_ave + canvasHeight), IMAGEWIDTH);        
- 
+
+        // 両端１％を除去
+        //Pair<Range, Range> mutantRange = filterRange(plotTable);
+        //Pair<Range, Range> wildtypeRange = filterRange(plotTable_wt);
+
         // convert the table data into a list format
         LinkedList<Point> mutantList = new LinkedList<Point>();
         LinkedList<Point> wildtypeList = new LinkedList<Point>();
@@ -145,10 +157,12 @@ public class Plot2DServlet extends HttpServlet
                 double y = Double.parseDouble(plotTable.get(i, param2_col).toString());
                 String orf = plotTable.get(i, strain_col).toString();
                 Point p = new Point(x, y);                                
-                if(selectedORFSet.contains(orf.toUpperCase()))
+                if(selectedORFSet.contains(orf.toUpperCase()))               
                     selectedORFList.add(new Pair<String, Point>(orf.toUpperCase(), p));
                 else
+                {
                     mutantList.add(p);
+                }
             }
             catch(NumberFormatException e)
             {
@@ -159,8 +173,8 @@ public class Plot2DServlet extends HttpServlet
         {
             try
             {
-                double x = Double.parseDouble(plotTable.get(i, param1_col_wt).toString());
-                double y = Double.parseDouble(plotTable.get(i, param2_col_wt).toString());
+                double x = Double.parseDouble(plotTable_wt.get(i, param1_col_wt).toString());
+                double y = Double.parseDouble(plotTable_wt.get(i, param2_col_wt).toString());
                 wildtypeList.add(new Point(x, y));
             }
             catch(NumberFormatException e)
@@ -168,7 +182,9 @@ public class Plot2DServlet extends HttpServlet
                 // skip this point
             }
         }
+
         
+
         plotCanvas.plot(mutantList, 0x59E2EF);        // plot mutants        
         plotCanvas.plot(wildtypeList, 0x49BCC6);      // plot wildtype 
         // plot selected ORFs
@@ -186,67 +202,25 @@ public class Plot2DServlet extends HttpServlet
         ImageIO.write(plotCanvas.getImage(), "png", response.getOutputStream());
     }
     
-//    /**
-//     * 2DPlotの下地を作成する
-//     * @param xParamName 
-//     * @param yParamName
-//     * @param plotTable (strainname, xParamName, yParamName) というスキーマのテーブルの入力を想定
-//     * @param imageWidth
-//     * @return 2DPlotの下地
-//     */
-//    static public BufferedImage create2DPlot(String xParamName, String yParamName, Table plotTable, int imageWidth)
-//    {
-//        if(plotTable == null)
-//        {
-//            return createNAImage(imageWidth);
-//        }
-//        ColLabelIndex colIndex = new ColLabelIndex(plotTable);
-//        int param1_col = colIndex.getColIndex(xParamName);
-//        int param2_col = colIndex.getColIndex(yParamName);
-//        int strain_col = colIndex.getColIndex("strainname");
-//        if(param1_col == -1 || param2_col == -1 || strain_col == -1)
-//            return createNAImage(imageWidth);
-//        
-//        // create graphics 
-//
-//        BufferedImage image = new BufferedImage(imageWidth, imageWidth, BufferedImage.TYPE_INT_RGB);
-//        Graphics2D g = (Graphics2D) image.getGraphics();
-//        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-//        
-//        StatisticsWithMissingValueSupport stat = new StatisticsWithMissingValueSupport(new String[] {".", "-1", "-1.0"});
-//        
-//        double x_max = stat.getMaxValue(colIndex.getVerticalIterator(xParamName));
-//        double x_min = stat.getMinValue(colIndex.getVerticalIterator(xParamName));
-//        double y_max = stat.getMaxValue(colIndex.getVerticalIterator(yParamName));
-//        double y_min = stat.getMinValue(colIndex.getVerticalIterator(yParamName));
-//        
-//        g.setColor(new Color(0xFFFFFF));
-//        g.fillRect(0, 0, imageWidth, imageWidth);
-//        g.setColor(new Color(0x90C0E0));
-//
-//        LinkedList<Point> selectedORFPointList = new LinkedList<Point>();
-//        
-//        for(int i=1; i<plotTable.getRowSize(); i++)
-//        {
-//            try
-//            {
-//                double x = Double.parseDouble(plotTable.get(i, param1_col).toString());
-//                double y = Double.parseDouble(plotTable.get(i, param2_col).toString());
-//                String orf = plotTable.get(i, strain_col).toString();
-//                
-//                int xplot = (int) (x * imageWidth / x_max);
-//                int yplot = (int) (imageWidth - (y * imageWidth / y_max));
-//        
-//                g.fillOval(xplot-1, yplot-1, 3, 3);
-//            }
-//            catch(NumberFormatException e)
-//            {
-//                // skip this point
-//            }
-//        }
-//        
-//        return image;
-//    }
+    /** 上下１％に属するエントリを除去する場合の値域を返す
+     * @param table
+     * @return
+     */
+    private Pair<Range, Range> filterRange(Table table)
+    {
+        Table filteredTable = new Table();        
+        ColLabelIndex colIndex = new ColLabelIndex(table);
+        
+        filteredTable.addRow(table.getRowList(0)); // ラベル行を(shallow)コピー
+        
+        StatisticsWithMissingValueSupport stat = new StatisticsWithMissingValueSupport(new String[] {".", "-1", "-1.0"}, new EliminateOnePercentOfBothSidesStrategy());
+        List<Double> p1List = (List<Double>) stat.filter(colIndex.getVerticalIterator("p1"));
+        List<Double> p2List = (List<Double>) stat.filter(colIndex.getVerticalIterator("p2"));
+        Range p1Range = new Range(p1List.get(0), p1List.get(p1List.size()-1));
+        Range p2Range = new Range(p2List.get(0), p2List.get(p2List.size()-1));
+        return new Pair<Range, Range>(p1Range, p2Range);
+    }
+    
     
     public void printNAImage(HttpServletRequest request, HttpServletResponse response)
     	throws IOException
@@ -279,6 +253,11 @@ class Range extends Pair<Double, Double>
     }
     public double getMin() { return this.getFirst(); }
     public double getMax() { return this.getSecond(); }
+    
+    public boolean within(double value) 
+    {
+        return (this.getFirst() <= value) && ( value <= this.getSecond());
+    }
 }
 
 class Point 
