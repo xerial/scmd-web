@@ -8,7 +8,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <jsp:useBean id="param"  scope="request" class="lab.cb.scmd.web.sessiondata.MorphParameter"/>
-<jsp:useBean id="view"  scope="session" class="lab.cb.scmd.web.formbean.ViewParamSheetForm"/>
 <jsp:useBean id="gene"  scope="request" class="lab.cb.scmd.web.bean.YeastGene"/>
 <jsp:useBean id="userSelection"  scope="session" class="lab.cb.scmd.web.bean.UserSelection"/>
 

@@ -131,11 +131,13 @@ public class TeardropStatistics {
         String drawCommand = "-fill " + BASE_COLOR;
         for( int i = 0; i < size; i++ ) {
             int hpos = ( centerindex - i ) * BARHEIGHT + IMAGEHEIGHT /2 ;
-            double barwidth = Math.log(tds.getHistgram(i) + 1) * (IMAGEWIDTH - MARGIN) / Math.log(tds.getMaxCount() + 1);
-            double middle = IMAGEWIDTH/2.0;
-            String stpos = (int)(middle - barwidth/2.0) + "," + hpos; 
-            String edpos = (int)(middle + barwidth/2.0) + "," + (hpos + BARHEIGHT);
-            drawCommand += " -draw \"rectangle " + stpos + " " + edpos + "\""; 
+            if( tds.getHistgram(i) != 0 ) {
+                double barwidth = Math.log(tds.getHistgram(i) + 1) * (IMAGEWIDTH - MARGIN) / Math.log(tds.getMaxCount() + 1);
+                double middle = IMAGEWIDTH/2.0;
+                String stpos = (int)(middle - barwidth/2.0) + "," + hpos; 
+                String edpos = (int)(middle + barwidth/2.0) + "," + (hpos + BARHEIGHT);
+                drawCommand += " -draw \"rectangle " + stpos + " " + edpos + "\""; 
+            }
         }
         String cmd = _converter + " " + BGFILE + " " + drawCommand + " -"; 
         
