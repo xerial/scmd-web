@@ -113,6 +113,11 @@ usage: ant (-Dconf=build.properties)
 	</target>
 
 	<target name="jsp.precompile">
+		<!--
+		<taskdef name="junit" classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask">
+			<classpath> <path location="${lib}/junit.jar"/> </classpath>
+		</taskdef>
+		-->
 		<junit printsummary="on" showoutput="true" failureproperty="test.failed">
 			<classpath>
 				 <pathelement path="${webinf}/classes"/>
@@ -138,7 +143,12 @@ usage: ant (-Dconf=build.properties)
 	
 	
 	<target name="update">
-	   <svn username="scmd-dev">
+	   <taskdef name="svn" classname="org.tigris.subversion.svnant.SvnTask">
+	      <classpath> 
+    		<fileset dir="${lib}"/>
+	      </classpath>
+	   </taskdef>
+	   <svn username="${user.name}">
 		 <update/>
 	   </svn>
 	</target>
