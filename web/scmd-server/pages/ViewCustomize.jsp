@@ -27,7 +27,7 @@
 <scmd-tags:linkMenu orf="${gene.orf}" logo="on"/> 
 <html:form action="CustomizeView.do" method="GET">
 
-Back to <a href="ViewDataSheet.do">datasheet</a> page.
+Back to <a href="ViewDataSheet.do">datasheet</a> or <a href="ORFTeardrop.do">ORF Teardrop</a> page.
 
 <table width="500">
 <tr><td align="right">
@@ -36,10 +36,11 @@ Back to <a href="ViewDataSheet.do">datasheet</a> page.
 </td></tr>
 </table>
 
+<% if ( cellParameterList.size() != 0  ) { %>
 <table>
 <tr><td align="top">
 <!-- show selected cell params -->
-<p class="title"> Selected Cell Detail Parametes </p>
+<p class="title"> Selected DataSheet Parametes </p>
 <table class="small" border="0" cellspacing="0" cellpadding="0">
 <tr nowrap="nowrap">
 <td class="sheetlabel"> </td>
@@ -55,10 +56,12 @@ ${morphParam.displayname}
 </td></tr>
 </logic:iterate>
 </table>
+<% } %>
 </td>
 <td align="top">
+<% if ( orfParameterList.size() != 0  ) { %>
 <!-- show selected cell params -->
-<p class="title"> Selected Average/SD Parametes </p>
+<p class="title"> ORF Teardrop Parametes </p>
 <table class="small" border="0" cellspacing="0" cellpadding="0">
 <tr nowrap="nowrap">
 <td class="sheetlabel"> </td>
@@ -75,12 +78,13 @@ ${morphParam.name}
 </logic:iterate>
 </table>
 <!-- -->
+<% } %>
 </td></tr>
 </table>
 
 
-<p class="title"> Individual Cell Parameters </p>
-
+<p class="title"> Add Datasheet Parameters </p>
+<p class="small"> Select and add parameters </p>
 <table>
 <tr><td>Category</td><td></td><td>Parameter Name</td></tr>
 <tr><td>
@@ -103,6 +107,7 @@ ${morphParam.name}
 </table>
 
 <p class="title"> ORF Unit Parameters </p>
+<p class="small"> Select and add parameters </p>
 <table>
 <tr><td>Category</td><td></td><td>Parameter Name</td></tr>
 <tr><td>
