@@ -73,8 +73,8 @@ public class ViewSelectionAction extends Action
         
         if(selection.getButton().equals("save"))
         {
-            response.setContentType("application/download");
-            response.addHeader("Content-disposition", "filename=\"scmd_selection.xml\"");
+            response.setContentType("application/octet-stream");
+            response.addHeader("Content-disposition", "attachment; filename=\"scmd_selection.xml\"");
             userSelection.outputXML(response.getOutputStream());
             return super.execute(mapping, form, request, response);
         }
