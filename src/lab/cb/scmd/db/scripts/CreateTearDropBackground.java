@@ -14,19 +14,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Vector;
 
 import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.dbutils.handlers.ColumnListHandler;
 
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.postgresql.jdbc3.Jdbc3PoolingDataSource;
@@ -39,10 +34,7 @@ import lab.cb.scmd.db.scripts.bean.GroupType;
 import lab.cb.scmd.db.sql.SQLExpression;
 import lab.cb.scmd.db.sql.TableHandler;
 import lab.cb.scmd.exception.SCMDException;
-import lab.cb.scmd.exception.UnfinishedTaskException;
-import lab.cb.scmd.util.ProcessRunner;
 import lab.cb.scmd.util.io.NullPrintStream;
-import lab.cb.scmd.util.stat.EliminateOnePercentOfBothSidesStrategy;
 import lab.cb.scmd.util.stat.Statistics;
 import lab.cb.scmd.util.stat.StatisticsWithMissingValueSupport;
 import lab.cb.scmd.util.table.Cell;

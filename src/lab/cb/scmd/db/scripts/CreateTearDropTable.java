@@ -12,30 +12,21 @@ package lab.cb.scmd.db.scripts;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Vector;
-
 
 import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.ResultSetHandler;
-import org.apache.commons.dbutils.handlers.ArrayHandler;
 import org.apache.commons.dbutils.handlers.ColumnListHandler;
 
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.postgresql.jdbc3.Jdbc3PoolingDataSource;
 import org.xerial.XerialException;
-import org.xerial.util.xml.bean.XMLBeanUtil;
-
 
 import lab.cb.common.cui.OptionParser;
 import lab.cb.common.cui.OptionParserException;
-import lab.cb.scmd.algorithm.Algorithm;
 import lab.cb.scmd.db.scripts.bean.GroupType;
 import lab.cb.scmd.db.sql.SQLExpression;
 import lab.cb.scmd.db.sql.TableHandler;

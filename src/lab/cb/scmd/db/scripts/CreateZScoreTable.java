@@ -53,7 +53,7 @@ import org.xerial.XerialException;
 public class CreateZScoreTable {
 
     private enum Opt {
-        help, verbose, outfile, avgoutfile, server, port, user, passwd, dbname
+        help, verbose, outfile, avgoutfile, server, port, user, passwd, dbname, wildtype
     }
 
     private OptionParser<Opt> optionParser = new OptionParser<Opt>();
@@ -85,6 +85,7 @@ public class CreateZScoreTable {
     {
         optionParser.addOption(Opt.help, "h", "help", "display help messages");
         optionParser.addOption(Opt.verbose, "v", "verbose", "display verbose messages");
+        optionParser.addOption(Opt.wildtype, "w", "wildtype", "use wildtype data");
         optionParser.addOptionWithArgment(Opt.outfile, "o", "output", "FILE", "output file name. defalut=zscore.txt", "zscore.txt");
         optionParser.addOptionWithArgment(Opt.avgoutfile, "a", "output", "FILE", "average output file name. defalut=zscoreavg.txt", "zscoreavg.txt");
         optionParser.addOptionWithArgment(Opt.server, "s", "server", "SERVER", "postgres server name. defalut=localhost", "localhost");
@@ -176,9 +177,54 @@ public class CreateZScoreTable {
                 if (samples.size() <= 1)
                     continue;
                 
-                double ave = Statistics.calcMean(samples);
-                double SD = Statistics.calcSD(samples);
+                double ave = 0.0;
+                double SD = 0.0;
                 double num = samples.size();
+                
+                if(optionParser.isSet(Opt.wildtype)) {
+                    Table avgsdsheet = (Table) queryRunner.query(
+                            "select average, sd, num from paramavgsd_wt where paramid=" + param.getId() + " AND groupid=" + group.getId(), 
+                                new ResultSetHandler() {
+                                public Object handle(ResultSet rs) throws SQLException {
+                                    Table avgSheet = new Table();
+                                    ResultSetMetaData metaData = rs.getMetaData();
+                                    Vector<String> columnName = new Vector<String>();
+                                    int colSize = metaData.getColumnCount();
+                                    for (int i = 1; i <= colSize; i++)
+                                        columnName.add(metaData.getColumnName(i));
+
+                                    avgSheet.addRow(columnName);
+
+                                    while (rs.next()) {
+                                        Vector<Object> row = new Vector<Object>();
+                                        for (int i = 1; i <= colSize; i++)
+                                            row.add(rs.getObject(i));
+                                        avgSheet.addRow(row);
+                                    }
+                                    return avgSheet;
+                                }
+                            });
+                    if(avgsdsheet.getRowSize() == 2 ) {
+                        if(!avgsdsheet.get(1,0).toString().equals("") ) {
+                            ave = Double.parseDouble(avgsdsheet.get(1,0).toString());
+                        } else {
+                            System.err.println("ERROR! number format exception on average where paramid = " + param.getId() + " and groupid = " + group.getId());
+                        }
+                        if(!avgsdsheet.get(1,1).toString().equals("") ) {
+                            SD  = Double.parseDouble(avgsdsheet.get(1,1).toString());
+                        } else {
+                            System.err.println("ERROR! number format exception on sd where paramid = " + param.getId() + " and groupid = " + group.getId());
+                        }
+                    } else {
+                        System.err.println("ERROR!!! on paramid = " + param.getId() + " and groupid = " + group.getId());
+                        System.err.println("Row Size " + avgsdsheet.getRowSize());
+                        ave = -1.0;
+                        SD = -1.0;
+                    }
+                } else {
+                    ave = Statistics.calcMean(samples);
+                    SD = Statistics.calcSD(samples);
+                }
 
                 avgOutFile.println(param.getId() + "\t" + group.getId() +  "\t" + ave + "\t" + SD + "\t" + num);
 

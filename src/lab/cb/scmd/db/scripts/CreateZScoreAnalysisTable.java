@@ -117,7 +117,7 @@ public class CreateZScoreAnalysisTable {
 
         QueryRunner queryRunner = new QueryRunner(dataSource);
 
-        Table sheet = new Table("workfolder/avgsd/analysisdata_ver2.xls");
+        Table sheet = new Table("../SCMDData/data/ver2/analysisdata/oldparam/analysisdata_ver2_0310.xls");
        
         ColLabelIndex colLabelIndex = new ColLabelIndex(sheet);
         List colList = sheet.getRowList(0);
