@@ -4,12 +4,11 @@ SCMDWeb README
 src -- Java source files
 test -- JUnit test files
 
-scmd -- warファイルとして固めるフォルダ
-scmd/WEB-INF --　JSP/Servlet用の設定ファイル
-scmd/resources -- 画像、stylesheet等、静的なファイルの置き場　
+web/scmd-server -- warファイルとして固めるフォルダ
+web/scmd-server/WEB-INF --　JSP/Servlet用の設定ファイル
+web/scmd-server/META-INF  -- tomcat用のcontext.xmlを置く
 
-web　serverの構成は、scmd/resources内以外はTomcatに処理させ、
-（*.jsp, *.tld, *.xml, *.do(servlet)等はTomcat）
-resources内は、apacheに処理を任せるのが基本
+web/config/SCMDServer.config  -- serverのconfiguration用
+(context.xmlに統一した方がいいかもしれない)
 
-性能に信頼を置けるなら、resources内もtomcatに任せてしまって良い
+

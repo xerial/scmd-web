@@ -64,7 +64,8 @@ usage: ant (-Dconf=build.properties)
     </target>
 	
 	<target name="war" depends="compile" description="create war file">
-	  <war destfile="${build}/${war.name}" webxml="${webinf}/web.xml" basedir="${web}/${server.name}">
+	  <mkdir dir="${build}/war"/>
+	  <war destfile="${build}/war/${war.name}" webxml="${webinf}/web.xml" basedir="${web}/${server.name}">
 	  	 <!-- <classes dir="${dir.webinf}/classes"/> -->
 	  </war>
 	</target>
@@ -109,7 +110,7 @@ usage: ant (-Dconf=build.properties)
 		</taskdef>
 		<deploy 
 			url="${manager.url}" username="${manager.username}" password="${manager.password}" path="/${server.name}"
-		   	update="true" war="${build}/${war.name}"/>
+		   	update="true" war="${build}/war/${war.name}"/>
 	</target>
 
 	<target name="jsp.precompile">
