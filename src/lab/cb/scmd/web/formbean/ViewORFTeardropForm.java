@@ -25,7 +25,7 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ViewORFTeardropForm extends ActionForm
 {
-    static final String[] sheetTypeList = {"Cell", "Nucleus", "Actin", "Custom" };  
+    static final String[] sheetTypeList = {"Cell Shape", "Nucleus", "Actin", "Custom" };  
     String orf = "yor202w";
     int sheetType = -1;
     
