@@ -39,6 +39,7 @@
 <td class="sheetlabel" witdh="90"> Std. Name </td> 
 <td class="sheetlabel" width="150"> Aliases </td> 
 <td colspan="3" class="sheetlabel"></td>
+<td class="sheetlabel" width="50"> Color </td>
 </tr>
 <logic:iterate id="yeastGene" name="orfList" type="lab.cb.scmd.web.bean.YeastGene">
 
@@ -54,14 +55,29 @@
 <html:link page="/ViewPhoto.do?orf=${yeastGene.orf}"> viewer </html:link>&nbsp;
 <a href="http://mips.gsf.de/genre/proj/yeast/searchEntryAction.do?text=${yeastGene.orf}" target="_blank">CYGD</a>&nbsp;
 <a href="http://genome-www4.stanford.edu/cgi-bin/SGD/locus.pl?locus=${yeastGene.orf}" target="_blank">SGD</a>
-</tr>
+</td>
+<td></td>
+<td align="center"> 
+<select name="color">
+<option style="color:#FF90A0; background:#FF90A0;" value="pink"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  </option>
+<option style="color:#80C0FF; background:#80C0FF;" value="skyblue"> </option>
+<option style="color:#FF5050; background:#FF5050;" value="red">  </option>
+<option style="color:#A0A0A0; background:#A0A0A0;" value="gray">  </option>
+<option style="color:#50FF80; background:#50FF80;" value="green"> </option>
+<option style="color:#FFFF50; background:#FFFF50;" value="yellow"> </option>
+<option style="color:#D0A0FF; background:#D0A0FF;" value="purple"> </option>
+<option style="color:#333333; background:#333333;" value="black">  </option>
+</select>
+</td>
+</tr>	
 <tr bgcolor="#F0F0E0" height="15">
-<td ></td>
-<td colspan="5" width="530" class="annotation"> <%= yeastGene.getAnnotation() %></td> 
+<td></td>
+<td colspan="8" width="600" class="annotation"> <%= yeastGene.getAnnotation() %></td> 
 </tr>
 <tr height="10"><td> </td></tr>
 </logic:iterate>
 </table>
+<html:submit value="apply color changes" property="button"/>
 </html:form>
 
 
