@@ -1,4 +1,4 @@
-	//--------------------------------------
+//--------------------------------------
 // SCMDServer
 // 
 // ViewStatsAction.java 
@@ -156,7 +156,7 @@ public class ViewStatsAction extends Action
 				link = new AttributeDecollation(link, "id", groupPrefix[groupIndex] + i + statParamName[groupIndex][i]);
 				link = new JavaScriptDecollation(link, "onMouseOver", "on(this.id);");
 				link = new JavaScriptDecollation(link, "onMouseOut", "off(this.id);");
-				link = new JavaScriptDecollation(link, "onClick", "javascript:help('/help/nucleus_param.html');");
+				link = new JavaScriptDecollation(link, "onClick", "javascript:help('help/nucleus_param.html');");
 				dataTable.set(1, i + 1, link);
 				break;
 			case 3:
@@ -164,7 +164,7 @@ public class ViewStatsAction extends Action
 				link = new AttributeDecollation(link, "id", groupPrefix[groupIndex] + i + statParamName[groupIndex][i]);
 				link = new JavaScriptDecollation(link, "onMouseOver", "on(this.id);");
 				link = new JavaScriptDecollation(link, "onMouseOut", "off(this.id);");
-				link = new JavaScriptDecollation(link, "onClick", "javascript:help('/help/actin_param.html');");
+				link = new JavaScriptDecollation(link, "onClick", "javascript:help('help/actin_param.html');");
 				dataTable.set(1, i + 1, link);
 				break;
 			}
