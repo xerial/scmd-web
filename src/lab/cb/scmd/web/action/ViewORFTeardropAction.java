@@ -97,7 +97,7 @@ public class ViewORFTeardropAction extends Action
             // stainType‚ÉŠY“–‚·‚éparameter ID‚ÌƒŠƒXƒg‚ðŽæ“¾
             final String[] stainName = {"cell wall", "nucleus", "actin"};
             sql = SQLExpression.assignTo(
-                    "select id, displayname, shortname from $1 where scope='orf' and datatype in ('double') and stain = '$2' order by id",
+                    "select id, displayname, shortname from $1 where scope='orf' and datatype in ('double', 'cv') and stain = '$2' order by id",
                     SCMDConfiguration.getProperty("DB_PARAMETERLIST", "parameterlist"),
                     stainName[stainType]
             );        
@@ -110,7 +110,7 @@ public class ViewORFTeardropAction extends Action
             if(paramIDSet.isEmpty())
                 return mapping.findForward("success");
             sql = SQLExpression.assignTo(
-                    "select id, displayname, shortname from $1 where scope='orf' and datatype in ('double') and id in ($2)",
+                    "select id, displayname, shortname from $1 where scope='orf' and datatype in ('double', 'cv') and id in ($2)",
                     SCMDConfiguration.getProperty("DB_PARAMETERLIST", "parameterlist"),
                     SQLUtil.commaSeparatedList(paramIDSet, SQLUtil.QuotationType.none)
             );
