@@ -315,7 +315,7 @@ public class SCMDTableQuery implements TableQuery {
     }
 
     public List<MorphParameter> getParameterInfo(Set<Integer> parameter) {
-        String sql = "SELECT id, name, shortname, displayname, scope, datatype FROM " 
+        String sql = "SELECT id, name, shortname, displayname, scope, datatype,description FROM " 
             + SCMDConfiguration.getProperty("DB_PARAMETERLIST");
         String sql_where = "";
         for(Object param: parameter) {
