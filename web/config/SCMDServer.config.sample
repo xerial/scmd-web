@@ -9,11 +9,8 @@ TABLEQUERY = lab.cb.scmd.db.connect.SCMDTableQuery
 VALUEQUERY = lab.cb.scmd.db.connect.SCMDValueQuery
 POSTGRESQL_IP = scmd.gi.k.u-tokyo.ac.jp
 POSTGRESQL_PORT = 5432
-#POSTGRESQL_DBNAME = scmd_pre_20040714
 POSTGRESQL_DBNAME = scmd
-#TEARDROP_URI = http://scmd.gi.k.u-tokyo.ac.jp/database/teardrop/average_shape/
-TEARDROP_URI = http://scmd.gi.k.u-tokyo.ac.jp/database/teardrop/paramstats
-TEARDROP_H_URI = http://scmd.gi.k.u-tokyo.ac.jp/database/teardrop/paramstats_h
+TEARDROP_URI = http://scmd.gi.k.u-tokyo.ac.jp/database/teardrop/composite
 PARAMFIG_URI = http://scmd.gi.k.u-tokyo.ac.jp/database/paramfig
 
 
@@ -25,8 +22,11 @@ DB_SUMMARY = analysisdata_20050131
 DB_INDIVIDUAL = individual_20050131
 DB_AVERAGESHAPE = average_shape_20040813
 DB_TD_AVERAGESHAPE = td_average_shape_20040820
-DB_PARAMETERLIST = parameterlist
+DB_PARAMETERLIST = visible_parameterlist
 DB_ZSCORE = paramzscore
 DB_PARAM_AVG_SD = paramavgsd
+DB_PARAM_AVG_SD_WT = paramavgsd_wt
+DB_PARAMSTAT = paramstat
+DB_PARAMSTAT_WT = paramstat_wt
 DB_TMP_ANALYSISZSCORE = analysiszscore
 DB_GROUPLIST = groups

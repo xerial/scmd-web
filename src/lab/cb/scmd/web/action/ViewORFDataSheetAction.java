@@ -64,7 +64,7 @@ public class ViewORFDataSheetAction extends Action
         
         // validate the existence of the given parameter ID
         MorphParameter param = (MorphParameter) ConnectionServer.query(new BeanHandler(MorphParameter.class), "select * from $1 list where id=$2 and scope='orf'", 
-                SCMDConfiguration.getProperty("DB_PARAMETERLIST", "parameterlist"), paramID);        
+                SCMDConfiguration.getProperty("DB_PARAMETERLIST", "visible_parameterlist"), paramID);        
         if(param == null)
             return mapping.findForward("select_parameter");  // parameter‚Ì‘I‘ð‚µ‚È‚¨‚µ
         request.setAttribute("para", param);        

@@ -161,7 +161,7 @@ public class UserSelection
         {
             Object result = ConnectionServer.query(new ScalarHandler("orf"),
                     "select orf from $1 where alias ilike '$2'",
-                    SCMDConfiguration.getProperty("DB_ORFALIASNAME", "orfaliasname_20040719"),
+                    SCMDConfiguration.getProperty("DB_ORFALIAS", "orfaliasname_20040719"),
                     genename                            
             );
             if(result != null)

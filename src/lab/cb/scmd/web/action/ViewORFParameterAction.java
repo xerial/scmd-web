@@ -72,7 +72,7 @@ public class ViewORFParameterAction extends Action
                 (List<MorphParameter>)
                 ConnectionServer.query(new BeanListHandler(MorphParameter.class), 
                         "select * from $1 where scope='orf' and id in ($2)",
-                        SCMDConfiguration.getProperty("DB_PARAMLIST", "parameterlist"),
+                        SCMDConfiguration.getProperty("DB_PARAMETERLIST", "parameterlist"),
                         SQLUtil.commaSeparatedList(input.getParamID(), SQLUtil.QuotationType.singleQuote));
             break;
         case custom:
