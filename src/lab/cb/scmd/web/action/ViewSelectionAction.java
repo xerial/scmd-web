@@ -23,6 +23,7 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.upload.FormFile;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -34,6 +35,7 @@ import lab.cb.scmd.web.bean.ORFSelectionForm;
 import lab.cb.scmd.web.bean.UserSelection;
 import lab.cb.scmd.web.bean.YeastGene;
 import lab.cb.scmd.web.common.SCMDConfiguration;
+import lab.cb.scmd.web.common.SCMDSessionManager;
 import lab.cb.scmd.web.xml.DOMParser;
 import lab.cb.scmd.web.xml.XMLReaderThread;
 
@@ -54,53 +56,69 @@ public class ViewSelectionAction extends Action
     }
     
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response)
+	throws Exception
+    {
 	    
 	    ORFSelectionForm selection = (ORFSelectionForm) form;
 	    String orf = selection.getInput();
-
+	    
 	    // sessionを取得
 	    HttpSession session = request.getSession(true);
-	    UserSelection userSelection = (UserSelection) session.getAttribute("userSelection");
-	    if(userSelection == null)
-	        userSelection = new UserSelection();
+	    UserSelection userSelection = SCMDSessionManager.getUserSelection(request);
+	    CellViewerForm view = SCMDSessionManager.getCellViewerForm(request);
+	    
 
-        // 
-       CellViewerForm view = (CellViewerForm) session.getAttribute("view");
-       if(view == null)
-       {
-           view = new CellViewerForm();
-           session.setAttribute("view", view);
-       }
-        
         String[] inputList = selection.getInputList();
+        
+        if(selection.getButton().equals("save"))
+        {
+            response.setContentType("application/download");
+            response.addHeader("Content-disposition", "filename=\"scmd_selection.xml\"");
+            userSelection.outputXML(response.getOutputStream());
+            return super.execute(mapping, form, request, response);
+        }
         
         if(selection.getButton().equals("remove all"))
         {
             userSelection.clear();
         }
-
-        if(selection.getButton().equals("remove"))
-        {
-            // ユーザーの入力を消去
-            for(String s : inputList)
-                userSelection.removeSelection(s);
-        }
         else
         {
-            // ユーザーの入力を追加
-            if(orf != null)
+            if(selection.getButton().equals("remove"))
             {
-                userSelection.addSelection(orf);
-                userSelection.setColor(orf, "skyblue");
+                // ユーザーの入力を消去
+                for(String s : inputList)
+                    userSelection.removeSelection(s);
             }
-            for(String s : inputList)
+            else
             {
-                userSelection.addSelection(s);
-                userSelection.setColor(s, "skyblue");
+                if(selection.getButton().equals("load"))
+                {
+                    // ユーザーの入力を追加
+                    FormFile inputXMLFile = selection.getFile();
+                    if(inputXMLFile != null)
+                    {
+                        // XMLファイルから読み込み
+                        userSelection.loadFromXML(inputXMLFile);
+                    }
+                }
+                else 
+                {
+                    if(orf != null)
+                    {
+                        userSelection.addSelection(orf);
+                        userSelection.setColor(orf, "skyblue");
+                    }
+                    for(String s : inputList)
+                    {
+                        userSelection.addSelection(s);
+                        userSelection.setColor(s, "skyblue");
+                    }
+                }
             }
         }
-	    session.setAttribute("userSelection", userSelection);
+
 
         // 色名(ORF_color)を<ORF,color> のHashに入れる。
         for(String colorMap : selection.getColorList())
@@ -151,6 +169,8 @@ public class ViewSelectionAction extends Action
 	    
 	    return mapping.findForward("success");
 	}
+    
+    
     
 }
 

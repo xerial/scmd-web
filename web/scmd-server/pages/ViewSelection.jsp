@@ -82,7 +82,7 @@
 </html:form>
 
 
-<html:form action="ViewSelection.do" method="GET">
+<html:form action="ViewSelection.do" method="POST" enctype="multipart/form-data">
 <table>
 <tr>
 <td class="small" valign="center"><b>input ORFs manually</b> : <br> (ex. yor202w, yal002w, ...) </td>
@@ -91,7 +91,10 @@
 </tr>
 </table>
 <html:submit value="update" property="button"/>
-</html:form>
+
+<p>Save as XML file : <html:submit value="save" property="button"/></p>
+<p>Load from XML file : <html:file property="file" /> <html:submit value="load" property="button"/></p>
+</html:form> 
 
 </center>
 </body>

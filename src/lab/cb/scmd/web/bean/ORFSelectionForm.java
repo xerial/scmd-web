@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.upload.FormFile;
 
 /**
  * @author leo
@@ -30,6 +31,8 @@ public class ORFSelectionForm extends ActionForm
     String[] _inputList = new String[0];
     String[] _colorList = new String[0];
     String _button = "add selections";
+    
+    FormFile file = null;
     
     //Set _removeList = new TreeSet();
     //Set _previousSet = new TreeSet();
@@ -46,8 +49,21 @@ public class ORFSelectionForm extends ActionForm
     public void reset(ActionMapping arg0, HttpServletRequest arg1) {
         _inputList = new String[0];
         //_colorList = new String[0];
+        file = null;
     }
     
+    public FormFile getFile()
+    {
+        return file;
+    }
+    
+
+    public void setFile(FormFile file)
+    {
+        this.file = file;
+    }
+    
+
     public String getInput() {
         return _input;
     }
