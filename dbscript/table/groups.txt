@@ -1,3 +1,4 @@
+0		global	normal	global parameter
 1	C	no	normal	no bud
 2	C	small	normal	small bud
 3	C	medium	normal	medium bud
