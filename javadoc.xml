@@ -7,7 +7,7 @@
 	version="true" 
 	splitindex="true" use="true"
 	windowtitle="SCMDWeb Project Documentation"
-	stylesheetfile="javadoc.css"
+	stylesheetfile="javadoc.css" linksource="yes"
 	Locale="en_US" Encoding="SJIS">
 	<packageset dir="src" defaultexcludes="yes">
       <include name="lab/cb/scmd/db/**" />
