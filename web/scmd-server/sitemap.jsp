@@ -3,26 +3,198 @@
 <%@ taglib prefix="scmd-base" uri="http://scmd.gi.k.u-tokyo.ac.jp/taglib/scmd-base" %>
 <%@ taglib prefix="bean" uri="/WEB-INF/struts-bean.tld" %>
 <%@ taglib prefix="html" uri="/WEB-INF/struts-html-el.tld" %>
-<%@ taglib prefix="logic" uri="/WEB-INF/struts-logic-el.tld" %>
+<%@ taglib prefix="logic" uri="/WEB-INF/struts-logic.tld" %>
 <%@ taglib prefix="scmd-tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<jsp:useBean id="view"  scope="session" class="lab.cb.scmd.web.bean.CellViewerForm"/>
-<jsp:useBean id="para"  scope="request" class="lab.cb.scmd.web.sessiondata.MorphParameter"/>
-<jsp:useBean id="range"  scope="request" class="lab.cb.scmd.web.bean.Range"/>
-<jsp:useBean id="pageStatus"  scope="request" class="lab.cb.scmd.db.common.PageStatus"/>
-<jsp:useBean id="selection" scope="request" class="lab.cb.scmd.web.bean.ORFSelectionForm"/>
+<logic:equal name="view" value="">
+<c:set var="orf" value="yor202w"/>
+</logic:equal>
+<logic:notEqual name="view" value="">
+<c:set var="orf" value="${view.orf}"/>
+</logic:notEqual>
 
 <scmd-base:header title="Site Map" css="/css/scmd.css"/>
 <body>
 <center>
-<scmd-tags:menu  toolbar="on"/>
+<scmd-tags:menu  toolbar="on" searchframe="on"/>
 
 <p class="title"> SCMD Site Map </p>
-<p class="notice">  </p>
 
+<table width="500">
+<tr>
+<td class="small">
+You can select all menues described below from the above drop-down menu bar.
+</td>
+<td>
+<img src="image/dropdownmenu.png"/>
+</td>
+</table>
 
+  <table width="700" border="0" class="helpmenu">
+    <tr> 
+      <td colspan="2" class="menubar">Yeast Mutant</td>
+    </tr>
+    <tr> 
+      <td> 
+        <ul>
+	      <li><a href="ViewORFList.do">Yeast Mutant</a></li>
+		  <ul>Display a list of yeast mutants available in SCMD. </ul>
+        </ul>
+      </td>
+      <td><img src="image/yeastmutant.png" align="middle"/></td>
+    </tr>
+    <tr> 
+      <td colspan="2"  class="menubar">Photo Menu </td>
+    </tr>
+    <tr> 
+      <td valign="top"> 
+        <ul>
+          <li><a href="ViewPhoto.do?orf=${orf}"> Photo Viewer </a>
+          <ul> Display micrographs of yeast mutants.   
+          <img src="image/photoviewer.png" align="center"/> 
+          </ul>
+		  </li>          
+                   
+                              
+        </ul>
+        </td>
+      <td valign="top"> 
+        <ul>
+                  <li><a href="ViewDataSheet.do?orf=${orf}"> Individual Cell Datasheet</a> </li>
+              <ul> Show individual cells and their morphological prameters (cell 
+                parameters) in the micrographs.
+  <img src="image/indivcell.png" align="center"/> 
+                </ul>
+        
+                  <li> Cells Grouped by <html:link page="/ViewGroupBySheet.do?stainType=0&orf=${orf}">
+                           bud size </html:link>, <html:link page="/ViewGroupBySheet.do?stainType=1&orf=${orf}"> 
+            nucleus location </html:link>, <html:link page="/ViewGroupBySheet.do?stainType=2&orf=${orf}"> 
+            actin distribution</html:link> </li>
+              <ul> Show cells grouped by morphological conditions such as bud size, 
+                nucleus location and action distributions. <img src="image/groupcell.png"  /> </ul>
+        </ul>
+      </td>
+    </tr>
+    <tr> 
+      <td colspan="2" class="menubar">Data Mining Menu</td>
+    </tr>
+    <tr> 
+      <td valign="top"> 
+        <ul>
+          <li><a href="SelectShape.do">Morphology Search </a> 
+             <ul>
+              By inputting or selecting cell chapes displayed in dialogue, 
+               search yeast mutants that are similar in shapes. 
+               <img src="image/morphologysearch.png"/>               
+             </ul>
+              </li>
+          <li><a href="ViewORFParameter.do">ORF Parameter Datasheet</a> 
+            <ul>
+              Show descriptions of ORF parameters and their datasheet sorted by values. 
+              <img src="image/orfdatasheet.png" width="385" height="233"> 
+            </ul>
+          </li>
+          <li><a href="ViewStats.do?orf=${orf}">Average Shapes</a> 
+            <ul>
+              Display average shapes of mutants grouped by morphological conditions 
+              <img src="image/averageshape.png" width="344" height="159"> 
+            </ul>
+          </li>
+        </ul>
+      </td>
+      <td  valign="top"> 
+        <ul>
+          <li><a href="ORFTeardrop.do?orf=${orf}">Teardrop View of ORF Parameters 
+            </a> </li>
+            <ul>
+            Display values and statistical information (average, distribution, 
+            etc.) of morphological parameters of an ORF at a glance. By clicking the teardrop images, you can see their <a href="ViewORFParameter.do">ORF Parameter Datasheet</a>.
+              <p align="center">
+                    <img src="image/orfterdrop.png" align="center"/> </p>
+            </ul>
+          </ul>
 
+        <ul>
+          <li><a href="View2DPlot.do?orfType=current">2D Plot</a></li>
+          <ul>
+              Plot pairs of two morphological parameters of all yeast mutants 
+                on a two dimensional plane. 
+                <p align="center"><img src="image/2dplot.png" align="center" width="184" height="189"/> </p>  
+                
+                
+	      </ul>
+        </ul>
+        <ul>
+        <li>Teardrop View of Average Shapes Grouped by 
+            <ul>
+              <li><html:link page="/ViewGroupByTearDrop.do?stainType=0&orf=${orf}"> 
+                bud size </html:link></li>
+              <li><html:link page="/ViewGroupByTearDrop.do?stainType=1&orf=${orf}"> 
+                nucleus location</html:link></li>
+              <li><html:link page="/ViewGroupByTearDrop.do?stainType=2&orf=${orf}"> 
+                actin distribution </html:link></li>
+			</ul>
+          </li>
+          <ul>
+                      Show average shapes and teardrop views of mutants grouped by morphological 
+              conditions 
+              <p align="center">
+                      <img src="image/teardropgroup.png" width="334" height="302" align="center"/></p>  </ul>  
+          
+		</ul>
+	        
+        
+      </td>
+    </tr>
+    <tr> 
+      <td colspan="2"  class="menubar">Customization Menu </td>
+    </tr>
+    <tr> 
+      <td valign="top"> 
+        <ul>
+          <li><a href="ViewSelection.do"> My Gene List</a> 
+            <ul>
+              By selecting genes in this page, positions of these genes are shown 
+              in the teardrop view and the 2D plot display. Inputted data can 
+              be saved and loaded with an XML format. <img src="image/mygene.png"/> 
+            </ul>
+          </li>
+        </ul>
+      </td>
+      <td valign="top"> 
+        <ul>
+          <li><a href="CustomizeView.do"> My Parameter List</a></li>
+            <ul>
+            By selecting several morphological parameters related to genes(ORFs) or indivial cells, you can customize displayed parameters in the <a href="ViewORFParameter.do">ORF Parameter Datasheet</a>, <a href="ORFTeardrop.do">Teardrop View</a> and <a href="ViewDataSheet.do">Indivisual Cell Parameter Datasheet</a>.
+           <img src="image/myparm.png" align="center"/> 
+           </ul>
 
+        </ul>
+
+      </td>
+    </tr>
+    <tr><td colspan="2"  class="menubar">Others</td></tr>
+    <tr> 
+      <td> 
+        <ul>
+          <li>Help Menu 
+            <ul>
+              <li><a href="ParameterHelp.do">Parameter Help</a> </li>
+              <li><a href="sitemap.jsp">Site Map</a></li>
+            </ul>
+          </li>
+        </ul>
+      </td>
+    </tr>
+    <tr> 
+      <td> 
+        <ul>
+          <li><a href="publication.jsp">Publications</a> </li>
+          <li><a href="about.jsp">About SCMD</a> </li>
+        </ul>
+      </td>
+    </tr>
+  </table>
 </center>
 <scmd-base:footer/>
