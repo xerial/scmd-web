@@ -24,7 +24,6 @@
 <body>
 <center>
 <scmd-tags:menu toolbar="on" searchframe="on" orf="${gne.orf}"/>
-[ <html:link page="/View2DPlot.do"> 2D plot </html:link> ] 
 
 <scmd-tags:linkMenu orf="${gene.orf}" logo="on"/> 
 
@@ -79,6 +78,9 @@
 </logic:iterate>
 </table>
 <html:submit value="apply color changes" property="button"/>
+<p align="center" class="linkmenu"> 
+[ <html:link page="/View2DPlot.do"> Display 2D plot of these mutants</html:link> ] 
+</p>
 </html:form>
 
 

@@ -11,14 +11,14 @@
 <jsp:useBean id="datasheet"  scope="request" class="lab.cb.scmd.web.table.Table"/>
 <jsp:useBean id="gene"  scope="request" class="lab.cb.scmd.web.bean.YeastGene"/>
 
-<scmd-base:header title="DataSheet ${view.orf}" css="/css/tabsheet.css"/>
+<scmd-base:header title="Individual Cell Datasheet of ${view.orf}" css="/css/tabsheet.css"/>
 <body>
 <center>
 <scmd-tags:menu  toolbar="on" orf="${gene.orf}"/>
 
 <scmd-tags:orfInfo  orf="${gene.orf}" 
 	stdname="${gene.standardName}" annot="${gene.annotation}" 
-	title="Cell Data Sheet" />
+	title="Individual Cell Datasheet" />
 
 <table><tr><td>
 <scmd-tags:pageMoveButton actionURL="ViewDataSheet.do" currentPage="${view.photoPage}" maxPage="${view.photoPageMax}"/>

@@ -20,22 +20,17 @@
 <jsp:useBean id="orfParameterList" scope="request" type="java.util.List"/>
 <jsp:useBean id="gene"  scope="request" class="lab.cb.scmd.web.bean.YeastGene"/>
 
-<scmd-base:header title="Customize View" css="/css/tabsheet.css"/>
+<scmd-base:header title="My Parameter List (Customization)" css="/css/tabsheet.css"/>
 <body>
 <center>
 <scmd-tags:menu toolbar="on" searchframe="on" orf="${view.orf}"/>
 <html:form action="CustomizeView.do" method="GET">
 
-Back to <a href="ViewDataSheet.do">Photo Datasheet</a>, <a href="ORFTeardrop.do">ORF Teardrop</a> or 
-<a href="ViewORFParameter.do">ORF Prarameter Sheet</a> page.
-
-
-<% if ( cellParameterList.size() != 0  ) { %>
 <table>
 <tr>
 <td valign="top" class="small">
 
-<table class="small" valign="top" cellspacing="0">
+<table class="small" valign="top" cellspacing="0" align="center">
 <tr><td colspan="3" class="title" align="center">Selected Cell Parametes</td></tr>
 <tr>
 <td align="center">
@@ -54,14 +49,20 @@ ${morphParam.displayname}
 </td></tr>
 </logic:iterate>
 </table>
-<% } %>
+
+<table align="center">
+<tr>
+<td class="menubutton" align="center">
+[<a href="ViewDataSheet.do?sheetType=4">Photo Datasheet</a>]
+</td>
+</tr>
+</table>
 </td>
 
-
+<td width="15"></td>
 <td valign="top">
-<% if ( orfParameterList.size() != 0  ) { %>
 <!-- show selected cell params -->
-<table class="small" valign="top" cellspacing="0">
+<table class="small" valign="top" cellspacing="0"  align="center">
 <tr><td colspan="3" class="title" align="center"> Selected ORF Parameters </td></tr>
 <tr>
 <td class="sheetlabel"> </td>
@@ -80,7 +81,8 @@ ${morphParam.displayname}
 <table>
 <tr>
 <td class="menubutton" align="center">
-[<a href="ViewORFParameter.do">Display datasheet</a>]
+[<a href="ViewORFParameter.do">Display Datasheet</a>]
+[<a href="ORFTeardrop.do?orf=${view.orf}&sheetType=3">Teardrop View</a>]
 </td>
 </tr>
 <tr>
@@ -89,7 +91,6 @@ download as [<a href="ViewORFParameter.do?format=xml">XML</a>] [<a href="ViewORF
 </td>
 </tr>
 </table>
-<% } %>
 </td>
 </tr>
 </table>

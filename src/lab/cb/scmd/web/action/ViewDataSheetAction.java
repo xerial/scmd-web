@@ -130,7 +130,7 @@ public class ViewDataSheetAction extends Action {
         }
         colLabelList.add("cell_local_id");
         for (MorphParameter param: columns) {
-            colLabelList.add(param.getShortName());
+            colLabelList.add(param.getName());
         }
         table.addRow(colLabelList);
         //table.paste(0, table.getColSize(), datasheet.getRow(0));

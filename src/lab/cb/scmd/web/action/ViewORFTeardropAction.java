@@ -115,7 +115,7 @@ public class ViewORFTeardropAction extends Action
             if(paramIDSet.isEmpty())
                 return mapping.findForward("success");
             sql = SQLExpression.assignTo(
-                    "select id, name, displayname, shortname, systematicname from $1 where scope='orf' and datatype in 'num' and id in ($2)",
+                    "select id, name, displayname, shortname, systematicname from $1 where scope='orf' and datatype = 'num' and id in ($2)",
                     SCMDConfiguration.getProperty("DB_PARAMETERLIST", "parameterlist"),
                     SQLUtil.commaSeparatedList(paramIDSet, SQLUtil.QuotationType.none)
             );
