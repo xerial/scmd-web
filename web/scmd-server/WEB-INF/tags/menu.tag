@@ -111,11 +111,11 @@
 </td>     
     
     
-<td align="center" id="help" onMouseOver="selectMenu('helpmenu');" onMouseOut="detectMouseOut(event,this);">
+<td align="center" id="help" onMouseOver="selectMenu('hmenu');" onMouseOut="detectMouseOut(event,this);">
 <table cellpadding="0" cellspacing="0">
 <tr class="menubar"><td><a href="."> Help </a></td></tr>
 <tr><td>
-<table width="150" border="0" class="dropdownmenu" cellpadding="0" id="helpmenu" align="left">
+<table width="150" border="0" class="dropdownmenu" cellpadding="0" id="hmenu" align="left">
 <tr><td nowrap="nowrap"> 
 <ul>
 <li><a href="ParameterHelp.do">Parameter Help</a> </li>
