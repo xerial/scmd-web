@@ -361,12 +361,12 @@ class Plot2DCanvas
     
     private int calcX(Point p)
     {
-        return (int) (p.getX() * imageWidth / xRange.getMax());
+        return (int) ((p.getX() - xRange.getMin()) * imageWidth / (xRange.getMax() - xRange.getMin()));
     }
     
     private int calcY(Point p)
     {
-        return (int) (imageWidth - (p.getY() * imageWidth / yRange.getMax()));
+        return (int) (imageWidth - ((p.getY() - yRange.getMin()) * imageWidth / (yRange.getMax() - yRange.getMin())));
     }
     
 }
