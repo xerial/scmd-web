@@ -86,6 +86,7 @@ public class ParamPlotAction extends Action
     /**
      * @param plotForm
      * @param tableQueryInstance
+     * interclass varianceが最大になる２軸を選択
      */
     private void selectMaximumInterclassVarianceCorrdinates(ParamPlotForm plotForm, String[] orf, TableQuery tableQuery) {
         // 501 rows and {paramname, average, sd} cols
@@ -101,8 +102,12 @@ public class ParamPlotAction extends Action
         // ** rows  and 501 cols
         Table selectedValues = tableQuery.getSelectedAnalysisValue(orf);
         int rowsize = selectedValues.getRowSize();
-        if(rowsize <= 1 )
+        // ORFが選択されていないときには何もしない
+        if(rowsize <= 1 ) {
+            plotForm.setParam1("");
+            plotForm.setParam2("");
             return;
+        }
         int orfsize = rowsize - 1;
         String[] options = plotForm.getOptions();
         int optionSize = options.length + 1;
@@ -111,6 +116,7 @@ public class ParamPlotAction extends Action
         double[] avg = {0.0, 0.0};
         ColLabelIndex colLabelIndex = new ColLabelIndex(selectedValues);
         for(int i = 1; i < optionSize; i++ ) {
+            //１軸目の選択
             int col0 = colLabelIndex.getColIndex(options[i-1]);
             avg[0] = 0.0;
             for(int orfnum = 1; orfnum < rowsize; orfnum++ ) {
@@ -120,6 +126,7 @@ public class ParamPlotAction extends Action
             }
             avg[0] /= (double)orfsize;
             for( int j = i + 1; j < optionSize; j++ ) {
+                // 2軸目の選択
                 int col1 = colLabelIndex.getColIndex(options[j-1]);
                 double var = 0.0;
                 avg[1] = 0.0;
@@ -130,6 +137,7 @@ public class ParamPlotAction extends Action
                 }
                 avg[1] /= (double)orfsize;
                 var = avg[0] * avg[0] + avg[1] * avg[1];
+                // 最適コンビネーションの組み合わせ
                 if(maxvar < var) {
                     maxvar = var;
                     maxcorrdinates[0] = i;
@@ -137,6 +145,7 @@ public class ParamPlotAction extends Action
                 }
             }
         }
+        //最適な組み合わせをセット
         plotForm.setParam1(options[maxcorrdinates[0]-1]);
         plotForm.setParam2(options[maxcorrdinates[1]-1]);
     }
