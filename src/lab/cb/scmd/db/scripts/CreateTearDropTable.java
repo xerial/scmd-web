@@ -142,7 +142,7 @@ public class CreateTearDropTable
         for(Object orfObj : orfList)
         {
             String orf = orfObj.toString();
-            Table sheet = (Table) queryRunner.query("select * from individual_20050131 where strainname=" + quote(orf),
+            Table sheet = (Table) queryRunner.query("select * from individual where strainname=" + quote(orf),
                     new ResultSetHandler()  {
                 public Object handle(ResultSet rs) throws SQLException
                 {
@@ -179,12 +179,20 @@ public class CreateTearDropTable
                     String groupName = group.getStain() + "group";
 
                     LinkedList<TableElement> dataList = new LinkedList<TableElement>();
-                    for(TableIterator colIt = colLabelIndex.getVerticalIterator(groupName); colIt.hasNext(); )
-                    {
-                        Cell cell = colIt.nextCell();
-                        if(!cell.toString().equals(group.getName()))
-                            continue;
-                        dataList.add(colLabelIndex.get(colIt.row(), param.getName()));
+                    if( group.getId() == 9 ) { // Dapi A1B is "A1" or "B"
+                        for(TableIterator colIt = colLabelIndex.getVerticalIterator(groupName); colIt.hasNext(); )
+                        {
+                            Cell cell = colIt.nextCell();
+                            if(cell.toString().equals("A1") || cell.toString().equals("B"))
+                                dataList.add(colLabelIndex.get(colIt.row(), param.getName()));
+                        }
+                    } else {
+                        for(TableIterator colIt = colLabelIndex.getVerticalIterator(groupName); colIt.hasNext(); )
+                        {
+                            Cell cell = colIt.nextCell();
+                            if(cell.toString().equals(group.getName()))
+                                dataList.add(colLabelIndex.get(colIt.row(), param.getName()));
+                        }
                     }
                     
 //                    List dataList = (List) queryRunner.query(
@@ -203,7 +211,8 @@ public class CreateTearDropTable
                     double min = Statistics.getMinValue(samples);
                     double max = Statistics.getMaxValue(samples);
                     double num = samples.size();                    
-                    outFile.println(orf + "\t" + param.getId() + "\t" +  group.getId() + "\t" + ave + "\t" +  SD + "\t" +  min + "\t" +  max);
+                    //outFile.println(orf + "\t" + param.getId() + "\t" +  group.getId() + "\t" + ave + "\t" +  SD + "\t" +  min + "\t" +  max);
+                    outFile.println(orf + "\t" + param.getId() + "\t" +  group.getId() + "\t" + ave + "\t" +  SD + "\t" +  min + "\t" +  max + "\t" + num );
                 }
             }
         }
