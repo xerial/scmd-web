@@ -25,7 +25,7 @@
  <html:link page="/ViewGroupByTearDrop.do?stainType=1"> nucleus </html:link>
  <html:link page="/ViewGroupByTearDrop.do?stainType=2"> actin </html:link> ] 
 [ <html:link page="/ViewStats.do"> stats </html:link> ] 
-[ <html:link page="/View2DPlot.do"> 2D plot </html:link> ] 
+[ <html:link page="/View2DPlot.do"> 2D plot </html:link> (<html:link page="/View2DPlot.do?param1=-1&param2=-1"> lucky! </html:link>) ] 
 [ <html:link page="/ViewORFList.do"> yeast mutants </html:link> ] 
 [ <html:link page="/ParameterHelp.do"> parameter help </html:link> ] 
 [ <html:link page="/"> top </html:link> ] 
@@ -42,7 +42,7 @@
  <html:link page="/ViewGroupByTearDrop.do?orf=${orf}&stainType=1"> nucleus </html:link>
  <html:link page="/ViewGroupByTearDrop.do?orf=${orf}&stainType=2"> actin </html:link> ] 
 [ <html:link page="/ViewStats.do?orf=${orf}"> stats </html:link> ] 
-[ <html:link page="/View2DPlot.do?orf=${orf}"> 2D plot </html:link> ] 
+[ <html:link page="/View2DPlot.do?orf=${orf}"> 2D plot </html:link> (<html:link page="/View2DPlot.do?param1=-1&param2=-1"> lucky! </html:link>) ] 
 [ <html:link page="/ViewORFList.do"> yeast mutants </html:link> ] 
 [ <html:link page="/ParameterHelp.do"> parameter help </html:link> ] 
 [ <html:link page="/"> top </html:link> ] 
