@@ -4,16 +4,26 @@
 <javadoc 
 	access="public" author="true" classpath="." destdir="javadoc/api" 
 	nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" 
-	packagenames="lab.cb.scmd.*" version="true" 
-	sourcepath="src" splitindex="true" use="true"
+	version="true" 
+	splitindex="true" use="true"
 	windowtitle="SCMDWeb Project Documentation"
 	stylesheetfile="javadoc.css"
-	Locale="en_US" Encoding="SJIS"
-	>
+	Locale="en_US" Encoding="SJIS">
+	<packageset dir="src" defaultexcludes="yes">
+      <include name="lab/cb/scmd/db/**" />
+      <include name="lab/cb/scmd/web/**" />
+    </packageset>
+	
+	<classpath>
+		<fileset dir="web/scmd-server/WEB-INF/lib">
+		   <include name="*.jar"/>
+		</fileset>		
+	</classpath>	
 
 	<doctitle><![CDATA[SCMDWeb Project Documentation]]></doctitle>
-	<link href="http://java.sun.com/j2se/1.5.0/docs/api/"/>
 	<link href="http://scmd.gi.k.u-tokyo.ac.jp/devel/javadoc/SCMD/api/"/>
+	<link href="http://java.sun.com/j2se/1.5.0/docs/api/"/>
+
 </javadoc>
 </target>
 </project>
