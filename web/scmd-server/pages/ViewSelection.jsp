@@ -58,16 +58,16 @@
 </td>
 <td></td>
 <td align="center"> 
-<select name="color">
-<option style="color:#FF90A0; background:#FF90A0;" value="pink"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  </option>
-<option style="color:#80C0FF; background:#80C0FF;" value="skyblue"> </option>
-<option style="color:#FF5050; background:#FF5050;" value="red">  </option>
-<option style="color:#A0A0A0; background:#A0A0A0;" value="gray">  </option>
-<option style="color:#50FF80; background:#50FF80;" value="green"> </option>
-<option style="color:#FFFF50; background:#FFFF50;" value="yellow"> </option>
-<option style="color:#D0A0FF; background:#D0A0FF;" value="purple"> </option>
-<option style="color:#333333; background:#333333;" value="black">  </option>
-</select>
+<html:select name="selection" property="colorList">
+<option style="color:#FF90A0; background:#FF90A0;" value="${yeastGene.orf}_pink" <%=yeastGene.isSelectedColor("pink")%>> pink </option>
+<option style="color:#80C0FF; background:#80C0FF;" value="${yeastGene.orf}_skyblue" <%=yeastGene.isSelectedColor("skyblue")%>> skyblue </option>
+<option style="color:#FF5050; background:#FF5050;" value="${yeastGene.orf}_red"  <%=yeastGene.isSelectedColor("red")%>> red </option>
+<option style="color:#A0A0A0; background:#A0A0A0;" value="${yeastGene.orf}_gray" <%=yeastGene.isSelectedColor("gray")%>> gray </option>
+<option style="color:#50FF80; background:#50FF80;" value="${yeastGene.orf}_green" <%=yeastGene.isSelectedColor("green")%>> green </option>
+<option style="color:#FFFF50; background:#FFFF50;" value="${yeastGene.orf}_yellow" <%=yeastGene.isSelectedColor("yellow")%>> yellow </option>
+<option style="color:#D0A0FF; background:#D0A0FF;" value="${yeastGene.orf}_purple" <%=yeastGene.isSelectedColor("purple")%>> purple </option>
+<option style="color:#333333; background:#333333;" value="${yeastGene.orf}_black" <%=yeastGene.isSelectedColor("black")%>>  black </option>
+</html:select>
 </td>
 </tr>	
 <tr bgcolor="#F0F0E0" height="15">

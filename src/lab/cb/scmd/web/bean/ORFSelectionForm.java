@@ -28,6 +28,7 @@ public class ORFSelectionForm extends ActionForm
 
     String _input;
     String[] _inputList;
+    String[] _colorList;
     String _button = "add selections";
     //Set _removeList = new TreeSet();
     //Set _previousSet = new TreeSet();
@@ -44,6 +45,7 @@ public class ORFSelectionForm extends ActionForm
 
     public void reset(ActionMapping arg0, HttpServletRequest arg1) {
         _inputList = new String[0];
+        _colorList = new String[0];
     }
     
     public String getInput() {
@@ -58,6 +60,12 @@ public class ORFSelectionForm extends ActionForm
     {
         return _inputList;
     }
+    
+    public String[] getColorList()
+    {
+        return _colorList;
+    }
+    
     /*
     public Set getRemoveList()
     {
@@ -82,6 +90,9 @@ public class ORFSelectionForm extends ActionForm
         }
         */
         _inputList = inputList;
+    }
+    public void setColorList(String[] colorList) {
+        _colorList = colorList;
     }
     
     public void setSelectedORFList(Set orfSet)

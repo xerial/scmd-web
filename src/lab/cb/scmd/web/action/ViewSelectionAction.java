@@ -11,6 +11,7 @@
 package lab.cb.scmd.web.action;
 
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -84,7 +85,16 @@ public class ViewSelectionAction extends Action
                 userSelection.addSelection(s);
         }
 	    session.setAttribute("userSelection", userSelection);
-	    
+
+        // 色名(ORF_color)を<ORF,color> のHashに入れる。
+        String[] colorList = selection.getColorList();
+        HashMap<String,String> colorMap = new HashMap<String, String>();
+        for(String color : colorList)
+        {
+            String[] orfColorSet = color.split("_");
+            if(orfColorSet.length == 2 )
+                colorMap.put(orfColorSet[0], orfColorSet[1]);
+        }
 	    
 	    LinkedList orfList = new LinkedList();
 	    
@@ -103,7 +113,11 @@ public class ViewSelectionAction extends Action
 	        
 	        for(int i=0; i<nodeList.getLength(); i++)
 	        {
-	            orfList.add(new YeastGene((Element) nodeList.item(i)));
+                YeastGene yeastGene = new YeastGene((Element) nodeList.item(i));
+                //各ORF情報に色指定を入れる
+                if( colorMap.containsKey(yeastGene.getOrf()) )
+                    yeastGene.setColor(colorMap.get(yeastGene.getOrf()));
+	            orfList.add(yeastGene);
 	        }
 	        
 	    }
