@@ -15,7 +15,7 @@
 <logic:notEqual name="top" value="true"> 
 <td width="110"><html:link page="/"><html:img page="/image/scmd_logo_grad.png" alt="SCMD" border="0"/></html:link></td>
 </logic:notEqual>
-<td width="540" valign="bottom" align="center"> 
+<td width="450" valign="bottom" align="left"> 
  <html:link page="/">
    <html:img page="/image/scmd_title.png" align="absbottom" width="467" height="22" 
    alt="Saccharomyces Cerevisiae Morphological Database" border="0"/>
