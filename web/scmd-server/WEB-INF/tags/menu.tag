@@ -30,6 +30,7 @@
 </td>
 </tr>
 </table>
+
 <table width="700" border="0" cellpadding="0" cellspacing="0">
 <tr class="menubar" >  
 <td align="center" id="yeast" onMouseOver="closeAllMenu();"><a href="ViewORFList.do">Yeast Mutant</a></td>

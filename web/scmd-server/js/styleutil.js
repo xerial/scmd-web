@@ -70,8 +70,8 @@ function switchVisibility(nodeID)
 function openMenu(nodeID)
 {
 	var s = document.getElementById(nodeID).style;
-	if(s.display)
-		s.display = "block";
+	s.display = "block";
+	return false;
 }
 
 function closeMenu(nodeID)
