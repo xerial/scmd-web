@@ -18,6 +18,7 @@ import java.util.Collection;
 import lab.cb.scmd.db.common.XMLQuery;
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.util.xml.XMLOutputter;
+import lab.cb.scmd.web.bean.SelectedShape;
 import lab.cb.scmd.web.common.SCMDConfiguration;
 
 /**

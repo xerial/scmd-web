@@ -35,6 +35,27 @@ public class SCMDDBConnect extends DBConnect {
     			SCMDConfiguration.getProperty("POSTGRESQL_PORT"),
 				SCMDConfiguration.getProperty("POSTGRESQL_DBNAME"));
     	connect();
+        if(SCMDConfiguration.getProperty("DB_GENENAME") != null ) {
+            _genenameTable = SCMDConfiguration.getProperty("DB_GENENAME");
+        }
+        if(SCMDConfiguration.getProperty("DB_STRAIN") != null ) {
+            _strainTable = SCMDConfiguration.getProperty("DB_STRAIN");
+        }
+        if(SCMDConfiguration.getProperty("DB_ORFALIAS") != null ) {
+            _orfaliasTable = SCMDConfiguration.getProperty("DB_ORFALIAS");
+        }
+        if(SCMDConfiguration.getProperty("DB_SUMMARY") != null ) {
+            _summaryTable = SCMDConfiguration.getProperty("DB_SUMMARY");
+        }
+        if(SCMDConfiguration.getProperty("DB_INDIVIDUAL") != null ) {
+            _individualTable = SCMDConfiguration.getProperty("DB_INDIVIDUAL");
+        }
+        if(SCMDConfiguration.getProperty("DB_AVERAGESHAPE") != null ) {
+            _averageShapeTable = SCMDConfiguration.getProperty("DB_AVERAGESHAPE");
+        }
+        if(SCMDConfiguration.getProperty("DB_TD_AVERAGESHAPE") != null ) {
+            _tdAverageShapeTable = SCMDConfiguration.getProperty("DB_TD_AVERAGESHAPE");
+        }
     }
     
     public SCMDDBConnect (String dbaddress, String portno, String dbname) throws DBConnectException {

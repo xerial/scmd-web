@@ -23,6 +23,7 @@ import lab.cb.scmd.util.table.Cell;
 import lab.cb.scmd.util.table.FlatTable;
 import lab.cb.scmd.util.table.TableIterator;
 import lab.cb.scmd.web.common.SCMDConfiguration;
+import lab.cb.scmd.web.datagen.ParamPair;
 import lab.cb.scmd.web.table.Table;
 
 /**
@@ -194,6 +195,9 @@ public class MockTableQuery extends MockQueryAPI implements TableQuery
         return null;
     }
 
+    public Table getShapeZScoreTable(ParamPair[] paramSets) {
+        return null;
+    }
 
 }
 

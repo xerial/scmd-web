@@ -228,7 +228,9 @@ If this parameter does not matter to what you wish, please select 0:
 
 <tr>
 <td colspan="4" align="center" class="menubutton">
-[<html:link page="/SearchSimilarShape.do"> search </html:link>]
+<% shape.setSearchArgument(); %>
+<bean:define id="imgparam" name="shape" property="searchArgument" type="java.lang.String"/>
+[<html:link page="/SearchSimilarShape.do?${imgparam}"> search </html:link>]
 </td>
 </tr>
 </table>

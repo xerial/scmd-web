@@ -16,6 +16,7 @@ import lab.cb.scmd.db.common.TableQuery;
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.web.common.DataSheetType;
 import lab.cb.scmd.web.common.StainType;
+import lab.cb.scmd.web.datagen.ParamPair;
 import lab.cb.scmd.web.exception.DBConnectException;
 import lab.cb.scmd.web.exception.InvalidSQLException;
 import lab.cb.scmd.web.table.RowLabelIndex;
@@ -203,6 +204,54 @@ public class SCMDTableQuery extends ConnectionHolder implements TableQuery {
     protected String quoteAttribute(String attribute)
     {
         return "\"" + attribute + "\""; 
+    }
+
+    /*
+     * 現在、返るテーブルのcolumn(変数名key)にはパラメータ名を入れているが、group横断で検索を行いたい場合には、変更の必要あり
+     */
+    public Table getShapeZScoreTable(ParamPair[] paramSets) {
+        String sql = "SELECT strainname";
+        String sql_from = " FROM ";
+        String sql_using = "";
+        for(int i = 0; i < paramSets.length; i++ ) {
+            ParamPair pair = paramSets[i];
+            /* get parameter and group name */
+            String paramname = getParameterName(pair.getParamid());
+            String groupname = getGroupName(pair.getGroupid());
+            String key = paramname; 
+            /* */
+            sql += "," + quote(paramname);
+            String subsql = "SELECT strainname, paramid, groupid, average AS " + quote(key) + " FROM paramstat WHERE ";
+            if( pair.getParamid() == -1 && pair.getGroupid() == -1 )
+                continue;
+            if( paramSets[i].getParamid() != -1 ) {
+                subsql += "paramid=" + paramSets[i].getParamid();
+                if( paramSets[i].getGroupid() != -1 ) {
+                    subsql += " AND groupid=" + paramSets[i].getGroupid();
+                }
+            } else {
+                subsql += "groupid=" + paramSets[i].getGroupid();
+            }
+            if( i == 0 ) {
+                sql_from += "(" + subsql + ") AS s" + key;
+            } else {
+                sql_from += " LEFT JOIN (" + subsql + ") AS s" + key;
+                sql_using += " USING (strainname)";
+            }
+        }
+        return evalSQL(sql + sql_from + sql_using);
+    }
+    
+    public String getParameterName(int paramid) {
+        return "" + paramid;
+    }
+    
+    public String getGroupName(int groupid) {
+        return "" + groupid;
+    }
+    
+    public String quote(String str) {
+        return "\"" + str + "\"";
     }
 
 }

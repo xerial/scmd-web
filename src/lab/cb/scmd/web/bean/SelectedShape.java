@@ -22,7 +22,6 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
-import lab.cb.scmd.web.table.decollation.NumberFormatDecollator;
 import lab.cb.scmd.web.util.CGIUtil;
 
 
@@ -104,6 +103,7 @@ public class SelectedShape extends ActionForm
     int weightGrowthDirection = 3;
     String inputValue = "0.5";
     String selectedValue = "0.5";
+    String searchArgument = "";
     
     public double getAreaRatio() {
         return areaRatio;
@@ -128,6 +128,14 @@ public class SelectedShape extends ActionForm
     public void setInputValue(String inputValue) {
         this.inputValue = inputValue;
     }
+    public String getSearchArgument() {
+        return searchArgument;
+    }
+    public void setSearchArgument()
+    {
+        searchArgument = getImageArgument();
+    }
+    
     
     public void setParameter()
     {

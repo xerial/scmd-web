@@ -303,6 +303,16 @@
 			<forward name="failure" path="/error.jsp"/>
 		</action>
 
+		<action path="/SearchSimilarShape"
+				name="shape"
+				scope="session"
+				type="lab.cb.scmd.web.action.SearchSimilarShapeAction"
+				validate="true"
+				input="/error.jsp">
+			<forward name="success" path="/pages/SimilarSearchResult.jsp"/>
+			<forward name="failure" path="/SelectShape.do"/>
+		</action>
+		
 		<action path="/ImagePreview"
 				name="shape"
 				scope="request"

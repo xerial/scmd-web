@@ -26,6 +26,7 @@ import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.util.xml.InvalidXMLException;
 import lab.cb.scmd.util.xml.XMLAttribute;
 import lab.cb.scmd.util.xml.XMLOutputter;
+import lab.cb.scmd.web.bean.SelectedShape;
 import lab.cb.scmd.web.exception.DBConnectException;
 //import lab.cb.scmd.web.exception.InvalidSQLException;
 import lab.cb.scmd.web.table.ColLabelIndex;
@@ -353,7 +354,6 @@ public class SCMDXMLQuery extends ConnectionHolder  implements XMLQuery {
 
 
     }
-    
     
 
 }
