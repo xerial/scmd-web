@@ -1,223 +1,223 @@
-1	strainname	ORF	ORF	orf	text	
-2	image_number	Photo Number	PN	photo	num	
-3	cell_local_id	Cell ID	CID	photo	num	
-4	x1	x1	x1	cell	num	
-5	x2	x2	x2	cell	num	
-6	y1	y1	y1	cell	num	
-7	y2	y2	y2	cell	num	
-8	Cgroup	Bud Size	Bud	cell	text	
-9	C1-1	C1-1	C1-1	cell	coordinate	
-10	C1-2	C1-2	C1-2	cell	coordinate	
-11	C2-1	C2-1	C2-1	cell	coordinate	
-12	C2-2	C2-2	C2-2	cell	coordinate	
-13	C3-1	C3-1	C3-1	cell	coordinate	
-14	C3-2	C3-2	C3-2	cell	coordinate	
-15	C4-1	C4-1	C4-1	cell	coordinate	
-16	C4-2	C4-2	C4-2	cell	coordinate
-17	C5-1	C5-1	C5-1	cell	coordinate
-18	C5-2	C5-2	C5-2	cell	coordinate
-19	C6	C6	C6	cell	coordinate
-20	C7	C7	C7	cell	coordinate
-21	C8	C8	C8	cell	coordinate
-22	C9	C9	C9	cell	coordinate
-23	C10	C10	C10	cell	coordinate
-24	C11-1	C11-1	C11-1	cell	num
-25	C11-2	C11-2	C11-2	cell	num
-26	C12-1	C12-1	C12-1	cell	num
-27	C12-2	C12-2	C12-2	cell	num
-28	C13	C13	C13	cell	num
-29	C101	C101	C101	cell	num
-30	C102	C102	C102	cell	num
-31	C103	C103	C103	cell	num
-32	C104	C104	C104	cell	num
-33	C105	C105	C105	cell	num
-34	C106	C106	C106	cell	num
-35	C107	C107	C107	cell	num
-36	C108	C108	C108	cell	num
-37	C109	C109	C109	cell	num
-38	C110	C110	C110	cell	num
-39	C111	C111	C111	cell	num
-40	C112	C112	C112	cell	num
-41	C113	C113	C113	cell	num
-42	C114	C114	C114	cell	num
-43	C115	C115	C115	cell	num
-44	C116	C116	C116	cell	num
-45	C117	C117	C117	cell	num
-46	C118	C118	C118	cell	num
-47	C126	C126	C126	cell	num
-48	C127	C127	C127	cell	num
-49	C128	C128	C128	cell	num
-50	Agroup	Actin Group	Actin	cell	text
-51	A2-1	A2-1	A2-1	cell	coordinate
-52	A2-2	A2-2	A2-2	cell	coordinate
-53	A2-3	A2-3	A2-3	cell	coordinate
-54	A3-1	A3-1	A3-1	cell	coordinate
-55	A3-2	A3-2	A3-2	cell	coordinate
-56	A3-3	A3-3	A3-3	cell	coordinate
-57	A4-1	A4-1	A4-1	cell	coordinate
-58	A4-2	A4-2	A4-2	cell	coordinate
-59	A4-3	A4-3	A4-3	cell	coordinate
-60	A5-1	A5-1	A5-1	cell	coordinate
-61	A5-2	A5-2	A5-2	cell	coordinate
-62	A5-3	A5-3	A5-3	cell	coordinate
-63	A6-1	A6-1	A6-1	cell	coordinate
-64	A6-2	A6-2	A6-2	cell	coordinate
-65	A6-3	A6-3	A6-3	cell	coordinate
-66	A7-1	A7-1	A7-1	cell	num
-67	A7-2	A7-2	A7-2	cell	num
-68	A8-1	A8-1	A8-1	cell	num
-69	A8-2	A8-2	A8-2	cell	num
-70	A9	A9	A9	cell	num
-71	A101	A101	A101	cell	num
-72	A102	A102	A102	cell	num
-73	A103	A103	A103	cell	num
-74	A104	A104	A104	cell	num
-75	A120	A120	A120	cell	num
-76	A121	A121	A121	cell	num
-77	A122	A122	A122	cell	num
-78	A123	A123	A123	cell	num
-79	Dgroup	Nucleus Group	Nucleus	cell	text
-80	D1-1	D1-1	D1-1	cell	coordinate
-81	D1-2	D1-2	D1-2	cell	coordinate
-82	D1-3-1	D1-3-1	D1-3-1	cell	coordinate
-83	D1-3-2	D1-3-2	D1-3-2	cell	coordinate
-84	D2-1	D2-1	D2-1	cell	coordinate
-85	D2-2	D2-2	D2-2	cell	coordinate
-86	D2-3-1	D2-3-1	D2-3-1	cell	coordinate
-87	D2-3-2	D2-3-2	D2-3-2	cell	coordinate
-88	D3-1	D3-1	D3-1	cell	coordinate
-89	D3-2	D3-2	D3-2	cell	coordinate
-90	D3-3	D3-3	D3-3	cell	coordinate
-91	D4-1	D4-1	D4-1	cell	coordinate
-92	D4-2	D4-2	D4-2	cell	coordinate
-93	D4-3	D4-3	D4-3	cell	coordinate
-94	D5-1	D5-1	D5-1	cell	coordinate
-95	D5-2	D5-2	D5-2	cell	coordinate
-96	D5-3	D5-3	D5-3	cell	coordinate
-97	D6-1	D6-1	D6-1	cell	coordinate
-98	D6-2	D6-2	D6-2	cell	coordinate
-99	D7	D7	D7	cell	coordinate
-100	D8	D8	D8	cell	coordinate
-101	D9-1	D9-1	D9-1	cell	coordinate
-102	D9-2	D9-2	D9-2	cell	coordinate
-103	D10-1	D10-1	D10-1	cell	coordinate
-104	D10-2	D10-2	D10-2	cell	coordinate
-105	D11-1	D11-1	D11-1	cell	coordinate
-106	D11-2	D11-2	D11-2	cell	coordinate
-107	D12-1	D12-1	D12-1	cell	coordinate
-108	D12-2	D12-2	D12-2	cell	coordinate
-109	D13-1	D13-1	D13-1	cell	coordinate
-110	D13-2	D13-2	D13-2	cell	coordinate
-111	D14-1	D14-1	D14-1	cell	num
-112	D14-2	D14-2	D14-2	cell	num
-113	D14-3	D14-3	D14-3	cell	num
-114	D15-1	D15-1	D15-1	cell	num
-115	D15-2	D15-2	D15-2	cell	num
-116	D15-3	D15-3	D15-3	cell	num
-117	D16-1	D16-1	D16-1	cell	num
-118	D16-2	D16-2	D16-2	cell	num
-119	D16-3	D16-3	D16-3	cell	num
-120	D17-1	D17-1	D17-1	cell	num
-121	D17-2	D17-2	D17-2	cell	num
-122	D17-3	D17-3	D17-3	cell	num
-123	D101	D101	D101	cell	num
-124	D102	D102	D102	cell	num
-125	D103	D103	D103	cell	num
-126	D104	D104	D104	cell	num
-127	D105	D105	D105	cell	num
-128	D106	D106	D106	cell	num
-129	D107	D107	D107	cell	num
-130	D108	D108	D108	cell	num
-131	D109	D109	D109	cell	num
-132	D110	D110	D110	cell	num
-133	D111	D111	D111	cell	num
-134	D112	D112	D112	cell	num
-135	D113	D113	D113	cell	num
-136	D114	D114	D114	cell	num
-137	D115	D115	D115	cell	num
-138	D116	D116	D116	cell	num
-139	D117	D117	D117	cell	num
-140	D118	D118	D118	cell	num
-141	D119	D119	D119	cell	num
-142	D120	D120	D120	cell	num
-143	D121	D121	D121	cell	num
-144	D122	D122	D122	cell	num
-145	D123	D123	D123	cell	num
-146	D124	D124	D124	cell	num
-147	D125	D125	D125	cell	num
-148	D126	D126	D126	cell	num
-149	D127	D127	D127	cell	num
-150	D128	D128	D128	cell	num
-151	D129	D129	D129	cell	num
-152	D130	D130	D130	cell	num
-153	D131	D131	D131	cell	num
-154	D132	D132	D132	cell	num
-155	D133	D133	D133	cell	num
-156	D134	D134	D134	cell	num
-157	D135	D135	D135	cell	num
-158	D136	D136	D136	cell	num
-159	D137	D137	D137	cell	num
-160	D138	D138	D138	cell	num
-161	D139	D139	D139	cell	num
-162	D140	D140	D140	cell	num
-163	D141	D141	D141	cell	num
-164	D142	D142	D142	cell	num
-165	D143	D143	D143	cell	num
-166	D144	D144	D144	cell	num
-167	D145	D145	D145	cell	num
-168	D146	D146	D146	cell	num
-169	D147	D147	D147	cell	num
-170	D148	D148	D148	cell	num
-171	D149	D149	D149	cell	num
-172	D150	D150	D150	cell	num
-173	D151	D151	D151	cell	num
-174	D152	D152	D152	cell	num
-175	D153	D153	D153	cell	num
-176	D154	D154	D154	cell	num
-177	D155	D155	D155	cell	num
-178	D156	D156	D156	cell	num
-179	D157	D157	D157	cell	num
-180	D158	D158	D158	cell	num
-181	D159	D159	D159	cell	num
-182	D160	D160	D160	cell	num
-183	D161	D161	D161	cell	num
-184	D162	D162	D162	cell	num
-185	D163	D163	D163	cell	num
-186	D164	D164	D164	cell	num
-187	D165	D165	D165	cell	num
-188	D166	D166	D166	cell	num
-189	D167	D167	D167	cell	num
-190	D168	D168	D168	cell	num
-191	D169	D169	D169	cell	num
-192	D170	D170	D170	cell	num
-193	D171	D171	D171	cell	num
-194	D172	D172	D172	cell	num
-195	D173	D173	D173	cell	num
-196	D174	D174	D174	cell	num
-197	D175	D175	D175	cell	num
-198	D176	D176	D176	cell	num
-199	D177	D177	D177	cell	num
-200	D178	D178	D178	cell	num
-201	D179	D179	D179	cell	num
-202	D180	D180	D180	cell	num
-203	D181	D181	D181	cell	num
-204	D182	D182	D182	cell	num
-205	D183	D183	D183	cell	num
-206	D184	D184	D184	cell	num
-207	D185	D185	D185	cell	num
-208	D186	D186	D186	cell	num	
-209	D187	D187	D187	cell	num	
-210	D188	D188	D188	cell	num	
-211	D189	D189	D189	cell	num	
-212	D190	D190	D190	cell	num	
-213	D191	D191	D191	cell	num	
-214	D192	D192	D192	cell	num	
-215	D193	D193	D193	cell	num	
-216	D194	D194	D194	cell	num	
-217	D195	D195	D195	cell	num	
-218	D196	D196	D196	cell	num	
-219	D197	D197	D197	cell	num	
-220	D198	D198	D198	cell	num	
+1	strainname	ORF	ORF	orf	text	N/A
+2	image_number	Photo Number	PN	photo	num	N/A
+3	cell_local_id	Cell ID	CID	photo	num	N/A
+4	x1	x1	x1	cell	num	N/A
+5	x2	x2	x2	cell	num	N/A
+6	y1	y1	y1	cell	num	N/A
+7	y2	y2	y2	cell	num	N/A
+8	Cgroup	Bud Size	Bud	cell	text	N/A
+9	C1-1	C1-1	C1-1	cell	coordinate	N/A
+10	C1-2	C1-2	C1-2	cell	coordinate	N/A
+11	C2-1	C2-1	C2-1	cell	coordinate	N/A
+12	C2-2	C2-2	C2-2	cell	coordinate	N/A
+13	C3-1	C3-1	C3-1	cell	coordinate	N/A
+14	C3-2	C3-2	C3-2	cell	coordinate	N/A
+15	C4-1	C4-1	C4-1	cell	coordinate	N/A
+16	C4-2	C4-2	C4-2	cell	coordinate	N/A
+17	C5-1	C5-1	C5-1	cell	coordinate	N/A
+18	C5-2	C5-2	C5-2	cell	coordinate	N/A
+19	C6	C6	C6	cell	coordinate	N/A
+20	C7	C7	C7	cell	coordinate	N/A
+21	C8	C8	C8	cell	coordinate	N/A
+22	C9	C9	C9	cell	coordinate	N/A
+23	C10	C10	C10	cell	coordinate	N/A
+24	C11-1	C11-1	C11-1	cell	num	N/A
+25	C11-2	C11-2	C11-2	cell	num	N/A
+26	C12-1	C12-1	C12-1	cell	num	N/A
+27	C12-2	C12-2	C12-2	cell	num	N/A
+28	C13	C13	C13	cell	num	N/A
+29	C101	C101	C101	cell	num	N/A
+30	C102	C102	C102	cell	num	N/A
+31	C103	C103	C103	cell	num	N/A
+32	C104	C104	C104	cell	num	N/A
+33	C105	C105	C105	cell	num	N/A
+34	C106	C106	C106	cell	num	N/A
+35	C107	C107	C107	cell	num	N/A
+36	C108	C108	C108	cell	num	N/A
+37	C109	C109	C109	cell	num	N/A
+38	C110	C110	C110	cell	num	N/A
+39	C111	C111	C111	cell	num	N/A
+40	C112	C112	C112	cell	num	N/A
+41	C113	C113	C113	cell	num	N/A
+42	C114	C114	C114	cell	num	N/A
+43	C115	C115	C115	cell	num	N/A
+44	C116	C116	C116	cell	num	N/A
+45	C117	C117	C117	cell	num	N/A
+46	C118	C118	C118	cell	num	N/A
+47	C126	C126	C126	cell	num	N/A
+48	C127	C127	C127	cell	num	N/A
+49	C128	C128	C128	cell	num	N/A
+50	Agroup	Actin Group	Actin	cell	text	N/A
+51	A2-1	A2-1	A2-1	cell	coordinate	N/A
+52	A2-2	A2-2	A2-2	cell	coordinate	N/A
+53	A2-3	A2-3	A2-3	cell	coordinate	N/A
+54	A3-1	A3-1	A3-1	cell	coordinate	N/A
+55	A3-2	A3-2	A3-2	cell	coordinate	N/A
+56	A3-3	A3-3	A3-3	cell	coordinate	N/A
+57	A4-1	A4-1	A4-1	cell	coordinate	N/A
+58	A4-2	A4-2	A4-2	cell	coordinate	N/A
+59	A4-3	A4-3	A4-3	cell	coordinate	N/A
+60	A5-1	A5-1	A5-1	cell	coordinate	N/A
+61	A5-2	A5-2	A5-2	cell	coordinate	N/A
+62	A5-3	A5-3	A5-3	cell	coordinate	N/A
+63	A6-1	A6-1	A6-1	cell	coordinate	N/A
+64	A6-2	A6-2	A6-2	cell	coordinate	N/A
+65	A6-3	A6-3	A6-3	cell	coordinate	N/A
+66	A7-1	A7-1	A7-1	cell	num	N/A
+67	A7-2	A7-2	A7-2	cell	num	N/A
+68	A8-1	A8-1	A8-1	cell	num	N/A
+69	A8-2	A8-2	A8-2	cell	num	N/A
+70	A9	A9	A9	cell	num	N/A
+71	A101	A101	A101	cell	num	N/A
+72	A102	A102	A102	cell	num	N/A
+73	A103	A103	A103	cell	num	N/A
+74	A104	A104	A104	cell	num	N/A
+75	A120	A120	A120	cell	num	N/A
+76	A121	A121	A121	cell	num	N/A
+77	A122	A122	A122	cell	num	N/A
+78	A123	A123	A123	cell	num	N/A
+79	Dgroup	Nucleus Group	Nucleus	cell	text	N/A
+80	D1-1	D1-1	D1-1	cell	coordinate	N/A
+81	D1-2	D1-2	D1-2	cell	coordinate	N/A
+82	D1-3-1	D1-3-1	D1-3-1	cell	coordinate	N/A
+83	D1-3-2	D1-3-2	D1-3-2	cell	coordinate	N/A
+84	D2-1	D2-1	D2-1	cell	coordinate	N/A
+85	D2-2	D2-2	D2-2	cell	coordinate	N/A
+86	D2-3-1	D2-3-1	D2-3-1	cell	coordinate	N/A
+87	D2-3-2	D2-3-2	D2-3-2	cell	coordinate	N/A
+88	D3-1	D3-1	D3-1	cell	coordinate	N/A
+89	D3-2	D3-2	D3-2	cell	coordinate	N/A
+90	D3-3	D3-3	D3-3	cell	coordinate	N/A
+91	D4-1	D4-1	D4-1	cell	coordinate	N/A
+92	D4-2	D4-2	D4-2	cell	coordinate	N/A
+93	D4-3	D4-3	D4-3	cell	coordinate	N/A
+94	D5-1	D5-1	D5-1	cell	coordinate	N/A
+95	D5-2	D5-2	D5-2	cell	coordinate	N/A
+96	D5-3	D5-3	D5-3	cell	coordinate	N/A
+97	D6-1	D6-1	D6-1	cell	coordinate	N/A
+98	D6-2	D6-2	D6-2	cell	coordinate	N/A
+99	D7	D7	D7	cell	coordinate	N/A
+100	D8	D8	D8	cell	coordinate	N/A
+101	D9-1	D9-1	D9-1	cell	coordinate	N/A
+102	D9-2	D9-2	D9-2	cell	coordinate	N/A
+103	D10-1	D10-1	D10-1	cell	coordinate	N/A
+104	D10-2	D10-2	D10-2	cell	coordinate	N/A
+105	D11-1	D11-1	D11-1	cell	coordinate	N/A
+106	D11-2	D11-2	D11-2	cell	coordinate	N/A
+107	D12-1	D12-1	D12-1	cell	coordinate	N/A
+108	D12-2	D12-2	D12-2	cell	coordinate	N/A
+109	D13-1	D13-1	D13-1	cell	coordinate	N/A
+110	D13-2	D13-2	D13-2	cell	coordinate	N/A
+111	D14-1	D14-1	D14-1	cell	num	N/A
+112	D14-2	D14-2	D14-2	cell	num	N/A
+113	D14-3	D14-3	D14-3	cell	num	N/A
+114	D15-1	D15-1	D15-1	cell	num	N/A
+115	D15-2	D15-2	D15-2	cell	num	N/A
+116	D15-3	D15-3	D15-3	cell	num	N/A
+117	D16-1	D16-1	D16-1	cell	num	N/A
+118	D16-2	D16-2	D16-2	cell	num	N/A
+119	D16-3	D16-3	D16-3	cell	num	N/A
+120	D17-1	D17-1	D17-1	cell	num	N/A
+121	D17-2	D17-2	D17-2	cell	num	N/A
+122	D17-3	D17-3	D17-3	cell	num	N/A
+123	D101	D101	D101	cell	num	N/A
+124	D102	D102	D102	cell	num	N/A
+125	D103	D103	D103	cell	num	N/A
+126	D104	D104	D104	cell	num	N/A
+127	D105	D105	D105	cell	num	N/A
+128	D106	D106	D106	cell	num	N/A
+129	D107	D107	D107	cell	num	N/A
+130	D108	D108	D108	cell	num	N/A
+131	D109	D109	D109	cell	num	N/A
+132	D110	D110	D110	cell	num	N/A
+133	D111	D111	D111	cell	num	N/A
+134	D112	D112	D112	cell	num	N/A
+135	D113	D113	D113	cell	num	N/A
+136	D114	D114	D114	cell	num	N/A
+137	D115	D115	D115	cell	num	N/A
+138	D116	D116	D116	cell	num	N/A
+139	D117	D117	D117	cell	num	N/A
+140	D118	D118	D118	cell	num	N/A
+141	D119	D119	D119	cell	num	N/A
+142	D120	D120	D120	cell	num	N/A
+143	D121	D121	D121	cell	num	N/A
+144	D122	D122	D122	cell	num	N/A
+145	D123	D123	D123	cell	num	N/A
+146	D124	D124	D124	cell	num	N/A
+147	D125	D125	D125	cell	num	N/A
+148	D126	D126	D126	cell	num	N/A
+149	D127	D127	D127	cell	num	N/A
+150	D128	D128	D128	cell	num	N/A
+151	D129	D129	D129	cell	num	N/A
+152	D130	D130	D130	cell	num	N/A
+153	D131	D131	D131	cell	num	N/A
+154	D132	D132	D132	cell	num	N/A
+155	D133	D133	D133	cell	num	N/A
+156	D134	D134	D134	cell	num	N/A
+157	D135	D135	D135	cell	num	N/A
+158	D136	D136	D136	cell	num	N/A
+159	D137	D137	D137	cell	num	N/A
+160	D138	D138	D138	cell	num	N/A
+161	D139	D139	D139	cell	num	N/A
+162	D140	D140	D140	cell	num	N/A
+163	D141	D141	D141	cell	num	N/A
+164	D142	D142	D142	cell	num	N/A
+165	D143	D143	D143	cell	num	N/A
+166	D144	D144	D144	cell	num	N/A
+167	D145	D145	D145	cell	num	N/A
+168	D146	D146	D146	cell	num	N/A
+169	D147	D147	D147	cell	num	N/A
+170	D148	D148	D148	cell	num	N/A
+171	D149	D149	D149	cell	num	N/A
+172	D150	D150	D150	cell	num	N/A
+173	D151	D151	D151	cell	num	N/A
+174	D152	D152	D152	cell	num	N/A
+175	D153	D153	D153	cell	num	N/A
+176	D154	D154	D154	cell	num	N/A
+177	D155	D155	D155	cell	num	N/A
+178	D156	D156	D156	cell	num	N/A
+179	D157	D157	D157	cell	num	N/A
+180	D158	D158	D158	cell	num	N/A
+181	D159	D159	D159	cell	num	N/A
+182	D160	D160	D160	cell	num	N/A
+183	D161	D161	D161	cell	num	N/A
+184	D162	D162	D162	cell	num	N/A
+185	D163	D163	D163	cell	num	N/A
+186	D164	D164	D164	cell	num	N/A
+187	D165	D165	D165	cell	num	N/A
+188	D166	D166	D166	cell	num	N/A
+189	D167	D167	D167	cell	num	N/A
+190	D168	D168	D168	cell	num	N/A
+191	D169	D169	D169	cell	num	N/A
+192	D170	D170	D170	cell	num	N/A
+193	D171	D171	D171	cell	num	N/A
+194	D172	D172	D172	cell	num	N/A
+195	D173	D173	D173	cell	num	N/A
+196	D174	D174	D174	cell	num	N/A
+197	D175	D175	D175	cell	num	N/A
+198	D176	D176	D176	cell	num	N/A
+199	D177	D177	D177	cell	num	N/A
+200	D178	D178	D178	cell	num	N/A
+201	D179	D179	D179	cell	num	N/A
+202	D180	D180	D180	cell	num	N/A
+203	D181	D181	D181	cell	num	N/A
+204	D182	D182	D182	cell	num	N/A
+205	D183	D183	D183	cell	num	N/A
+206	D184	D184	D184	cell	num	N/A
+207	D185	D185	D185	cell	num	N/A
+208	D186	D186	D186	cell	num	N/A
+209	D187	D187	D187	cell	num	N/A
+210	D188	D188	D188	cell	num	N/A
+211	D189	D189	D189	cell	num	N/A
+212	D190	D190	D190	cell	num	N/A
+213	D191	D191	D191	cell	num	N/A
+214	D192	D192	D192	cell	num	N/A
+215	D193	D193	D193	cell	num	N/A
+216	D194	D194	D194	cell	num	N/A
+217	D195	D195	D195	cell	num	N/A
+218	D196	D196	D196	cell	num	N/A
+219	D197	D197	D197	cell	num	N/A
+220	D198	D198	D198	cell	num	N/A
 221	C119	C119	C119	orf	double	no_bud_ratio
 222	C120	C120	C120	orf	double	small_bud_ratio
 223	C121	C121	C121	orf	double	medium_bud_ratio
