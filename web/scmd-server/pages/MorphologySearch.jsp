@@ -94,7 +94,7 @@ ${shape.selectionSubMessage}
 <!--
 function preview(){
     value = document.shape.inputValue.value;
-    url = "/scmd-server/ImagePreview.do?" + "<%= shape.getImageArgumentWithout(shape.getParameterName()) %>"  +  "&${shape.parameterName}=" + value;
+    url = "ImagePreview.do?" + "<%= shape.getImageArgumentWithout(shape.getParameterName()) %>"  +  "&${shape.parameterName}=" + value;
     previewWin = window.open
 	(url, 'preview', 
 	 'width=200, height=360, status=no, menuber=no, scrollbar=no'); 
@@ -110,7 +110,7 @@ function preview(){
 <tr>
 <% for(int i=0; i<4; i++) {%>
 <td width="128" height="128">
-<img src="/scmd-server/cellshape.png?<%= shape.getImageArgument(i)%>"/>
+<img src="cellshape.png?<%= shape.getImageArgument(i)%>"/>
 </td>
 <% } %>
 </tr>
