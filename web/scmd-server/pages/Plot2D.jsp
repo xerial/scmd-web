@@ -10,6 +10,7 @@
 <jsp:useBean id="view"  scope="session" class="lab.cb.scmd.web.bean.CellViewerForm"/>
 <jsp:useBean id="plotForm"  scope="request" class="lab.cb.scmd.web.bean.ParamPlotForm"/>
 <jsp:useBean id="gene"  scope="request" class="lab.cb.scmd.web.bean.YeastGene"/>
+<jsp:useBean id="userSelection"  scope="session" class="lab.cb.scmd.web.bean.UserSelection"/>
 
 <scmd-base:header title="2D Plot ${view.orf}"/>
 
@@ -73,9 +74,28 @@ function writeRegion(e)
 	stdname="${gene.standardName}" annot="${gene.annotation}" 
 	title="2D Plot"  />
 
+<table>
+<tr>
+<td>
+<table>
+<logic:iterate id="orf" name="userSelection" property="selection" type="java.lang.String">
+<tr>
+<td bgcolor="<%= userSelection.getColor(orf) %>" width="25"></td>
+<td width="5"></td>
+<td class="orf" width="100" align="left">
+<a href="/scmd-server/ViewStats.do?orf=${orf}"><%= orf.toUpperCase() %></a> 
+</td>
+</tr>
+</logic:iterate>
+</table>
+</td>
+<td>
 <img id="plot" class="plotview" src="Write2DPlot.do?${plotForm.cgiArgument}" 
 width="300" height="300" onclick="clk(event)" onmousemove="writeRegion(event)"
 />
+</td>
+</tr>
+</table>
 <%--<embed src="Write2DPlot.do?${plotForm.cgiArgument}" width="300" height="300" class="plotview"/>--%>
 <br/>
 <img id="b_n" style="position:absolute;" src="/image/dot.gif" width="0" height="0"/>

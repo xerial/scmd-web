@@ -71,10 +71,20 @@ public class UserSelection
     {
         _colorMap.put(orf.toLowerCase(), colorName);
     }
-    
+    public String getColor(String orf)
+    {
+        if(orf == null)
+            return "white";
+        
+        PlotColor pc = getPlotColor(orf);
+        if(pc != null)
+            return "#" + pc.getColorCode();
+        else
+            return "white";
+    }
     
     public PlotColor getPlotColor(String orf)
-    {
+    {        
         return PlotColor.getPlotColor(_colorMap.get(orf.toLowerCase()));
     }
     
