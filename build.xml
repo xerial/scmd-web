@@ -6,15 +6,11 @@
 // $URL$	 
 // $LastChangedBy$  
 
-usage: ant (-Dconf=build.properties)
-
-環境変数TOMCAT_HOMEを設定しておくこと。
-実行時には、CLASSPATHに、lib/catalina-ant.jar, lib/junit.jar, lib/svnant.jarが
-追加されていることが必要。
 -->
 <project name="SCMDWeb" default="default">
     <description>
-        ant script for building SCMDWeb server.
+ Ant script for building SCMDWeb server.
+ usage: > ant -lib=lib (-Dconf=[configuration file: default=build.properties])
     </description>
 	
 	<property environment="env"/> <!-- load environment variables -->
@@ -32,6 +28,7 @@ usage: ant (-Dconf=build.properties)
 	<property name="manager.url" value="http://localhost:8080/manager"/>
 	<property name="manager.username" value="tomcat"/>
 	<property name="manager.password" value="tomcat"/>
+	
 	
 	<!-- ================================= 
           target: default              
@@ -55,10 +52,10 @@ usage: ant (-Dconf=build.properties)
 	   </javac>
 	</target>	
 
-    <target name="clean" description="clean .class files">
+    <target name="clean" description="clean .class &amp; .war files">
 	   <delete includeEmptyDirs="true">
 	      <fileset dir="${webinf}/classes" includes="**/*.class"/>   	
-	      <file name="${build}/${war.name}"/>
+	      <file name="${build}/war/${war.name}"/>
 	   </delete>
     </target>
 	
@@ -112,7 +109,7 @@ usage: ant (-Dconf=build.properties)
 		   	update="true" war="${build}/war/${war.name}"/>
 	</target>
 
-	<target name="jsp.precompile">
+	<target name="jsp.precompile" description="fetch .jsp pages from the web server">
 		<!--
 		<taskdef name="junit" classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask">
 			<classpath> <path location="${lib}/junit.jar"/> </classpath>
