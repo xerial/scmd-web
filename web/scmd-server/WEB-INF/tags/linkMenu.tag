@@ -13,7 +13,7 @@
 <tr><td>
 </logic:equal>
 <span class="menubutton">
-[ <html:link page="/ViewPhoto.do?orf=${orf}"> viewer </html:link> ] 
+[ <html:link page="/ViewPhoto.do?orf=${orf}"> photo </html:link> ] 
 [ <html:link page="/ViewDataSheet.do?orf=${orf}"> datasheet </html:link> ] 
 [<span class="small"> Group by: </span> 
  <html:link page="/ViewGroupBySheet.do?orf=${orf}&stainType=0"> bud size </html:link>
