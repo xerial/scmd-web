@@ -9,6 +9,9 @@
 //--------------------------------------
 package lab.cb.scmd.db.scripts;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.sql.SQLException;
 
 import java.util.Collection;
@@ -29,6 +32,8 @@ import lab.cb.common.cui.OptionParserException;
 import lab.cb.scmd.db.scripts.bean.GroupType;
 import lab.cb.scmd.db.scripts.bean.Parameter;
 import lab.cb.scmd.exception.SCMDException;
+import lab.cb.scmd.util.io.NullPrintStream;
+import lab.cb.scmd.util.stat.EliminateOnePercentOfBothSidesStrategy;
 import lab.cb.scmd.util.stat.Statistics;
 import lab.cb.scmd.util.stat.StatisticsWithMissingValueSupport;
 import lab.cb.scmd.web.exception.DatabaseException;
@@ -46,13 +51,13 @@ import lab.cb.scmd.web.table.Table;
 public class CreateTearDropTable
 {
     private enum Opt {
-        help, verbose
+        help, verbose, outfile
     }
 
     private OptionParser<Opt> optionParser = new OptionParser<Opt>();
     private Jdbc3PoolingDataSource dataSource = new Jdbc3PoolingDataSource();
+    private PrintStream log = new NullPrintStream(); 
 
-    
     public static void main(String[] arg) 
     {
         try
@@ -77,15 +82,26 @@ public class CreateTearDropTable
     public CreateTearDropTable() throws OptionParserException, SCMDException
     {
         optionParser.addOption(Opt.help, "h", "help", "display help messages");
-        optionParser.addOption(Opt.verbose, "v", "verbose",
-                "display verbose messages");
+        optionParser.addOption(Opt.verbose, "v", "verbose", "display verbose messages");
+        optionParser.addOptionWithArgment(Opt.outfile, "o", "output", "FILE", "output file name. defalut=teardrop.txt", "teardrop.txt");
         initDB();
     }
 
     public void process(String[] arg) throws OptionParserException,
-            SCMDException, SQLException, XerialException
+            SCMDException, SQLException, XerialException, IOException
     {
         optionParser.parse(arg);
+        if(optionParser.isSet(Opt.help))
+        {
+            System.out.println(optionParser.helpMessage());
+            return;
+        }
+        if(optionParser.isSet(Opt.verbose))
+        {
+            log = System.out;
+        }
+        
+        PrintStream outFile = new PrintStream(new FileOutputStream(optionParser.getValue(Opt.outfile)));
         
         // read group types
         QueryRunner queryRunner = new QueryRunner(dataSource);
@@ -97,7 +113,7 @@ public class CreateTearDropTable
 //        for(Parameter p : cellParamList)
 //            XMLBeanUtil.outputAsXML(p, System.out);
         
-        Statistics stat = new StatisticsWithMissingValueSupport(new String[] {"-1", "-1.0", "."});
+        Statistics stat = new StatisticsWithMissingValueSupport(new String[] {"-1", "-1.0", "."}, new EliminateOnePercentOfBothSidesStrategy());
         
         // for each orf
         List orfList = (List) queryRunner.query("select distinct systematicname from genename_20040719 order by systematicname", new ColumnListHandler());
@@ -105,13 +121,14 @@ public class CreateTearDropTable
         for(Object orfObj : orfList)
         {
             String orf = orfObj.toString();
-            System.out.println("[" + orf + "]");
             // for each param
             for(Parameter param : cellParamList)
             {
                 // for each group
                 for(GroupType group : groupTypeList)
-                {                    
+                {   
+                    log.printf("[%7s] param %5s : group %10s\r", orf, param.getName(), group.getName());
+                    log.flush();
                     String groupName = group.getStain() + "group";
                     List dataList = (List) queryRunner.query(
                            "select " + doublequote(param.getName()) + " from individual_20050131 where strainname=" +quote(orf) + " and " + doublequote(groupName) + "=" + quote(group.getName()),
@@ -123,16 +140,18 @@ public class CreateTearDropTable
                     
                     if(samples.size() == 0) 
                         continue;
+
                     double SD = Statistics.calcSD(samples);
                     double ave = Statistics.calcMean(samples);
                     double min = Statistics.getMinValue(samples);
                     double max = Statistics.getMaxValue(samples);
                     double num = samples.size();
-                    System.out.println(orf + "\t" + param.getId() + "\t" +  group.getId() + "\t" +  num + "\t" +  ave + "\t" +  SD + "\t" +  min + "\t" +  max);
+                    outFile.println(orf + "\t" + param.getId() + "\t" +  group.getId() + "\t" + ave + "\t" +  SD + "\t" +  min + "\t" +  max);
                 }
             }
         }
-        
+        outFile.flush();
+        outFile.close();
     }
 
     String quote(String s)
