@@ -195,14 +195,14 @@ public class CreateTearDropTable
                     table.addRow(dataList);
                     Collection samples = stat.filter(table.getHorizontalIterator(0));
                     
-                    if(samples.size() == 0) 
+                    if(samples.size() <= 1) 
                         continue;
 
                     double SD = Statistics.calcSD(samples);
                     double ave = Statistics.calcMean(samples);
                     double min = Statistics.getMinValue(samples);
                     double max = Statistics.getMaxValue(samples);
-                    double num = samples.size();
+                    double num = samples.size();                    
                     outFile.println(orf + "\t" + param.getId() + "\t" +  group.getId() + "\t" + ave + "\t" +  SD + "\t" +  min + "\t" +  max);
                 }
             }
