@@ -21,10 +21,18 @@
 
 <p class="title"> SCMD Site Map </p>
 
+<p class="menubutton">
+[<a href="#yeastmutant">Yeast Mutant</a>]
+[<a href="#photo">Photo Menu</a>]
+[<a href="#datamining">Data Mining Menu</a>]
+[<a href="#custom">Customization Menu</a>]
+[<a href="#help">Other Menus</a>]
+</p>
+
 <table width="500">
 <tr>
 <td class="small">
-You can select all menues described below from the above drop-down menu bar.
+You can select all menus described below from the above drop-down menu bar.
 </td>
 <td>
 <img src="image/dropdownmenu.png"/>
@@ -33,6 +41,7 @@ You can select all menues described below from the above drop-down menu bar.
 
   <table width="650" border="0" class="helpmenu">
     <tr> 
+      <a name="yeastmutant"/>
       <td colspan="2" class="menubar">Yeast Mutant</td>
     </tr>
     <tr> 
@@ -46,7 +55,8 @@ You can select all menues described below from the above drop-down menu bar.
       </td>
       <td><img src="image/yeastmutant.png" align="middle"/></td>
     </tr>
-    <tr> 
+    <tr>
+          <a name="photo"/> 
       <td colspan="2"  class="menubar">Photo Menu </td>
     </tr>
     <tr> 
@@ -85,6 +95,7 @@ You can select all menues described below from the above drop-down menu bar.
       </td>
     </tr>
     <tr> 
+          <a name="datamining"/>    
       <td colspan="2" class="menubar">Data Mining Menu</td>
     </tr>
     <tr> 
@@ -154,6 +165,7 @@ You can select all menues described below from the above drop-down menu bar.
       </td>
     </tr>
     <tr> 
+          <a name="custom"/>
       <td colspan="2"  class="menubar">Customization Menu </td>
     </tr>
     <tr> 
@@ -180,9 +192,10 @@ You can select all menues described below from the above drop-down menu bar.
 
       </td>
     </tr>
-    <tr><td colspan="2"  class="menubar">Others</td></tr>
+    <tr><td colspan="2"  class="menubar">Other Menus</td></tr>
     <tr> 
-      <td> 
+      <td colspan="2">
+            <a name="help"/>       
         <ul>
           <li>Help Menu 
             <ul>
@@ -194,7 +207,9 @@ You can select all menues described below from the above drop-down menu bar.
       </td>
     </tr>
     <tr> 
-      <td> 
+    	<a name="publication"/>    	
+    	<a name="about"/>    	
+      <td colspan="2"> 
         <ul>
           <li><a href="publication.jsp">Publications</a> </li>
           <li><a href="about.jsp">About SCMD</a> </li>
