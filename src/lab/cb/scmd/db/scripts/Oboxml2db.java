@@ -4,6 +4,9 @@
  * TODO To change the template for this generated file go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
+// XML-OBOŒ`®‚Ì‚à‚Ì‚ğADB‚É“ü‚ê‚é‚É•ÏX‚·‚é
+//Ref. http://scmd-staff.gi.k.u-tokyo.ac.jp/developer/index.php?SCMD%2FDB%2FGO
+
 package lab.cb.scmd.db.scripts;
 
 import java.io.BufferedReader;

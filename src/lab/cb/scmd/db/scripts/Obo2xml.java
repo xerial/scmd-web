@@ -7,6 +7,9 @@
 //$URL: http://scmd.gi.k.u-tokyo.ac.jp/devel/svn/phenome/trunk/SCMDWeb/src/lab/cb/scmd/db/scripts/CreateTearDropTable.java $ 
 //$Author: leo $
 //--------------------------------------
+// GO ÇÃOBOå`éÆÇÃÇ‡ÇÃÇÅAxmlÇ…ïœçXÇ∑ÇÈ
+// Ref. http://scmd-staff.gi.k.u-tokyo.ac.jp/developer/index.php?SCMD%2FDB%2FGO
+
 package lab.cb.scmd.db.scripts;
 
 import java.io.BufferedReader;
