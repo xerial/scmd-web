@@ -1,0 +1,26 @@
+<?xmlversion="1.0" encoding="utf-8"?>
+	<jnlp spec="1.0+" codebase="http://scmd/scmd-server/jws/2dplot" href="index.jnlp">
+		<information>
+			<title>2D Plotter</title>
+			<vendor>SCMDServer Development Team</vendor>
+			<homepage href="index.html"/>
+			<description>2D Plotter</description>
+			<description kind="short">2D Plotter</description>
+		</information>
+		<security>
+			<all-permissions/>
+		</security>
+		<resources>
+			<j2se version="1.4+"/>
+			<jar href="ScatterPlotter.jar"/>
+			<nativelib href="../common/swt-lib.jar"/>
+		</resources>
+		<resources os="Windows"> 
+			<jar href="../common/swt-win32.jar"/>
+		</resources>
+		<resources os="Mac OS X"> 
+			<jar href="../common/swt-macosx.jar"/>
+			<jar href="../common/swt-pi.jar"/>
+		</resources>
+		<application-desc main-class="scmd.util.scatterplotter.ScatterPlotter"/>
+	</jnlp>

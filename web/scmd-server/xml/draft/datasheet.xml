@@ -1,0 +1,21 @@
+<scmdresult>
+ <datasheet>
+  <orf orfname="yor202w">
+   <photo id="1" currentpage="7" maxpage="26" numberofcells="20"/>
+   <cell id="1" currentpage="1">
+      <value parameter="Bud growth phase" > medium </value>
+      <value parameter="Nucleus group" group="nucleus"> A1 </value>
+      <value parameter="Actin group" group="acitin" > iso </value>
+      ...
+   </cell>
+
+   <cell id="2" currentpage="2">
+      <value parameter="Bud growth phase" > medium </value>
+      <value parameter="Nucleus group" group="nucleus"> A1 </value>
+      <value parameter="Actin group" group="acitin" > iso </value>
+      ...
+   </cell>
+   </photo>
+  </orf>
+ </datasheet>
+</scmdresult>

@@ -1,0 +1,13 @@
+IMAGEMAGICK_CONVERT = C:/Program Files/ImageMagick-6.0.3-Q16/convert.exe
+SCMD_PHOTO_DIR_URL = file:///M:/cygwin/home/leo/eclipse/workspace/SCMDServer/web/database/photo
+#SCMD_PHOTO_DIR_URL = http://scmd.gi.k.u-tokyo.ac.jp/database/photos/
+XMLQUERY = scmd.db.mock.MockXMLQuery
+TABLEQUERY = scmd.db.mock.MockTableQuery
+VALUEQUERY = scmd.db.mock.MockValueQuery
+#XMLQUERY = scmd.db.connect.SCMDXMLQuery
+#TABLEQUERY = scmd.db.connect.SCMDTableQuery
+#VALUEQUERY = scmd.db.connect.SCMDValueQuery
+POSTGRESQL_IP = 157.82.250.67
+POSTGRESQL_PORT = 5432
+POSTGRESQL_DBNAME = scmd_pre_20040714
+TEARDROP_URI = http://scmd.gi.k.u-tokyo.ac.jp/database/teardrop/average_shape/

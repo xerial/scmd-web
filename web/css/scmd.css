@@ -1,0 +1,160 @@
+/*
+//--------------------------------------
+// SCMDProject
+// 
+// scmd.css
+// Since: 2004/07/05
+//
+// $Date: 2004/09/07 18:07:35 $ ($Author: leo $)
+// $Revision: 1.17 $
+//--------------------------------------
+*/
+
+body 
+{
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 12pt;
+}
+
+body.center
+{
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+a:link 	{ color: #006699; }
+a:visited { color: #666666; }
+
+.menubar
+{
+    font-size: 10pt;
+	text-align: center;
+	background: #70b0b0;
+	margin-top: 0pt;
+	background-image: url("/image/border.png");	
+}
+.menubar a:link { text-decoration: none; color: white; }
+.menubar a:visited { text-decoration: none; color: white; }
+.menubar a:hover { text-decoration: none; color: white; background: #10D0F0; }
+
+
+.small { font-family: Arial, Helvetica, sans-serif; font-size: 10pt}
+.annotation { font-family: Arial, Helvetica, sans-serif; font-size: 10pt; color: #705030;}
+.default { font-family: Arial, Helvetica, sans-serif; font-size: 12pt}
+
+.title { color: #006699; font-weight: bold; font-size:12pt }
+.notice { color: #f08080; font-weight: bold; }
+.time { font-size: 8pt; }
+
+.orf { color: #0066b0; font-size: 12pt; font-weight: bold; }
+.orf a:link { font-weight: normal; color: #0066b0; }
+.orf a:visited { font-weight: normal; color: #666666; }
+.orf a:hover { background: #90f0f0; }
+
+.genename { color: black; font-size: 10pt; font-weight: bold; }
+
+.item { color: #006699; }
+.datasheet { font-size: 8pt; }
+.datasheet_gray { font-size: 8pt; background: #E0F0F0; }
+.sheetlabel { color: white; font-size: 8pt; text-align: center; background: #4096B9; 
+	background-image: url("/image/label.png");
+	font-weight: bold; 
+	white-space: nowrap;
+}
+.sheetlabel a:link { text-decoration: none; font-weight: bold; color: white; }
+.sheetlabel a:visited { text-decoration: none; font-weight: bold; color: white; }
+.sheetlabel a:hover { text-decoration:none; color: white; background: #90C0F0; }
+.sheetlabel_on { 
+    color: white; 
+    font-size: 8pt; 
+    text-align: center; 
+    background: #90C0F0; 
+	font-weight: bold; 
+    white-space: nowrap;
+}
+.sheetlabel_on a:link { text-decoration: none; font-weight: bold; color: white; }
+.sheetlabel_on a:visited { text-decoration: none; font-weight: bold; color: white; }
+.sheetlabel_on a:hover { text-decoration:none; color: white; background: #90C0F0; }
+
+.label { color: #006699; font-weight: bold; text-align: center; }
+.notation { color: #444444; font-size: 11pt; }
+.memo { color: #6688E0; }
+
+.tablelabel 
+{ 
+	color: #006699; font-size: 10pt; 
+	font-weight: bold; text-align: left; 
+	white-space: nowrap;
+}
+.tablelabel_bright 
+{ 
+	color: #B06080; font-size: 10pt; 
+	font-weight: bold; text-align: left; 
+	white-space: nowrap;
+}
+.tabledata
+{
+	color: black; font-size: 9pt;
+	text-align: right;
+}
+
+
+.tool
+{ 
+	color: white;
+	background: #FDC060;
+	font-size: 10pt; 
+	font-weight: bold; 
+	text-align: center;
+}
+.tool a:link { text-decoration: none; font-weight: bold; color: white; }
+.tool a:visited { text-decoration: none; font-weight: bold; color: white; }
+.tool a:hover { font-weight: bold; background: #F0A040; }
+.tool_on
+{ 
+	color: white;
+	background: #FDA040;
+	font-size: 10pt; 
+	font-weight: bold; 
+	text-align: center;
+}
+.tool_on a:link { text-decoration: none; font-weight: bold; color: white; }
+.tool_on a:visited { text-decoration: none; font-weight: bold; color: white; }
+.tool_on a:hover { font-weight: bold; background: #F0A040; }
+
+.button 
+{ 
+	font-size: 10pt; 
+}
+.button a:link { text-decoration: none; font-weight: bold; color: #666699; }
+.button a:visited { text-decoration: none; font-weight: bold; color: #666699; }
+.button a:hover { font-weight: bold; background: #e0c0f0; }
+
+.menubutton 
+{ 
+	font-size: 10pt; 
+}
+.menubutton a:link { color: #006699; }
+.menubutton a:visited { color: #666666; }
+.menubutton a:hover { text-decoration: none; color: #006699; background: #b0e0f0; }
+
+.header 
+{ 
+	text-align: center; 
+	color: #666666; 
+	font-weight: bold; 
+	font-size: 12pt;  
+}
+
+.marginabove { margin-top: 15pt; }
+.searchframe { margin-top: 2pt; text-align: center; }
+.plain { text-decoration: none; }
+.noret { white-space: nowrap; }
+
+
+.plotview
+{
+ border-style: solid;
+ border-width: 2px;
+ border-color: white white #60A0A0 #80C0C0;
+}
