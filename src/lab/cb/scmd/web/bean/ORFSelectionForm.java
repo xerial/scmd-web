@@ -12,6 +12,7 @@ package lab.cb.scmd.web.bean;
 
 import java.util.Iterator;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,6 +28,7 @@ public class ORFSelectionForm extends ActionForm
 
     String _input;
     String[] _inputList;
+    String _button = "add selections";
     //Set _removeList = new TreeSet();
     //Set _previousSet = new TreeSet();
     /**
@@ -91,6 +93,34 @@ public class ORFSelectionForm extends ActionForm
         {
             _inputList[i++] = (String) it.next();
         }
+    }
+    
+    public void setOrfList(String orfListText)
+    {
+        String[]  orfList = orfListText.trim().split("[ ,\t\n\r]+");
+        if(orfList.length > 0) 
+            setInputList(orfList);
+    }
+    
+//    public String getOrfList()
+//    {
+////        StringBuilder orfList = new StringBuilder();
+////        for(String s : _inputList)
+////        {
+////            orfList.append(s);
+////            orfList.append("\n");
+////        }
+////        return orfList.toString();
+//        return "";
+//    }
+    
+    public void setButton(String buttonName)
+    {
+        _button = buttonName;
+    }
+    public String getButton()
+    {
+        return _button;
     }
 }
 

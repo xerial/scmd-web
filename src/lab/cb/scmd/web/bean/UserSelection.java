@@ -29,7 +29,7 @@ public class UserSelection
         super();
     }
     
-    public void addSeletion(String orf)
+    public void addSelection(String orf)
     {
         _selection.add(orf.toLowerCase());
     }
@@ -42,7 +42,7 @@ public class UserSelection
     
     public void removeSelection(String orf)
     {
-        _selection.remove(orf);
+        _selection.remove(orf.toLowerCase());
     }
 }
 

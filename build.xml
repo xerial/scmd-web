@@ -154,8 +154,9 @@
 	 java -cp web/scmd-server/WEB-INF/classes -Djava.ext.dirs=web/scmd-server/WEB-INF/lib lab.cb.scmd.db.scripts.CreateTearDropTable -v -o build/teardrop.txt
 	-->
 	<target name="table.teardrop" depends="compile" description="generate teardrop table">
-		<java classname="lab.cb.scmd.db.scripts.CreateTearDropTable" fork="true" >
+		<java classname="lab.cb.scmd.db.scripts.CreateTearDropTable" fork="true"  >
 			<mkdir dir="build"/>
+			<jvmarg line="-Xmx512M -server"/>
 			<arg line="-v -o build/teardrop.txt"/>
 			<classpath>
 				<dirset dir="${webinf}/classes"/>

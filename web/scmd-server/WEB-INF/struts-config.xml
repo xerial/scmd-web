@@ -271,6 +271,7 @@
 				input="/error.jsp">
 			<forward name="success" path="/pages/ORFList.jsp"/>
 		</action>
+		
 
 		<action path="/Search"
 				name="search"
@@ -337,6 +338,8 @@
 				input="/error.jsp">
 			<forward name="success" path="/pages/ViewSelection.jsp"/>
 		</action>
+
+
 
 		<action path="/ViewGroupBySheet"
 				name="groupBySheet"

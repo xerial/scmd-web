@@ -13,6 +13,11 @@
 <center>
 <scmd-tags:menu searchframe="on" toolbar="on"/>
 
+<html:form action="ViewSelection.do" method="GET">
+
+<html:textarea rows="10" property="orfInput"/>  
+</html:form>
+
 </center>
 </body>
 

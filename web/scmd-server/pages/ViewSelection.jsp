@@ -24,7 +24,13 @@
 <center>
 <scmd-tags:menu toolbar="on" searchframe="on"/>
 
-<html:form action="ViewSelection.do" method="POST">
+<html:form action="ViewSelection.do" method="GET">
+
+<table width="500">
+<tr><td align="right">
+<html:submit value="remove" property="button"/>
+</td></tr>
+</table>
 
 <table border="0" cellspacing="0" cellpadding="0">
 <tr nowrap="nowrap">
@@ -55,7 +61,18 @@
 <tr height="10"><td> </td></tr>
 </logic:iterate>
 </table>
+</html:form>
 
+
+<html:form action="ViewSelection.do" method="GET">
+<table>
+<tr>
+<td class="small" valign="center"><b>input ORFs manually</b> : <br> (ex. yor202w, yal002w, ...) </td>
+<td><textarea name="orfList" rows="5" cols="15"></textarea> </td>
+</td>
+</tr>
+</table>
+<html:submit value="update" property="button"/>
 </html:form>
 
 </center>

@@ -64,14 +64,16 @@ public class ViewSelectionAction extends Action
 	    
 	    // ƒ†[ƒU[‚Ì“ü—Í‚ğ’Ç‰Á
 	    if(orf != null)
-	        userSelection.addSeletion(orf);
+	        userSelection.addSelection(orf);
 	    String[] inputList = selection.getInputList();
 	    if(inputList != null)
 	    {
-	        for(int i=0; i<inputList.length; i++)
-	        {
-	            userSelection.addSeletion(inputList[i]);
-	        }
+            if(selection.getButton().equals("remove"))
+                for(String s : inputList)
+                    userSelection.removeSelection(s);
+            else
+                for(String s : inputList)
+                    userSelection.addSelection(s);
 	    }
 	    session.setAttribute("userSelection", userSelection);
 	    
