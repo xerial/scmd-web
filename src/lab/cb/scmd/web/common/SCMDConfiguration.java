@@ -12,6 +12,7 @@ package lab.cb.scmd.web.common;
 
 import java.io.*;
 
+import java.util.LinkedList;
 import java.util.Properties;
 import java.util.Set;
 import java.util.SortedSet;
@@ -49,12 +50,29 @@ public class SCMDConfiguration
     String[]                   _requiredConfigParam = new String[] { SCMD_ROOT, SCMD_PHOTO_URL, IMAGEMAGICK_CONVERT,
             XMLQUERY, TABLEQUERY, VALUEQUERY, TEARDROP_URI };
 
+    static private LinkedList<ConfigObserver> _observers = new LinkedList<ConfigObserver>(); 
+    static SCMDConfiguration _instance;
+
+    String                   _scmdRootDir;
+    Properties               _properties = new Properties();
+
+    
+    public static void addObserver(ConfigObserver observer)
+    {
+        _observers.add(observer);
+    }
+    
     public static void Initialize() throws SCMDException {
         _instance = new SCMDConfiguration();
     }
 
     public static String getProperty(String property) {
         return _instance._properties.getProperty(property);    
+    }
+    
+    public static String getProperty(String property, String defaultValue)
+    {
+        return _instance._properties.getProperty(property, defaultValue);
     }
 
     protected static Object getInstance(String className) throws InstantiationException, IllegalAccessException,
@@ -146,13 +164,13 @@ public class SCMDConfiguration
         {
             throw new SCMDException(e);
         }
-
+        
+        for(ConfigObserver observer : _observers)
+        {
+            observer.reloaded();
+        }
     }
 
-    static SCMDConfiguration _instance;
-
-    String                   _scmdRootDir;
-    Properties               _properties = new Properties();
 }
 
 //--------------------------------------

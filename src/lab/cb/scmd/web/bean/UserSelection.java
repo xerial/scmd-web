@@ -22,6 +22,7 @@ public class UserSelection
 {
 
     private TreeSet<String> _selection = new TreeSet<String>();
+    private String[] _color = new String[0];
     /**
      * 
      */
@@ -50,7 +51,17 @@ public class UserSelection
     {
         return (Set<String>) _selection.clone();
     }
-
+    
+    public void setColor(String[] color)
+    {
+        _color = color;
+    }
+    public String[] getColor()
+    {
+        return _color;
+    }
+    
+    
     /**
      *  
      */

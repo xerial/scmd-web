@@ -10,13 +10,18 @@
 
 package lab.cb.scmd.web.common;
 
+import java.sql.SQLException;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
+import lab.cb.scmd.db.connect.ConnectionServer;
 import lab.cb.scmd.exception.SCMDException;
+import lab.cb.scmd.web.formbean.ViewCustomizeForm;
 
 /**
+ * Tomcat
  * @author leo
  *
  */
@@ -34,8 +39,18 @@ public class SetupServlet extends HttpServlet {
         {
             SCMDConfiguration.Initialize();
             System.out.println("[scmd-server] SCMDConfiguration is initialized");
+                        
+            ConnectionServer.initialize();
+            
+            
+            // initialize some beans
+            ViewCustomizeForm.loadParameters();
         }
         catch(SCMDException e)
+        {
+            throw new ServletException(e);
+        }
+        catch(SQLException e)
         {
             throw new ServletException(e);
         }
