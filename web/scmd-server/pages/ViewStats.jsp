@@ -48,6 +48,7 @@ function help(url)
 <tr><td align="left">
 <span class="orf"> ${gene.orf} </span> 
 <span class="genename"> ${gene.standardName} </span>
+<span class="annotation"> <%= gene.getAnnotation() %></span>
 </td>
 <td align="right">
 <p align="absbottom">

@@ -28,20 +28,20 @@ function help(url)
 <body>
 <center>
 <scmd-tags:menu  toolbar="on" searchframe="on"/>
-
-
+<scmd-tags:linkMenu orf="${view.orf}" logo="on"/> 
 
 <table width="700">
 <tr><td align="left">
 <span class="orf"> ${gene.orf} </span> 
 <span class="genename"> ${gene.standardName} </span>
-<td>
-<p class="header"> Cells Grouped by <%= lab.cb.scmd.web.common.GroupType.STAIN_GROUP[groupBySheet.getStainType()] %> </p>
+<span class="annotation"> <%= gene.getAnnotation() %></span>
 </td>
 <td align="right">
 <p align="absbottom">
 <scmd-tags:selectorf orf="${gene.orf}"/>
-</p>
+</p></td></tr>
+<tr><td colspan=2>
+<p class="header"> Cells Grouped by <%= lab.cb.scmd.web.common.GroupType.STAIN_GROUP[groupBySheet.getStainType()] %> </p>
 </td>
 </tr>
 </table>
