@@ -18,12 +18,9 @@ import java.util.regex.Pattern;
  * SQL文内では、$1, $2, ...　という変数が使える。
  * 
  * <pre>
- * <sql name="select all" description="">
- *   SELECT * from $1
- * </sql>
+ * String assignedSQL = SQLExpression.assignTo("select * from $1", "t1");
+ * // assignedSQL = "select * from t1"　となる
  * </pre>
- * 
- * 
  * @author leo
  *
  */
@@ -57,5 +54,16 @@ public class SQLExpression
             assignedSQL = m.replaceAll(replacement);
         }
         return assignedSQL;
+    }
+    
+    /**
+     * SQL文に引数を代入して返す
+     * @param sqlExpr SQL文
+     * @param arguments　代入する引数
+     * @return 引数の値が代入されたSQL文
+     */
+    public static String assignTo(String sqlExpr, Object... arguments)
+    {
+        return new SQLExpression(sqlExpr).assign(arguments);
     }
 }
