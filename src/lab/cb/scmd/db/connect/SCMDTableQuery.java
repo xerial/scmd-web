@@ -144,7 +144,7 @@ public class SCMDTableQuery extends ConnectionHolder implements TableQuery {
             selectParam += "\"" + (String) it.next() + "\", ";
         }
         selectParam = selectParam.substring(0, selectParam.length() - 2);
-        String sql = "SELECT "  + selectParam + " FROM individual_20040813 WHERE strainname='" + orf.toUpperCase() + "' AND \""
+        String sql = "SELECT "  + selectParam + " FROM individual_20050131 WHERE strainname='" + orf.toUpperCase() + "' AND \""
         + StainType.getStainTypeName(stainType) +  "group\"='" + groupName +  "' ORDER BY cell_local_id";
         if(page > 0 && numElementInAPage > 0)
             sql += " LIMIT " + numElementInAPage + " OFFSET " + (numElementInAPage * (page-1)); 
@@ -156,7 +156,7 @@ public class SCMDTableQuery extends ConnectionHolder implements TableQuery {
      * @see lab.cb.scmd.db.common.TableQuery#getGroupCount(java.lang.String, int, java.lang.String)
      */
     public Table getGroupCount(String orf, int stainType) {
-        String sql = "SELECT \"" + StainType.getStainTypeName(stainType) + "group\", COUNT(cell_local_id) FROM individual_20040813 WHERE strainname='" 
+        String sql = "SELECT \"" + StainType.getStainTypeName(stainType) + "group\", COUNT(cell_local_id) FROM individual_20050131 WHERE strainname='" 
         + orf.toUpperCase() + "' GROUP BY  \"" + StainType.getStainTypeName(stainType) + "group\"";
         
         return evalSQL(sql);
