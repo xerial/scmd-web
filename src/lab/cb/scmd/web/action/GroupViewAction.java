@@ -143,10 +143,10 @@ public class GroupViewAction extends Action
             switch(stainType)
             {
             case StainType.STAIN_DAPI:
-                elem = new Link(XMLUtil.createCDATA("javascript:help('/help/nucleus_param.html');"), elem);
+                elem = new Link(XMLUtil.createCDATA("javascript:help('help/nucleus_param.html');"), elem);
                 break;
             case StainType.STAIN_RhPh:
-                elem = new Link(XMLUtil.createCDATA("javascript:help('/help/actin_param.html');"), elem);
+                elem = new Link(XMLUtil.createCDATA("javascript:help('help/actin_param.html');"), elem);
             	break;
             case StainType.STAIN_ConA:
             default:
