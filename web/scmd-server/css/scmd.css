@@ -45,13 +45,13 @@ a:visited { color: #666666; }
 	font-size: 9pt;
 	background: #0056AD;	
 	margin-top: 0pt;	
-	overflow: auto;	
 	position: absolute;
 	padding: 0 0 0 0;
 }
 .dropdownmenu ul 
 {
 	list-style: none;
+	background: #0056AD;		
 	margin: 0;
 	padding: 0;
 }

@@ -10,6 +10,15 @@ function closeAllMenu()
 	closeMenu(openedTabID);
 }
 
+function nodeContains(a, b)
+{
+// Return true if node a contains node b.
+	while (b.parentNode)
+		if ((b = b.parentNode) == a)
+			return true;
+	return false;
+}
+
 
 function detectMouseOut(event, obj)
 {
@@ -24,7 +33,7 @@ function detectMouseOut(event, obj)
 		current = event.currentTarget;
 		related = event.relatedTarget;
 	}
-	if (current != related)
+	if (current != related && !nodeContains(current, related))
 	{
 		closeMenu(openedTabID);
 	}

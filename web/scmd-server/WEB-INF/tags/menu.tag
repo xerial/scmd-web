@@ -36,10 +36,12 @@
 <td align="center" id="yeast" onMouseOver="closeAllMenu();"><a href="ViewORFList.do">Yeast Mutant</a></td>
 
 <td align="center" id="photo" onMouseOver="selectMenu('photomenu');" onMouseOut="detectMouseOut(event,this);">
-<a href="ViewPhoto.do">Photo</a>
-<table width="200" id="photomenu" class="dropdownmenu">
+<table cellpadding="0" cellspacing="0">
+<tr class="menubar"><td><a href="ViewPhoto.do">Photo</a></td></tr>
+<tr><td>
+<table width="200" id="photomenu" class="dropdownmenu"> 
 <tr>
-<td>
+<td  nowrap="nowrap">
 <ul>
 <li><a href="ViewPhoto.do?orf=${orf}"> Photo Viewer </a></li>
 <li><a href="ViewDataSheet.do?orf=${orf}"> Individual Cell Datasheet</a> </li>
@@ -54,12 +56,17 @@
 </tr>
 </table>   
 </td>
+</tr>
+</table>
+</td>
     
 <td align="center" id="data" onMouseOver="selectMenu('dataminingmenu');" onMouseOut="detectMouseOut(event,this);">
-<a href=".">Data Mining</a> 
-<table width="300" class="dropdownmenu" cellpadding="0" id="dataminingmenu">
+<table cellpadding="0" cellspacing="0">
+<tr class="menubar"><td><a href=".">Data Mining</a></td></tr>
+<tr><td>
+<table  width="300" class="dropdownmenu" cellpadding="0" id="dataminingmenu" align="left">
 <tr>
-<td>
+<td  nowrap="nowrap">
 <ul>
 <li> <a href="SelectShape.do">Morphology Search </a></li>
 <li> <a href="ORFTeardrop.do?orf=${orf}">Teardrop View of ORF Parameters </a></li>
@@ -76,33 +83,44 @@
 </td>
 </tr>
 </table>
+</td></tr>
+</table>
 </td>
 
 <td align="center" id="customize" onMouseOver="selectMenu('customizemenu');" onMouseOut="detectMouseOut(event,this);">
-<a href="."> Customization</a>     
-<table border="0" width="180" class="dropdownmenu" cellpadding="0" id="customizemenu">
+<table cellpadding="0" cellspacing="0">
+<tr class="menubar"><td><a href="."> Customization</a></td></tr>
+<tr><td>
+<table width="150" border="0" class="dropdownmenu" cellpadding="0" id="customizemenu" align="left">
 <tr>
-<td>
+<td  nowrap="nowrap">
 <ul>
 <li> <a href="ViewSelection.do"> My Gene List</a> </li>
 <li> <a href="CustomizeView.do"> My Parameter List </a></li>
 </ul>
 </td>
 </tr>
+</table>
+</td></tr>
 </table>    
 </td>     
     
     
 <td align="center" id="help" onMouseOver="selectMenu('helpmenu');" onMouseOut="detectMouseOut(event,this);">
-<a href="."> Help </a>
-<table border="0" width="180" class="dropdownmenu" cellpadding="0" id="helpmenu">
-<tr><td> 
+<table cellpadding="0" cellspacing="0">
+<tr class="menubar"><td><a href="."> Help </a></td></tr>
+<tr><td>
+<table width="150" border="0" class="dropdownmenu" cellpadding="0" id="helpmenu" align="left">
+<tr><td nowrap="nowrap"> 
 <ul>
 <li><a href="ParameterHelp.do">Parameter Help</a> </li>
 <li> <a href="sitemap.jsp">Site Map </a></li>
 </ul>
 </td></tr>
 </table>
+</td></tr>
+</table>    
+
 </td>     
 
     <td align="center" onMouseOver="closeAllMenu();"> <a href="publication.jsp">Publications</a> </td>
