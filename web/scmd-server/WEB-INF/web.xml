@@ -87,6 +87,15 @@
     <url-pattern>/plot/plot2d.png</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+	<servlet-name>ParamFigPainter</servlet-name>
+	<servlet-class>lab.cb.scmd.web.image.ParamFigPainter</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>ParamFigPainter</servlet-name>
+	<url-pattern>/paramfig.png</url-pattern>
+  </servlet-mapping>
+  
 
   <servlet>
     <servlet-name>BufferedCellImageServer</servlet-name>
