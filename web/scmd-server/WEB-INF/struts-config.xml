@@ -144,19 +144,19 @@
 
     end sample -->
     
-    	<form-bean name="view" type="scmd.web.bean.CellViewerForm"/>
+    	<form-bean name="view" type="lab.cb.scmd.web.bean.CellViewerForm"/>
 
-		<form-bean name="listPage" type="scmd.web.bean.ORFListViewForm"/>
+		<form-bean name="listPage" type="lab.cb.scmd.web.bean.ORFListViewForm"/>
 
-		<form-bean name="shape" type="scmd.web.bean.SelectedShape"/>
+		<form-bean name="shape" type="lab.cb.scmd.web.bean.SelectedShape"/>
 
-		<form-bean name="targetPhoto" type="scmd.web.bean.TargetPhoto"/>
-		<form-bean name="cell" type="scmd.web.bean.SingleCell"/>
-		<form-bean name="groupBySheet" type="scmd.web.bean.GroupViewForm"/>
-		<form-bean name="selection" type="scmd.web.bean.ORFSelectionForm"/>
-		<form-bean name="search" type="scmd.web.bean.SearchResultViewForm"/>
-		<form-bean name="sheetForm" type="scmd.web.bean.GroupByDatasheetForm"/>
-		<form-bean name="plotForm" type="scmd.web.bean.ParamPlotForm"/>
+		<form-bean name="targetPhoto" type="lab.cb.scmd.web.bean.TargetPhoto"/>
+		<form-bean name="cell" type="lab.cb.scmd.web.bean.SingleCell"/>
+		<form-bean name="groupBySheet" type="lab.cb.scmd.web.bean.GroupViewForm"/>
+		<form-bean name="selection" type="lab.cb.scmd.web.bean.ORFSelectionForm"/>
+		<form-bean name="search" type="lab.cb.scmd.web.bean.SearchResultViewForm"/>
+		<form-bean name="sheetForm" type="lab.cb.scmd.web.bean.GroupByDatasheetForm"/>
+		<form-bean name="plotForm" type="lab.cb.scmd.web.bean.ParamPlotForm"/>
     </form-beans>
 
 
@@ -227,7 +227,7 @@
         	path="/ViewPhoto" 
         	name="view" 
         	scope="session"
-        	type="scmd.web.action.CellViewerAction"
+        	type="lab.cb.scmd.web.action.CellViewerAction"
         	validate="true"
         	input="/error.jsp"
         >
@@ -255,7 +255,7 @@
         	path="/ViewDataSheet" 
         	name="view" 
         	scope="session"
-        	type="scmd.web.action.ViewDataSheetAction"
+        	type="lab.cb.scmd.web.action.ViewDataSheetAction"
         	validate="true"
         	input="/error.jsp"
         >
@@ -266,7 +266,7 @@
 		<action path="/ViewORFList"
 				name="listPage"
 				scope="session"
-				type="scmd.web.action.ViewORFListAction"
+				type="lab.cb.scmd.web.action.ViewORFListAction"
 				validate="true"
 				input="/error.jsp">
 			<forward name="success" path="/pages/ORFList.jsp"/>
@@ -275,7 +275,7 @@
 		<action path="/Search"
 				name="search"
 				scope="request"
-				type="scmd.web.action.SearchKeywordAction"
+				type="lab.cb.scmd.web.action.SearchKeywordAction"
 				validate="true"
 				input="/error.jsp">
 			<forward name="success" path="/pages/SearchResult.jsp"/>
@@ -286,7 +286,7 @@
 		<action path="/ViewCellInfo"
 				name="view"
 				scope="session"
-				type="scmd.web.action.ViewCellInfoAction"
+				type="lab.cb.scmd.web.action.ViewCellInfoAction"
 				validate="true"
 				input="/error.jsp">
 			<forward name="success" path="/pages/CellInfo.jsp"/>
@@ -296,7 +296,7 @@
 		<action path="/SelectShape"
 				name="shape"
 				scope="session"
-				type="scmd.web.action.SelectShapeAction"
+				type="lab.cb.scmd.web.action.SelectShapeAction"
 				validate="true"
 				input="/error.jsp">
 			<forward name="success" path="/pages/MorphologySearch.jsp"/>
@@ -313,7 +313,7 @@
 		<action path="/ViewStats"
 				name="view"
 				scope="session"
-				type="scmd.web.action.ViewStatsAction"
+				type="lab.cb.scmd.web.action.ViewStatsAction"
 				validate="true"
 				input="/error.jsp">
 			<forward name="success" path="/pages/ViewStats.jsp"/>
@@ -322,7 +322,7 @@
 		<action path="/ViewSelection"
 				name="selection"
 				scope="request"
-				type="scmd.web.action.ViewSelectionAction"
+				type="lab.cb.scmd.web.action.ViewSelectionAction"
 				validate="true"
 				input="/error.jsp">
 			<forward name="success" path="/pages/ViewSelection.jsp"/>
@@ -331,7 +331,7 @@
 		<action path="/ViewGroupBySheet"
 				name="groupBySheet"
 				scope="request"
-				type="scmd.web.action.GroupViewAction"
+				type="lab.cb.scmd.web.action.GroupViewAction"
 				validate="true"
 				input="/error.jsp">
 			<forward name="success" path="/pages/GroupBySheet.jsp"/>
@@ -340,7 +340,7 @@
 		<action path="/ViewGroupDataSheet"
 				name="sheetForm"
 				scope="request"
-				type="scmd.web.action.ViewGroupByDatasheetAction"
+				type="lab.cb.scmd.web.action.ViewGroupByDatasheetAction"
 				validate="true"
 				input="/error.jsp">
 			<forward name="success" path="/pages/GroupByDatasheet.jsp"/>
@@ -349,7 +349,7 @@
 		<action path="/ViewGroupByTearDrop"
 				name="sheetForm"
 				scope="request"
-				type="scmd.web.action.ViewGroupByTearDropAction"
+				type="lab.cb.scmd.web.action.ViewGroupByTearDropAction"
 				validate="true"
 				input="/error.jsp">
 			<forward name="success" path="/pages/ViewGroupByTearDrop.jsp"/>
@@ -358,7 +358,7 @@
 		<action path="/View2DPlot"
 				name="plotForm"
 				scope="request"
-				type="scmd.web.action.ParamPlotAction"				
+				type="lab.cb.scmd.web.action.ParamPlotAction"				
 				validate="true"
 				input="/error.jsp">
 			<forward name="success" path="/pages/Plot2D.jsp"/>	 

@@ -11,7 +11,7 @@
 
     <tag>
     	<name>header</name>
-    	<tagclass>scmd.web.taglib.Header</tagclass>
+    	<tagclass>lab.cb.scmd.web.taglib.Header</tagclass>
     	<info> inserting SCMD header </info>
     	<bodycontent>EMPTY</bodycontent>
     	
@@ -31,7 +31,7 @@
     
     <tag>
     	<name>pagemover</name>
-    	<tagclass>scmd.web.taglib.PageMover</tagclass>
+    	<tagclass>lab.cb.scmd.web.taglib.PageMover</tagclass>
     	<info> inserting page mover </info>
     	<bodycontent>EMPTY</bodycontent>
     	
@@ -75,14 +75,14 @@
     
     <tag>
     	<name>footer</name>
-    	<tagclass>scmd.web.taglib.Footer</tagclass>
+    	<tagclass>lab.cb.scmd.web.taglib.Footer</tagclass>
     	<info> inserting SCMD footer </info>
     	<bodycontent>EMPTY</bodycontent>    
     </tag>
 
     <tag>
     	<name>tablist</name>
-    	<tagclass>scmd.web.taglib.TabList</tagclass>
+    	<tagclass>lab.cb.scmd.web.taglib.TabList</tagclass>
     	<info> inserting page tab </info>
     	<bodycontent>JSP</bodycontent>
     	
@@ -95,7 +95,7 @@
 
     <tag>
     	<name>tab</name>
-    	<tagclass>scmd.web.taglib.Tab</tagclass>
+    	<tagclass>lab.cb.scmd.web.taglib.Tab</tagclass>
     	<info> inserting page tab </info>
     	<bodycontent>JSP</bodycontent>
     	
@@ -113,8 +113,8 @@
 	
     <tag>
     	<name>table</name>
-    	<tagclass>scmd.web.taglib.Table</tagclass>
-    	<info> print scmd.web.table.AbstractTable instance </info>
+    	<tagclass>lab.cb.scmd.web.taglib.Table</tagclass>
+    	<info> print lab.cb.scmd.web.table.AbstractTable instance </info>
     	<bodycontent>EMPTY</bodycontent>
     	
         <attribute>
@@ -126,7 +126,7 @@
 
     <tag>
     	<name>pagebutton</name>
-    	<tagclass>scmd.web.taglib.PageButton</tagclass>
+    	<tagclass>lab.cb.scmd.web.taglib.PageButton</tagclass>
     	<info> print page buttons  </info>
     	<bodycontent>EMPTY</bodycontent>
     	

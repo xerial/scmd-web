@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<!-- 
+// SCMDWeb Project 
+// Since 2004/07/07 22:48:21                                                        
+//	 
+// $URL$	 
+// $LastChangedBy$  
+
+usage: ant (-Dconf=build.properties)
+-->
+<project name="SCMDWeb" default="default">
+    <description>
+        ant script for building SCMDWeb server.
+    </description>
+	
+
+	<property name="dir.src" value="src"/>
+	<property name="dir.test" value="test"/>
+	<property name="dir.build" value="build"/>	
+	<property name="dir.lib" value="lib"/>
+	<property name="dir.resources.apache" value="web"/>
+	<property name="dir.resources.tomcat" value="web/scmd-server"/>
+	<property name="dir.webinf" value="${dir.resources.tomcat}/WEB-INF"/>
+	<property name="webapp.context.name" value="scmd-server"/>
+	<property name="war.name" value="${webapp.context.name}.war"/>
+	<property name="dir.deploy" value="webapps"/>
+	
+	<property environment="env"/> <!-- load environment variables -->
+	<property name="conf" value="build.properties"/>
+	<property file="${conf}"/>  <!-- load user defined properties -->
+		
+
+	<!-- ================================= 
+          target: default              
+         ================================= -->
+    <target name="default"  description="compile and deploy SCMDWeb">
+     <antcall target="compile"/>
+    </target>
+	
+
+	<target name="compile" description="compile java files">
+	   <fail unless="TOMCAT_HOME">Please set the TOMCAT_HOME environment variable</fail>
+	   <mkdir dir="${dir.webinf}/classes"/>
+	   <javac srcdir="${dir.src}" destdir="${dir.webinf}/classes" encoding="SJIS" target="1.5">
+	   	   <classpath>
+		     <fileset dir="${dir.webinf}/lib">
+		   	     <include name="*.jar"/>
+			 </fileset>
+			 <fileset dir="${TOMCAT_HOME}/common/lib">
+			     <include name="*.jar"/>
+			 </fileset>
+		   </classpath>
+	   </javac>
+	</target>	
+
+    <target name="clean" description="clean .class files">
+	   <delete includeEmptyDirs="true">
+	      <fileset dir="${dir.webinf}/classes" includes="**/*.class"/>   	
+	      <file name="${dir.build}/${war.name}"/>
+	   </delete>
+    </target>
+	
+	<target name="war" depends="compile" description="create war file">
+	  <war warfile="${dir.build}/${war.name}" webxml="${dir.webinf}/web.xml" basedir="${dir.resources.tomcat}">
+	  	 <!-- <classes dir="${dir.webinf}/classes"/> -->
+	  </war>
+	</target>
+
+	<target name="reload">
+	    <taskdef name="reload" classname="org.apache.catalina.ant.ReloadTask">
+	    	<classpath>
+	    		<path location="${dir.lib}/catalina-ant.jar"/>
+	    	</classpath>
+		</taskdef>
+	  	<fail unless="url.tomcat.manager">Please set Tomcat Manger URL('url.tomcat.manager') in build.properties</fail>
+      	<reload url="${url.tomcat.manager}" username="leo" password="leoleo" path="/${server.base}"/>
+    </target>
+
+    <target name="SCMDProject" description="build SCMDProject.jar">
+	   <ant dir="../SCMDProject" target="jar" inheritAll="false"/>
+       <copy file="../SCMDProject/SCMDProject.jar" todir="${JAR_DIR}"/>
+	</target>
+  
+    <target name="jar" depends="compile" description="create SCMDWeb.jar">
+	   <jar basedir="${dest}" destfile="SCMDServer.jar"/>
+	</target>
+	
+	<target name="init">
+		<condition property="is.webapp.deployed">
+			<http url="http://${host}:${port}/${webapp.context.name}"/>
+		</condition>
+	</target>
+	
+	<target name="undeploy" depends="init" if="is.webapp.deployed">
+	    <taskdef name="undeploy" classname="org.apache.catalina.ant.UndeployTask">
+	    	<classpath>
+	    		<path location="${dir.lib}/catalina-ant.jar"/>
+	    	</classpath>
+		</taskdef>
+		
+		<undeploy 
+		    url="${url.manager}" username="${username.manager}" password="${password.manager}"
+		    path="/${webapp.context.name}"/>		
+	</target>
+	
+	<target name="deploy" depends="war" description="deplay .war file into TOMCAT_HOME/${dir.deploy}">
+	    <taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask">
+	    	<classpath>
+	    		<path location="${dir.lib}/catalina-ant.jar"/>
+	    	</classpath>
+		</taskdef>
+		<pathconvert dirsep="/" property="war.dir.fullpath">
+			<path>
+				<pathelement location="${dir.build}/${war.name}"/>
+			</path>
+		</pathconvert>
+		<deploy 
+		   url="${url.manager}" username="${username.manager}" password="${password.manager}"
+		   update="true"
+		   path="/${webapp.context.name}" war="${dir.build}/${war.name}"/>
+	</target>
+
+	<target name="update">
+	   <svn username="scmd-dev">
+		 <update/>
+	   </svn>
+	</target>
+
+	
+	
+	
+</project>

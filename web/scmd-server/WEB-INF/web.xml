@@ -6,7 +6,7 @@
   <!-- Standard Action Servlet Configuration (with debugging) -->
   <servlet>
   	<servlet-name>SetupServlet</servlet-name>
-  	<servlet-class>scmd.web.common.SetupServlet</servlet-class>
+  	<servlet-class>lab.cb.scmd.web.common.SetupServlet</servlet-class>
   	<load-on-startup>1</load-on-startup>
   </servlet>
   
@@ -42,7 +42,7 @@
 
   <servlet>
     <servlet-name>ImageServer</servlet-name>
-    <servlet-class>scmd.web.image.ImageServer</servlet-class>
+    <servlet-class>lab.cb.scmd.web.image.ImageServer</servlet-class>
   </servlet>  	
   <servlet-mapping>
     <servlet-name>ImageServer</servlet-name>
@@ -52,7 +52,7 @@
 <!--
   <servlet>
     <servlet-name>com</servlet-name>
-    <servlet-class>scmd.web.image.EchoServlet</servlet-class>
+    <servlet-class>lab.cb.scmd.web.image.EchoServlet</servlet-class>
   </servlet>  	
   <servlet-mapping>
     <servlet-name>com</servlet-name>
@@ -61,7 +61,7 @@
   -->
   <servlet>
     <servlet-name>plot2d</servlet-name>
-    <servlet-class>scmd.web.image.Plot2DServlet</servlet-class>
+    <servlet-class>lab.cb.scmd.web.image.Plot2DServlet</servlet-class>
   </servlet>  	
   <servlet-mapping>
     <servlet-name>plot2d</servlet-name>
@@ -71,7 +71,7 @@
 
   <servlet>
     <servlet-name>BufferedCellImageServer</servlet-name>
-    <servlet-class>scmd.web.image.BufferedCellImageServer</servlet-class>
+    <servlet-class>lab.cb.scmd.web.image.BufferedCellImageServer</servlet-class>
   </servlet>  	
   <servlet-mapping>
     <servlet-name>BufferedCellImageServer</servlet-name>
@@ -81,7 +81,7 @@
 
   <servlet>
     <servlet-name>CellPainter</servlet-name>
-    <servlet-class>scmd.web.image.CellPainter</servlet-class>
+    <servlet-class>lab.cb.scmd.web.image.CellPainter</servlet-class>
   </servlet>  	
   <servlet-mapping>
     <servlet-name>CellPainter</servlet-name>
@@ -90,7 +90,7 @@
 
   <servlet>
     <servlet-name>TeardropPainter</servlet-name>
-    <servlet-class>scmd.web.image.TeardropPainter</servlet-class>
+    <servlet-class>lab.cb.scmd.web.image.TeardropPainter</servlet-class>
   </servlet>  	
   <servlet-mapping>
     <servlet-name>TeardropPainter</servlet-name>
@@ -99,7 +99,7 @@
   
    <servlet>
 	<servlet-name>CellImageServer</servlet-name>
-	<servlet-class>scmd.web.image.CellImageServer</servlet-class>
+	<servlet-class>lab.cb.scmd.web.image.CellImageServer</servlet-class>
    </servlet>
    <servlet-mapping>
 	<servlet-name>CellImageServer</servlet-name>
