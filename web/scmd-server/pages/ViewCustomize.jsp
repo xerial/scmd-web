@@ -77,7 +77,18 @@ ${morphParam.displayname}
 </td></tr>
 </logic:iterate>
 </table>
-<!-- -->
+<table>
+<tr>
+<td class="menubutton" align="center">
+[<a href="ViewORFParameter.do">Display datasheet</a>]
+</td>
+</tr>
+<tr>
+<td class="menubutton" align="center">
+download as [<a href="ViewORFParameter.do?format=xml">XML</a>] [<a href="ViewORFParameter.do?format=tab">tab-separated sheet</a>]
+</td>
+</tr>
+</table>
 <% } %>
 </td>
 </tr>
