@@ -101,8 +101,12 @@ Y-coordinate:
 <html:select name="plotForm" property="param2">
 <html:options name="plotForm" property="options"/>
 </html:select>
-
 <html:submit value="plot mutants"/>
+</html:form>
+<html:form action="/View2DPlot.do" method="GET">
+<input type="hidden" name="param1" value="-1">
+<input type="hidden" name="param2" value="-1">
+<html:submit value="lucky coordinate!"/>
 </html:form>
 
 <scmd-tags:linkMenu orf="${view.orf}" logo="on"/> 
