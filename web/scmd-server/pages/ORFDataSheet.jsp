@@ -55,10 +55,10 @@
 <tr>
 <logic:iterate id="dataSet" name="orfData" scope="request">
 <td valign="top">
-<table class="datasheet">
+<table class="datasheet"  border="0" cellspacing="0" cellpadding="0">
 <tr class="sheetlabel">
-<td align="center" colspan="2">ORF</td>
-<td align="center">Std. name</td>
+<td align="center" colspan="2" width="105">ORF</td>
+<td align="center" width="90" >Std. name</td>
 <td align="center" title="${para.displayname}">${para.shortName}</td>
 </tr>
 <logic:iterate id="data" name="dataSet" type="lab.cb.scmd.web.container.ORFParamData">
@@ -70,6 +70,8 @@
 ${data.data}
 </td>
 </tr>
+<tr bgcolor="#F0F0E0"><td></td>
+<td colspan="4" width="530" class="annotation">${data.annotation}</td></tr>
 </logic:iterate>
 </table>
 </td>

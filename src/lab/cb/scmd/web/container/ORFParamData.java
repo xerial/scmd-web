@@ -20,6 +20,8 @@ public class ORFParamData
 {
     String orf; 
     String standardname;
+    String annotation;
+    String aliases;
     double data;
     
     /**
@@ -57,6 +59,18 @@ public class ORFParamData
     {
         this.standardname = standardname;
     }
+
+    public String getAnnotation() {
+        return annotation;
+    }
+    
+
+    public void setAnnotation(String annotation) {
+        this.annotation = annotation;
+    }
+    
+    
+    
 }
 
 

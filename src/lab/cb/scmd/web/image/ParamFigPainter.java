@@ -1,9 +1,13 @@
-/*
- * Created on 2005/02/15
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
+//--------------------------------------
+//SCMDWeb Project
+//
+//CustomizeViewAction.java
+//Since: 2005/02/08
+//
+//$URL: http://scmd.gi.k.u-tokyo.ac.jp/devel/svn/phenome/trunk/SCMDWeb/src/lab/cb/scmd/web/action/CustomizeViewAction.java $ 
+//$Author: sesejun $
+//--------------------------------------
+
 package lab.cb.scmd.web.image;
 
 import java.awt.image.BufferedImage;
