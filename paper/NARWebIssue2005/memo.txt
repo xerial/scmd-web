@@ -79,6 +79,9 @@ Cell cycleの情報を調べるには、cell wallの形状だけでは不十分なため、われわれは、
 
 
 
+Case 1 ORF Centric Approach
+ORFの入力から調べる。
 
+Case 2 Paramter Centric Approach
 
 
