@@ -90,9 +90,15 @@ public class ViewSelectionAction extends Action
         {
             // ÉÜÅ[ÉUÅ[ÇÃì¸óÕÇí«â¡
             if(orf != null)
+            {
                 userSelection.addSelection(orf);
+                userSelection.setColor(orf, "skyblue");
+            }
             for(String s : inputList)
+            {
                 userSelection.addSelection(s);
+                userSelection.setColor(s, "skyblue");
+            }
         }
 	    session.setAttribute("userSelection", userSelection);
 
