@@ -20,7 +20,7 @@ import java.util.TreeSet;
 public class UserSelection
 {
 
-    TreeSet _selection = new TreeSet();
+    private TreeSet<String> _selection = new TreeSet<String>();
     /**
      * 
      */
@@ -45,9 +45,9 @@ public class UserSelection
         _selection.remove(orf.toLowerCase());
     }
     
-    public Set orfSet()
+    public Set<String> orfSet()
     {
-        return _selection;
+        return (Set<String>) _selection.clone();
     }
 }
 

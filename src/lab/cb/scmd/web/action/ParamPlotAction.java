@@ -69,7 +69,7 @@ public class ParamPlotAction extends Action
         
         if(plotForm.getParam1().equals("-1") && plotForm.getParam2().equals("-1")) {
             TreeSet selectedORFSet = (TreeSet)userSelection.orfSet();
-            selectedORFSet.add(orf);
+            selectedORFSet.add(orf.toLowerCase());
             String[] orfs = new String[selectedORFSet.size()];
             int n = 0;
             for(Iterator it = selectedORFSet.iterator(); it.hasNext(); ) {

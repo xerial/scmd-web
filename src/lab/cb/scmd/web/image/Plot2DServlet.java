@@ -19,6 +19,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Set;
+import java.util.TreeSet;
 
 
 import javax.imageio.ImageIO;
@@ -60,7 +61,12 @@ public class Plot2DServlet extends HttpServlet
             selection = new UserSelection();
             session.setAttribute("userSelection", selection);
         }
-        Set selectedORFSet = selection.orfSet();
+        TreeSet selectedORFSet = new TreeSet();
+        selectedORFSet.add(view.getOrf().toLowerCase());
+        for(Object orf : selection.orfSet())
+        {
+            selectedORFSet.add(orf);
+        }
         
         if(view == null)
         {
