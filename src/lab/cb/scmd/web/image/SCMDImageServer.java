@@ -75,11 +75,14 @@ public class SCMDImageServer extends HttpServlet
             {
                 ImageIO.write(image, "png", response.getOutputStream());                
             }
+            response.getOutputStream().flush();
         }
         catch(IOException e)
         {
             log(e.getMessage());
         }
+        
+
     }
     
 }

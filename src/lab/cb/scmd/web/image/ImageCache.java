@@ -24,7 +24,7 @@ public class ImageCache
 {
     public final static String IMAGA_CACHE = "imageCache"; 
     
-    private enum ImageStatus { not_ready, ready, not_available } 
+    private enum ImageStatus { not_ready, ready, not_available} 
     private TreeMap<String, BufferedImage> cache = new TreeMap<String, BufferedImage>();
     private TreeMap<String, ImageStatus> imageRegistory = new TreeMap<String, ImageStatus>();
     
@@ -53,6 +53,7 @@ public class ImageCache
     synchronized public BufferedImage getImage(String imageID)
     {
         BufferedImage image = null;
+        
         if(imageRegistory.containsKey(imageID))
         {
             switch(imageRegistory.get(imageID))
@@ -61,19 +62,14 @@ public class ImageCache
                 try
                 {
                     int loopTimes = 0;
-                    while(imageRegistory.get(imageID) == ImageStatus.not_ready)
+                    while(imageRegistory.get(imageID) == ImageStatus.not_ready && imageRegistory.get(imageID) != null)
                     {
-                        wait(5000); // timeout 5•b
+                        wait(1000); // timeout 1•b
                         loopTimes++;
                         if(loopTimes >= 2)
                             break;
                     }
-                    if(imageRegistory.get(imageID) == ImageStatus.ready)
-                        image = cache.get(imageID);
-                    else
-                    {
-                        // not available
-                    }
+                    
                 }
                 catch(InterruptedException e)
                 {
@@ -113,6 +109,7 @@ public class ImageCache
             imageCache = new ImageCache();
             session.setAttribute(IMAGA_CACHE, imageCache);
         }
+                
         return imageCache;
     }
     
