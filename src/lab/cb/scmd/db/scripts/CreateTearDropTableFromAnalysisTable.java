@@ -51,7 +51,8 @@ import org.xerial.XerialException;
 public class CreateTearDropTableFromAnalysisTable {
 
     private enum Opt {
-        help, verbose, outfile, avgoutfile, server, port, user, passwd, dbname
+        help, verbose, outfile, avgoutfile, server, port, user, passwd, dbname, 
+        table, paramlist
     }
 
     private OptionParser<Opt> optionParser = new OptionParser<Opt>();
@@ -89,6 +90,8 @@ public class CreateTearDropTableFromAnalysisTable {
         optionParser.addOptionWithArgment(Opt.user, "u", "user", "USER", "user name. defalut=postgres", "postgres");        
         optionParser.addOptionWithArgment(Opt.passwd, "", "passwd", "PASSWORD", "password. defalut=\"\"", "");        
         optionParser.addOptionWithArgment(Opt.dbname, "d", "db", "NAME", "database name. defalut=scmd", "scmd");        
+        optionParser.addOptionWithArgment(Opt.table, "t", "table", "TABLE", "table name", "table");
+        optionParser.addOptionWithArgment(Opt.paramlist, "l", "paramlist", "PARAMLIST", "parameter list", "parameterlist_avg.xls");
         initDB();
     }
 
@@ -102,6 +105,8 @@ public class CreateTearDropTableFromAnalysisTable {
         if (optionParser.isSet(Opt.verbose)) {
             log = System.out;
         }
+        String tablename = optionParser.getValue(Opt.table);
+        String paramfile = optionParser.getValue(Opt.paramlist); 
 
         PrintStream outFile = new PrintStream(new FileOutputStream(optionParser
                 .getValue(Opt.outfile)));
@@ -120,9 +125,9 @@ public class CreateTearDropTableFromAnalysisTable {
         QueryRunner queryRunner = new QueryRunner(dataSource);
 
         // analysis data
-        Table sheet = new Table("analysisdata_ver2_0224.xls");
+        Table sheet = new Table(tablename);
         // parameterlistÅBÇΩÇæÇµÅAcellÇî≤Ç¢Ç‡ÇÃ
-        Table paramSheet = new Table("parameterlist_avg.xls");
+        Table paramSheet = new Table(optionParser.getValue(Opt.paramlist));
        
         RowLabelIndex rowLabelIndex = new RowLabelIndex(sheet);
         ColLabelIndex colLabelIndex = new ColLabelIndex(sheet);
