@@ -196,7 +196,10 @@ public class Plot2DServlet extends HttpServlet
             plotCanvas.plot(point, plotColor, 5);
         }
         // draw average lines
-        plotCanvas.drawAverageLine(new Point(x_ave, y_ave));
+        plotCanvas.drawAverageLine(new Point(x_ave, y_ave), 0x90F0C0);
+        plotCanvas.drawAverageLine(new Point(stat.calcAverage(plotTable_wt.getVerticalIterator(param1_col_wt)),
+                                             stat.calcAverage(plotTable_wt.getVerticalIterator(param2_col_wt))), 0xEFC4C9);
+        
 
         response.setContentType("image/png");
         ImageIO.write(plotCanvas.getImage(), "png", response.getOutputStream());
@@ -327,13 +330,13 @@ class Plot2DCanvas
         g.fillOval(calcX(p) - offset, calcY(p) - offset, pointRadius, pointRadius);            
     }
     
-    public void drawAverageLine(Point averagePoint)
+    public void drawAverageLine(Point averagePoint, int rgb)
     {
         Composite prevComposite = g.getComposite();
         
         // average line
         AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);       
-        g.setColor(new Color(0x90F0C0));
+        g.setColor(new Color(rgb));
         g.setComposite(ac);
         int aveX = calcX(averagePoint);
         int aveY = calcY(averagePoint);

@@ -17,7 +17,7 @@
  String groupTitle = "Grouped by " + lab.cb.scmd.web.common.GroupType.STAIN_GROUP[sheetForm.getStainType()];
 %>
 
-<scmd-base:header title="Teardrop View of ${gene.orf}" css="/css/tabsheet.css"/>
+<scmd-base:header title="Teardrop View of Average Shapes ${gene.orf}" css="/css/tabsheet.css"/>
 
 <body>
 <center>
@@ -25,9 +25,8 @@
 
 <scmd-tags:orfInfo  orf="${gene.orf}" 
 	stdname="${gene.standardName}" annot="${gene.annotation}" 
-	headtitle="test"
-	title="Averages of Cell Shape Parameters"  />
-<!-- <%= groupTitle %> -->
+	headtitle="<%= groupTitle %>"
+	title="Teardrop View of Averages Shapes"  />
 <logic:iterate id="datasheet" name="tableList" type="lab.cb.scmd.web.table.Table">
 <scmd-base:table name="datasheet"/>
 </logic:iterate>

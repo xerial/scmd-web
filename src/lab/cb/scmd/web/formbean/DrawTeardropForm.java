@@ -23,6 +23,7 @@ import org.apache.struts.action.ActionMapping;
 public class DrawTeardropForm extends ActionForm
 {
     int paramID = 221;
+    int groupID = 0;
     double rangeBegin = -1;
     double rangeEnd = -1;
     String orientation = "";
@@ -89,6 +90,16 @@ public class DrawTeardropForm extends ActionForm
     public void setPlotTargetORF(boolean plotTargetORF)
     {
         this.plotTargetORF = plotTargetORF;
+    }
+    
+    
+    public int getGroupID()
+    {
+        return groupID;
+    }
+    public void setGroupID(int groupID)
+    {
+        this.groupID = groupID;
     }
 }
 

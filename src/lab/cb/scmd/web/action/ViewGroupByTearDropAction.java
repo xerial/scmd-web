@@ -140,74 +140,19 @@ public class ViewGroupByTearDropAction extends Action
             ColLabelIndex colLabelIndex = new ColLabelIndex(tearDropData);
 
             String pointArg = "";
-            // user selectionにあるORFについてポイントを表示する
-            int o = 0;
-            for (Iterator it = orfSet.iterator(); it.hasNext(); o++)
-            {
-                String orf = (String) it.next();
-                Map map = (Map) paramMapList.get(o);
-                Object v = map.get(paramName);
-                if(v == null) continue;
 
-                // 0個だったら平均値は０となって変な場所に表示されてしまうので、表示しない
-                Object num = map.get(numParamName);
-                if(num == null)
-                    continue;
-                else
-                {
-                    int n = Integer.parseInt((String) num);
-                    if(n == 0) continue;
-                }
-
-                if(cellShapeParam[i].equals("budNeckPosition") || cellShapeParam[i].equals("budGrowthDirection"))
-                {
-                    String areaRatioStr = (String) map.get(areaRatioParamName);
-                    if(areaRatioStr != null)
-                    {
-                        double areaRatio = Double.parseDouble(areaRatioStr);
-                        if(areaRatio == 0.0)
-                        {
-                            continue;
-                        }
-                    }
-                    else
-                        continue;
-                }
-
-                pointArg += orf + ":" + v.toString();
-                pointArg += ":" + selection.getPlotColor(orf).getColorCode() + ",";
-            }
-
-            // 現在見ているORFの点を追加
             // TODO refactoring
             boolean displayValueFlag = true;
             double paramValue = Double.parseDouble(dataMap.get(paramName).toString());
             int numCells = Integer.parseInt(dataMap.get(numParamName).toString());
-            if(numCells > 0)
-            {
-                if(cellShapeParam[i].equals("budNeckPosition") || cellShapeParam[i].equals("budGrowthDirection"))
-                {
-                    String areaRatioStr = (String) dataMap.get(areaRatioParamName);
-                    if(areaRatioStr != null)
-                    {
-                        double areaRatio = Double.parseDouble(areaRatioStr);
-                        if(areaRatio != 0.0)
-                            pointArg += sheetForm.getOrf() + ":" + paramValue + ":" + "FFB0C0";
-                        else
-                            displayValueFlag = false;
-                    }
-                    else
-                        displayValueFlag = false;
-                }
-                else
-                    pointArg += sheetForm.getOrf() + ":" + paramValue + ":" + "FFB0C0";
-            }
 
             TreeMap argMap = new TreeMap();
-            argMap.put("param", paramName);
+            //argMap.put("param", paramName);
             argMap.put("value", pointArg);
             argMap.put("paramID", paramID[i]);
             argMap.put("groupID", groupParamID);
+            argMap.put("plotTargetORF", "true");
+            argMap.put("orientation", "horizontal");
 
             try
             {
@@ -223,29 +168,24 @@ public class ViewGroupByTearDropAction extends Action
                 System.out.println(e.getMessage());
             }
 
-            // add min, max, sd, avg
-            final String param[] = { "max", "min", "avg", "sd"};
-            final String realParam[] = { "maxvalue", "minvalue", "average", "sd"};
-            for (int p = 0; p < param.length; p++)
-            {
-                argMap.put(param[p], colLabelIndex.get(1, realParam[p]).toString());
-            }
             // add point
-            ImageElement img = new ImageElement("teardrop.png", argMap);
+            ImageElement img = new ImageElement("DrawTeardrop.do", argMap);
             img.setProperty("width", "128");
             img.setProperty("height", "30");
 
             row.add(label[i]);
-            row.add(img);
-
             if(numCells > 0 && displayValueFlag)
                 row.add(Double.toString(paramValue));
             else
                 row.add("");
+            row.add(colLabelIndex.get(1, "minvalue"));            
+            row.add(img);
+            row.add(colLabelIndex.get(1, "maxvalue"));
+            
             row.add(colLabelIndex.get(1, "average"));
             row.add(colLabelIndex.get(1, "sd"));
-            row.add(colLabelIndex.get(1, "minvalue"));
-            row.add(colLabelIndex.get(1, "maxvalue"));
+
+
 
             datasheet.addRow(row);
         }
@@ -253,16 +193,20 @@ public class ViewGroupByTearDropAction extends Action
         datasheet.setProperty("class", "datasheet");
         datasheet.setProperty("cellpadding", "0");
         datasheet.decollateCol(0, new StyleDecollator("tablelabel"));
-        TableRange dataRange = new TableRange(0, 2, datasheet.getRowSize() - 1, datasheet.getColSize() - 1);
+        TableRange dataRange = new TableRange(0, 1, datasheet.getRowSize() - 1, 2);
+        TableRange dataRange2 = new TableRange(0, 4, datasheet.getRowSize() - 1, 6);
         datasheet.decollate(dataRange, new NumberFormatDecollator(2));
         datasheet.decollate(dataRange, new AttributeDecollator("width", "50"));
         datasheet.decollate(dataRange, new AttributeDecollator("align", "right"));
+        datasheet.decollate(dataRange2, new NumberFormatDecollator(2));
+        datasheet.decollate(dataRange2, new AttributeDecollator("width", "50"));
+        datasheet.decollate(dataRange2, new AttributeDecollator("align", "right"));
         for (int i = 0; i < 5; i += 2)
         {
             datasheet.decollateCol(2 + i, new StyleDecollator("datasheet_gray"));
         }
 
-        datasheet.insertRow(0, new String[] { "Parameter", "Teardrop", "value", "avg.", "SD", "min", "max"});
+        datasheet.insertRow(0, new String[] { "Parameter", "value", "min", "Teardrop", "max", "avg.", "SD"});
         datasheet.decollateRow(0, new StyleDecollator("sheetlabel"));
 
         Table frame = new Table();

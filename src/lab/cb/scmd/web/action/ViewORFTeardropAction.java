@@ -370,6 +370,10 @@ public class ViewORFTeardropAction extends Action
                 {
                     e.printStackTrace();
                 }
+                catch(IOException e)
+                {
+                    e.printStackTrace();
+                }
             }
         }
         

@@ -31,6 +31,10 @@ import lab.cb.scmd.db.scripts.TeardropStatistics;
 import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.image.teaddrop.Teardrop;
 
+
+/*
+ * @deprecated TeadropƒNƒ‰ƒX‚É“‡
+ */
 public class TeardropPainter extends HttpServlet{
 	TeardropGenerator	_teardropGenerator;
 	

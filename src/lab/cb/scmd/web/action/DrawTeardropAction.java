@@ -10,6 +10,7 @@
 package lab.cb.scmd.web.action;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -28,7 +29,6 @@ import lab.cb.scmd.web.bean.UserSelection;
 import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.common.SCMDSessionManager;
 import lab.cb.scmd.web.formbean.DrawTeardropForm;
-import lab.cb.scmd.web.image.TeardropPainter;
 import lab.cb.scmd.web.image.TeardropPoint;
 import lab.cb.scmd.web.image.teaddrop.Teardrop;
 
@@ -62,15 +62,21 @@ public class DrawTeardropAction extends Action
         DrawTeardropForm input = (DrawTeardropForm) form;
         CellViewerForm view = SCMDSessionManager.getCellViewerForm(request);
         int paramID = input.getParamID();
+        int groupID = input.getGroupID();
         
         // create teadrop
         String sql = SQLExpression.assignTo(
-                "select t1.paramid as \"paramID\", t1.groupid, t1.average, t1.sd, t1.min, t1.max, t2.average as wt_average, t2.sd as wt_sd from $1 as t1 inner join $2 as t2 using(paramid) where t1.groupid=0 and t2.groupid=0 and paramid=$3", 
+                "select t1.paramid as \"paramID\", t1.groupid, t1.average, t1.sd, t1.min, t1.max, t2.average as wt_average, t2.sd as wt_sd from $1 as t1 inner join $2 as t2 using(paramid) where t1.groupid=$4 and t2.groupid=$4 and paramid=$3", 
                 SCMDConfiguration.getProperty("DB_PARAM_AVG_SD", "paramavgsd"),
                 SCMDConfiguration.getProperty("DB_PARAM_AVG_SD_WT", "paramavgsd_wt"),                
-                paramID);
+                paramID,
+                groupID                
+        );
         Teardrop teardrop = (Teardrop) ConnectionServer.query(sql, new BeanHandler(Teardrop.class));
+        if(teardrop == null)
+            return printNAImage(mapping, form, request, response);
         teardrop.setParamID(paramID);
+        teardrop.setGroupID(groupID);
 
         UserSelection selection = SCMDSessionManager.getUserSelection(request);
         
@@ -84,10 +90,11 @@ public class DrawTeardropAction extends Action
             plotList = new LinkedList<TeardropPoint>();
         else
         {            
-            String sql2 = SQLExpression.assignTo("select strainname, average from $1 where groupid='0' and strainname in ($2) and paramid=$3",
+            String sql2 = SQLExpression.assignTo("select strainname, average from $1 where groupid='$4' and strainname in ($2) and paramid=$3",
                     SCMDConfiguration.getProperty("DB_PARAMSTAT", "paramstat"),
-                    SQLUtil.commaSeparatedList(orfSet, SQLUtil.QuotationType.singleQuote),
-                    paramID
+                    SQLUtil.commaSeparatedList(orfSet, SQLUtil.QuotationType.singleQuote),                    
+                    paramID,
+                    groupID                   
             );
             plotList = (List<TeardropPoint>) ConnectionServer.query(sql2, new BeanListHandler(TeardropPoint.class));
         }
@@ -113,12 +120,26 @@ public class DrawTeardropAction extends Action
         }
         catch(SCMDException e)
         {
-            TeardropPainter.printWhiteBoard(request, response);
+            e.printStackTrace();
+            return printNAImage(mapping, form, request, response);
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+            return printNAImage(mapping, form, request, response);
         }
         
         return super.execute(mapping, form, request, response);
     }
     
+    
+    private ActionForward printNAImage(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception
+    {
+        response.setContentType("image/png");
+        request.getRequestDispatcher("/png/na_teardrop.png").forward(request, response);
+        return super.execute(mapping, form, request, response);
+    }
     
     
 }

@@ -41,19 +41,8 @@ function help(url)
 <scmd-tags:menu searchframe="on" toolbar="on" orf="${gene.orf}"/>
 
 
-<table width="750">
-<tr><td align="left">
-<span class="orf"> ${gene.orf} </span> 
-<span class="genename"> ${gene.standardName} </span>
-<span class="annotation"> <%= gene.getAnnotation() %></span>
-</td>
-<td align="right">
-<p align="absbottom">
-<scmd-tags:selectorf orf="${view.orf}"/>
-</p>
-</td>
-</tr>
-</table>
+
+<scmd-tags:orfInfo orf="${gene.orf}" annot="${gene.annotation}" stdname="${gene.standardName}"/>
 
 <p align="center" class="title"> Average Shapes of ${view.orf} </p>
 

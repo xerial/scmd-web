@@ -160,7 +160,13 @@ function writeRegion(e)
 </tr>
 </table>
 
-
+<table>
+<tr>
+<td><table><tr><td bgcolor="#90F0C0" height="2" width="50"></td></tr></table></td><td>average of all mutants</td>
+<td width="50"></td>
+<td><table><tr><td bgcolor="#EFC4C9" height="2" width="50"></td></tr></table></td><td>average of wildtype</td>
+</tr>
+</table>
 <scmd-tags:linkMenu orf="${view.orf}" logo="on"/> 
 
 </center>
