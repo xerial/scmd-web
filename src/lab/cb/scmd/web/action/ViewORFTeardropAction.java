@@ -159,7 +159,7 @@ public class ViewORFTeardropAction extends Action
         {
             int paramID = param.getId();
             //StringElement label = new StringElement(param.getShortName());
-            Link label = new Link("ORFDataSheet.do?param=" + paramID, param.getShortName());
+            Link label = new Link("ORFDataSheet.do?paramID=" + paramID, param.getShortName());
             //labelRow.add(new AttributeDecollation(label, "title", param.getDisplayname()));
             labelRow.add(new AttributeDecollation(label, "title", param.getDisplayname()));
 
