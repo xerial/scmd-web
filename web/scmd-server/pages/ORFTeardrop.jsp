@@ -53,6 +53,9 @@
 </scmd-base:tab>
 </logic:iterate>
 </scmd-base:tablist>
+<td width="300" class="small" align="right">
+(click the teardrops below to see detail data)
+</td>
 </tr>
 </table>
 </td>
