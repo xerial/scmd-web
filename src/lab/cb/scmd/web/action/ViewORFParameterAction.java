@@ -94,6 +94,7 @@ public class ViewORFParameterAction extends Action
         StringBuilder sqlTable = new StringBuilder();
         int count = 0;
         String sortParamName = "strainname";
+        MorphParameter targetParam = null;
         for(MorphParameter p : selectedORFParameter)
         {
             paramIDs.add(p.getId());
@@ -101,7 +102,10 @@ public class ViewORFParameterAction extends Action
             String tableAlias = "t" + count;
             sqlParamList.add(SQLUtil.doubleQuote(p.getName()));
             if(input.getSortspec() == p.getId())
+            {
                 sortParamName = p.getName();
+                targetParam = p;
+            }
 //            sqlCondition.add(tableAlias + ".paramid=" + p.getId());
 //            if(count == 0)
 //                sqlTable.append(dbTable + " as " + tableAlias);
@@ -183,9 +187,10 @@ public class ViewORFParameterAction extends Action
         int offset = numRows * input.getPage();                 
         geneList = retrieveYeastGeneList(selectedORFParameter, numRows, offset, sqlParamList, sortParamName);
         
-        if(selectedORFParameter.size() == 1)
+        if(selectedORFParameter.size() == 1 || input.getSortspec() != -1)
         {
-            MorphParameter targetParam = selectedORFParameter.get(0);
+            if(targetParam == null)
+                targetParam = selectedORFParameter.get(0);
             request.setAttribute("targetParam", targetParam);
             double begin = 0, end=0;        
             if(!geneList.isEmpty())
@@ -198,7 +203,7 @@ public class ViewORFParameterAction extends Action
         }
         
         request.setAttribute("geneList", geneList);
-        request.setAttribute("paramNames", paramShortNames);
+        request.setAttribute("paramList", selectedORFParameter);
         request.setAttribute("pageStatus", new PageStatus(input.getPage()+1, maxPage));
         request.setAttribute("paramIDs", paramIDs);
         request.setAttribute("sortspec", input.getSortspec());

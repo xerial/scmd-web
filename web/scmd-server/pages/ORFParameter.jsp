@@ -18,7 +18,7 @@
 <center>
 <scmd-tags:menu  toolbar="on" searchframe="on" orf="${view.orf}"/>
 
-<p class="title">ORF Parameter Sheet </p>
+<p class="title">Sortable ORF Parameter Sheet </p>
 
 <html:form action="ViewSelection.do" method="GET">
 <table width="750">
@@ -46,6 +46,7 @@
 </td>
 </tr>
 </table>
+<p class="header"> order by ${targetParam.name} </p>
 </logic-nonel:present>
 
 
@@ -67,12 +68,12 @@ format.
 </span>
 <table class="datasheet" cellpadding="0" cellspacing="0">
 <tr>
-<td class="sheetlabel" align="center">ORF</td>
+<td class="sheetlabel" align="center"><a href="ViewORFParameter.do?sortspec=-1">ORF</a></td>
 <td class="sheetlabel" align="center">Std. Name</td>
 <%-- <td width="150" align="center">Aliases</td> --%>
 <td></td>
-<logic:iterate id="p" name="paramNames" scope="request" type="java.lang.String">
-<td class="sheetlabel" align="center" >${p}</td>
+<logic:iterate id="p" name="paramList" scope="request" type="lab.cb.scmd.web.sessiondata.MorphParameter">
+<td class="sheetlabel" align="center" ><a href="ViewORFParameter.do?sortspec=${p.id}">${p.name}</a></td>
 </logic:iterate>
 </tr>
 <logic:iterate id="gene" name="geneList" scope="request" type="lab.cb.scmd.web.bean.YeastGene">
@@ -84,8 +85,8 @@ format.
 <td class="genename" align="center">${gene.standardName}</td>
 <td></td>
 <%--<td class="small" align="center"> ${gene.aliasString} </td> --%>
-<logic:iterate id="p" name="paramNames" scope="request" type="java.lang.String">
-<td align="right"><bean:write name="gene" property="parameter(${p})"/></td>
+<logic:iterate id="p" name="paramList" scope="request" type="lab.cb.scmd.web.sessiondata.MorphParameter">
+<td align="right"><bean:write name="gene" property="parameter(${p.name})"/></td>
 </logic:iterate>
 </tr>
 <tr bgcolor="#F0F0E0" height="15">

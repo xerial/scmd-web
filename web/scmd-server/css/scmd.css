@@ -101,9 +101,18 @@ a:visited { color: #666666; }
 	font-weight: bold; 
 	white-space: nowrap;
 }
-.sheetlabel a:link { text-decoration: none; font-weight: bold; color: white; }
-.sheetlabel a:visited { text-decoration: none; font-weight: bold; color: white; }
-.sheetlabel a:hover { text-decoration:none; color: white; background: #90C0F0; }
+.sheetlabel a:link, .sheetlabel a:visited 
+{ 
+	text-decoration: none; font-weight: bold; color: white; 
+	display: block;
+	width: 100%;
+}
+.sheetlabel a:hover 
+{ 
+	text-decoration:none; color: white; background: #90C0F0; 
+	display: block;
+	width: 100%;
+}
 .sheetlabel_on { 
     color: white; 
     font-size: 8pt; 
