@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import lab.cb.scmd.db.common.TableQuery;
-import lab.cb.scmd.db.scripts.bean.Parameter;
 import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.formbean.ViewCustomizeForm;
 import lab.cb.scmd.web.sessiondata.MorphParameter;
@@ -48,8 +47,8 @@ public class CustomizeViewAction extends Action
             HttpServletRequest request, HttpServletResponse response) 
     {
         ViewCustomizeForm selection = (ViewCustomizeForm) form;
-        List<Parameter> cellParameter = selection.getCellParameterList();
-        List<Parameter> orfParameter  = selection.getORFParameterList();
+        List<MorphParameter> cellParameter = selection.getCellParameterList();
+        List<MorphParameter> orfParameter  = selection.getORFParameterList();
         
         // session‚ðŽæ“¾
         HttpSession session = request.getSession(true);

@@ -19,7 +19,6 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import lab.cb.scmd.algorithm.Algorithm;
 import lab.cb.scmd.db.common.QueryRange;
 import lab.cb.scmd.db.common.TableQuery;
-import lab.cb.scmd.db.scripts.bean.Parameter;
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.web.common.DataSheetType;
 import lab.cb.scmd.web.common.SCMDConfiguration;
@@ -297,9 +296,9 @@ public class SCMDTableQuery implements TableQuery {
         return evalSQL(sql);
     }
 
-    public List<Parameter> getParameterList(String scope, String datatype) throws SQLException {
+    public List<MorphParameter> getParameterList(String scope, String datatype) throws SQLException {
         String sql = "select id, name, shortname, scope, datatype from " + SCMDConfiguration.getProperty("DB_PARAMETERLIST") + " where scope='$1' and datatype='$2' order by id";
-        List<Parameter> result = (List<Parameter>) ConnectionServer.query(new BeanListHandler(Parameter.class), sql, scope, datatype);
+        List<MorphParameter> result = (List<MorphParameter>) ConnectionServer.query(new BeanListHandler(MorphParameter.class), sql, scope, datatype);
         return result;
     }
 

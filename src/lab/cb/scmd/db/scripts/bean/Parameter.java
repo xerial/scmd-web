@@ -11,55 +11,56 @@ package lab.cb.scmd.db.scripts.bean;
 
 /**
  * ParameterÇï\åªÇ∑ÇÈbean
+ * lab.cb.scmd.web.sessiondata.MorphParameter Ç…ìùçá
  * @author leo
  *
  */
-public class Parameter
-{
-    private int id;
-    private String name;
-    private String shortName;
-    
-    /**
-     * 
-     */
-    public Parameter()
-    {
-        super();
-    }
-    
-    public String[] attributes() 
-    {
-        return new String[] { "id", "name" };
-    }
-
-    public int getId()
-    {
-        return id;
-    }
-    public void setId(int id)
-    {
-        this.id = id;
-    }
-    public String getName()
-    {
-        return name;
-    }
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-    
-    
-    public String getShortname()
-    {
-        return shortName;
-    }
-    public void setShortname(String shortName)
-    {
-        this.shortName = shortName;
-    }
-}
+//public class Parameter
+//{
+//    private int id;
+//    private String name;
+//    private String shortName;
+//    
+//    /**
+//     * 
+//     */
+//    public Parameter()
+//    {
+//        super();
+//    }
+//    
+//    public String[] attributes() 
+//    {
+//        return new String[] { "id", "name" };
+//    }
+//
+//    public int getId()
+//    {
+//        return id;
+//    }
+//    public void setId(int id)
+//    {
+//        this.id = id;
+//    }
+//    public String getName()
+//    {
+//        return name;
+//    }
+//    public void setName(String name)
+//    {
+//        this.name = name;
+//    }
+//    
+//    
+//    public String getShortname()
+//    {
+//        return shortName;
+//    }
+//    public void setShortname(String shortName)
+//    {
+//        this.shortName = shortName;
+//    }
+//}
 
 
 

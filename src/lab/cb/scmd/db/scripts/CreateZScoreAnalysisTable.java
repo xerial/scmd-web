@@ -24,7 +24,6 @@ import java.util.Vector;
 import lab.cb.common.cui.OptionParser;
 import lab.cb.common.cui.OptionParserException;
 import lab.cb.scmd.db.scripts.bean.GroupType;
-import lab.cb.scmd.db.scripts.bean.Parameter;
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.util.io.NullPrintStream;
 import lab.cb.scmd.util.stat.EliminateOnePercentOfBothSidesStrategy;
@@ -35,12 +34,8 @@ import lab.cb.scmd.util.table.TableIterator;
 import lab.cb.scmd.web.exception.DatabaseException;
 import lab.cb.scmd.web.table.ColLabelIndex;
 import lab.cb.scmd.web.table.Table;
-import lab.cb.scmd.web.table.TableElement;
 
 import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.ResultSetHandler;
-import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.commons.dbutils.handlers.ColumnListHandler;
 import org.postgresql.jdbc3.Jdbc3PoolingDataSource;
 import org.xerial.XerialException;
 

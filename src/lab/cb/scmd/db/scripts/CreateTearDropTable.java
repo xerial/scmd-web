@@ -37,7 +37,7 @@ import lab.cb.common.cui.OptionParser;
 import lab.cb.common.cui.OptionParserException;
 import lab.cb.scmd.algorithm.Algorithm;
 import lab.cb.scmd.db.scripts.bean.GroupType;
-import lab.cb.scmd.db.scripts.bean.Parameter;
+import lab.cb.scmd.web.sessiondata.MorphParameter;
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.util.io.NullPrintStream;
 import lab.cb.scmd.util.stat.EliminateOnePercentOfBothSidesStrategy;
@@ -132,7 +132,7 @@ public class CreateTearDropTable
         
         // read group types
         List<GroupType> groupTypeList = (List<GroupType>) queryRunner.query("select id, stain, name from groups  where id >= 1 order by id", new BeanListHandler(GroupType.class));
-        List<Parameter> cellParamList = (List<Parameter>) queryRunner.query("select id, name, scope, datatype from parameterlist where scope='cell' and datatype='num' order by id", new BeanListHandler(Parameter.class));
+        List<MorphParameter> cellParamList = (List<MorphParameter>) queryRunner.query("select id, name, scope, datatype from parameterlist where scope='cell' and datatype='num' order by id", new BeanListHandler(MorphParameter.class));
 
         Statistics stat = new StatisticsWithMissingValueSupport(new String[] {"-1", "-1.0", "."}, new EliminateOnePercentOfBothSidesStrategy());
         
@@ -169,7 +169,7 @@ public class CreateTearDropTable
             ColLabelIndex colLabelIndex = new ColLabelIndex(sheet);
             
             // for each param
-            for(Parameter param : cellParamList)
+            for(MorphParameter param : cellParamList)
             {
                 // for each group
                 for(GroupType group : groupTypeList)

@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import lab.cb.scmd.db.scripts.bean.Parameter;
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.web.datagen.ParamPair;
 import lab.cb.scmd.web.sessiondata.MorphParameter;

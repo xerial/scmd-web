@@ -15,8 +15,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import lab.cb.scmd.db.connect.SCMDTableQuery;
-import lab.cb.scmd.db.scripts.bean.Parameter;
-import lab.cb.scmd.web.table.Table;
+import lab.cb.scmd.web.sessiondata.MorphParameter;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
@@ -27,8 +26,8 @@ import org.apache.struts.action.ActionMapping;
  */
 public class ViewCustomizeForm extends ActionForm 
 {
-    static List<Parameter> _cellParameterList; 
-    static List<Parameter> _orfParameterList;
+    static List<MorphParameter> _cellParameterList; 
+    static List<MorphParameter> _orfParameterList;
     String _button = "add selections";
         
     public static void loadParameters() throws SQLException
@@ -61,11 +60,11 @@ public class ViewCustomizeForm extends ActionForm
         super();
     }
 
-    public List<Parameter> getCellParameterList()
+    public List<MorphParameter> getCellParameterList()
     {
         return _cellParameterList;
     }
-    public List<Parameter> getORFParameterList()
+    public List<MorphParameter> getORFParameterList()
     {
         return _orfParameterList;
     }
