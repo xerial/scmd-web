@@ -20,7 +20,7 @@ import lab.cb.scmd.web.table.Table;
  * @author leo
  *  
  */
-public interface TableQuery extends QueryAPI
+public interface TableQuery 
 {
     /*
      * 写真に含まれるcellの形態パラメータのテーブルを返す (cellID, budSize, nucleusGroup, actin group,

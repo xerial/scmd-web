@@ -10,16 +10,11 @@
 
 package lab.cb.scmd.db.common;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.LinkedList;
 
+import lab.cb.scmd.db.connect.ConnectionServer;
 import lab.cb.scmd.exception.SCMDException;
-import lab.cb.scmd.util.table.AppendableTable;
 import lab.cb.scmd.util.table.BasicTable;
 import lab.cb.scmd.util.table.Cell;
 import lab.cb.scmd.web.exception.DBConnectException;
@@ -28,9 +23,9 @@ import lab.cb.scmd.web.table.Table;
 
 public class DBConnect {
     protected boolean _useSQL = true;
-    protected static String _dbaddress = "";
-    protected static String _portno	  = "";
-    protected static String _dbname	  = "";
+//    protected static String _dbaddress = "";
+//    protected static String _portno	  = "";
+//    protected static String _dbname	  = "";
     
     protected String _genenameTable	= "genename_20040719";
     protected String _strainTable 	= "strain_20040730";
@@ -38,48 +33,51 @@ public class DBConnect {
     protected String _summaryTable  = "summary_20040719";
     protected String _individualTable = "individual_20040813";
     
-    private Connection _connection = null;
-    private Statement  _statement  = null;
-    private ResultSet  _resultset  = null;
+//    private Connection _connection = null;
+//    private Statement  _statement  = null;
+//    private ResultSet  _resultset  = null;
+  
+    public DBConnect()
+    {}
     
-    public DBConnect (String dbaddress, String portno, String dbname) throws DBConnectException {
-    	if( dbaddress == null || portno == null || dbname == null )
-    		throw new DBConnectException();
-        if( dbaddress.equals("flatfile") ) {
-            _useSQL = false;
-            return;
-        }
+//    public DBConnect (String dbaddress, String portno, String dbname)  {
+//    	if( dbaddress == null || portno == null || dbname == null )
+//    		throw new DBConnectException();
+//        if( dbaddress.equals("flatfile") ) {
+//            _useSQL = false;
+//            return;
+//        }
+//
+//        _useSQL = true;
+//        _dbaddress = dbaddress;
+//        _portno = portno;
+//        _dbname = dbname;
+//        connect();
+//    }
 
-        _useSQL = true;
-        _dbaddress = dbaddress;
-        _portno = portno;
-        _dbname = dbname;
-        connect();
-    }
-
-    public void connect () {
-    	if( _connection != null )
-    		return;
-        
-        try{
-            Class.forName("org.postgresql.Driver");
-        }catch(ClassNotFoundException e){
-            e.printStackTrace();
-//            System.exit(1);
-        }
-        try{
-            String connectCommand = "jdbc:postgresql:";
-            if( !_dbaddress.equals("localhost") ) {
-                connectCommand  += "//" + _dbaddress;
-                if( !_portno.equals("5432") )
-                    connectCommand += ":" + _portno;
-                connectCommand += "/";
-            }
-            connectCommand += _dbname;
-            _connection = DriverManager.getConnection(connectCommand,"postgres","");
-        }catch(SQLException e){
-        }
-    }
+//    public void connect () {
+//    	if( _connection != null )
+//    		return;
+//        
+//        try{
+//            Class.forName("org.postgresql.Driver");
+//        }catch(ClassNotFoundException e){
+//            e.printStackTrace();
+////            System.exit(1);
+//        }
+//        try{
+//            String connectCommand = "jdbc:postgresql:";
+//            if( !_dbaddress.equals("localhost") ) {
+//                connectCommand  += "//" + _dbaddress;
+//                if( !_portno.equals("5432") )
+//                    connectCommand += ":" + _portno;
+//                connectCommand += "/";
+//            }
+//            connectCommand += _dbname;
+//            _connection = DriverManager.getConnection(connectCommand,"postgres","");
+//        }catch(SQLException e){
+//        }
+//    }
 
     // query に対し、BasicTableを返す。
     // ただし, 各行に対するunique keyを必要とする場合は、keyColumn に
@@ -92,123 +90,72 @@ public class DBConnect {
     }
 
     protected BasicTable query (String sql, String keyColumnName, boolean isShowColumn) throws InvalidSQLException {
-        _resultset = null;
-        AppendableTable at = null;
-        try{
-            _statement = _connection.createStatement();
-//            String sql="select * from genename_20040714 limit 200";
-            _resultset = _statement.executeQuery(sql);
-            ResultSetMetaData metaData = _resultset.getMetaData();
-            int numberOfColumns =  metaData.getColumnCount();
-            String[] columnName = new String [numberOfColumns];
-            int keyColumn = -1;
-            for( int i = 0; i < numberOfColumns; i++ ) {
-                columnName[i] = metaData.getColumnLabel(i + 1);
-                if( keyColumnName.equals(metaData.getColumnLabel(i + 1))) {
-                    keyColumn = i;
-                }
-            }
-            int curcol = 0;
-            int collength = 0;
-            if( keyColumn < 0 ) {
-                collength = numberOfColumns;
-            } else {
-                collength = numberOfColumns + 1;
-                curcol = 1;
-            }
-
-            if( keyColumn < 0)
-                at = new AppendableTable("SQL Result", columnName); // without rowlabel
-            else
-                at = new AppendableTable("SQL Result", columnName, true); // with rowlabel
-            
-            while( _resultset.next()){
-                String[] row = new String[collength];
-                if( keyColumn >= 0 )
-                    row[0] = _resultset.getString(columnName[keyColumn]);
-                for( int i = 0; i < numberOfColumns; i++ ) {
-                    row[i + curcol] = _resultset.getString(columnName[i]);
-                }
-                at.append(row);
-            }
-        } catch (SQLException e) {
-            throw new InvalidSQLException();
+        try
+        {
+            return ConnectionServer.retrieveBasicTable(sql, keyColumnName);
+        } 
+        catch (SQLException e) 
+        {
+            throw new InvalidSQLException(e);
         }
-        return (BasicTable)at;
     }
     
     public Table getQueryResult(String sql) throws InvalidSQLException {
-        _resultset = null;
-        Table table = new Table();
-        try{
-            _statement = _connection.createStatement();
-            _resultset = _statement.executeQuery(sql);
-            ResultSetMetaData metaData = _resultset.getMetaData();
-            int numberOfColumns =  metaData.getColumnCount();
-            String[] columnName = new String [numberOfColumns];
-            for( int i = 0; i < numberOfColumns; i++ ) {
-                columnName[i] = metaData.getColumnLabel(i + 1);
-            }
-            table.addRow(columnName);
-            while( _resultset.next()){
-                String[] row = new String[numberOfColumns];
-                for( int i = 0; i < numberOfColumns; i++ ) {
-                    row[i] = _resultset.getString(columnName[i]);
-                }
-                table.addRow(row);
-            }
-        } catch (SQLException e) {
-            throw new InvalidSQLException(e);
-        }
-        return table;
-    }
-    public synchronized void close() 
-    {
-        if(_useSQL)
-        {
-            try
-            {
-            	if(_statement  != null) {
-            		_statement.close();
-            	}
-            	if(_resultset != null) {
-            		_resultset.close();
-            	}
-                if(_connection != null)
-                {
-                    if(!_connection.isClosed())
-                        _connection.close();
-                }
-            }
-            catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
-        }
-    }
-    
-    public boolean isClosed() throws SCMDException
-    {
         try
         {
-            if(_connection != null)
-                return _connection.isClosed();
-            else
-            {
-                return true;
-            }
-        }
-        catch(SQLException e)
-        {
-            throw new SCMDException(e);
+            return ConnectionServer.retrieveTable(sql);
+        } 
+        catch (SQLException e) {
+            throw new InvalidSQLException(e);
         }
     }
+//    public synchronized void close() 
+//    {
+//        if(_useSQL)
+//        {
+//            try
+//            {
+//            	if(_statement  != null) {
+//            		_statement.close();
+//            	}
+//            	if(_resultset != null) {
+//            		_resultset.close();
+//            	}
+//                if(_connection != null)
+//                {
+//                    if(!_connection.isClosed())
+//                        _connection.close();
+//                }
+//            }
+//            catch(SQLException e)
+//            {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
+//    
+//    public boolean isClosed() throws SCMDException
+//    {
+//        try
+//        {
+//            if(_connection != null)
+//                return _connection.isClosed();
+//            else
+//            {
+//                return true;
+//            }
+//        }
+//        catch(SQLException e)
+//        {
+//            throw new SCMDException(e);
+//        }
+//    }
     
     
-    public void finalize() throws Throwable {
-        close();
-        super.finalize();
-    }
+//    public void finalize() throws Throwable {
+//        close();
+//        super.finalize();
+//    }
 
     public BasicTable geneGroupQuery(LinkedList genes, PageStatus page, String[] columns, String params[]) throws SCMDException {
         BasicTable bt = null;
@@ -336,27 +283,27 @@ public class DBConnect {
         return bt;
 	}
 
-    public static void main(String[] args) {
-        DBConnect dbconnect = null;
-		try {
-			dbconnect = new DBConnect("157.82.250.67", "5432", "lab.cb.scmd_pre_20040714");
-		} catch (DBConnectException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		String sql = "select systematicname, annotation from genename_20040714 limit 200";
-        String[] cols = {"systematicname","annotation"};
-        BasicTable result = null;
-        try {
-            result = dbconnect.query(sql);
-        } catch (SCMDException e) {
-            e.printStackTrace();
-        }
-        for(int i = 0; i < result.getRowSize(); i++ ) {
-            for( int j = 0; j < result.getColSize(); j++ ) {
-                System.out.print("\t" + result.getCell(i, j).toString());
-            }
-            System.out.println();
-        }
-    }
+//    public static void main(String[] args) {
+//        DBConnect dbconnect = null;
+//		try {
+//			dbconnect = new DBConnect("157.82.250.67", "5432", "lab.cb.scmd_pre_20040714");
+//		} catch (DBConnectException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		String sql = "select systematicname, annotation from genename_20040714 limit 200";
+//        String[] cols = {"systematicname","annotation"};
+//        BasicTable result = null;
+//        try {
+//            result = dbconnect.query(sql);
+//        } catch (SCMDException e) {
+//            e.printStackTrace();
+//        }
+//        for(int i = 0; i < result.getRowSize(); i++ ) {
+//            for( int j = 0; j < result.getColSize(); j++ ) {
+//                System.out.print("\t" + result.getCell(i, j).toString());
+//            }
+//            System.out.println();
+//        }
+//    }
 }

@@ -30,11 +30,11 @@ public class SCMDDBConnect extends DBConnect {
     protected String _averageShapeTable		= "average_shape_20040813"; 
     protected String _tdAverageShapeTable 	= "td_average_shape_20040820";
 
-    public SCMDDBConnect () throws DBConnectException {
-    	super(SCMDConfiguration.getProperty("POSTGRESQL_IP"),
-    			SCMDConfiguration.getProperty("POSTGRESQL_PORT"),
-				SCMDConfiguration.getProperty("POSTGRESQL_DBNAME"));
-    	connect();
+    public SCMDDBConnect ()  {
+//    	super(SCMDConfiguration.getProperty("POSTGRESQL_IP"),
+//    			SCMDConfiguration.getProperty("POSTGRESQL_PORT"),
+//				SCMDConfiguration.getProperty("POSTGRESQL_DBNAME"));
+    	
         if(SCMDConfiguration.getProperty("DB_GENENAME") != null ) {
             _genenameTable = SCMDConfiguration.getProperty("DB_GENENAME");
         }
@@ -58,18 +58,18 @@ public class SCMDDBConnect extends DBConnect {
         }
     }
     
-    public SCMDDBConnect (String dbaddress, String portno, String dbname) throws DBConnectException {
-        super(dbaddress, portno, dbname);
-        _groupQueryTableFile = dbname;
-    }
+//    public SCMDDBConnect (String dbaddress, String portno, String dbname)  {
+//        //super(dbaddress, portno, dbname);
+//        _groupQueryTableFile = dbname;
+//    }
 
     
-    public void setDB(String filename, String dbname) {
-    	if( filename.equals("GroupQuery") )
-    		_groupQueryTableFile = filename;
-    	else if ( filename.equals("CellBox") )
-    		_cellBoxQueryTableFile = filename;
-    }
+//    public void setDB(String filename, String dbname) {
+//    	if( filename.equals("GroupQuery") )
+//    		_groupQueryTableFile = filename;
+//    	else if ( filename.equals("CellBox") )
+//    		_cellBoxQueryTableFile = filename;
+//    }
 
     public BasicTable geneGroupQuery(LinkedList _genes, PageStatus _page, String columns[], String params[]) throws SCMDException {
         BasicTable bt = null;
@@ -137,7 +137,7 @@ public class SCMDDBConnect extends DBConnect {
 		return getQueryResult(sql);
 	}
 
-	public Table getDataSheet(String strain, int photoID, String[] params) throws InvalidSQLException {
+	public Table getDataSheet(String strain, int photoID, String[] params) throws InvalidSQLException {;
 		String columns = "";
 		columns = "cell_local_id ";
 //		if( params.length > 0 )

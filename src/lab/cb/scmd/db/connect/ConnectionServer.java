@@ -14,6 +14,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.Vector;
 
@@ -23,6 +24,8 @@ import org.apache.commons.dbutils.ResultSetHandler;
 import org.xerial.util.Pair;
 
 import lab.cb.scmd.db.sql.SQLExpression;
+import lab.cb.scmd.util.table.AppendableTable;
+import lab.cb.scmd.util.table.BasicTable;
 import lab.cb.scmd.web.common.ConfigObserver;
 import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.table.Table;
@@ -46,6 +49,9 @@ public class ConnectionServer implements ConfigObserver
     private LinkedList<Connection> _connectionHolder = new LinkedList<Connection>();
     private QueryRunner _queryRunner = new QueryRunner();
 
+    
+   
+    
     /** SQLを実行して結果をTableに格納して返す
      * @param sql $1, $2, ...という変数を含むＳＱＬ文
      * @param args 引数に代入する値
@@ -58,12 +64,74 @@ public class ConnectionServer implements ConfigObserver
     }
     /** SQLを実行して結果をTableに格納して返す
      * @param sql ＳＱＬ文
-     * @return lab.cb.web.table.Table クラスのインスタンス
+     * @return lab.cb.scmd.web.table.Table クラスのインスタンス
      * @throws SQLException
      */
     static public Table retrieveTable(String sql) throws SQLException
     {
         return (Table) _instance.execQuery(sql, new TableConverter()); 
+    }
+    
+    /** SQLを実行して結果をBasicTableに格納して返す
+     * @param sql ＳＱＬ文
+     * @return lab.cb.scmd.util.Table.BasicTable クラスのインスタンス
+     * @throws SQLException
+     */
+    static public BasicTable retrieveBasicTable(String sql, String keyColumnName) throws SQLException
+    {
+        return (BasicTable) _instance.execQuery(sql, new BasicTableConverter(keyColumnName)); 
+
+    }
+    static private class BasicTableConverter implements ResultSetHandler
+    {
+        String keyColumnName = "";
+        public BasicTableConverter()
+        {
+            
+        }
+        public BasicTableConverter(String keyColumnName)
+        {
+            this.keyColumnName = keyColumnName;
+        }
+        
+        public Object handle(ResultSet resultSet) throws SQLException
+        {
+            AppendableTable at = null;            
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int numberOfColumns =  metaData.getColumnCount();
+            String[] columnName = new String [numberOfColumns];
+            int keyColumn = -1;
+            for( int i = 0; i < numberOfColumns; i++ ) {
+                columnName[i] = metaData.getColumnLabel(i + 1);
+                if( keyColumnName.equals(metaData.getColumnLabel(i + 1))) {
+                    keyColumn = i;
+                }
+            }
+            int curcol = 0;
+            int collength = 0;
+            if( keyColumn < 0 ) {
+                collength = numberOfColumns;
+            } else {
+                collength = numberOfColumns + 1;
+                curcol = 1;
+            }
+            
+            if( keyColumn < 0)
+                at = new AppendableTable("SQL Result", columnName); // without rowlabel
+            else
+                at = new AppendableTable("SQL Result", columnName, true); // with rowlabel
+            
+            while( resultSet.next()){
+                String[] row = new String[collength];
+                if( keyColumn >= 0 )
+                    row[0] = resultSet.getString(columnName[keyColumn]);
+                for( int i = 0; i < numberOfColumns; i++ ) {
+                    row[i + curcol] = resultSet.getString(columnName[i]);
+                }
+                at.append(row);
+            }
+            return at;
+        }
     }
     
     static private class TableConverter implements ResultSetHandler
@@ -172,6 +240,7 @@ public class ConnectionServer implements ConfigObserver
         SCMDConfiguration.addObserver(_instance);
     }
     
+    
     /**
      * 後始末を行うメソッド。TOMCATの再起動前に呼び出す 
      */
@@ -250,13 +319,13 @@ public class ConnectionServer implements ConfigObserver
     
     protected void closeAll()
     {
-        System.out.print("[scmd-server] closing connections ...");
+        System.out.print("[scmd-server " + new Date(System.currentTimeMillis())  + "] closing connections ...");
         int count = 1;
         for(Connection con : _connectionHolder)
         {
             try
             {
-                con.close();
+                con.close(); 
                 System.out.print(count++);
                 System.out.print(" ");                
             }

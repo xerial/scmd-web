@@ -14,7 +14,7 @@ package lab.cb.scmd.db.common;
  * @author leo
  *
  */
-public interface ValueQuery extends QueryAPI
+public interface ValueQuery 
 {
     int getMaxPhotoPage(String orf);
     

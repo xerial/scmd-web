@@ -11,12 +11,11 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
 
+
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
-import sun.jdbc.odbc.ee.ConnectionHandler;
 
 import lab.cb.scmd.algorithm.Algorithm;
-import lab.cb.scmd.db.common.DBConnect;
 import lab.cb.scmd.db.common.QueryRange;
 import lab.cb.scmd.db.common.TableQuery;
 import lab.cb.scmd.db.scripts.bean.Parameter;
@@ -25,46 +24,44 @@ import lab.cb.scmd.web.common.DataSheetType;
 import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.common.StainType;
 import lab.cb.scmd.web.datagen.ParamPair;
-import lab.cb.scmd.web.exception.DBConnectException;
 import lab.cb.scmd.web.exception.InvalidSQLException;
 import lab.cb.scmd.web.table.RowLabelIndex;
 import lab.cb.scmd.web.table.Table;
 
-public class SCMDTableQuery extends ConnectionHolder implements TableQuery {
+public class SCMDTableQuery implements TableQuery {
 
-	public SCMDTableQuery () {
-        try {
-            ConnectionServer.initialize();
-            _connection = (SCMDDBConnect)getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-	}
+    private SCMDDBConnect _connection = null;
+	public SCMDTableQuery () 
+    {
+	    _connection = new SCMDDBConnect();
+    }
 	
-	public DBConnect getConnection()
-	{
-	    try
-	    {
-	        if(_connection == null)
-	            _connection = new SCMDDBConnect();
-	        else if(_connection.isClosed())
-	        {
-	            // çƒê⁄ë±
-	            _connection = new SCMDDBConnect();
-	        }
-	    }
-	    catch(SCMDException e)
-	    {
-	        e.what();
-            try {
-				// çƒê⁄ë±
-				_connection = new SCMDDBConnect();
-			} catch (DBConnectException e1) {
-				e.what();
-			}
-	    }
-	    return _connection;
-	}
+//	public DBConnect getConnection()
+//	{
+//	    ConnectionServer.
+//        
+////	    try
+////	    {
+////	        if(_connection == null)
+////	            _connection = new SCMDDBConnect();
+////	        else if(_connection.isClosed())
+////	        {
+////	            // çƒê⁄ë±
+////	            _connection = new SCMDDBConnect();
+////	        }
+////	    }
+////	    catch(SCMDException e)
+////	    {
+////	        e.what();
+////            try {
+////				// çƒê⁄ë±
+////				_connection = new SCMDDBConnect();
+////			} catch (DBConnectException e1) {
+////				e.what();
+////			}
+////	    }
+////	    return _connection;
+//	}
 
 	
 	/* (non-Javadoc)
@@ -74,7 +71,7 @@ public class SCMDTableQuery extends ConnectionHolder implements TableQuery {
 		strain = strain.toUpperCase();
 		Table table;
 		try {
-			table = ((SCMDDBConnect)getConnection()).getDataSheet(strain, photoID, cellID,
+			table = _connection.getDataSheet(strain, photoID, cellID,
 					DataSheetType.getDetailParameters(sheetType));
 		} catch (InvalidSQLException e) {
 			return null;
@@ -88,8 +85,7 @@ public class SCMDTableQuery extends ConnectionHolder implements TableQuery {
 		strain = strain.toUpperCase();
 		Table table;
 		try {
-			table = ((SCMDDBConnect)getConnection()).getDataSheet(strain, photoID, 
-					DataSheetType.getParameters(sheetType));
+			table = _connection.getDataSheet(strain, photoID, DataSheetType.getParameters(sheetType));
 		} catch (InvalidSQLException e) {
 			return null;
 		}
@@ -102,7 +98,7 @@ public class SCMDTableQuery extends ConnectionHolder implements TableQuery {
 		strain = strain.toUpperCase();
 		Table table;
 		try {
-			table = ((SCMDDBConnect)getConnection()).getAverageShapeStatSheet(strain);
+			table = _connection.getAverageShapeStatSheet(strain);
 		} catch (InvalidSQLException e) {
 			TreeMap map = new TreeMap();
 			return map;
@@ -125,7 +121,7 @@ public class SCMDTableQuery extends ConnectionHolder implements TableQuery {
     public Table getShapeStatOfParameter(String param) {
         Table table;
         try {
-            table = ((SCMDDBConnect)getConnection()).getShapeStatOfParameter(param);
+            table = _connection.getShapeStatOfParameter(param);
         } catch (InvalidSQLException e) {
             e.what();
             return null;

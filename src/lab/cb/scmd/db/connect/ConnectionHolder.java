@@ -15,41 +15,42 @@ import lab.cb.scmd.db.common.QueryAPI;
 import lab.cb.scmd.web.exception.DBConnectException;
 
 /**
+ * @deprecated 
  * @author leo
  *
  */
-public class ConnectionHolder implements QueryAPI
-{
-
-    protected DBConnect _connection = null;
-    /**
-     * 
-     */
-    public ConnectionHolder() 
-    {
-        super();
-    }
-
-    /* (non-Javadoc)
-     * @see lab.cb.scmd.db.common.QueryAPI#getConnection()
-     */
-    public DBConnect getConnection() throws DBConnectException {
-        return _connection;
-    }
-
-    /* (non-Javadoc)
-     * @see lab.cb.scmd.db.common.QueryAPI#setConnectino(lab.cb.scmd.db.common.DBConnect)
-     */
-    public void setConnection(DBConnect connection) {
-        
-        if(_connection != null)
-        {
-            _connection.close();
-        }
-        _connection = connection;
-    }
-
-}
+//public class ConnectionHolder implements QueryAPI
+//{
+//
+//    protected DBConnect _connection = null;
+//    /**
+//     * 
+//     */
+//    public ConnectionHolder() 
+//    {
+//        super();
+//    }
+//
+//    /* (non-Javadoc)
+//     * @see lab.cb.scmd.db.common.QueryAPI#getConnection()
+//     */
+//    public DBConnect getConnection() throws DBConnectException {
+//        return _connection;
+//    }
+//
+//    /* (non-Javadoc)
+//     * @see lab.cb.scmd.db.common.QueryAPI#setConnectino(lab.cb.scmd.db.common.DBConnect)
+//     */
+//    public void setConnection(DBConnect connection) {
+//        
+//        if(_connection != null)
+//        {
+//            _connection.close();
+//        }
+//        _connection = connection;
+//    }
+//
+//}
 
 
 //--------------------------------------

@@ -89,7 +89,6 @@ public class ViewCellInfoAction extends Action
             return mapping.findForward("failure");
         
         XMLQuery xmlQuery = SCMDConfiguration.getXMLQueryInstance();
-        xmlQuery.setConnection(query.getConnection());
         
         DOMParser parser = new DOMParser();
         XMLReaderThread reader = new XMLReaderThread(parser);

@@ -22,7 +22,7 @@ import lab.cb.scmd.web.bean.SelectedShape;
  * @author leo
  *  
  */
-public interface XMLQuery extends QueryAPI
+public interface XMLQuery 
 {
 	void getAvailableORF(OutputStream out, AbstractMap groupToPageMap);
 

@@ -7,6 +7,7 @@
 package lab.cb.scmd.db.connect;
 
 import lab.cb.scmd.db.common.DBConnect;
+import lab.cb.scmd.db.common.ValueQuery;
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.util.table.BasicTable;
 import lab.cb.scmd.web.exception.DBConnectException;
@@ -17,19 +18,21 @@ import lab.cb.scmd.web.exception.DBConnectException;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class SCMDValueQuery extends ConnectionHolder implements lab.cb.scmd.db.common.ValueQuery {
+public class SCMDValueQuery implements ValueQuery {
 	
+    SCMDDBConnect _connection = null;
+    
 	public SCMDValueQuery () {
+	    _connection = new SCMDDBConnect();
 	}
 
 	/* (non-Javadoc)
 	 * @see lab.cb.scmd.db.common.ValueQuery#getMaxPhotoPage(java.lang.String)
 	 */
 	public int getMaxPhotoPage(String orf) {
-		SCMDDBConnect dbconnect = (SCMDDBConnect)getConnection();
 		BasicTable bt = null;
 		try {
-			bt = dbconnect.imagePageStatusQuery(orf.toUpperCase());
+			bt = _connection.imagePageStatusQuery(orf.toUpperCase());
 		} catch (SCMDException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -38,39 +41,7 @@ public class SCMDValueQuery extends ConnectionHolder implements lab.cb.scmd.db.c
 		return bt.getRowSize();
 	}
 
-	/* (non-Javadoc)
-	 * @see lab.cb.scmd.db.common.QueryAPI#getConnection()
-	 */
-	public DBConnect getConnection() {
-	    try
-	    {
-	        if(_connection == null)
-	            _connection = new SCMDDBConnect();
-	        else if(_connection.isClosed())
-	        {
-	            // çƒê⁄ë±
-	            _connection = new SCMDDBConnect();
-	        }
-	    }
-	    catch(SCMDException e)
-	    {
-	        e.what();
-            try {
-				// çƒê⁄ë±
-				_connection = new SCMDDBConnect();
-			} catch (DBConnectException e1) {
-				e1.what();
-			}
-	    }
-	    return _connection;
-	}
 
-	/* (non-Javadoc)
-	 * @see lab.cb.scmd.db.common.QueryAPI#setConnection(lab.cb.scmd.db.common.DBConnect)
-	 */
-	public void setConnection(DBConnect connection) {
-	    _connection = connection;
-	}
 
 //	
 //    /* (non-Javadoc)

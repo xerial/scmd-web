@@ -19,23 +19,20 @@ import java.util.Vector;
 //import java.util.Iterator;
 //import java.util.Set;
 
-import lab.cb.scmd.db.common.DBConnect;
 import lab.cb.scmd.db.common.PageStatus;
 import lab.cb.scmd.db.common.XMLQuery;
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.util.xml.InvalidXMLException;
 import lab.cb.scmd.util.xml.XMLAttribute;
 import lab.cb.scmd.util.xml.XMLOutputter;
-import lab.cb.scmd.web.bean.SelectedShape;
 import lab.cb.scmd.web.common.SCMDConfiguration;
-import lab.cb.scmd.web.exception.DBConnectException;
 //import lab.cb.scmd.web.exception.InvalidSQLException;
 import lab.cb.scmd.web.table.ColLabelIndex;
 import lab.cb.scmd.web.table.Table;
 
 
-public class SCMDXMLQuery extends ConnectionHolder  implements XMLQuery {
-	//private SCMDDBConnect dbconnect;
+public class SCMDXMLQuery implements XMLQuery {
+	private SCMDDBConnect _connection = null;
     //private ConnectionHolder _connectionHolder = new ConnectionHolder();
     
 	private String		_wildtype 	= "wildtype";
@@ -43,32 +40,9 @@ public class SCMDXMLQuery extends ConnectionHolder  implements XMLQuery {
 	private	String[]	_wildtypeORFs = {"YOR202W"};
 
 	public SCMDXMLQuery() {
+	    _connection = new SCMDDBConnect();
 	}
 
-	public DBConnect getConnection() throws DBConnectException
-	{
-	    try
-	    {
-	        if(_connection == null)
-	            _connection = new SCMDDBConnect();
-	        else if(_connection.isClosed())
-	        {
-	            // çƒê⁄ë±
-	            _connection = new SCMDDBConnect();
-	        }
-	    }
-	    catch(SCMDException e)
-	    {
-	        e.what();
-            try {
-				// çƒê⁄ë±
-				_connection = new SCMDDBConnect();
-			} catch (DBConnectException e1) {
-				throw new DBConnectException();
-			}
-	    }
-	    return _connection;
-	}
 	
 	
 	/* (non-Javadoc)
@@ -118,7 +92,7 @@ public class SCMDXMLQuery extends ConnectionHolder  implements XMLQuery {
         //orfList.addParameter("C11-1_A");
         
         try {
-            orfList.setData((SCMDDBConnect)getConnection());
+            orfList.setData(_connection);
         } catch (SCMDException e) {
         	System.err.println("Data Reading Error in ORFList");
             e.printStackTrace();
@@ -182,7 +156,7 @@ public class SCMDXMLQuery extends ConnectionHolder  implements XMLQuery {
         CellBox cellBox = new CellBox(orf);
         cellBox.setCurrentPage(currentPage);
         
-        cellBox.setData((SCMDDBConnect) getConnection());
+        cellBox.setData(_connection);
         
         try
         {
@@ -206,7 +180,7 @@ public class SCMDXMLQuery extends ConnectionHolder  implements XMLQuery {
         cellBox.setCurrentPage(currentPage);
         cellBox.setCellID(cellID);
         
-        cellBox.setData((SCMDDBConnect) getConnection());
+        cellBox.setData(_connection);
         
         try
         {
@@ -276,7 +250,7 @@ public class SCMDXMLQuery extends ConnectionHolder  implements XMLQuery {
         //orfList.addParameter("C11-1_A");
         
         try {
-            orfList.setData((SCMDDBConnect)getConnection());
+            orfList.setData(_connection);
         } catch (SCMDException e) {
         	System.err.println("Data Reading Error in ORFList");
             e.printStackTrace();
@@ -322,7 +296,7 @@ public class SCMDXMLQuery extends ConnectionHolder  implements XMLQuery {
 //		    + " genename_20040719 " + whereClause;
 
         try {
-            Table orfTable = getConnection().getQueryResult(sql);
+            Table orfTable = _connection.getQueryResult(sql);
             ColLabelIndex colLabelIndex = new ColLabelIndex(orfTable);
             
             int count = orfTable.getRowSize() - 1;

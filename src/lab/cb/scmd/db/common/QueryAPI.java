@@ -13,7 +13,7 @@ package lab.cb.scmd.db.common;
 import lab.cb.scmd.web.exception.DBConnectException;
 
 /** DBへの問い合わせには、接続を保持する機能が必要 
- * 
+ * @deprecated 
  * @author leo
  *
  */
