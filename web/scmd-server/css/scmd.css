@@ -213,23 +213,27 @@ a:visited { color: #666666; }
 
 .helpmenu ul
 {
-	margin-bottom: 10pt;	
+	margin-bottom: 5pt;	
 	margin-left: 0;
 	margin-right: 0;
-	padding: 3;
+	padding: 3pt;
 }
 .helpmenu ul ul
 {
 	color: #507080;
 	font-size: 9pt;
 	font-weight: normal;
+	margin-left: 5pt;
 }
 .helpmenu li, .helpmenu ul a, .helpmenu ul a:visited, .helpmenu ul a:link
 {
+	text-align: left;
 	color: #077aaf;
 	font-size: 12pt;
 	list-style-type: none;
 	background-color: #D1FFED;
+	margin-left: 0;
+	margin-right: 0;
 }
 .helpmenu ul a:hover { color: white; text-decoration: none; background-color: #01CFFF; }
 
