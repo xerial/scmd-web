@@ -25,7 +25,6 @@ public class PlotColor
     static
     {
         plotColorList.add(new PlotColor("default",  0xF090C0)); // do not remove this!
-        plotColorList.add(new PlotColor("navyblue", 0x113377));
         plotColorList.add(new PlotColor("pink",    0xFF7090));
         plotColorList.add(new PlotColor("skyblue", 0x80C0FF));
         plotColorList.add(new PlotColor("red",     0xFF5050));
@@ -33,6 +32,7 @@ public class PlotColor
         plotColorList.add(new PlotColor("green",   0x50FF80));
         plotColorList.add(new PlotColor("yellow",  0xFFFF50));
         plotColorList.add(new PlotColor("purple",  0xD0A0FF));
+        plotColorList.add(new PlotColor("navyblue", 0x113377));
         plotColorList.add(new PlotColor("black",   0x333333));
         
         for(PlotColor plotColor : plotColorList)
