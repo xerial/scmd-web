@@ -26,6 +26,7 @@ public class DrawTeardropForm extends ActionForm
     double rangeBegin = -1;
     double rangeEnd = -1;
     String orientation = "";
+    boolean plotTargetORF = true;
     
     /**
      * 
@@ -79,6 +80,15 @@ public class DrawTeardropForm extends ActionForm
     public void setOrientation(String orientation)
     {
         this.orientation = orientation;
+    }
+    
+    public boolean isPlotTargetORF()
+    {
+        return plotTargetORF;
+    }
+    public void setPlotTargetORF(boolean plotTargetORF)
+    {
+        this.plotTargetORF = plotTargetORF;
     }
 }
 

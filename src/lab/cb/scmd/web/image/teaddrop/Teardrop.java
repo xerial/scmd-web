@@ -213,7 +213,7 @@ public class Teardrop
             {
                 int y = computePositionOnThePoll(tp.getValue(), pollLength) - dotRadius;
                 g.setColor(tp.getColor());
-                g.fillOval(xpos[i], pollLength-y, dotRadius * 2, dotRadius * 2);
+                g.fillOval(xpos[i], pollLength-y - (dotRadius * 2), dotRadius * 2, dotRadius * 2);
                 i++;
             }
             break;

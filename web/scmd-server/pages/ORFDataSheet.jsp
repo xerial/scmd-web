@@ -31,7 +31,7 @@
 
 <table>
 <tr>
-<td width="150"><img src="DrawTeardrop.do?paramID=${para.id}&rangeBegin=${range.min}&rangeEnd=${range.max}"/></td>
+<td width="150"><img src="DrawTeardrop.do?paramID=${para.id}&rangeBegin=${range.min}&rangeEnd=${range.max}&plotTargetORF=false"/></td>
 <td>
 <table>
 <tr><td class="small">Parameter Name:</td><td class="genename"><%= para.getName()%></td></tr>

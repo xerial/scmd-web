@@ -12,6 +12,8 @@ package lab.cb.scmd.web.action;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +23,7 @@ import lab.cb.scmd.db.connect.ConnectionServer;
 import lab.cb.scmd.db.sql.SQLExpression;
 import lab.cb.scmd.db.sql.SQLUtil;
 import lab.cb.scmd.exception.SCMDException;
+import lab.cb.scmd.web.bean.CellViewerForm;
 import lab.cb.scmd.web.bean.UserSelection;
 import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.common.SCMDSessionManager;
@@ -57,6 +60,7 @@ public class DrawTeardropAction extends Action
             HttpServletRequest request, HttpServletResponse response) throws Exception
     {
         DrawTeardropForm input = (DrawTeardropForm) form;
+        CellViewerForm view = SCMDSessionManager.getCellViewerForm(request);
         int paramID = input.getParamID();
         
         // create teadrop
@@ -68,14 +72,18 @@ public class DrawTeardropAction extends Action
         UserSelection selection = SCMDSessionManager.getUserSelection(request);
         
         // Teardropè„ÇÃì_ÇÃà íuèÓïÒÇéÊìæ
+        Set<String> orfSet = new TreeSet<String>();
+        if(input.isPlotTargetORF())
+            orfSet.add(view.getOrf().toUpperCase());
+        orfSet.addAll(selection.getSelection());
         List<TeardropPoint> plotList;
-        if(selection.getSelection().isEmpty())
+        if(orfSet.isEmpty())
             plotList = new LinkedList<TeardropPoint>();
         else
-        {
+        {            
             String sql2 = SQLExpression.assignTo("select strainname, average from $1 where groupid='0' and strainname in ($2) and paramid=$3",
                     SCMDConfiguration.getProperty("DB_PARAMSTAT", "paramstat"),
-                    SQLUtil.commaSeparatedList(selection.getSelection(), SQLUtil.QuotationType.singleQuote),
+                    SQLUtil.commaSeparatedList(orfSet, SQLUtil.QuotationType.singleQuote),
                     paramID
             );
             plotList = (List<TeardropPoint>) ConnectionServer.query(sql2, new BeanListHandler(TeardropPoint.class));
