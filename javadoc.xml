@@ -23,7 +23,8 @@
 	<doctitle><![CDATA[SCMDWeb Project Documentation]]></doctitle>
 	<link href="http://scmd.gi.k.u-tokyo.ac.jp/devel/javadoc/SCMD/api/"/>
 	<link href="http://java.sun.com/j2se/1.5.0/docs/api/"/>
-
+	<link href="http://java.sun.com/j2ee/1.4/docs/api/"/>
+	<link href="http://struts.apache.org/api/"/>
 </javadoc>
 </target>
 </project>
