@@ -115,8 +115,8 @@ usage: ant (-Dconf=build.properties)
 	<target name="jsp.precompile">
 		<junit printsummary="on" showoutput="true" failureproperty="test.failed">
 			<classpath>
-				 <pathelement path="${dir.webinf}/classes"/>
-			     <fileset dir="${dir.webinf}/lib">
+				 <pathelement path="${webinf}/classes"/>
+			     <fileset dir="${webinf}/lib">
 			   	     <include name="*.jar"/>
 				 </fileset>
 				 <fileset dir="${TOMCAT_HOME}/common/lib">
