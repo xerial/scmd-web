@@ -128,7 +128,7 @@ alt="cell ID=${cell.cellID}"/>
 </logic:iterate> 
 </map>
 </body>
-<scmd:footer/> 
+<scmd-base:footer/> 
 
 
 <%--
