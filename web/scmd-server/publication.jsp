@@ -36,6 +36,14 @@
 <td>
 <ul>
  <li>
+Masaya Suzuki, Ryoji Igarashi, Mizuho Sekiya, Takahiko Utsugi, Shinichi 
+Morishita, Masashi Yukawa, Yoshikazu Ohya.
+Dynactin is involved in a checkpoint to monitor cell wall synthesis in 
+Saccharomyces cerevisiae.
+Nature Cell Biology  6, 861 - 871, 2004.
+ </li>
+  <br>
+ <li>
    Miwaka Ohtani, Ayaka Saka, Fumi Sano, Yoshikazu Ohya, and Shinichi Morishita: Development of Image Processing Program for Yeast Cell Morphology. <i> Journal of Bioinformatics and Computational Biology (in press) </i> <br>
   <a href="http://www.worldscinet.com/jbcb/jbcb.shtml"> http://www.worldscinet.com/jbcb/jbcb.shtml </a>
  </li>
