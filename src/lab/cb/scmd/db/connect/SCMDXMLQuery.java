@@ -27,6 +27,7 @@ import lab.cb.scmd.util.xml.InvalidXMLException;
 import lab.cb.scmd.util.xml.XMLAttribute;
 import lab.cb.scmd.util.xml.XMLOutputter;
 import lab.cb.scmd.web.bean.SelectedShape;
+import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.exception.DBConnectException;
 //import lab.cb.scmd.web.exception.InvalidSQLException;
 import lab.cb.scmd.web.table.ColLabelIndex;
@@ -295,16 +296,30 @@ public class SCMDXMLQuery extends ConnectionHolder  implements XMLQuery {
     /* (non-Javadoc)
      * @see lab.cb.scmd.db.common.XMLQuery#getSearchResult(java.io.OutputStream, java.lang.String, int, int)
      */
-    public void getSearchResult(OutputStream out, String keyword, int currentPage, int numElementInAPage) {
+    public void getSearchResult(OutputStream out, String keywordstr, int currentPage, int numElementInAPage) {
 
 	    XMLOutputter xmlout = new XMLOutputter(out);
 	    ORFList orfList = new ORFList();
-        
-		String exp = "'" + keyword + "%'";
-		String whereClause = "WHERE systematicname ILIKE " + exp + " OR primaryname ILIKE " + exp + " OR aliasname ILIKE " + exp;
+        String summaryTable = SCMDConfiguration.getProperty("DB_SUMMARY");
+        String genenameTable = SCMDConfiguration.getProperty("DB_GENENAME");
+    
+        String[] keyword = keywordstr.split("[ \\,/]+");
+        String whereClause = "WHERE ";
+        for(int i = 0; i < keyword.length; i++ ) {
+            if( i != 0 )
+                whereClause += " AND ";
+            String exp = "'" + keyword[i] + "%'";
+            String exp_annot = "'%" + keyword[i] + "%'";
+            whereClause += "(systematicname ILIKE " + exp 
+                + " OR primaryname ILIKE " + exp 
+                + " OR aliasname ILIKE " + exp
+                + " OR annotation ILIKE " + exp_annot + ")";
+        }
 		String sql = "SELECT systematicname, primaryname, aliasname, annotation FROM "
-		    + "(SELECT geneid FROM strain_20040730 RIGHT JOIN summary_20040719 USING(strainid) WHERE visible='t') AS valid " + 
-		    " LEFT JOIN genename_20040719 USING(geneid) " + whereClause;
+            + "(SELECT strainname FROM " + summaryTable + ") AS GT INNER JOIN " 
+            + "(SELECT systematicname, primaryname, aliasname, annotation FROM " + genenameTable 
+            + " " + whereClause + ") AS QT ON systematicname = strainname";
+//		    + " genename_20040719 " + whereClause;
 
         try {
             Table orfTable = getConnection().getQueryResult(sql);

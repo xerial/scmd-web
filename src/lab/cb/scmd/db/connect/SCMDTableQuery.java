@@ -4,10 +4,13 @@
  */
 package lab.cb.scmd.db.connect;
 
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
+
+import sun.jdbc.odbc.ee.ConnectionHandler;
 
 import lab.cb.scmd.algorithm.Algorithm;
 import lab.cb.scmd.db.common.DBConnect;
@@ -15,18 +18,23 @@ import lab.cb.scmd.db.common.QueryRange;
 import lab.cb.scmd.db.common.TableQuery;
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.web.common.DataSheetType;
+import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.common.StainType;
 import lab.cb.scmd.web.datagen.ParamPair;
 import lab.cb.scmd.web.exception.DBConnectException;
 import lab.cb.scmd.web.exception.InvalidSQLException;
-import lab.cb.scmd.web.table.ColLabelIndex;
 import lab.cb.scmd.web.table.RowLabelIndex;
 import lab.cb.scmd.web.table.Table;
 
 public class SCMDTableQuery extends ConnectionHolder implements TableQuery {
 
 	public SCMDTableQuery () {
-		
+        try {
+            ConnectionServer.initialize();
+            _connection = (SCMDDBConnect)getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 	}
 	
 	public DBConnect getConnection()
@@ -144,7 +152,7 @@ public class SCMDTableQuery extends ConnectionHolder implements TableQuery {
             selectParam += "\"" + (String) it.next() + "\", ";
         }
         selectParam = selectParam.substring(0, selectParam.length() - 2);
-        String sql = "SELECT "  + selectParam + " FROM individual_20050131 WHERE strainname='" + orf.toUpperCase() + "' AND \""
+        String sql = "SELECT "  + selectParam + " FROM " + SCMDConfiguration.getProperty("DB_INDIVIDUAL") + " WHERE strainname='" + orf.toUpperCase() + "' AND \""
         + StainType.getStainTypeName(stainType) +  "group\"='" + groupName +  "' ORDER BY cell_local_id";
         if(page > 0 && numElementInAPage > 0)
             sql += " LIMIT " + numElementInAPage + " OFFSET " + (numElementInAPage * (page-1)); 
@@ -156,7 +164,7 @@ public class SCMDTableQuery extends ConnectionHolder implements TableQuery {
      * @see lab.cb.scmd.db.common.TableQuery#getGroupCount(java.lang.String, int, java.lang.String)
      */
     public Table getGroupCount(String orf, int stainType) {
-        String sql = "SELECT \"" + StainType.getStainTypeName(stainType) + "group\", COUNT(cell_local_id) FROM individual_20050131 WHERE strainname='" 
+        String sql = "SELECT \"" + StainType.getStainTypeName(stainType) + "group\", COUNT(cell_local_id) FROM " + SCMDConfiguration.getProperty("DB_INDIVIDUAL") + " WHERE strainname='" 
         + orf.toUpperCase() + "' GROUP BY  \"" + StainType.getStainTypeName(stainType) + "group\"";
         
         return evalSQL(sql);
@@ -165,14 +173,11 @@ public class SCMDTableQuery extends ConnectionHolder implements TableQuery {
     protected Table evalSQL(String sql)
     {
         Table result = null;
-        SCMDDBConnect connection = (SCMDDBConnect) getConnection();
-        try
-        {
-            result = connection.getQueryResult(sql);
-        }
-        catch(InvalidSQLException e)
-        {
-            e.what();
+        try {
+//                  result = _connection.getQueryResult(sql);
+            result = ConnectionServer.retrieveTable(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return result;
     }
@@ -181,9 +186,8 @@ public class SCMDTableQuery extends ConnectionHolder implements TableQuery {
      * @see lab.cb.scmd.db.common.TableQuery#getAveragePlot(java.lang.String, java.lang.String)
      */
     public Table getAveragePlot(String param1, String param2) {
-
         String sql = "SELECT strainname, " + quoteAttribute(param1) + ", " + quoteAttribute(param2) 
-        + " FROM strain_20040730 RIGHT JOIN summary_20040719 USING(strainid)";
+        + " FROM " + SCMDConfiguration.getProperty("DB_STRAIN") + " RIGHT JOIN summary_20040719 USING(strainid)";
         
         return evalSQL(sql);
     }
@@ -192,9 +196,8 @@ public class SCMDTableQuery extends ConnectionHolder implements TableQuery {
      * @see lab.cb.scmd.db.common.TableQuery#getAveragePlot(java.lang.String, lab.cb.scmd.db.common.QueryRange, java.lang.String, lab.cb.scmd.db.common.QueryRange)
      */
     public Table getAveragePlot(String param1, QueryRange range1, String param2, QueryRange range2) {
-
         String sql = "SELECT strainname, " + quoteAttribute(param1) + ", " + quoteAttribute(param2) 
-        + " FROM strain_20040730 RIGHT JOIN summary_20040719 USING(strainid) WHERE ";
+        + " FROM " + SCMDConfiguration.getProperty("DB_STRAINTABLE") + " RIGHT JOIN summary_20040719 USING(strainid) WHERE ";
         
         sql += quoteAttribute(param1) + " BETWEEN " + range1.getBegin() + " AND " + range1.getEnd() + " AND ";
         sql += quoteAttribute(param2) + " BETWEEN " + range2.getBegin() + " AND " + range2.getEnd();
@@ -215,7 +218,7 @@ public class SCMDTableQuery extends ConnectionHolder implements TableQuery {
         String sql_from = " FROM ";
         String sql_using = "";
         
-        String sql_param = "SELECT id, displayname FROM parameterlist WHERE ";
+        String sql_param = "SELECT id, displayname FROM " + SCMDConfiguration.getProperty("DB_PARAMETERLIST") + " WHERE ";
         for(int i = 0; i < paramSets.length; i++ ) {
             ParamPair pair = paramSets[i];
             if( i != 0 )
@@ -233,7 +236,7 @@ public class SCMDTableQuery extends ConnectionHolder implements TableQuery {
             String key = paramname;
             /* */
             sql += "," + quote(paramname);
-            String subsql = "SELECT strainname, paramid, groupid, zscore AS " + quote(key) + " FROM paramzscore WHERE ";
+            String subsql = "SELECT strainname, paramid, groupid, zscore AS " + quote(key) + " FROM " + SCMDConfiguration.getProperty("DB_ZSCORE") + " WHERE ";
             if( pair.getParamid() == -1 && pair.getGroupid() == -1 )
                 continue;
             if( paramSets[i].getParamid() != -1 ) {
@@ -255,7 +258,7 @@ public class SCMDTableQuery extends ConnectionHolder implements TableQuery {
     }
 
     public Table getGroupAvgSDTable(ParamPair[] paramSets) {
-        String sql_param = "SELECT paramid, groupid, average, sd FROM paramavgsd WHERE ";
+        String sql_param = "SELECT paramid, groupid, average, sd FROM " + SCMDConfiguration.getProperty("DB_PARAM_AVG_SD") + " WHERE ";
         for(int i = 0; i < paramSets.length; i++ ) {
             ParamPair pair = paramSets[i];
             if( i != 0 )
@@ -278,11 +281,11 @@ public class SCMDTableQuery extends ConnectionHolder implements TableQuery {
     }
     
     public Table getAnalysisAVGandSD() {
-        String sql = "SELECT paramname, average, sd FROM analysiszscore";
+        String sql = "SELECT paramname, average, sd FROM " + SCMDConfiguration.getProperty("DB_TMP_ANALYSISZSCORE");
         return evalSQL(sql);
     }
     public Table getSelectedAnalysisValue(String[] orf) {
-        String sql = "SELECT * FROM analysisdata_20050131 WHERE ";
+        String sql = "SELECT * FROM " + SCMDConfiguration.getProperty("DB_SUMMARY") + " WHERE ";
         for(int i = 0; i < orf.length; i++ ) {
             if( i != 0 ) {
                 sql += " OR ";

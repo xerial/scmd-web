@@ -13,11 +13,16 @@ POSTGRESQL_PORT = 5432
 POSTGRESQL_DBNAME = scmd
 TEARDROP_URI = http://scmd.gi.k.u-tokyo.ac.jp/database/teardrop/average_shape/
 
-# DBのテーブルを追加中(まだ全ては終わっていない)
+# DBのテーブルを追加 (2005/02/08)
 DB_GENENAME = genename_20040719
 DB_STRAIN = strain_20040730
 DB_ORFALIAS = orfaliasname_20040719
-DB_SUMMARY = summary_20040719
+DB_SUMMARY = analysisdata_20050131
 DB_INDIVIDUAL = individual_20050131
 DB_AVERAGESHAPE = average_shape_20040813
 DB_TD_AVERAGESHAPE = td_average_shape_20040820
+DB_PARAMETERLIST = parameterlist
+DB_ZSCORE = paramzscore
+DB_PARAM_AVG_SD = paramavgsd
+DB_TMP_ANALYSISZSCORE = analysiszscore
+DB_GROUPLIST = groups

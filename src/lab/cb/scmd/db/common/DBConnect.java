@@ -217,27 +217,21 @@ public class DBConnect {
             //SELECT systematicname, primaryname, aliasname, annotation, "C11-1_A" from 
             // (SELECT strainid, systematicname,primaryname, aliasname, annotation from strain_20040719 left join genename_20040719 on strain_20040719.geneid = genename_20040719.geneid where visible = 't') 
             // as genetable left join summary_20040719 on genetable.strainid = summary_20040719.strainid;
-            String genetablesql = "SELECT strainid, ";
+            String genetablesql = "SELECT ";
             String sql_columns = columns[0];
             for( int i = 1; i < columns.length; i++ ) {
                 sql_columns += "," + columns[i];
            	}
-            genetablesql 	+= sql_columns;
+            genetablesql += sql_columns;
             genetablesql += " FROM ";
-            genetablesql += _strainTable;
-            genetablesql += " LEFT JOIN ";
             genetablesql += _genenameTable;
-            genetablesql += " ON ";
-            genetablesql += _strainTable + ".geneid = ";
-            genetablesql += _genenameTable + ".geneid ";
-            genetablesql += " WHERE visible = 't'";
             if( genes.size() > 0) {
-                genetablesql += " AND (";
+                genetablesql += " WHERE ";
                 genetablesql += "systematicname = \'" + ((GeneInformation)genes.get(0)).getSystematicName() + "\'";
                 for( int i = 1; i < genes.size(); i++ ) {
                 	genetablesql += " OR systematicname = \'" + ((GeneInformation)genes.get(i)).getSystematicName() + "\'";
                 }
-                genetablesql += ") ";
+                genetablesql += " ";
             }
             
             String sql = "SELECT " + sql_columns;
@@ -246,7 +240,7 @@ public class DBConnect {
             }
             sql += " FROM (" + genetablesql + ") AS genetable ";
             sql += "INNER JOIN " + _summaryTable + " ON ";
-            sql += "genetable.strainid = " + _summaryTable + ".strainid";
+            sql += "genetable.systematicname = " + _summaryTable + ".strainname";
             sql += " ORDER BY systematicname";
 //            sql += page.toSQL(); // limit
             
