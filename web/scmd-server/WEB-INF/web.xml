@@ -65,6 +65,10 @@
     <servlet-name>SCMDImageServer</servlet-name>
     <url-pattern>/scmdimage.img</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SCMDImageServer</servlet-name>
+    <url-pattern>/scmdimage.png</url-pattern>
+  </servlet-mapping>
   
 
 

@@ -118,10 +118,6 @@ public class Teardrop
     {
         return paramID;
     }
-    public void setParamid(int paramid)
-    {
-        this.paramID = paramid;
-    }
     public double getSD()
     {
         return SD;
@@ -228,6 +224,38 @@ public class Teardrop
         g.setColor(new Color(0xFFFFFF));
         g.fillRect(0, 0, teardrop.getWidth(), teardrop.getHeight());
         return teardrop;        
+    }
+
+    public void drawRange(BufferedImage teardrop, double rangeBegin, double rangeEnd)
+    {
+        Graphics2D g = (Graphics2D) teardrop.getGraphics();
+        g.setColor(new Color(0xF0B0AF));
+        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+        g.setComposite(ac);
+        
+        int begin, end, pollLength, perpendicularLength, range;
+        switch(orientation)
+        {
+        case horizontal:
+            pollLength = teardrop.getWidth();
+            perpendicularLength = teardrop.getHeight();
+            begin = computePositionOnThePoll(rangeBegin, pollLength);
+            end = computePositionOnThePoll(rangeEnd, pollLength);
+            range = (end - begin > 0) ? end - begin : 1;
+            
+            g.fillRect(begin, 0, range, perpendicularLength);
+            break;
+        case vertical:
+        default:
+            pollLength = teardrop.getHeight();
+            perpendicularLength = teardrop.getWidth();
+            begin = computePositionOnThePoll(rangeBegin, pollLength);
+            end = computePositionOnThePoll(rangeEnd, pollLength);
+            range = (end - begin > 0) ? end - begin : 1;
+            
+            g.fillRect(0, begin, perpendicularLength, range);                        
+            break;                   
+        }
     }
     
 
@@ -419,6 +447,10 @@ public class Teardrop
 
    
     
+    public void setParamID(int paramID)
+    {
+        this.paramID = paramID;
+    }
 }
 
 

@@ -112,7 +112,9 @@ public class PageMover extends TagSupport {
     
     String getEncodedURL(String baseURL, int nextpage, Map argMap)
     {
-        String actionURL = baseURL + "?page=" + nextpage + "&" + CGIUtil.getCGIArgument(argMap);
+        String actionURL = baseURL + "?page=" + nextpage;
+        if(!argMap.isEmpty())
+                actionURL += "&" + CGIUtil.getCGIArgument(argMap);
         if(!target.equals(""))
         {
             actionURL += "&target=" + target; 

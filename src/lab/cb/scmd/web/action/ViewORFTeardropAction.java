@@ -167,7 +167,7 @@ public class ViewORFTeardropAction extends Action
                     SCMDConfiguration.getProperty("DB_PARAM_AVG_SD", "paramavgsd"), paramID);
             Teardrop teardrop = (Teardrop) ConnectionServer.query(sql2, new BeanHandler(Teardrop.class));
             teardrop.setGroupID(0);
-            teardrop.setParamid(paramID);
+            teardrop.setParamID(paramID);
             teardrop.setOrientation(Teardrop.Orientation.horizontal);
             
             minRow.add(roughFormat.format(teardrop.getMin()));
@@ -221,10 +221,8 @@ public class ViewORFTeardropAction extends Action
             TreeMap<String, String> imgArg = new TreeMap<String, String>();
             imgArg.put("imageID", imageID);
             imgArg.put("encoding", "png"); 
-            ImageElement img = new ImageElement("scmdimage.img", imgArg);
+            ImageElement img = new ImageElement("scmdimage.png", imgArg);
             img.setProperty("alt", "average = " + format.format(teardrop.getAverage()));
-            img.setProperty("align", "center");
-            img.setProperty("bgcolor", "white");
             teardropRow.add(img);
         }
         

@@ -21,6 +21,11 @@ public class Range
     /**
      * 
      */
+    public Range()
+    {
+        
+    }
+    
     public Range(double min, double max)
     {
         _min = min;

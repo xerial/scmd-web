@@ -96,7 +96,7 @@ public class TeardropPainter extends HttpServlet{
 
 	}
 
-	void printWhiteBoard(HttpServletRequest request, HttpServletResponse response)
+	static public void printWhiteBoard(HttpServletRequest request, HttpServletResponse response)
 				throws IOException, ServletException {
 		response.setContentType("image/png");
 		request.getRequestDispatcher("/png/na_teardrop.png").forward(request, response);
