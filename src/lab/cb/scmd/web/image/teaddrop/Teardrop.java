@@ -13,6 +13,7 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -138,17 +139,7 @@ public class Teardrop
 
     public BufferedImage drawImage(List<TeardropPoint> plotList) throws SCMDException
     {   
-        String teardropURI;
-        switch(orientation)
-        {
-        case horizontal:
-            teardropURI = SCMDConfiguration.getProperty("TEARDROP_H_URI");
-            break;
-        case vertical:
-        default:
-            teardropURI = SCMDConfiguration.getProperty("TEARDROP_URI");                
-            break;
-        }
+        String teardropURI = SCMDConfiguration.getProperty("TEARDROP_URI");                
         
         URL imageURL;
         BufferedImage teardrop;
@@ -170,59 +161,48 @@ public class Teardrop
         Graphics2D g = (Graphics2D) teardrop.getGraphics();
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-
         int dotRadius = 3;
         int avgLineColor = 0xA0E0F0;
         int pollLength, perpendicularLength;
         int avgPos;
         int i;
-        switch(orientation)
-        {
-        case horizontal:
-            pollLength = teardrop.getWidth();
-            perpendicularLength = teardrop.getHeight();
-            avgPos = pollLength / 2;     
-            // 平均値に線を引く
-            g.setColor(new Color(avgLineColor));
-            g.drawLine(avgPos, 0, avgPos, perpendicularLength);
-             
-            int[] ypos = computePositionInPerpendicularDirection(plotList, perpendicularLength, pollLength, dotRadius);
-            // 点を打つ
-            i=0;
-            for(TeardropPoint tp : plotList)
-            {
-                int x = computePositionOnThePoll(tp.getValue(), pollLength) - dotRadius;
-                g.setColor(tp.getColor());
-                g.fillOval(x, ypos[i], dotRadius * 2, dotRadius * 2);
-                i++;
-            }
-            break;
-        case vertical:
-        default:
-            pollLength = teardrop.getHeight();
-            perpendicularLength = teardrop.getWidth();
-            avgPos = pollLength / 2;     
-
-            // 平均値に線を引く
-            g.setColor(new Color(0xA0E0F0));
-            g.drawLine(0, avgPos, perpendicularLength, avgPos);
-            int[] xpos = computePositionInPerpendicularDirection(plotList, perpendicularLength, pollLength, dotRadius);
-            // 点を打つ
-            i=0;
-            for(TeardropPoint tp : plotList)
-            {
-                int y = computePositionOnThePoll(tp.getValue(), pollLength) - dotRadius;
-                g.setColor(tp.getColor());
-                g.fillOval(xpos[i], pollLength-y - (dotRadius * 2), dotRadius * 2, dotRadius * 2);
-                i++;
-            }
-            break;
-        }
         
+        pollLength = teardrop.getHeight();
+        perpendicularLength = teardrop.getWidth();
+        avgPos = pollLength / 2;     
+
+        // 平均値に線を引く
+        g.setColor(new Color(0xA0E0F0));
+        g.drawLine(0, avgPos, perpendicularLength, avgPos);
+        int[] xpos = computePositionInPerpendicularDirection(plotList, perpendicularLength, pollLength, dotRadius);
+        // 点を打つ
+        i=0;
+        for(TeardropPoint tp : plotList)
+        {
+            int y = computePositionOnThePoll(tp.getValue(), pollLength) - dotRadius;
+            g.setColor(tp.getColor());
+            g.fillOval(xpos[i], pollLength-y - (dotRadius * 2), dotRadius * 2, dotRadius * 2);
+            i++;
+        }
+              
         AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.DST_OVER);
         g.setComposite(ac);
         g.setColor(new Color(0xFFFFFF));
         g.fillRect(0, 0, teardrop.getWidth(), teardrop.getHeight());
+
+        switch(orientation)
+        {
+        case horizontal:
+            BufferedImage rotatedImage = new BufferedImage(teardrop.getHeight(), teardrop.getWidth(), BufferedImage.TYPE_INT_RGB);
+            Graphics2D g2 = (Graphics2D) rotatedImage.getGraphics();
+            g2.rotate(Math.toRadians(90));
+            g2.drawImage(teardrop, null, 0, -teardrop.getHeight());
+            teardrop = rotatedImage;
+        case vertical:
+        default:
+            break;
+        }
+        
         return teardrop;        
     }
 
