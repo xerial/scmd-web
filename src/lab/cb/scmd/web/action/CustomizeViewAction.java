@@ -56,20 +56,34 @@ public class CustomizeViewAction extends Action
         if(paramSelection == null)
             paramSelection = new ParamUserSelection();
 
-        Integer[] inputCellParam = selection.getSelectedCellParameter();
-        Integer[] inputORFParam  = selection.getSelectedORFParameter();
-        
-        if(selection.getButton().equals("reset all"))
+        if(selection.getButton().equals("remove all"))
         {
             paramSelection.resetCellParam();
             paramSelection.resetOrfParam();
         }
-        else if (selection.getButton().equals("set"))
+        else if (selection.getButton().equals("add"))
         {
+            Integer[] inputCellParam = selection.getSelectedCellParameter();
+            Integer[] inputORFParam  = selection.getSelectedORFParameter();
+            
             for(Integer id : inputCellParam )
                 paramSelection.addCellParamSelection(id);
             for(Integer id : inputORFParam )
                 paramSelection.addOrfParamSelection(id);
+            selection.setSelectedCellParameter(new Integer [0]);
+            selection.setSelectedORFParameter(new Integer [0]);
+        } 
+        else if (selection.getButton().equals("remove"))
+        {
+            Integer[] inputCellParam = selection.getRemoveCellParamList();
+            Integer[] inputORFParam  = selection.getRemoveORFParamList();
+            
+            for(Integer id : inputCellParam )
+                paramSelection.removeCellParamSelection(id);
+            for(Integer id : inputORFParam )
+                paramSelection.removeOrfParamSelection(id);
+            selection.setRemoveCellParamList(new Integer [0]);
+            selection.setRemoveORFParamList(new Integer [0]);
         }
         
         // パラメータの値を取得

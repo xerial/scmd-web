@@ -40,6 +40,11 @@ public class ParamUserSelection {
         return (Set<Integer>) _orfParam.clone();
     }
     
+    public void removeOrfParamSelection(int param)
+    {
+        _orfParam.remove(new Integer(param));
+    }
+
     public void resetOrfParam() {
         _orfParam.clear();
     }
@@ -52,6 +57,11 @@ public class ParamUserSelection {
     public Set<Integer> getCellParamSelection() 
     {
         return (Set<Integer>) _cellParam.clone();
+    }
+    
+    public void removeCellParamSelection(int param)
+    {
+        _cellParam.remove(new Integer(param));
     }
 
     public void resetCellParam() {

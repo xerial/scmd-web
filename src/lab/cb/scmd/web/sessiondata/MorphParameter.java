@@ -16,6 +16,8 @@ public class MorphParameter {
     String shortName = "";
     String datatype = "";
     String displayname = "";
+    String stain = "";
+    String groupid = ""; 
 
     public MorphParameter() {
         

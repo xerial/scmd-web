@@ -52,6 +52,8 @@ public class ViewCustomizeForm extends ActionForm
     private Integer[] selectedORFParameter = new Integer[] {};
     private String cellCategory = "";
     private String orfCategory = "";
+    private Integer[] removeCellParamList = new Integer[0];
+    private Integer[] removeORFParamList = new Integer[0];
     
     public void reset(ActionMapping arg0, HttpServletRequest arg1)
     {
@@ -83,47 +85,15 @@ public class ViewCustomizeForm extends ActionForm
         return selectedCellParameter;
     }
     public void setSelectedCellParameter(Integer[] cellParameters) {
-        TreeSet<Integer> params = new TreeSet<Integer> ();
-
-        //　選択されていたものを保存
-        for(Integer i: this.selectedCellParameter) {
-            if(i != null)
-                params.add(i);
-        }
-        // 新規に選択されたものを追加
-        for(Integer i: cellParameters) {
-            if(i != null)
-                params.add(i);
-        }
-        this.selectedCellParameter = new Integer [params.size()];
-        int n = 0;
-        for(Integer i: params) {
-            this.selectedCellParameter[n++] = i;
-        }
+        this.selectedCellParameter = cellParameters;
     }
     public Integer[] getSelectedORFParameter()
     {
         return selectedORFParameter;
     }
-    public void setSelectedORFParameter(Integer[] selectedORFParameter)
+    public void setSelectedORFParameter(Integer[] orfParameters)
     {
-        TreeSet<Integer> params = new TreeSet<Integer> ();
-
-        //　選択されていたものを保存
-        for(Integer i: this.selectedORFParameter) {
-            if(i != null)
-                params.add(i);
-        }
-        // 新規に選択されたものを追加
-        for(Integer i: selectedORFParameter) {
-            if(i != null)
-                params.add(i);
-        }
-        this.selectedORFParameter = new Integer [params.size()];
-        int n = 0;
-        for(Integer i: params) {
-            this.selectedORFParameter[n++] = i;
-        }
+        this.selectedORFParameter = orfParameters;
     }
     public String getCellCategory() {
         return cellCategory;
@@ -146,7 +116,18 @@ public class ViewCustomizeForm extends ActionForm
     {
         return _button;
     }
-
+    public Integer[] getRemoveCellParamList() {
+        return removeCellParamList;
+    }
+    public void setRemoveCellParamList(Integer[] removeCellParamList) {
+        this.removeCellParamList = removeCellParamList;
+    }
+    public Integer[] getRemoveORFParamList() {
+        return removeORFParamList;
+    }
+    public void setRemoveORFParamList(Integer[] removeORFParamList) {
+        this.removeORFParamList = removeORFParamList;
+    }
     public List<String> getCellCategoryList() {
         String[] cellCategory = {"Cell Wall", "Actin", "Nucleus"};
         List<String> cellCategoryList = new LinkedList<String> ();
