@@ -100,7 +100,7 @@ public class GroupViewAction extends Action
         {
             try
             {
-                int numCell = Integer.parseInt(colLabelIndex.get(1, "count").toString()); 
+                int numCell = Integer.parseInt(colLabelIndex.get(i, "count").toString()); 
                 sum += numCell;
                 int numPage = numCell / numCellsInARow; 
                 if(numCell % numCellsInARow != 0)
