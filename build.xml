@@ -149,9 +149,7 @@ usage: ant (-Dconf=build.properties)
 	      </classpath>
 	   </taskdef>
 	   <svn>
-		 <update>
-		 	<fileset dir="."/>
-	   	 </update>
+		 <update dir="."/>
 	   </svn>
 	</target>
 
