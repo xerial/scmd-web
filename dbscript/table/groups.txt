@@ -3,7 +3,7 @@
 2	C	small	normal	small bud
 3	C	medium	normal	medium bud
 4	C	large	normal	large bud
-5	C	complex	abnormal	too complex to process
+5	C	complex	peculiar	too complex to process
 6	C	unknown	abnormal	
 7	D	A	normal	A single nucleus (unbudded cell)
 8	D	A1	normal	A single nucleus in mother cell (budded cell)
