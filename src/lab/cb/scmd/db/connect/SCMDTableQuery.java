@@ -19,6 +19,7 @@ import lab.cb.scmd.web.common.StainType;
 import lab.cb.scmd.web.datagen.ParamPair;
 import lab.cb.scmd.web.exception.DBConnectException;
 import lab.cb.scmd.web.exception.InvalidSQLException;
+import lab.cb.scmd.web.table.ColLabelIndex;
 import lab.cb.scmd.web.table.RowLabelIndex;
 import lab.cb.scmd.web.table.Table;
 
@@ -213,15 +214,26 @@ public class SCMDTableQuery extends ConnectionHolder implements TableQuery {
         String sql = "SELECT strainname";
         String sql_from = " FROM ";
         String sql_using = "";
+        
+        String sql_param = "SELECT id, displayname FROM parameterlist WHERE ";
+        for(int i = 0; i < paramSets.length; i++ ) {
+            ParamPair pair = paramSets[i];
+            if( i != 0 )
+                sql_param += " OR ";
+            sql_param += "id=" + pair.getParamid();
+        }
+        Table paramTable = evalSQL(sql_param);
+        RowLabelIndex rowLabelIndex = new RowLabelIndex(paramTable);
         for(int i = 0; i < paramSets.length; i++ ) {
             ParamPair pair = paramSets[i];
             /* get parameter and group name */
-            String paramname = getParameterName(pair.getParamid());
-            String groupname = getGroupName(pair.getGroupid());
-            String key = paramname; 
+            //String paramname = getParameterName(pair.getParamid());
+            //String groupname = getGroupName(pair.getGroupid());
+            String paramname = paramTable.get(rowLabelIndex.getRowIndex(pair.getParamid() + ""), 1).toString();
+            String key = paramname;
             /* */
             sql += "," + quote(paramname);
-            String subsql = "SELECT strainname, paramid, groupid, average AS " + quote(key) + " FROM paramstat WHERE ";
+            String subsql = "SELECT strainname, paramid, groupid, zscore AS " + quote(key) + " FROM paramzscore WHERE ";
             if( pair.getParamid() == -1 && pair.getGroupid() == -1 )
                 continue;
             if( paramSets[i].getParamid() != -1 ) {
@@ -233,15 +245,26 @@ public class SCMDTableQuery extends ConnectionHolder implements TableQuery {
                 subsql += "groupid=" + paramSets[i].getGroupid();
             }
             if( i == 0 ) {
-                sql_from += "(" + subsql + ") AS s" + key;
+                sql_from += "(" + subsql + ") AS s" + pair.getParamid();
             } else {
-                sql_from += " LEFT JOIN (" + subsql + ") AS s" + key;
+                sql_from += " LEFT JOIN (" + subsql + ") AS s" + pair.getParamid();
                 sql_using += " USING (strainname)";
             }
         }
         return evalSQL(sql + sql_from + sql_using);
     }
-    
+
+    public Table getGroupAvgSDTable(ParamPair[] paramSets) {
+        String sql_param = "SELECT paramid, groupid, average, sd FROM paramavgsd WHERE ";
+        for(int i = 0; i < paramSets.length; i++ ) {
+            ParamPair pair = paramSets[i];
+            if( i != 0 )
+                sql_param += " OR ";
+            sql_param += "( paramid=" + pair.getParamid() + "AND groupid=" + pair.getGroupid() + ")";
+        }
+        return evalSQL(sql_param);
+    }
+
     public String getParameterName(int paramid) {
         return "" + paramid;
     }

@@ -7,7 +7,17 @@ SCMD_PHOTO_DIR_URL = http://scmd.gi.k.u-tokyo.ac.jp/database/photos/
 XMLQUERY = lab.cb.scmd.db.connect.SCMDXMLQuery
 TABLEQUERY = lab.cb.scmd.db.connect.SCMDTableQuery
 VALUEQUERY = lab.cb.scmd.db.connect.SCMDValueQuery
-POSTGRESQL_IP = dps.cb.k.u-tokyo.ac.jp
+POSTGRESQL_IP = scmd.gi.k.u-tokyo.ac.jp
 POSTGRESQL_PORT = 5432
-POSTGRESQL_DBNAME = scmd_pre_20040714
+#POSTGRESQL_DBNAME = scmd_pre_20040714
+POSTGRESQL_DBNAME = scmd
 TEARDROP_URI = http://scmd.gi.k.u-tokyo.ac.jp/database/teardrop/average_shape/
+
+# DBのテーブルを追加中(まだ全ては終わっていない)
+DB_GENENAME = genename_20040719
+DB_STRAIN = strain_20040730
+DB_ORFALIAS = orfaliasname_20040719
+DB_SUMMARY = summary_20040719
+DB_INDIVIDUAL = individual_20040813
+DB_AVERAGESHAPE = average_shape_20040813
+DB_TD_AVERAGESHAPE = td_average_shape_20040820

@@ -198,6 +198,9 @@ public class MockTableQuery extends MockQueryAPI implements TableQuery
     public Table getShapeZScoreTable(ParamPair[] paramSets) {
         return null;
     }
+    public Table getGroupAvgSDTable(ParamPair[] paramSets) {
+        return null;
+    }
 
 }
 

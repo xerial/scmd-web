@@ -230,7 +230,8 @@ If this parameter does not matter to what you wish, please select 0:
 <td colspan="4" align="center" class="menubutton">
 <% shape.setSearchArgument(); %>
 <bean:define id="imgparam" name="shape" property="searchArgument" type="java.lang.String"/>
-[<html:link page="/SearchSimilarShape.do?${imgparam}"> search </html:link>]
+<%-- [<html:link page="/SearchSimilarShape.do?${imgparam}"> search </html:link>] --%>
+[<html:link page="/SearchSimilarShape.do?phase=5"> search </html:link>]
 </td>
 </tr>
 </table>

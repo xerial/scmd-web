@@ -89,6 +89,7 @@ public interface TableQuery extends QueryAPI
     public Table getAveragePlot(String param1, QueryRange range1, String param2, QueryRange range2);
 
     public Table getShapeZScoreTable(ParamPair[] paramSets);
+    public Table getGroupAvgSDTable(ParamPair[] paramSets);
     
 }
 
