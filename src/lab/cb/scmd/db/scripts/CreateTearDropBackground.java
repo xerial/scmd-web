@@ -132,7 +132,7 @@ public class CreateTearDropBackground {
             // for each group
             for (GroupType group : groupTypeList) {
                 log.printf("param %5s : group %10s\n", param.getName(), group.getName());
-//                log.flush();
+                log.flush();
 //                String groupName = group.getStain() + "group";
 
                 Table sheet = (Table) queryRunner.query(
