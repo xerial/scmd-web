@@ -2,7 +2,7 @@
 <project default="javadoc">
 <target name="javadoc">
 <javadoc 
-	access="public" author="true" classpath="." destdir="javadoc/api" 
+	access="package" author="true" classpath="." destdir="javadoc/api" 
 	nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" 
 	version="true" 
 	splitindex="true" use="true"
