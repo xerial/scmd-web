@@ -21,9 +21,12 @@
 <body class="toppage">
 <scmd-tags:menu searchframe="on" top="true"/>
 
-<table width="550" border="0" class="infoframe">
-	        <tr> 
-    	      <td colspan="3" align=left class=title> Materials </td>
+<table width="600" border="0" class="infoframe">
+  <tr>
+    <td>
+      <table width="100%" border="0">
+        <tr> 
+          <td colspan="3" height="50" align=left class=title> Materials </td>
         </tr>
         <tr> 
           <td colspan="3"> Mutants with altered cell morphology 
@@ -86,7 +89,7 @@
           <td width="48%" nowrap valign=top>
 		     <ul>
 			  <br>
-              <li><span class=notation> Researcher </span> 
+              <li><span class=notation> Postdoctroal Fellows </span> 
                 <ul>
                   <li><a href="mailto:kumagai@k.u-tokyo.ac.jp"> Fumi Sano</a> </li>
                   <li><a href="mailto:kmyukawa@mail.ecc.u-tokyo.ac.jp"> Masashi Yukawa </a> </li>
@@ -95,10 +98,11 @@
 			  <br>
               <li><span class="notation">Graduate Students </span> 
                 <ul>
-                  <li><a href="mailto:kk17511@mail.ecc.u-tokyo.ac.jp"> Ayaka Saka </a></li>
-                  <li><a href="mailto:kk17531@mail.ecc.u-tokyo.ac.jp"> Daisuke Watanabe </a></li>
-                  <li><a href="mailto:kk27517@mail.ecc.u-tokyo.ac.jp"> Genjiro Suzuki</a>
-                  </li>
+                  <li><a href="mailto:kk27517@mail.ecc.u-tokyo.ac.jp"> Genjiro Suzuki</a> </li>
+                  <li>Keiko Kono </li>
+                  <li>Mieko Higuchi</li>
+				  <li>Satoshi Ishihara</li>
+				  <li>Aiko Hirata</li>
                 </ul>
               </li>
             </ul>
@@ -108,26 +112,28 @@
           <td width="48%" valign=top> 
               <ul>
 				<br>
+
+                <li><span class=notation>Research Associate</span>
+				<ul> 
+				  <li>Jun Sese </li>
+					<ul>
+					  <li><span class="arialsmall">image processing & data mining</span></li>
+					</ul>
+				</ul>
                 <li><span class=notation>Graduate Students</span>
                 <ul>
-                  <li><a href="mailto:miwaka@gi.k.u-tokyo.ac.jp">Miwaka Ohtani</a>
-					<ul>
-					  <li><span class="arialsmall">image processing programs</span></li>
-					</ul>
-                  </li>
                   <li><a href="http://www.gi.k.u-tokyo.ac.jp/%7Eleo">Taro L. Saito</a>
                     <ul>
 					  <li><span class="arialsmall">database program & web site management</span></li>
                     </ul>
                   </li>
+				  <li> Yoichiro Nakatani </li>
+				  <ul><li> statistical analysis & data mining</li></ul>
                 </ul>
 				<br>
-				<li><span class=notation>Research Associate (Programmer)</span>
+				<li><span class=notation>Secretary</span>
 				<ul>
-				  <li><a href="mailto:sawai@gi.k.u-tokyo.ac.jp"> Hiroshi Sawai </a> </li>
-				  <ul>
-				    <li class=arialsmall> image processing programs </li>
-				  </ul>
+				  <li>Tsurutsuki Iijima</li>
 				</ul>
               </ul>
           </td>
@@ -144,13 +150,22 @@
           </td>
         </tr>
         <tr> 
-          <td colspan="3" class="arial"> Mitsuhiro Abe, Masayo Minemura, Emi 
-            Shimoi, Tamao Goto, Yuka Kitamura, Hideki Kudoh, Yuri Nagai, Keiko 
-            Kono, Mieko Higuchi, Kouichiro Doi, Jun Sese, Tomoyuki Yamada, 
-			Youichiro Nakatani, Masahiro Kasahara, Shin Sasaki,
-			 Yukinobu Nagayasu, Eri Nakamura </td>
+          <td colspan="3" class="arial"> 
+Emi Shimoi, Tamao Goto, Yuka Kitamura,
+Shin Sasaki, Naoko Bando, Yukinobu Nagayasu, Eri Nakamura, Ahsan Budrul, Wei Qu
+		  </td>
         </tr>
+        <tr>           <td colspan="3" height="50"> 
+            <div align="left" class="arial"><b><font color="#006699"> Ex-members </font></b></div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3" class="arial"> 
+Miwaka Ohtani, Hiroshi Sawai, Ayaka Saka, Daisuke Watanabe,
+Mitsuhiro Abe, Yuri Nagai, Kouichiro Doi, Tomoyuki Yamada, Masahiro Kasahara
+       </td></tr>
         <tr> 
+
           <td colspan="3" height="50"> 
             <div align="left" class="arial"><b><font color="#006699"> Acknowledgments 
               </font></b></div>
@@ -161,7 +176,12 @@
             by the Institute for Bioinformatics and Research and Development (<a href="http://bird.jst.go.jp/index_e.html">BIRD</a>) 
             of the Japan Science and Technology Corporation (JST). </td>
         </tr>
+      </table>
+    </td>
+  </tr>
 </table>
+
+
 <p> </p>
 </body>
 </html>
