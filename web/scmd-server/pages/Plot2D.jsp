@@ -131,6 +131,7 @@ function writeRegion(e)
 --%>
 
 <html:form action="/View2DPlot.do" method="GET">
+<input type="hidden" name="orfType" value="${addViewORF?"current":"user"}">
 <table>
 <tr>
 <td>X-coordinate: </td>
@@ -138,6 +139,9 @@ function writeRegion(e)
 <html:select name="plotForm" property="param1">
 <html:options name="plotForm" property="optionIDs" labelProperty="optionLabels"/>
 </html:select>
+</td>
+<td rowspan="2" valign="middle">
+<html:submit value="plot mutants"/>
 </td>
 </tr>
 <tr>
@@ -149,18 +153,24 @@ function writeRegion(e)
 </td>
 </tr>
 </table>
+</html:form>
 
 <table>
 <tr>
 <td>
-<html:submit value="plot mutants"/>
+<html:form action="/View2DPlot.do" method="GET">
+<input type="hidden" name="orfType" value="current">
+<input type="hidden" name="param1" value="-1">
+<input type="hidden" name="param2" value="-1">
+<html:submit value="lucky coordinate! (for ${view.orf})"/>
 </html:form>
 </td>
 <td>
 <html:form action="/View2DPlot.do" method="GET">
+<input type="hidden" name="orfType" value="user">
 <input type="hidden" name="param1" value="-1">
 <input type="hidden" name="param2" value="-1">
-<html:submit value="lucky coordinate!"/>
+<html:submit value="lucky coordinate! (for selected genes)"/>
 </html:form>
 </td>
 </tr>
