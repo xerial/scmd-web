@@ -41,7 +41,7 @@
 <td class="sheetlabel">Name</td>
 <td class="sheetlabel">Description</td></tr>
 <logic:equal name="orfsize" value="0" >
-<tr><td colspan="3">No ORF parameter is selected.</td></tr>
+<tr><td colspan="3" align="center">No ORF parameters selected</td></tr>
 </logic:equal>
 <logic:notEqual name="orfsize" value="0" >
 <logic:iterate id="morphParam" name="orfParameterList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
@@ -83,7 +83,7 @@ download as [<a href="ViewORFParameter.do?format=xml">XML</a>] [<a href="ViewORF
 <td class="sheetlabel">Name</td>
 <td class="sheetlabel">Description</td></tr>
 <logic:equal name="cellsize" value="0" >
-<tr><td colspan="3">No cell parameter is selected</td></tr>
+<tr><td colspan="3" align="center">No cell parameters selected</td></tr>
 </logic:equal>
 <logic:notEqual name="cellsize" value="0" >
 <logic:iterate id="morphParam" name="cellParameterList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
@@ -119,7 +119,7 @@ download as [<a href="ViewORFParameter.do?format=xml">XML</a>] [<a href="ViewORF
 <% } %>
 </p>
 
-<p class="title"> ORF Parameters List (<a href="ParameterHelp.do#orfparam">help</a>)</p>
+<p> <span class="title"> ORF Parameters List </span> <span class="menubutton">[<a href="ParameterHelp.do#orfparam">help</a>]</p>
 <p class="small"> Select and add parameters below. (press CTRL or SHIFT key to choose multiple items)</p>
 <table>
 <tr><td>Category</td><td></td><td>Parameter Description</td></tr>
@@ -141,7 +141,7 @@ download as [<a href="ViewORFParameter.do?format=xml">XML</a>] [<a href="ViewORF
 </td></tr>
 </table>
 
-<p class="title"> Cell Parameters List (<a href="ParameterHelp.do#cellparam">help</a>)</p>
+<p> <span class="title"> Cell Parameters List </span> <span class="menubutton">[<a href="ParameterHelp.do#cellparam">help</a>]</p>
 <p class="small"> Select and add parameters below (press CTRL or SHIFT key to choose multiple items) </p>
 <table>
 <tr><td>Category</td><td></td><td>Parameter Description</td></tr>
