@@ -126,21 +126,41 @@ function writeRegion(e)
 --%>
 
 <html:form action="/View2DPlot.do" method="GET">
-X-coordinate: 
+<table>
+<tr>
+<td>X-coordinate: </td>
+<td align="left">
 <html:select name="plotForm" property="param1">
-<html:options name="plotForm" property="optionIDs" labelProperty="options"/>
+<html:options name="plotForm" property="optionIDs" labelProperty="optionLabels"/>
 </html:select>
-Y-coordinate: 
+</td>
+</tr>
+<tr>
+<td>Y-coordinate: </td>
+<td align="left">
 <html:select name="plotForm" property="param2">
-<html:options name="plotForm" property="optionIDs" labelProperty="options"/>
+<html:options name="plotForm" property="optionIDs" labelProperty="optionLabels"/>
 </html:select>
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td>
 <html:submit value="plot mutants"/>
 </html:form>
+</td>
+<td>
 <html:form action="/View2DPlot.do" method="GET">
 <input type="hidden" name="param1" value="-1">
 <input type="hidden" name="param2" value="-1">
 <html:submit value="lucky coordinate!"/>
 </html:form>
+</td>
+</tr>
+</table>
+
 
 <scmd-tags:linkMenu orf="${view.orf}" logo="on"/> 
 

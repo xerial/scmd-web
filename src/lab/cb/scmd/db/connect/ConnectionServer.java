@@ -67,7 +67,7 @@ public class ConnectionServer implements ConfigObserver
      */
     static public Table retrieveTable(String sql) throws SQLException
     {
-        return (Table) _instance.execQuery(sql, new TableConverter()); 
+        return (Table) getInstance().execQuery(sql, new TableConverter()); 
     }
     
     /** SQLÇé¿çsÇµÇƒåãâ ÇBasicTableÇ…äiî[ÇµÇƒï‘Ç∑
@@ -77,8 +77,7 @@ public class ConnectionServer implements ConfigObserver
      */
     static public BasicTable retrieveBasicTable(String sql, String keyColumnName) throws SQLException
     {
-        return (BasicTable) _instance.execQuery(sql, new BasicTableConverter(keyColumnName)); 
-
+        return (BasicTable) getInstance().execQuery(sql, new BasicTableConverter(keyColumnName)); 
     }
     static private class BasicTableConverter implements ResultSetHandler
     {
@@ -171,7 +170,7 @@ public class ConnectionServer implements ConfigObserver
      */
     static public Object query(String sql, ResultSetHandler rsh) throws SQLException
     {
-        return _instance.execQuery(sql, rsh);
+        return getInstance().execQuery(sql, rsh);
     }
     /**
      * DBÇ÷ÇÃñ‚Ç¢çáÇÌÇπÇçsÇ§
@@ -183,7 +182,7 @@ public class ConnectionServer implements ConfigObserver
      */
     static public Object query(ResultSetHandler rsh, String sqlWithVariable, Object... sqlArg) throws SQLException
     {
-        return _instance.execQuery(new SQLExpression(sqlWithVariable).assign(sqlArg), rsh);
+        return getInstance().execQuery(new SQLExpression(sqlWithVariable).assign(sqlArg), rsh);
     }
     
     protected Object execQuery(String sql, ResultSetHandler rsh) throws SQLException
@@ -221,7 +220,16 @@ public class ConnectionServer implements ConfigObserver
         }
     }
     
-    
+    static synchronized public ConnectionServer getInstance() throws SQLException
+    {
+        if(_instance == null)
+        {
+            initialize();
+            return _instance;
+        }
+        else 
+            return _instance;
+    }
     
     
     /**

@@ -92,6 +92,17 @@ public class ParamPlotForm extends ActionForm
         return paramID;
     }
     
+    public List<String> getOptionLabels()
+    {
+        LinkedList<String> optionLabels = new LinkedList<String>();
+        for(MorphParameter p : paramList)
+        {
+           optionLabels.add("[" + p.getName() + "] " + p.getDisplayname());
+        }
+        return optionLabels;
+   
+    }
+    
     public List <String> getOptions()
     {        
         LinkedList<String> paramNames = new LinkedList<String>();
