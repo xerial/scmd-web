@@ -34,19 +34,16 @@
 <td width="15"></td>
 <td valign="top">
 <!-- show selected cell params -->
-<logic:equal name="orfsize" value="0" >
-<table class="small" valign="top" cellspacing="0"  align="center">
-<tr><td class="title" align="center"> Selected ORF Parameters </td></tr>
-<tr><td>No ORF Parameters Selected !</td></tr>
-</table>
-</logic:equal>
-<logic:notEqual name="orfsize" value="0" >
 <table class="small" valign="top" cellspacing="0"  align="center">
 <tr><td colspan="3" class="title" align="center"> Selected ORF Parameters </td></tr>
 <tr>
 <td class="sheetlabel"> </td>
 <td class="sheetlabel">Name</td>
 <td class="sheetlabel">Description</td></tr>
+<logic:equal name="orfsize" value="0" >
+<tr><td colspan="3">No ORF parameter is selected.</td></tr>
+</logic:equal>
+<logic:notEqual name="orfsize" value="0" >
 <logic:iterate id="morphParam" name="orfParameterList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
 <tr><td>
 <html:multibox name="viewConfigForm" property="removeORFParamList" value="<%= morphParam.getIdStr() %>"/>
@@ -56,6 +53,7 @@
 ${morphParam.displayname}
 </td></tr>
 </logic:iterate>
+</logic:notEqual>
 </table>
 <table align="center">
 <tr>
@@ -71,18 +69,10 @@ download as [<a href="ViewORFParameter.do?format=xml">XML</a>] [<a href="ViewORF
 </tr>
 </table>
 <!-- end of selected cell params -->
-</logic:notEqual>
 </td>
 <td width="15"></td>
 <td valign="top" class="small">
 
-<logic:equal name="cellsize" value="0" >
-<table class="small" valign="top" cellspacing="0" align="center">
-<tr><td class="title" align="center">Selected Cell Parametes</td></tr>
-<tr><td>No Cell Parameters Selected !</td></tr>
-</table>
-</logic:equal>
-<logic:notEqual name="cellsize" value="0" >
 <table class="small" valign="top" cellspacing="0" align="center">
 <tr><td colspan="3" class="title" align="center">Selected Cell Parametes</td></tr>
 <tr>
@@ -92,6 +82,10 @@ download as [<a href="ViewORFParameter.do?format=xml">XML</a>] [<a href="ViewORF
 <td class="sheetlabel"> </td>
 <td class="sheetlabel">Name</td>
 <td class="sheetlabel">Description</td></tr>
+<logic:equal name="cellsize" value="0" >
+<tr><td colspan="3">No cell parameter is selected</td></tr>
+</logic:equal>
+<logic:notEqual name="cellsize" value="0" >
 <logic:iterate id="morphParam" name="cellParameterList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
 <tr><td>
 <html:multibox name="viewConfigForm" property="removeCellParamList" value="<%= morphParam.getIdStr() %>"/>
@@ -99,6 +93,7 @@ download as [<a href="ViewORFParameter.do?format=xml">XML</a>] [<a href="ViewORF
 <td>${morphParam.displayname}</td>
 </tr>
 </logic:iterate>
+</logic:notEqual>
 </table>
 
 <table align="center">
@@ -109,7 +104,6 @@ download as [<a href="ViewORFParameter.do?format=xml">XML</a>] [<a href="ViewORF
 </tr>
 </table>
 
-</logic:notEqual>
 </td>
 </tr>
 </table>
