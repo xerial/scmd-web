@@ -23,6 +23,7 @@
 	<property name="web" value="web"/>
 	<property name="webinf" value="${web}/scmd-server/WEB-INF"/>
 	<property name="war.name" value="scmd-server.war"/>
+	<property name="webapp.path" value="/scmd-server"/>
 	<property name="dir.deploy" value="webapps"/>
 	<property name="TOMCAT_HOME" value="${env.TOMCAT_HOME}"/>
 	<property name="manager.url" value="http://localhost:8080/manager"/>
@@ -105,7 +106,7 @@
 	    	</classpath>
 		</taskdef>
 		<deploy 
-			url="${manager.url}" username="${manager.username}" password="${manager.password}" path="/scmd-server"
+			url="${manager.url}" username="${manager.username}" password="${manager.password}" path="${webapp.path}"
 		   	update="true" war="${build}/war/${war.name}"/>
 	</target>
 
