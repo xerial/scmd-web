@@ -74,7 +74,7 @@ public class Plot2DServlet extends HttpServlet
             + "(select strainname, average as p1 from $1 where paramid=$2 and groupid=0) as t1 "
             + "left join (select strainname, average as p2 from $1 where paramid=$3 and groupid=0) as t2 "
             + "on t1.strainname = t2.strainname";
-        String sql_wt = "select t1.average as p1, t2.average as p2 from $1 as t1 inner join $1 as t2 using (strainname) where t1.paramid=$2 and t2.paramid=$3";
+        String sql_wt = "select t1.average as p1, t2.average as p2 from $1 as t1 inner join $1 as t2 using (strainname) where t1.paramid=$2 and t2.paramid=$3 and t1.groupid=0 and t2.groupid=0";
         
         Table plotTable = null;  // 全mutantのデータ
         Table plotTable_wt = null; // 野生株のデータ
