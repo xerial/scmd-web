@@ -40,6 +40,7 @@ import lab.cb.scmd.web.bean.CellViewerForm;
 import lab.cb.scmd.web.bean.ParamPlotForm;
 import lab.cb.scmd.web.bean.UserSelection;
 import lab.cb.scmd.web.common.SCMDConfiguration;
+import lab.cb.scmd.web.common.SCMDSessionManager;
 import lab.cb.scmd.web.design.PlotColor;
 import lab.cb.scmd.web.table.ColLabelIndex;
 import lab.cb.scmd.web.table.Table;
@@ -59,26 +60,13 @@ public class Plot2DServlet extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         
         ParamPlotForm plotForm = (ParamPlotForm) request.getAttribute("plotForm");
-        HttpSession session = request.getSession(true);
-        CellViewerForm view = (CellViewerForm) session.getAttribute("view");
-        UserSelection selection = (UserSelection) session.getAttribute("userSelection");
-        if(selection == null) 
-        {
-            selection = new UserSelection();
-            session.setAttribute("userSelection", selection);
-        }
-        TreeSet selectedORFSet = new TreeSet();
-        selectedORFSet.add(view.getOrf().toUpperCase());
-        for(Object orf : selection.orfSet())
-        {
-            selectedORFSet.add(orf);
-        }
-        
-        if(view == null)
-        {
-            view = new CellViewerForm();
-            session.setAttribute("view", view);
-        }
+
+        CellViewerForm view = SCMDSessionManager.getCellViewerForm(request);
+        UserSelection selection = SCMDSessionManager.getUserSelection(request);
+        TreeSet<String> selectedORFSet = new TreeSet<String>();
+        selectedORFSet.addAll(selection.orfSet());
+        if(selectedORFSet.isEmpty())
+            selectedORFSet.add(view.getOrf().toUpperCase());
         
         TableQuery query = SCMDConfiguration.getTableQueryInstance();
         

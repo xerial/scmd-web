@@ -70,7 +70,13 @@ public class ParamPlotAction extends Action
         
         if(plotForm.getParam1() == -1 && plotForm.getParam2() == -1) {
             TreeSet selectedORFSet = (TreeSet)userSelection.orfSet();
-            //selectedORFSet.add(orf.toUpperCase());
+            if(selectedORFSet.isEmpty())
+            {
+                selectedORFSet.add(orf.toUpperCase());
+                request.setAttribute("addViewORF", true);
+            }
+            else
+                request.setAttribute("addViewORF", false);
             String[] orfs = new String[selectedORFSet.size()];
             int n = 0;
             for(Iterator it = selectedORFSet.iterator(); it.hasNext(); ) {

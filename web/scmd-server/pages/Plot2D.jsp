@@ -71,9 +71,15 @@ function writeRegion(e)
 <center>
 <scmd-tags:menu  toolbar="on" searchframe="on"/>
 <scmd-tags:linkMenu orf="${view.orf}" logo="on"/> 
+
+<c:if test="${addViewORF}">
 <scmd-tags:orfInfo  orf="${gene.orf}" 
 	stdname="${gene.standardName}" annot="${gene.annotation}" 
 	title="2D Plot"  />
+</c:if>
+<c:if test="${!addViewORF}">
+<p class="title">2D Plot</p>
+</c:if>
 
 <table>
 <tr>
@@ -92,9 +98,7 @@ function writeRegion(e)
 </td>
 <td align="center">
 <c:if test="${plotForm.param2 != -1}">
-<a href="ORFDataSheet.do?paramID=${plotForm.param2}">
-<img src="DrawTeardrop.do?paramID=${plotForm.param2}&orientation=vertical" border="0"/>
-</a>
+<a href="ORFDataSheet.do?paramID=${plotForm.param2}"><img src="DrawTeardrop.do?paramID=${plotForm.param2}&orientation=vertical&plotTargetORF=${addViewORF}" border="0"/></a>
 </c:if>
 </td>
 <td>
@@ -106,9 +110,7 @@ function writeRegion(e)
 <td/>
 <td align="center">
 <c:if test="${plotForm.param1 != -1}">
-<a href="ORFDataSheet.do?paramID=${plotForm.param1}">
-<img src="DrawTeardrop.do?paramID=${plotForm.param1}" border="0"/>
-</a>
+<a href="ORFDataSheet.do?paramID=${plotForm.param1}"><img src="DrawTeardrop.do?paramID=${plotForm.param1}&plotTargetORF=${addViewORF}" border="0"/></a>
 </c:if>
 </td>
 </tr>
