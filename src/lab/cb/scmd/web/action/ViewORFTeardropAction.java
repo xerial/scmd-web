@@ -115,7 +115,7 @@ public class ViewORFTeardropAction extends Action
             if(paramIDSet.isEmpty())
                 return mapping.findForward("success");
             sql = SQLExpression.assignTo(
-                    "select id, name, displayname, shortname from $1 where scope='orf' and datatype in 'num' and id in ($2)",
+                    "select id, name, displayname, shortname, systematicname from $1 where scope='orf' and datatype in 'num' and id in ($2)",
                     SCMDConfiguration.getProperty("DB_PARAMETERLIST", "parameterlist"),
                     SQLUtil.commaSeparatedList(paramIDSet, SQLUtil.QuotationType.none)
             );
@@ -159,9 +159,9 @@ public class ViewORFTeardropAction extends Action
         {
             int paramID = param.getId();
             //StringElement label = new StringElement(param.getShortName());
-            Link label = new Link("ORFDataSheet.do?paramID=" + paramID, param.getShortName());
+            Link label = new Link("ORFDataSheet.do?paramID=" + paramID, param.getName());
             //labelRow.add(new AttributeDecollation(label, "title", param.getDisplayname()));
-            labelRow.add(new AttributeDecollation(label, "title", param.getDisplayname()));
+            labelRow.add(new AttributeDecollation(label, "title", param.getSystematicname()));
 
             String sql2 = SQLExpression.assignTo("select paramid, groupid, average, sd, min, max from $1 where groupid=0 and paramid=$2", 
                     SCMDConfiguration.getProperty("DB_PARAM_AVG_SD", "paramavgsd"), paramID);

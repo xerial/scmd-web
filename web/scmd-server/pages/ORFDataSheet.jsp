@@ -35,7 +35,7 @@
 <td>
 <table>
 <tr><td class="small">Parameter Name:</td><td class="genename"><%= para.getName()%></td></tr>
-<tr><td class="small">Short Name:</td><td class="small"><%= para.getShortName()%></td></tr>
+<%--<tr><td class="small">Short Name:</td><td class="small"><%= para.getShortName()%></td></tr>--%>
 <tr><td class="small">Stain Type:</td><td class="small"><%= para.getStainType()%></td></tr>
 <tr><td class="small">Nucleus Status:</td><td class="small"><%= para.getNucleusStatus() %></td></tr>
 <tr><td class="small">Parameter Type:</td><td class="small"><%= para.getParameterType() %></td></tr>

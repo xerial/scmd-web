@@ -108,7 +108,7 @@ ${morphParam.name}
 </td><td>
 <html:select property="selectedCellParameter" multiple="true" size="10">
 <logic:iterate id="p" name="viewConfigForm" property="cellDetailCategoryList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
-<html:option value="${p.idStr}">[${p.shortName}] ${p.displayname}</html:option>
+<html:option value="${p.idStr}">[${p.name}] ${p.displayname}</html:option>
 </logic:iterate>
 </html:select>
 </td><td>
@@ -132,7 +132,7 @@ ${morphParam.name}
 </td><td>
 <html:select property="selectedORFParameter" multiple="true" size="10">
 <logic:iterate id="p" name="viewConfigForm" property="ORFDetailCategoryList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
-<html:option value="${p.idStr}">[${p.shortName}] ${p.displayname}</html:option>
+<html:option value="${p.idStr}">[${p.name}] ${p.displayname}</html:option>
 </logic:iterate>
 </html:select>
 </td><td>

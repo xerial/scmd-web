@@ -18,6 +18,7 @@ public class MorphParameter {
     String displayname = "";
     String stain = "";
     String groupid = "";
+    String systematicname = "";
 
     public MorphParameter() {
         
@@ -87,5 +88,13 @@ public class MorphParameter {
             return "Nucleus";
         }
         return "Cell Wall";
+    }
+    public String getSystematicname()
+    {
+        return systematicname;
+    }
+    public void setSystematicname(String systematicname)
+    {
+        this.systematicname = systematicname;
     }
 }
