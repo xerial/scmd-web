@@ -12,9 +12,12 @@ package lab.cb.scmd.web.image;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.Set;
 
 
 import javax.imageio.ImageIO;
@@ -28,6 +31,7 @@ import lab.cb.scmd.db.common.TableQuery;
 import lab.cb.scmd.util.stat.StatisticsWithMissingValueSupport;
 import lab.cb.scmd.web.bean.CellViewerForm;
 import lab.cb.scmd.web.bean.ParamPlotForm;
+import lab.cb.scmd.web.bean.UserSelection;
 import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.table.ColLabelIndex;
 import lab.cb.scmd.web.table.Table;
@@ -49,6 +53,14 @@ public class Plot2DServlet extends HttpServlet
         ParamPlotForm plotForm = (ParamPlotForm) request.getAttribute("plotForm");
         HttpSession session = request.getSession(true);
         CellViewerForm view = (CellViewerForm) session.getAttribute("view");
+        UserSelection selection = (UserSelection) session.getAttribute("userSelection");
+        if(selection == null) 
+        {
+            selection = new UserSelection();
+            session.setAttribute("userSelection", selection);
+        }
+        Set selectedORFSet = selection.orfSet();
+        
         if(view == null)
         {
             view = new CellViewerForm();
@@ -109,9 +121,9 @@ public class Plot2DServlet extends HttpServlet
         g.fillRect(0, 0, IMAGEWIDTH, IMAGEWIDTH);
         g.setColor(new Color(0x90C0E0));
         String targetOrf = view.getOrf().toUpperCase();
-        int t_x = -10;
-        int t_y = -10;
-        boolean foundTarget = false;
+
+        LinkedList<Point> selectedORFPointList = new LinkedList<Point>();
+        
         for(int i=1; i<plotTable.getRowSize(); i++)
         {
             try
@@ -123,11 +135,9 @@ public class Plot2DServlet extends HttpServlet
                 int xplot = (int) (x * IMAGEWIDTH / x_max);
                 int yplot = (int) (IMAGEWIDTH - (y * IMAGEWIDTH / y_max));
         
-                if(orf.equals(targetOrf))
+                if(selectedORFSet.contains(orf.toLowerCase()))
                 {
-                    t_x = xplot;
-                    t_y = yplot;
-                    foundTarget = true;
+                    selectedORFPointList.add(new Point(xplot,yplot));
                     continue;
                 }
                 g.fillOval(xplot-1, yplot-1, 3, 3);
@@ -143,16 +153,18 @@ public class Plot2DServlet extends HttpServlet
             }
         }
         
-        if(foundTarget)
+
+        for(Point p : selectedORFPointList)
         {
             g.setColor(new Color(0xFF8080));
-            g.fillOval(t_x-2, t_y-2, 5, 5);
+            g.fillOval(p.x - 2, p.y - 2, 5, 5);
+        }
 //            xmlout.selfCloseTag("rect", new XMLAttribute("x", Integer.toString(t_x-2))
 //                                .add("y", Integer.toString(t_y-2))
 //                                .add("width", Integer.toString(5))
 //                                .add("height", Integer.toString(5))
 //                                .add("style", "fill:rgb(255,128,128); stroke:none;"));
-        }
+
 
 //        try
 //        {

@@ -44,6 +44,11 @@ public class UserSelection
     {
         _selection.remove(orf.toLowerCase());
     }
+    
+    public Set orfSet()
+    {
+        return _selection;
+    }
 }
 
 
