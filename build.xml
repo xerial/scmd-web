@@ -155,6 +155,7 @@
 	-->
 	<target name="table.teardrop" depends="compile" description="generate teardrop table">
 		<java classname="lab.cb.scmd.db.scripts.CreateTearDropTable" fork="true" >
+			<mkdir dir="build"/>
 			<arg line="-v -o build/teardrop.txt"/>
 			<classpath>
 				<dirset dir="${webinf}/classes"/>
