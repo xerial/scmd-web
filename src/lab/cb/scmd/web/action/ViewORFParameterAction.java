@@ -224,12 +224,14 @@ public class ViewORFParameterAction extends Action
     {
         String sql = "";
         if( numRows!=-1 ) 
-        { // -1 ‚È‚ç my gene list ‚Ì‚İ‚ğæ“¾‚·‚é
+        { 
                 sql = "select strainname as \"ORF\",primaryname, aliasname, annotation, $1 from $2 left join $5 on strainname = systematicname order by $6 limit $3 offset $4";
-        } else {
+        } else { 
+                // -1 ‚È‚ç my gene list ‚Ì‚İ‚ğæ“¾‚·‚é
+                // my gene list ‚É‚Ğ‚Æ‚Â‚àˆâ“`q‚ª–³‚¢‚Æ‚«‚É‚ÍAtop
                 sql = "select strainname as \"ORF\",primaryname, aliasname, annotation, $1 from $2 left join $5 on strainname = systematicname ";
                 if( selectedOrfSet.size() == 0 ) {
-                    sql += "limit $3 offset $4 order by $6";
+                    sql += "order by $6 limit $3 offset $4";
                 } else {
                     boolean flag = false;
                     for(String orf: selectedOrfSet) {
