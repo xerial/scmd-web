@@ -15,7 +15,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import lab.cb.scmd.db.common.TableQuery;
 import lab.cb.scmd.db.connect.ConnectionServer;
+import lab.cb.scmd.db.connect.SCMDTableQuery;
 import lab.cb.scmd.db.scripts.bean.Parameter;
 import lab.cb.scmd.db.sql.SQLExpression;
 import lab.cb.scmd.web.action.ViewCellInfoAction;
@@ -34,13 +36,14 @@ public class ViewCustomizeForm extends ActionForm
 {
     static List<Parameter> _cellParameterList; 
     static List<Parameter> _orfParameterList;
-    
+    String _button = "add selections";
+        
     public static void loadParameters() throws SQLException
     {
-        String sql = "select id, name, shortname, scope, datatype from parameterlist where scope='$1' and datatype='$2' order by id";        
-        _cellParameterList = (List<Parameter>) ConnectionServer.query(new BeanListHandler(Parameter.class), sql, "cell", "num");
-        _orfParameterList = (List<Parameter>) ConnectionServer.query(new BeanListHandler(Parameter.class), sql, "orf", "double");
-        Table table = ConnectionServer.retrieveTable(sql, "orf");
+        SCMDTableQuery query = new SCMDTableQuery();
+        _cellParameterList = query.getParameterList("cell", "num");
+        _orfParameterList = query.getParameterList("orf", "double");
+//        Table table = ConnectionServer.retrieveTable(sql, "orf");
          
         System.out.println("[scmd-server] ViewCustomizeForm is initialized");
     }
@@ -92,6 +95,15 @@ public class ViewCustomizeForm extends ActionForm
         this.selectedORFParameter = selectedORFParameter;
     }
 
+    
+    public void setButton(String buttonName)
+    {
+        _button = buttonName;
+    }
+    public String getButton()
+    {
+        return _button;
+    }
 
 }
 
