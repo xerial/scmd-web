@@ -22,13 +22,18 @@ import lab.cb.scmd.exception.SCMDException;
  */
 public class SetupServlet extends HttpServlet {
 
+    /**
+     * Comment for <code>serialVersionUID</code>
+     */
+    private static final long serialVersionUID = 3256725074139427635L;
+
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         
         try
         {
             SCMDConfiguration.Initialize();
-            System.out.println("SCMDConfiguration is initialized");
+            System.out.println("[scmd-server] SCMDConfiguration is initialized");
         }
         catch(SCMDException e)
         {

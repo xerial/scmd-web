@@ -10,9 +10,9 @@
 <%@ taglib prefix="logic" uri="/WEB-INF/struts-logic.tld" %>
 --%>
 
-<jsp:useBean id="photoTable"  scope="request" class="scmd.web.table.Table"/>
-<jsp:useBean id="gene"  scope="request" class="scmd.web.bean.YeastGene"/>
-<jsp:useBean id="groupBySheet"  scope="request" class="scmd.web.bean.GroupViewForm"/>
+<jsp:useBean id="photoTable"  scope="request" class="lab.cb.scmd.web.table.Table"/>
+<jsp:useBean id="gene"  scope="request" class="lab.cb.scmd.web.bean.YeastGene"/>
+<jsp:useBean id="groupBySheet"  scope="request" class="lab.cb.scmd.web.bean.GroupViewForm"/>
 
 <scmd-base:header title="Group By DataSheet ${gene.orf}" css="/css/tabsheet.css"/>
 <script language="JavaScript">
@@ -36,7 +36,7 @@ function help(url)
 <span class="orf"> ${gene.orf} </span> 
 <span class="genename"> ${gene.standardName} </span>
 <td>
-<p class="header"> Cells Grouped by <%= scmd.web.common.GroupType.STAIN_GROUP[groupBySheet.getStainType()] %> </p>
+<p class="header"> Cells Grouped by <%= lab.cb.scmd.web.common.GroupType.STAIN_GROUP[groupBySheet.getStainType()] %> </p>
 </td>
 <td align="right">
 <p align="absbottom">

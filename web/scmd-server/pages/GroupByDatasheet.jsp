@@ -7,10 +7,10 @@
 <%@ taglib prefix="scmd-tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<jsp:useBean id="view"  scope="session" class="scmd.web.bean.CellViewerForm"/>
-<jsp:useBean id="datasheet"  scope="request" class="scmd.web.table.Table"/>
-<jsp:useBean id="sheetForm"  scope="request" class="scmd.web.bean.GroupByDatasheetForm"/>
-<jsp:useBean id="gene"  scope="request" class="scmd.web.bean.YeastGene"/>
+<jsp:useBean id="view"  scope="session" class="lab.cb.scmd.web.bean.CellViewerForm"/>
+<jsp:useBean id="datasheet"  scope="request" class="lab.cb.scmd.web.table.Table"/>
+<jsp:useBean id="sheetForm"  scope="request" class="lab.cb.scmd.web.bean.GroupByDatasheetForm"/>
+<jsp:useBean id="gene"  scope="request" class="lab.cb.scmd.web.bean.YeastGene"/>
 <jsp:useBean id="groupNameList"  scope="request" type="java.lang.String[]"/>
 
 <scmd-base:header title="DataSheet ${gene.orf} Grouped by: ${sheetForm.group}" css="/css/tabsheet.css"/>
@@ -44,7 +44,7 @@ function help(url)
 <tr><td align="left">
 <span class="orf"> ${gene.orf} </span> 
 <span class="genename"> ${gene.standardName} </span>
-<td class="title"> Grouped by <%= scmd.web.common.GroupType.STAIN_GROUP[sheetForm.getStainType()] %> (${sheetForm.group}) </td>
+<td class="title"> Grouped by <%= lab.cb.scmd.web.common.GroupType.STAIN_GROUP[sheetForm.getStainType()] %> (${sheetForm.group}) </td>
 </td>
 <td align="right">
 <p align="absbottom">

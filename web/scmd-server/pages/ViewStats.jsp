@@ -7,11 +7,11 @@
 <%@ taglib prefix="scmd-tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<jsp:useBean id="view"  scope="session" class="scmd.web.bean.CellViewerForm"/>
-<jsp:useBean id="gene"  scope="request" class="scmd.web.bean.YeastGene"/>
-<jsp:useBean id="statsTable0"  scope="request" class="scmd.web.table.Table"/>
-<jsp:useBean id="statsTable1"  scope="request" class="scmd.web.table.Table"/>
-<jsp:useBean id="statsTable2"  scope="request" class="scmd.web.table.Table"/>
+<jsp:useBean id="view"  scope="session" class="lab.cb.scmd.web.bean.CellViewerForm"/>
+<jsp:useBean id="gene"  scope="request" class="lab.cb.scmd.web.bean.YeastGene"/>
+<jsp:useBean id="statsTable0"  scope="request" class="lab.cb.scmd.web.table.Table"/>
+<jsp:useBean id="statsTable1"  scope="request" class="lab.cb.scmd.web.table.Table"/>
+<jsp:useBean id="statsTable2"  scope="request" class="lab.cb.scmd.web.table.Table"/>
 
 <scmd-base:header title="Stats ${view.orf}" css="/css/tabsheet.css"/>
 

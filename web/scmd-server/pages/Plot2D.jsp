@@ -7,9 +7,9 @@
 <%@ taglib prefix="scmd-tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<jsp:useBean id="view"  scope="session" class="scmd.web.bean.CellViewerForm"/>
-<jsp:useBean id="plotForm"  scope="request" class="scmd.web.bean.ParamPlotForm"/>
-<jsp:useBean id="gene"  scope="request" class="scmd.web.bean.YeastGene"/>
+<jsp:useBean id="view"  scope="session" class="lab.cb.scmd.web.bean.CellViewerForm"/>
+<jsp:useBean id="plotForm"  scope="request" class="lab.cb.scmd.web.bean.ParamPlotForm"/>
+<jsp:useBean id="gene"  scope="request" class="lab.cb.scmd.web.bean.YeastGene"/>
 
 <scmd-base:header title="2D Plot ${view.orf}"/>
 

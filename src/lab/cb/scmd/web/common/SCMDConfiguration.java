@@ -135,9 +135,8 @@ public class SCMDConfiguration
             _properties.load(new FileInputStream(configurationFile));
 
             // translate context paths to real ones in the server
-            String convertExec = _properties.getProperty(IMAGEMAGICK_CONVERT);
-
-            FileUtil.testExistence(new File(convertExec));
+            //String convertExec = _properties.getProperty(IMAGEMAGICK_CONVERT);
+            //FileUtil.testExistence(new File(convertExec));
         }
         catch (FileNotFoundException e)
         {

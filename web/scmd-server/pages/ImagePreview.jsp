@@ -18,9 +18,9 @@
 <%@ taglib prefix="logic" uri="/WEB-INF/struts-logic.tld" %>
 <%@ taglib prefix="scmd-tags" tagdir="/WEB-INF/tags" %>
 
-<%@page import="scmd.web.bean.*"%>
+<%@page import="lab.cb.scmd.web.bean.*"%>
 
-<jsp:useBean id="shape" scope="request" class="scmd.web.bean.SelectedShape"/>
+<jsp:useBean id="shape" scope="request" class="lab.cb.scmd.web.bean.SelectedShape"/>
 <scmd-base:header title="Preview Window"/>
 
 <body>

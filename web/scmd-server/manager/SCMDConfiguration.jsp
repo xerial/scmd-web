@@ -6,7 +6,7 @@
 <scmd-base:header title="Configuration" css="/css/scmd.css"/>
  
 
-<%@page import="scmd.web.common.SCMDConfiguration"%>
+<%@page import="lab.cb.scmd.web.common.SCMDConfiguration"%>
 
 <%
 	String action =	request.getParameter("action");

@@ -20,11 +20,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
-<jsp:useBean id="view"  scope="session" class="scmd.web.bean.CellViewerForm"/>
+<jsp:useBean id="view"  scope="session" class="lab.cb.scmd.web.bean.CellViewerForm"/>
 <jsp:useBean id="cellList"  scope="request" type="java.util.List"/>
-<jsp:useBean id="gene"  scope="request" class="scmd.web.bean.YeastGene"/>
+<jsp:useBean id="gene"  scope="request" class="lab.cb.scmd.web.bean.YeastGene"/>
 <jsp:useBean id="photoPropertyMap"  scope="request" type="java.util.Map"/>
-<jsp:useBean id="pageStatus"  scope="request" class="scmd.db.common.PageStatus"/>
+<jsp:useBean id="pageStatus"  scope="request" class="lab.cb.scmd.db.common.PageStatus"/>
 
 <scmd-base:header title="Cell Viewer ${gene.orf}" css="/css/tabsheet.css"/>
 
@@ -121,7 +121,7 @@ function cellinfo(cellID, width){
 
 <map name="cellmap">
 
-<logic:iterate id="cell" name="cellList" type="scmd.web.common.Cell">
+<logic:iterate id="cell" name="cellList" type="lab.cb.scmd.web.common.Cell">
 <area shapes="rect" coords="<%= cell.getBoundingRectangle().getAreaCoordinates(view.getMagnification()) %>"
 href="javascript: cellinfo(${cell.cellID}, ${cell.boundingRectangle.x2 - cell.boundingRectangle.x1})" 
 alt="cell ID=${cell.cellID}"/>

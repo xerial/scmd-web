@@ -43,15 +43,15 @@ public class MockXMLQuery extends MockQueryAPI implements XMLQuery
         if(_testMode)
         {
             String userDir = System.getProperty("user.dir");
-            int index = userDir.indexOf("SCMDServer");
+            int index = userDir.indexOf("SCMDWeb");
             if(index == -1)
                 return xmlSpecFile;
             File scmdServerPath = new File(userDir.substring(0, index));
-            File sampleXMLFolder = new File(scmdServerPath, "SCMDServer/web/lab.cb.scmd-server/xml/sample");
+            File sampleXMLFolder = new File(scmdServerPath, "SCMDWeb/web/scmd-server/xml/sample");
             return sampleXMLFolder.getAbsolutePath() + File.separator + xmlSpecFile;
         }
         else
-            return SCMDConfiguration.getProperty(SCMDConfiguration.SCMD_ROOT) + "lab.cb.scmd-server" + File.separator + "xml"
+            return SCMDConfiguration.getProperty(SCMDConfiguration.SCMD_ROOT) + "scmd-server" + File.separator + "xml"
                     + File.separator + "sample" + File.separator + xmlSpecFile;
     }
 

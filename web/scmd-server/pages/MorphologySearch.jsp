@@ -21,9 +21,9 @@
 <%@ taglib prefix="scmd-tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<%@page import="scmd.web.bean.*"%>
+<%@page import="lab.cb.scmd.web.bean.*"%>
 
-<jsp:useBean id="shape" scope="session" class="scmd.web.bean.SelectedShape"/>
+<jsp:useBean id="shape" scope="session" class="lab.cb.scmd.web.bean.SelectedShape"/>
 <scmd-base:header title="Morphology Search"/>
 <body>
 

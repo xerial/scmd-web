@@ -13,14 +13,14 @@
 <center>
 <scmd-tags:menu searchframe="on" toolbar="on"/>
 </center>
-<%@page import="scmd.web.bean.*"%>
+<%@page import="lab.cb.scmd.web.bean.*"%>
 <%@page import="java.util.*"%>
-<%@page import="scmd.db.common.PageStatus"%>
+<%@page import="lab.cb.scmd.db.common.PageStatus"%>
 
 
 <jsp:useBean id="groupList" scope="request" type="java.util.List"/>
-<jsp:useBean id="listPage" scope="session" class="scmd.web.bean.ORFListViewForm"/>
-<jsp:useBean id="selection" scope="request" class="scmd.web.bean.ORFSelectionForm"/>
+<jsp:useBean id="listPage" scope="session" class="lab.cb.scmd.web.bean.ORFListViewForm"/>
+<jsp:useBean id="selection" scope="request" class="lab.cb.scmd.web.bean.ORFSelectionForm"/>
 
 <html:form action="ViewSelection.do" method="GET">
 <table width="750">
@@ -29,7 +29,7 @@
 </td></tr>
 </table>
 
-<logic:iterate id="group"  collection="${groupList}" type="scmd.web.bean.ORFGroup">
+<logic:iterate id="group"  collection="${groupList}" type="lab.cb.scmd.web.bean.ORFGroup">
 <center>
 <table width="750">
 <tr height="20"><td></td> </tr>
@@ -49,7 +49,7 @@
 <td class="sheetlabel" width="150"> Aliases </td> 
 <td colspan="3" class="sheetlabel"></td>
 </tr>
-<logic:iterate id="yeastGene" name="group" property="orfList" type="scmd.web.bean.YeastGene">
+<logic:iterate id="yeastGene" name="group" property="orfList" type="lab.cb.scmd.web.bean.YeastGene">
 <tr class="small"> 
 <td align="left" width="15"><p align="center"><html:multibox name="selection" property="inputList" value="<%= yeastGene.getOrf().toLowerCase()%>"/></p></td>
 <td align="left" class="orf" width="90"> 

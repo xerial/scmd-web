@@ -15,8 +15,8 @@
 <%@ taglib prefix="logic" uri="/WEB-INF/struts-logic.tld" %>
 <%@ taglib prefix="html" uri="/WEB-INF/struts-html.tld" %>
 
-<jsp:useBean id="userSelection"  scope="session" class="scmd.web.bean.UserSelection"/>
-<jsp:useBean id="selection"  scope="page" class="scmd.web.bean.ORFSelectionForm"/>
+<jsp:useBean id="userSelection"  scope="session" class="lab.cb.scmd.web.bean.UserSelection"/>
+<jsp:useBean id="selection"  scope="page" class="lab.cb.scmd.web.bean.ORFSelectionForm"/>
 <jsp:useBean id="orfList"  scope="request" type="java.util.List"/>
 
 <scmd-base:header title="Your Selection" css="/css/tabsheet.css"/>
@@ -33,7 +33,7 @@
 <td class="sheetlabel" width="150"> Aliases </td> 
 <td colspan="3" class="sheetlabel"></td>
 </tr>
-<logic:iterate id="yeastGene" name="orfList" type="scmd.web.bean.YeastGene">
+<logic:iterate id="yeastGene" name="orfList" type="lab.cb.scmd.web.bean.YeastGene">
 
 <tr class="small"> 
 <td align="left" width="15"><p align="center"><html:multibox name="selection" property="inputList" value="<%= yeastGene.getOrf().toLowerCase()%>"/></p></td>

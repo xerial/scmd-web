@@ -104,6 +104,7 @@ usage: ant (-Dconf=build.properties)
 	</target>
 	
 	<target name="deploy" depends="war" description="deplay .war file into TOMCAT_HOME/${dir.deploy}">
+
 	    <taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask">
 	    	<classpath>
 	    		<path location="${dir.lib}/catalina-ant.jar"/>
@@ -116,7 +117,7 @@ usage: ant (-Dconf=build.properties)
 		</pathconvert>
 		<deploy 
 		   url="${url.manager}" username="${username.manager}" password="${password.manager}"
-		   update="true"
+		   update="true" 
 		   path="/${webapp.context.name}" war="${dir.build}/${war.name}"/>
 	</target>
 

@@ -139,7 +139,7 @@ public class MockTableQuery extends MockQueryAPI implements TableQuery
     public Map getShapeStatLine(String orf) throws SCMDException {
 
         BasicTable table = new FlatTable(new File(SCMDConfiguration.getProperty(SCMDConfiguration.SCMD_ROOT),
-                "lab.cb.scmd-server/table/sample/average_shape.xls"), true, true);
+                "scmd-server/table/sample/average_shape.xls"), true, true);
         TreeMap map = new TreeMap();
         TableIterator it = table.getHorisontalIterator(orf);
         for (; it.hasNext();)

@@ -8,9 +8,9 @@
 <%@ taglib prefix="scmd-tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<jsp:useBean id="view"  scope="session" class="scmd.web.bean.CellViewerForm"/>
-<jsp:useBean id="targetCell"  scope="request" class="scmd.web.common.Cell"/>
-<jsp:useBean id="cellSheet"  scope="request" class="scmd.web.table.Table"/>
+<jsp:useBean id="view"  scope="session" class="lab.cb.scmd.web.bean.CellViewerForm"/>
+<jsp:useBean id="targetCell"  scope="request" class="lab.cb.scmd.web.common.Cell"/>
+<jsp:useBean id="cellSheet"  scope="request" class="lab.cb.scmd.web.table.Table"/>
 
 <scmd-base:header title="Cell Info. ${targetCell.photo.orf}" css="/css/tabsheet.css"/>
 <body>
