@@ -182,7 +182,7 @@ If this parameter does not matter to what you wish, please select 0:
 <table>
 <tr>
 <td align="center">
-    <html:img page="/cellshape.png?${shape.imageArgument}" width="128" height="128"/>
+    <html:img page="/cellshape.png" name="shape" property="currentImageArgumentMap" width="128" height="128"/>
 </td>
 <td>
 <table>

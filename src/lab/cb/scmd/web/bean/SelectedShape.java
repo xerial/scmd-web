@@ -341,11 +341,11 @@ public class SelectedShape extends ActionForm
     
     public String getImageArgument(int imageNum)
     {
-        Map argMap = getDefaultImageArgumentMap();
+        Map argMap = getCurrentImageArgumentMap();
         argMap.put(_parameterName[phase], getSelectionValue(imageNum));
         return CGIUtil.getCGIArgument(argMap);
     }   
-    Map getDefaultImageArgumentMap()
+    public Map getCurrentImageArgumentMap()
     {
         TreeMap defaultParameterMap = new TreeMap();
         defaultParameterMap.put("areaRatio", new Double(areaRatio));
@@ -359,12 +359,12 @@ public class SelectedShape extends ActionForm
     
     public String getImageArgument()
     {
-        return CGIUtil.getCGIArgument(getDefaultImageArgumentMap());
+        return CGIUtil.getCGIArgument(getCurrentImageArgumentMap());
     }
     
     public String getImageArgumentWithout(String paramName)
     {
-        Map map = getDefaultImageArgumentMap();
+        Map map = getCurrentImageArgumentMap();
         map.remove(paramName);
         return CGIUtil.getCGIArgument(map);
     }
