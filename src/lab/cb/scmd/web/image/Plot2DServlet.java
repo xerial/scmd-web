@@ -91,7 +91,7 @@ public class Plot2DServlet extends HttpServlet
         
         // create graphics 
 
-        BufferedImage image = new BufferedImage(IMAGEWIDTH, IMAGEWIDTH, BufferedImage.TYPE_INT_RGB);
+        BufferedImage image = create2DPlot(param1, param2, plotTable, IMAGEWIDTH);
         Graphics2D g = (Graphics2D) image.getGraphics();
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         //DOMImplementation domImpl = GenericDOMImplementation.getDOMImplementation();

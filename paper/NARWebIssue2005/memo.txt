@@ -10,9 +10,24 @@ New Features
 -New Morphological Parameters
 --100 Numerical Parameters  & 100 point parameters
 
+2種類のアプローチの仕方がある。
+■ORFから異常なパラメータを発見する。
+ - average shapes & proportion of each cell cycle phases
+ - teardrop view of all parameters of this ORF 
+  -  Z値が大きい順にランキング
+
+■着目parameterから、異常な値を示すORFを検索する。
+ - teardrop view
+ - 2D plot
+多くのfunctionの特徴が見られる。
+
+■網羅的探索
+
 -Usage Example
 ある遺伝子破壊が細胞に及ぼす形状を知りたいとする。このような場合にSCMDは
 とってもステキな機能を提供する。
+
+
 
 search frame から検索すると、目的の破壊株がみつかる。もちろん、ここから
 酵母に関する大きなデータベースである、CYGD、MIPSへのリンクもあるので

@@ -61,20 +61,22 @@ public class ViewSelectionAction extends Action
 	    UserSelection userSelection = (UserSelection) session.getAttribute("userSelection");
 	    if(userSelection == null)
 	        userSelection = new UserSelection();
-	    
-	    // ユーザーの入力を追加
-	    if(orf != null)
-	        userSelection.addSelection(orf);
-	    String[] inputList = selection.getInputList();
-	    if(inputList != null)
-	    {
-            if(selection.getButton().equals("remove"))
-                for(String s : inputList)
-                    userSelection.removeSelection(s);
-            else
-                for(String s : inputList)
-                    userSelection.addSelection(s);
-	    }
+
+        String[] inputList = selection.getInputList();
+        if(selection.getButton().equals("remove"))
+        {
+            // ユーザーの入力を消去
+            for(String s : inputList)
+                userSelection.removeSelection(s);
+        }
+        else
+        {
+            // ユーザーの入力を追加
+            if(orf != null)
+                userSelection.addSelection(orf);
+            for(String s : inputList)
+                userSelection.addSelection(s);
+        }
 	    session.setAttribute("userSelection", userSelection);
 	    
 	    
