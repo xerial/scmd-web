@@ -163,8 +163,11 @@ public class ViewORFTeardropAction extends Action
             //labelRow.add(new AttributeDecollation(label, "title", param.getDisplayname()));
             labelRow.add(new AttributeDecollation(label, "title", param.getSystematicname()));
 
-            String sql2 = SQLExpression.assignTo("select paramid, groupid, average, sd, min, max from $1 where groupid=0 and paramid=$2", 
-                    SCMDConfiguration.getProperty("DB_PARAM_AVG_SD", "paramavgsd"), paramID);
+            String sql2 = SQLExpression.assignTo(
+                    "select t1.paramid as \"paramID\", t1.groupid, t1.average, t1.sd, t1.min, t1.max, t2.average as wt_average, t2.sd as wt_sd from $1 as t1 inner join $2 as t2 using(paramid) where t1.groupid=0 and t2.groupid=0 and paramid=$3", 
+                    SCMDConfiguration.getProperty("DB_PARAM_AVG_SD", "paramavgsd"), 
+                    SCMDConfiguration.getProperty("DB_PARAM_AVG_SD_WT", "paramavgsd_wt"),                     
+                    paramID);
             Teardrop teardrop = (Teardrop) ConnectionServer.query(sql2, new BeanHandler(Teardrop.class));
             teardrop.setGroupID(0);
             teardrop.setParamID(paramID);
@@ -192,8 +195,8 @@ public class ViewORFTeardropAction extends Action
             }
             if(value != -1)
             {
-                double ave = teardrop.getAverage();
-                double sd = teardrop.getSD();
+                double ave = teardrop.getWt_average();
+                double sd = teardrop.getWt_SD();
                 if(sd > 0)
                 {
                     double diff  = (value - ave) / sd;
@@ -223,8 +226,10 @@ public class ViewORFTeardropAction extends Action
             imgArg.put("encoding", "png"); 
             
             ImageElement img = new ImageElement("scmdimage.png", imgArg);
-            img.setProperty("alt", "average = " + format.format(teardrop.getAverage()));            
+            img.setProperty("alt", "avg. of all mutants = " + format.format(teardrop.getAverage()) + "\navg. of wildtype = " + format.format(teardrop.getWt_average()));            
             img.setProperty("border", "0");
+            img.setProperty("width", "128");            
+            img.setProperty("height", "30");            
             
             TreeMap<String, Object> linkMap = new TreeMap<String, Object>();
             linkMap.put("paramID", paramID);

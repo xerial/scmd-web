@@ -64,8 +64,11 @@ public class DrawTeardropAction extends Action
         int paramID = input.getParamID();
         
         // create teadrop
-        String sql = SQLExpression.assignTo("select paramid as \"paramID\", groupid, average, sd, min, max from $1 where groupid=0 and paramid=$2", 
-                SCMDConfiguration.getProperty("DB_PARAM_AVG_SD", "paramavgsd"), paramID);
+        String sql = SQLExpression.assignTo(
+                "select t1.paramid as \"paramID\", t1.groupid, t1.average, t1.sd, t1.min, t1.max, t2.average as wt_average, t2.sd as wt_sd from $1 as t1 inner join $2 as t2 using(paramid) where t1.groupid=0 and t2.groupid=0 and paramid=$3", 
+                SCMDConfiguration.getProperty("DB_PARAM_AVG_SD", "paramavgsd"),
+                SCMDConfiguration.getProperty("DB_PARAM_AVG_SD_WT", "paramavgsd_wt"),                
+                paramID);
         Teardrop teardrop = (Teardrop) ConnectionServer.query(sql, new BeanHandler(Teardrop.class));
         teardrop.setParamID(paramID);
 

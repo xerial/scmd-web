@@ -53,6 +53,9 @@ public class Teardrop
     private double average;
     private double SD;
     
+    private double wt_average;
+    private double wt_SD;
+    
     private String teardropURI = SCMDConfiguration.getProperty("TEARDROP_URI");                        
     
     /**
@@ -171,9 +174,12 @@ public class Teardrop
         avgPos = pollLength / 2;     
 
         // ïΩãœílÇ…ê¸Çà¯Ç≠
-        g.setColor(new Color(0xA0E0F0));
-        g.drawLine(0, avgPos, perpendicularLength, avgPos);
+        g.setColor(new Color(0x2384CE));
+        g.drawLine(0, avgPos, perpendicularLength / 2, avgPos);
         int[] xpos = computePositionInPerpendicularDirection(plotList, perpendicularLength, pollLength, dotRadius);
+        int avgPos_wt = computePositionOnThePoll(wt_average, pollLength);
+        g.drawLine(perpendicularLength/2, pollLength - avgPos_wt, perpendicularLength, pollLength-avgPos_wt);
+        
         // ì_Çë≈Ç¬
         i=0;
         for(TeardropPoint tp : plotList)
@@ -469,6 +475,24 @@ public class Teardrop
     public void setParamID(int paramID)
     {
         this.paramID = paramID;
+    }
+    
+    
+    public double getWt_average()
+    {
+        return wt_average;
+    }
+    public void setWt_average(double wt_average)
+    {
+        this.wt_average = wt_average;
+    }
+    public double getWt_SD()
+    {
+        return wt_SD;
+    }
+    public void setWt_SD(double wt_SD)
+    {
+        this.wt_SD = wt_SD;
     }
 }
 

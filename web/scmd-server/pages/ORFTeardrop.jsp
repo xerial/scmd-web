@@ -18,23 +18,26 @@
 
 <scmd-tags:orfInfo  orf="${gene.orf}" 
 	stdname="${gene.standardName}" annot="${gene.annotation}" 
-	title="ORF Teardrop Sheet" />
+	title="Teardrop View of ORF Parameters" />
 
 <table>
 <tr><td><scmd-base:table name="shadingTable"/></td></tr>
 <tr><td>
-<table>
-<tr class="small">
-<td width="40" align="center">-4SD</td>
-<td width="40" align="center">-3SD</td>
-<td width="40" align="center">-2SD</td>
-<td width="40" align="center">-1SD</td>
-<td width="40" align="center"> avg. </td>
-<td width="40" align="center">+1SD</td>
-<td width="40" align="center">+2SD</td>
-<td width="40" align="center">+3SD</td>
-<td width="40" align="center">+4SD</td>
+<table class="small">
+<tr>
+<td width="40" align="center" valign="top">-4SD</td>
+<td width="40" align="center" valign="top">-3SD</td>
+<td width="40" align="center" valign="top">-2SD</td>
+<td width="40" align="center" valign="top">-1SD</td>
+<td width="40" align="center" valign="top"> 
+avg.
+</td>
+<td width="40" align="center" valign="top">+1SD</td>
+<td width="40" align="center" valign="top">+2SD</td>
+<td width="40" align="center" valign="top">+3SD</td>
+<td width="40" align="center" valign="top">+4SD</td>
 </tr>
+<tr><td align="center" colspan="9">(wildtype)</td></tr>
 </table>
 </td></tr>
 </table>
