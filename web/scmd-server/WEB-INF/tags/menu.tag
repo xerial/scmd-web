@@ -25,20 +25,38 @@
 </table>
 <table width="750" border="0" bgcolor="#70b0b0" class="menubar" cellpadding="0">
   <tr> 
-    <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="ViewORFList.do">Yeast Mutant</a></td>
-    <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="SelectShape.do">Morphology Search</a> </td>
-    <td align="center" onMouseOver="switchStyle(this,'menubar_hover'); switchVisibility('photomenu');" onMouseOut="switchStyle(this, 'menu_bar'); "> <a href="ViewPhoto.do">Photo Viewer</a> </td>
-    <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="ORFTeardrop.do">Teardrop View</a> </td>
+    <td align="center" onMouseOver="switchStyle(this,'menubar_hover'); selectMenu('yeastmenu');" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="ViewORFList.do">Yeast Mutant</a></td>
+    <td align="center" onMouseOver="switchStyle(this,'menubar_hover'); selectMenu('photomenu');" onMouseOut="switchStyle(this, 'menu_bar'); "> <a href="ViewPhoto.do">Photo</a> </td>
+    <td align="center" onMouseOver="switchStyle(this,'menubar_hover'); selectMenu('teardropmenu');" onMouseOut="switchStyle(this, 'menu_bar');"> Data Mining </td>
 <%--    <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="ViewStats.do"> Average Shape </a> </td>     --%>
+    <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> Customization </td>     
     <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="sitemap.jsp">Site Map</a> </td>     
     <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="publication.jsp">Publications</a> </td>
     <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="about.jsp">About SCMD</a> </td>
 </tr>
-</table>
-<table width="750" border="0" bgcolor="#70b0b0" class="small" cellpadding="0" id="photomenu">
 <tr>
-<td> Photo Viewer</td>
-<td> Individual Cell Datasheet </td>
+<td>
+<table border="0" width="100" bgcolor="#70b0b0" class="dropdownmenu" cellpadding="0" id="yeastmenu">
+<tr><td> Wildtype </td></tr>
+<tr><td> Mutant </td></tr>
+</table>
+</td>
+
+<td>
+<table border="0" width="150" bgcolor="#70b0b0" class="dropdownmenu" cellpadding="0" id="photomenu">
+<tr><td><a href="ViewPhoto.do"> Photo </a></td></tr>
+<tr><td><a href="ViewDataSheet.do"> Individual Cell Datasheet</a> </td></tr>
+</table>
+</td>
+
+<td>
+<table border="0" width="180" bgcolor="#70b0b0" class="dropdownmenu" cellpadding="0" id="dataminingmenu">
+<tr><td> Teardrop View of ORF Parameters </td></tr>
+<tr><td> Average Shape </td></tr>
+<tr><td> 2D plot </td></tr>
+<tr><td> 2D plot </td></tr>
+</table>
+</td>
 </tr>
 </table>
 

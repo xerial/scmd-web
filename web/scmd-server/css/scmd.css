@@ -38,7 +38,19 @@ a:visited { color: #666666; }
 .menubar a:hover { text-decoration: none; color: white; background: #10D0F0; }
 .menubar_hover { text-decoration: none; color: white; background: #10D0F0; }
 
-#photomenu { display: none; }
+.dropdownmenu
+{ 
+	display: none; 
+	color: white;
+	position: relative;
+	font-size: 10pt;
+	background: #70b0b0;	
+	margin-top: 0pt;	
+}
+.dropdownmenu a:link { text-decoration: none; color: white; }
+.dropdownmenu a:visited { text-decoration: none; color: white; }
+.dropdownmenu a:hover { text-decoration: none; color: white; background: #10D0F0; }
+.dropdownmenu_hover { text-decoration: none; color: white; background: #10D0F0; }
 
 
 .small { font-family: Arial, Helvetica, sans-serif; font-size: 10pt}

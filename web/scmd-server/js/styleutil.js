@@ -3,6 +3,22 @@ function switchStyle(node, stylename)
    node.className=stylename;
 }
 
+var openedTabID = "";
+
+function selectMenu(nodeID)
+{
+	if(document.getElementById)
+	{
+		closeMenu(openedTabID);
+		openMenu(nodeID);
+		openedTabID = nodeID;		
+	}
+	else
+	{
+		return true;
+	}
+}
+
 function switchVisibility(nodeID)
 {
 	if(document.getElementById)
@@ -21,5 +37,18 @@ function switchVisibility(nodeID)
 	else
 	{
 		return true;
+	}
+}
+
+function openMenu(nodeID)
+{
+	document.getElementById(nodeID).style.display = "block";
+}
+
+function closeMenu(nodeID)
+{
+	if(nodeID.length != 0)
+	{
+		document.getElementById(nodeID).style.display = "none";
 	}
 }
