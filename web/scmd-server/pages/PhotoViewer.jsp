@@ -31,7 +31,7 @@
 
 <body>
 <center> 
-<scmd-tags:menu toolbar="on"/>
+<scmd-tags:menu toolbar="on" orf="${gene.orf}" searchframe="on"/>
  
 <%
 // 画像サイズの計算
@@ -40,7 +40,6 @@ int imageWidth = 696 * view.getMagnification() / 100 + 4;
 int blankTabSize = imageWidth - 70 * 3;
 %>
 
-<scmd-tags:linkMenu orf="${gene.orf}" logo="on"/> 
 <scmd-tags:orfInfo  orf="${gene.orf}" 
 	stdname="${gene.standardName}" annot="${gene.annotation}" 
 	title="Photo Viewer" />

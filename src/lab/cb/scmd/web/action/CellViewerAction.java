@@ -26,6 +26,7 @@ import lab.cb.scmd.web.action.logic.ActionLogic;
 import lab.cb.scmd.web.action.logic.DBUtil;
 import lab.cb.scmd.web.bean.CellList;
 import lab.cb.scmd.web.bean.CellViewerForm;
+import lab.cb.scmd.web.common.SCMDSessionManager;
 import lab.cb.scmd.web.common.StainType;
 
 /**
@@ -46,8 +47,8 @@ public class CellViewerAction extends Action
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response)   throws Exception
     {
-        CellViewerForm viewerForm = (CellViewerForm) form;
-
+        CellViewerForm viewerForm = SCMDSessionManager.getCellViewerForm(request);
+        
         _logic.handleAction(viewerForm, request);
         
         CellList cellList = null;

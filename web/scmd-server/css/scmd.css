@@ -26,31 +26,60 @@ a:link 	{ color: #006699; }
 a:visited { color: #666666; }
 
 .menubar
-{
+{	
     font-size: 10pt;
 	text-align: center;
 	background: #70b0b0;
 	margin-top: 0pt;
+	color: white;
 	background-image: url("../image/border.png");	
 }
-.menubar a:link { text-decoration: none; color: white; }
-.menubar a:visited { text-decoration: none; color: white; }
-.menubar a:hover { text-decoration: none; color: white; background: #10D0F0; }
-.menubar_hover { text-decoration: none; color: white; background: #10D0F0; }
+.menubar a:link { 	
+	display: block;
+	text-decoration: none; color: white; }
+.menubar a:visited { 	display: block;
+text-decoration: none; color: white; }
+.menubar a:hover { 	display: block;
+text-decoration: none; color: white; background: #10D0F0; }
 
 .dropdownmenu
 { 
 	display: none; 
 	color: white;
-	position: relative;
-	font-size: 10pt;
-	background: #70b0b0;	
+	font-size: 9pt;
+	background: #0056AD;	
 	margin-top: 0pt;	
+	overflow: auto;	
+	position: absolute;
+	padding: 0 0 0 0;
 }
-.dropdownmenu a:link { text-decoration: none; color: white; }
-.dropdownmenu a:visited { text-decoration: none; color: white; }
-.dropdownmenu a:hover { text-decoration: none; color: white; background: #10D0F0; }
-.dropdownmenu_hover { text-decoration: none; color: white; background: #10D0F0; }
+.dropdownmenu ul 
+{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.dropdownmenu li a:link, .dropdownmenu li a:visited
+{ 
+	display: block;
+	padding: 2px 2px 2px 0.5em;
+	border-left: 10px solid #369;
+	border-right: 1px solid #69c;
+	border-bottom: 1px solid #369;
+	background-color: #036;
+	width: 100%;
+	text-decoration: none; 	
+	color: white; 
+}
+.dropdownmenu li a:hover 
+{ 
+	text-decoration: none; 
+	color: white; 
+	background-color: #4CB5F8;
+	border-left: 10px solid #369;
+	border-right: 1px solid #69c;
+	border-bottom: 1px solid #369;
+}
 
 
 .small { font-family: Arial, Helvetica, sans-serif; font-size: 10pt}

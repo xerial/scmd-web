@@ -1,13 +1,19 @@
 <%@ taglib prefix="logic" uri="/WEB-INF/struts-logic.tld" %>
 <%@ taglib prefix="html" uri="/WEB-INF/struts-html.tld" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <%@ taglib prefix="scmd-tags" tagdir="/WEB-INF/tags" %>
 <%@ attribute name="toolbar" required="false" %>
 <%@ attribute name="searchframe" required="false" %>
 <%@ attribute name="top" required="false"%>
+<%@ attribute name="orf" required="false"%>
+
+<logic:equal name="orf" value="">
+<c:set var="orf" value="yor202w"/>
+</logic:equal>
 
 <script language="javascript" src="js/styleutil.js"></script>
 
-<table width="750" border="0" cellspacing=0 cellpadding=0>
+<table width="700" border="0" cellspacing=0 cellpadding=0>
 <tr>
 <logic:equal name="top" value="true"> 
 <td width="110"><html:link page="/"><html:img page="/image/scmd_logo.png" alt="SCMD" border="0"/></html:link></td>
@@ -15,7 +21,7 @@
 <logic:notEqual name="top" value="true"> 
 <td width="110"><html:link page="/"><html:img page="/image/scmd_logo_grad.png" alt="SCMD" border="0"/></html:link></td>
 </logic:notEqual>
-<td width="450" valign="bottom" align="left"> 
+<td width="400" valign="bottom" align="left"> 
  <html:link page="/">
    <html:img page="/image/scmd_title.png" align="absbottom" width="467" height="22" 
    alt="Saccharomyces Cerevisiae Morphological Database" border="0"/>
@@ -23,40 +29,87 @@
 </td>
 </tr>
 </table>
-<table width="750" border="0" bgcolor="#70b0b0" class="menubar" cellpadding="0">
-  <tr> 
-    <td align="center" onMouseOver="switchStyle(this,'menubar_hover'); selectMenu('yeastmenu');" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="ViewORFList.do">Yeast Mutant</a></td>
-    <td align="center" onMouseOver="switchStyle(this,'menubar_hover'); selectMenu('photomenu');" onMouseOut="switchStyle(this, 'menu_bar'); "> <a href="ViewPhoto.do">Photo</a> </td>
-    <td align="center" onMouseOver="switchStyle(this,'menubar_hover'); selectMenu('teardropmenu');" onMouseOut="switchStyle(this, 'menu_bar');"> Data Mining </td>
+<table width="700" border="0" cellpadding="0" cellspacing="0">
+  <tr class="menubar">  
+    <td align="center" onMouseOver="selectMenu('yeastmenu');" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="ViewORFList.do">Yeast Mutant</a></td>
+    <td align="center" onMouseOver="selectMenu('photomenu');" onMouseOut="switchStyle(this, 'menu_bar'); "> <a href="ViewPhoto.do">Photo</a> </td>
+    <td align="center" onMouseOver="selectMenu('dataminingmenu');" onMouseOut="switchStyle(this, 'menu_bar');"> Data Mining </td>
 <%--    <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="ViewStats.do"> Average Shape </a> </td>     --%>
-    <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> Customization </td>     
-    <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="sitemap.jsp">Site Map</a> </td>     
-    <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="publication.jsp">Publications</a> </td>
-    <td align="center" onMouseOver="switchStyle(this,'menubar_hover')" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="about.jsp">About SCMD</a> </td>
+    <td align="center" onMouseOver="selectMenu('customizemenu');" onMouseOut="switchStyle(this, 'menu_bar');"> Customization </td>     
+    <td align="center" onMouseOver="selectMenu('helpmenu');" onMouseOut="switchStyle(this, 'menu_bar');"> Help</td>     
+    <td align="center" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="publication.jsp">Publications</a> </td>
+    <td align="center" onMouseOut="switchStyle(this, 'menu_bar');"> <a href="about.jsp">About SCMD</a> </td>
 </tr>
 <tr>
+<td></td>
+
 <td>
-<table border="0" width="100" bgcolor="#70b0b0" class="dropdownmenu" cellpadding="0" id="yeastmenu">
-<tr><td> Wildtype </td></tr>
-<tr><td> Mutant </td></tr>
+<table width="200" class="dropdownmenu" id="photomenu">
+<tr>
+<td>
+<ul>
+<li><a href="ViewPhoto.do?orf=${orf}"> Photo Viewer </a></li>
+<li><a href="ViewDataSheet.do?orf=${orf}"> Individual Cell Datasheet</a> </li>
+<li> Cells Grouped by </li>
+<ul>
+<li> <html:link page="/ViewGroupBySheet.do?stainType=0&orf=${orf}"> bud size </html:link></li>
+<li> <html:link page="/ViewGroupBySheet.do?stainType=1&orf=${orf}"> nucleus location </html:link></li>
+<li> <html:link page="/ViewGroupBySheet.do?stainType=2&orf=${orf}"> actin distribution </html:link> </li>
+</ul>
+</ul>
+</td>
+</tr>
 </table>
 </td>
 
 <td>
-<table border="0" width="150" bgcolor="#70b0b0" class="dropdownmenu" cellpadding="0" id="photomenu">
-<tr><td><a href="ViewPhoto.do"> Photo </a></td></tr>
-<tr><td><a href="ViewDataSheet.do"> Individual Cell Datasheet</a> </td></tr>
+<table width="300" class="dropdownmenu" cellpadding="0" id="dataminingmenu">
+<tr>
+<td>
+<ul>
+<li> <a href="SelectShape.do">Morphology Search </a></li>
+<li> <a href="ORFTeardrop.do?orf=${orf}">Teardrop View of ORF Parameters </a></li>
+<li> <a href="ViewORFParameter.do">ORF Parameter Datasheet</a></li>
+<li><a href="View2DPlot.do">2D Plot</a></li>
+<li> <a href="ViewStats.do?orf=${orf}">Average Shapes</a> </li>
+<li>Teardrop View of Average Shapes Grouped by</li>
+<ul>
+<li><html:link page="/ViewGroupByTearDrop.do?stainType=0&orf=${orf}"> bud size </html:link></li>
+<li><html:link page="/ViewGroupByTearDrop.do?stainType=1&orf=${orf}"> nucleus location</html:link></li>
+<li><html:link page="/ViewGroupByTearDrop.do?stainType=2&orf=${orf}"> actin distribution </html:link></li>
+</ul>
+</ul>
+</td>
+</tr>
 </table>
 </td>
 
 <td>
-<table border="0" width="180" bgcolor="#70b0b0" class="dropdownmenu" cellpadding="0" id="dataminingmenu">
-<tr><td> Teardrop View of ORF Parameters </td></tr>
-<tr><td> Average Shape </td></tr>
-<tr><td> 2D plot </td></tr>
-<tr><td> 2D plot </td></tr>
+<table border="0" width="180" class="dropdownmenu" cellpadding="0" id="customizemenu">
+<tr>
+<td>
+<ul>
+<li> <a href="ViewSelection.do"> My Gene List</a> </li>
+<li> <a href="CustomizeView.do"> My Parameter List </a></li>
+</ul>
+</td>
+</tr>
 </table>
 </td>
+
+<td>
+<table border="0" width="180" class="dropdownmenu" cellpadding="0" id="helpmenu">
+<tr><td> 
+<ul>
+<li><a href="ParameterHelp.do">Parameter Help</a> </li>
+<li> <a href="sitemap.jsp">Site Map </a></li>
+</ul>
+</td></tr>
+</table>
+</td>
+
+
+
 </tr>
 </table>
 
@@ -67,8 +120,8 @@
    <td align="right">
     <table>
      <tr align="top">
-	    <td class="tool" width="150" onMouseOver="switchStyle(this,'tool_on')" onMouseOut="switchStyle(this,'tool')"> <a href="ViewSelection.do">view your selection</a> </td>
-    	<td class="tool" width="150" onMouseOver="switchStyle(this,'tool_on')" onMouseOut="switchStyle(this,'tool')"> <a href="CustomizeView.do">customize view</a></td>
+	    <td class="tool" width="150" onMouseOver="switchStyle(this,'tool_on')" onMouseOut="switchStyle(this,'tool')"> <a href="ViewSelection.do">My Gene List</a> </td>
+    	<td class="tool" width="150" onMouseOver="switchStyle(this,'tool_on')" onMouseOut="switchStyle(this,'tool')"> <a href="CustomizeView.do">My Parameter List</a></td>
      </tr>
 	</table>    
    </td>
