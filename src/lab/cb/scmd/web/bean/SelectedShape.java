@@ -11,6 +11,7 @@
 package lab.cb.scmd.web.bean;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -21,6 +22,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
+import lab.cb.scmd.web.table.decollation.NumberFormatDecollator;
 import lab.cb.scmd.web.util.CGIUtil;
 
 
@@ -382,6 +384,17 @@ public class SelectedShape extends ActionForm
             phase = SELECT_BUDSIZE;
         }
         
+        // round-up
+        NumberFormat format = NumberFormat.getNumberInstance();
+        format.setMaximumFractionDigits(2);
+        format.setMinimumFractionDigits(2);
+        
+        areaRatio = Double.parseDouble(format.format(areaRatio));
+        longAxis = Double.parseDouble(format.format(longAxis));
+        roundness= Double.parseDouble(format.format(roundness));
+        neckPosition = Double.parseDouble(format.format(neckPosition));
+        growthDirection = Double.parseDouble(format.format(growthDirection));
+
         return super.validate(mapping, request);
     }
 }
