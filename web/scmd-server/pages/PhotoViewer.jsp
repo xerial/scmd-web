@@ -26,7 +26,7 @@
 <jsp:useBean id="photoPropertyMap"  scope="request" type="java.util.Map"/>
 <jsp:useBean id="pageStatus"  scope="request" class="lab.cb.scmd.db.common.PageStatus"/>
 
-<scmd-base:header title="Cell Viewer ${gene.orf}" css="/css/tabsheet.css"/>
+<scmd-base:header title="Photo Viewer ${gene.orf}" css="/css/tabsheet.css"/>
 
 
 <body>
@@ -62,6 +62,11 @@ int blankTabSize = imageWidth - 70 * 3;
 <tr>
 <td colspan="4" align="center">
 <scmd-tags:pageMoveButton actionURL="ViewPhoto.do" currentPage="${view.photoPage}" maxPage="${view.photoPageMax}"/>
+</td>
+</tr>
+<tr>
+<td colspan="4" align="center" class="menubutton">
+[<a href="ViewDataSheet.do?orf=${view.orf}">Individual Cell Datasheet</a>]
 </td>
 </tr>
 </table>

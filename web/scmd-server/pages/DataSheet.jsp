@@ -26,7 +26,9 @@
 </tr></table>
 <% } %>
 
-<table><tr><td>
+<table>
+<tr><td class="menubutton" align="center">[<a href="ViewPhoto.do?orf=${view.orf}">Photo Viewer</a>]</td></tr>
+<tr><td>
 <scmd-tags:pageMoveButton actionURL="ViewDataSheet.do" currentPage="${view.photoPage}" maxPage="${view.photoPageMax}"/>
 </td>
 </tr></table>
