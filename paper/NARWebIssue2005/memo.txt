@@ -17,7 +17,8 @@ New Features
   -  Z値が大きい順にランキング
 
 ■着目parameterから、異常な値を示すORFを検索する。
- - teardrop view
+ - teardrop view の範囲検索
+
  - 2D plot
 多くのfunctionの特徴が見られる。
 
@@ -56,7 +57,7 @@ Cell cycleの情報を調べるには、cell wallの形状だけでは不十分なため、われわれは、
 便宜的に、budの大きさにより、no bud, small, medium, largeのグループ
 核の状態については、A, A1, B, C, Dなど、 Actinの状態もA-Fと６種類に分類している。
 分類の詳細については、web page上のdocumentを参照して欲しい。
-
+						  
 
 
 - Parameter Reproducibility 
