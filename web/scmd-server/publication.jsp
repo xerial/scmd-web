@@ -39,17 +39,18 @@
 Masaya Suzuki, Ryoji Igarashi, Mizuho Sekiya, Takahiko Utsugi, Shinichi 
 Morishita, Masashi Yukawa, Yoshikazu Ohya.
 Dynactin is involved in a checkpoint to monitor cell wall synthesis in 
-Saccharomyces cerevisiae.
-Nature Cell Biology  6, 861 - 871, 2004.
+<i>Saccharomyces cerevisiae.</i>
+<i>Nature Cell Biology</i> 6, 861 - 871, 2004.
  </li>
   <br>
+  <br>
  <li>
-   Miwaka Ohtani, Ayaka Saka, Fumi Sano, Yoshikazu Ohya, and Shinichi Morishita: Development of Image Processing Program for Yeast Cell Morphology. <i> Journal of Bioinformatics and Computational Biology (in press) </i> <br>
+   Miwaka Ohtani, Ayaka Saka, Fumi Sano, Yoshikazu Ohya, and Shinichi Morishita: Development of Image Processing Program for Yeast Cell Morphology. <i> Journal of Bioinformatics and Computational Biology </i> Vol. 1, No. 4 695-709, 2004. <br>
   <a href="http://www.worldscinet.com/jbcb/jbcb.shtml"> http://www.worldscinet.com/jbcb/jbcb.shtml </a>
  </li>
  <br>
  <br> <li>
-   Taro L. Saito, Miwaka  Ohtani, Hiroshi Sawai, Fumi Sano, Ayaka Saka, Daisuke Watanabe, Masashi Yukawa, Yoshikazu Ohya, and Shinichi Morishita.  <a href="http://nar.oupjournals.org/cgi/content/abstract/32/suppl_1/D319"> SCMD: Saccharomyces Cerevisiae Morphological Database</a>. <i>Nucl. Acids. Res. 32</i>: D319-D322 (2004)<br>
+   Taro L. Saito, Miwaka  Ohtani, Hiroshi Sawai, Fumi Sano, Ayaka Saka, Daisuke Watanabe, Masashi Yukawa, Yoshikazu Ohya, and Shinichi Morishita.  <a href="http://nar.oupjournals.org/cgi/content/abstract/32/suppl_1/D319"> SCMD: <i>Saccharomyces Cerevisiae</i> Morphological Database</a>. <i>Nucl. Acids. Res. 32</i>: D319-D322 (2004)<br>
 
  </li>
 </ul>
