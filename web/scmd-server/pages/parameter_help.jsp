@@ -55,8 +55,6 @@
 
  <tr> <td height=30> </td></tr>
 
-
-
    <tr>
    <td colspan=3 class=tablelabel><a name="ngroup">Nucleus Location Groups</a> </td>
    </tr>
@@ -139,27 +137,6 @@
 
 </table>
 
-<a name="cellparam">
-<p class="title"> Cell Parameter List </p>
-</a>
-
-<table class="datasheet">
-<tr class="sheetlabel">
-<td>parameter name</td>
-<td>description</td>
-<td>category</td>
-</tr>
-<logic:iterate id="p" name="cellParamList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
-<tr>
-<td>
-${p.name}
-</td>
-<td bgcolor="#FFEFEF">${p.displayname} </td>
-<td bgcolor="#EFEFEF" align="center">${p.stain} </td>
-</tr>
-</logic:iterate>
-</table>
-
 <a name="orfparam">
 <p class="title"> ORF Parameter List </p>
 </a>
@@ -183,6 +160,26 @@ ${p.name}
 </logic:iterate>
 </table>
 
+<a name="cellparam">
+<p class="title"> Cell Parameter List </p>
+</a>
+
+<table class="datasheet">
+<tr class="sheetlabel">
+<td>parameter name</td>
+<td>description</td>
+<td>category</td>
+</tr>
+<logic:iterate id="p" name="cellParamList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
+<tr>
+<td>
+${p.name}
+</td>
+<td bgcolor="#FFEFEF">${p.displayname} </td>
+<td bgcolor="#EFEFEF" align="center">${p.stain} </td>
+</tr>
+</logic:iterate>
+</table>
 
 </center>
 </body>
