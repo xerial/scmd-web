@@ -160,6 +160,11 @@ public class YeastGene
      return orf;
  }
  
+ public String getLowerCaseOrf() 
+ {
+     return orf.toLowerCase();
+ }
+ 
  public void setOrf(String orf)
  {
      Pattern p = Pattern.compile("(y[a-z]{2}[0-9]{3})([wc])(-[a-z])?", Pattern.CASE_INSENSITIVE);

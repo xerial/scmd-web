@@ -13,16 +13,19 @@
 <%@ taglib prefix="scmd-base" uri="http://scmd.gi.k.u-tokyo.ac.jp/taglib/scmd-base" %>
 <%@ taglib prefix="scmd-tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="logic" uri="/WEB-INF/struts-logic.tld" %>
-<%@ taglib prefix="html" uri="/WEB-INF/struts-html.tld" %>
+<%@ taglib prefix="html" uri="/WEB-INF/struts-html-el.tld" %>
 
 <jsp:useBean id="userSelection"  scope="session" class="lab.cb.scmd.web.bean.UserSelection"/>
 <jsp:useBean id="selection"  scope="page" class="lab.cb.scmd.web.bean.ORFSelectionForm"/>
 <jsp:useBean id="orfList"  scope="request" type="java.util.List"/>
+<jsp:useBean id="gene"  scope="request" class="lab.cb.scmd.web.bean.YeastGene"/>
 
 <scmd-base:header title="Your Selection" css="/css/tabsheet.css"/>
 <body>
 <center>
 <scmd-tags:menu toolbar="on" searchframe="on"/>
+
+<scmd-tags:linkMenu orf="${gene.orf}" logo="on"/> 
 
 <html:form action="ViewSelection.do" method="GET">
 
@@ -44,7 +47,8 @@
 <logic:iterate id="yeastGene" name="orfList" type="lab.cb.scmd.web.bean.YeastGene">
 
 <tr class="small"> 
-<td align="left" width="15"><p align="center"><html:multibox name="selection" property="inputList" value="<%= yeastGene.getOrf().toLowerCase()%>"/></p></td>
+<td align="left" width="15"><p align="center">
+<html:multibox name="selection" property="inputList" value="${yeastGene.orf}"/></p></td>
 <td align="left" class="orf" width="90"> 
 <html:link page="/ViewStats.do?orf=${yeastGene.orf}"> ${yeastGene.orf}  </html:link> 
 </td> 
@@ -58,15 +62,10 @@
 </td>
 <td></td>
 <td align="center"> 
-<html:select name="selection" property="colorList">
-<option style="color:#FF90A0; background:#FF90A0;" value="${yeastGene.orf}_pink" <%=yeastGene.isSelectedColor("pink")%>> pink </option>
-<option style="color:#80C0FF; background:#80C0FF;" value="${yeastGene.orf}_skyblue" <%=yeastGene.isSelectedColor("skyblue")%>> skyblue </option>
-<option style="color:#FF5050; background:#FF5050;" value="${yeastGene.orf}_red"  <%=yeastGene.isSelectedColor("red")%>> red </option>
-<option style="color:#A0A0A0; background:#A0A0A0;" value="${yeastGene.orf}_gray" <%=yeastGene.isSelectedColor("gray")%>> gray </option>
-<option style="color:#50FF80; background:#50FF80;" value="${yeastGene.orf}_green" <%=yeastGene.isSelectedColor("green")%>> green </option>
-<option style="color:#FFFF50; background:#FFFF50;" value="${yeastGene.orf}_yellow" <%=yeastGene.isSelectedColor("yellow")%>> yellow </option>
-<option style="color:#D0A0FF; background:#D0A0FF;" value="${yeastGene.orf}_purple" <%=yeastGene.isSelectedColor("purple")%>> purple </option>
-<option style="color:#333333; background:#333333;" value="${yeastGene.orf}_black" <%=yeastGene.isSelectedColor("black")%>>  black </option>
+<html:select name="userSelection" property="colorList">
+<logic:iterate id="plotColor" collection="<%= lab.cb.scmd.web.design.PlotColor.getDefaultPlotColorList()%>" type="lab.cb.scmd.web.design.PlotColor">
+<html:option style="color:${plotColor.colorCode}; background:${plotColor.colorCode};" value="${yeastGene.lowerCaseOrf}_${plotColor.colorName}">${plotColor.colorName}</html:option>
+</logic:iterate>
 </html:select>
 </td>
 </tr>	

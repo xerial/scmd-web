@@ -29,12 +29,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.xerial.util.Pair;
+
 import lab.cb.scmd.db.common.TableQuery;
 import lab.cb.scmd.util.stat.StatisticsWithMissingValueSupport;
 import lab.cb.scmd.web.bean.CellViewerForm;
 import lab.cb.scmd.web.bean.ParamPlotForm;
 import lab.cb.scmd.web.bean.UserSelection;
 import lab.cb.scmd.web.common.SCMDConfiguration;
+import lab.cb.scmd.web.design.PlotColor;
 import lab.cb.scmd.web.table.ColLabelIndex;
 import lab.cb.scmd.web.table.Table;
 
@@ -128,7 +131,7 @@ public class Plot2DServlet extends HttpServlet
         g.fillRect(0, 0, IMAGEWIDTH, IMAGEWIDTH);
         g.setColor(new Color(0x90C0E0));
         
-        LinkedList<Point> selectedORFPointList = new LinkedList<Point>();
+        LinkedList<Pair<String, Point>> selectedORFPointList = new LinkedList<Pair<String, Point>>();
         
         for(int i=1; i<plotTable.getRowSize(); i++)
         {
@@ -143,7 +146,7 @@ public class Plot2DServlet extends HttpServlet
         
                 if(selectedORFSet.contains(orf.toLowerCase()))
                 {
-                    selectedORFPointList.add(new Point(xplot,yplot));
+                    selectedORFPointList.add(new Pair<String, Point>(orf, new Point(xplot,yplot)));
                     continue;
                 }
                 g.fillOval(xplot-1, yplot-1, 3, 3);
@@ -160,10 +163,13 @@ public class Plot2DServlet extends HttpServlet
         }
         
 
-        for(Point p : selectedORFPointList)
+        for(Pair<String, Point> p : selectedORFPointList)
         {
-            g.setColor(new Color(0xFF8080));
-            g.fillOval(p.x - 2, p.y - 2, 5, 5);
+            String selectedORF = p.getFirst();
+            Point point = p.getSecond();
+            PlotColor plotColor = selection.getPlotColor(selectedORF);
+            g.setColor(plotColor.getColor());
+            g.fillOval(point.x - 2, point.y - 2, 5, 5);
         }
 //            xmlout.selfCloseTag("rect", new XMLAttribute("x", Integer.toString(t_x-2))
 //                                .add("y", Integer.toString(t_y-2))

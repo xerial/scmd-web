@@ -27,9 +27,10 @@ public class ORFSelectionForm extends ActionForm
 {
 
     String _input;
-    String[] _inputList;
-    String[] _colorList;
+    String[] _inputList = new String[0];
+    String[] _colorList = new String[0];
     String _button = "add selections";
+    
     //Set _removeList = new TreeSet();
     //Set _previousSet = new TreeSet();
     /**
@@ -38,14 +39,13 @@ public class ORFSelectionForm extends ActionForm
     public ORFSelectionForm()
     {
         super();
-        // TODO Auto-generated constructor stub
     }
     
     
 
     public void reset(ActionMapping arg0, HttpServletRequest arg1) {
         _inputList = new String[0];
-        _colorList = new String[0];
+        //_colorList = new String[0];
     }
     
     public String getInput() {

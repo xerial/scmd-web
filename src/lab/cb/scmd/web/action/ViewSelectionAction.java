@@ -29,6 +29,7 @@ import org.w3c.dom.NodeList;
 
 import lab.cb.scmd.db.common.XMLQuery;
 import lab.cb.scmd.exception.SCMDException;
+import lab.cb.scmd.web.bean.CellViewerForm;
 import lab.cb.scmd.web.bean.ORFSelectionForm;
 import lab.cb.scmd.web.bean.UserSelection;
 import lab.cb.scmd.web.bean.YeastGene;
@@ -64,6 +65,14 @@ public class ViewSelectionAction extends Action
 	    if(userSelection == null)
 	        userSelection = new UserSelection();
 
+        // 
+       CellViewerForm view = (CellViewerForm) session.getAttribute("view");
+       if(view == null)
+       {
+           view = new CellViewerForm();
+           session.setAttribute("view", view);
+       }
+        
         String[] inputList = selection.getInputList();
         
         if(selection.getButton().equals("remove all"))
@@ -88,15 +97,13 @@ public class ViewSelectionAction extends Action
 	    session.setAttribute("userSelection", userSelection);
 
         // 色名(ORF_color)を<ORF,color> のHashに入れる。
-        String[] colorList = selection.getColorList();
-        HashMap<String,String> colorMap = new HashMap<String, String>();
-        for(String color : colorList)
+        for(String colorMap : selection.getColorList())
         {
-            String[] orfColorSet = color.split("_");
+            String[] orfColorSet = colorMap.split("_");
             if(orfColorSet.length == 2 )
-                colorMap.put(orfColorSet[0], orfColorSet[1]);
+                userSelection.setColor(orfColorSet[0], orfColorSet[1]);
         }
-	    
+        
 	    LinkedList orfList = new LinkedList();
 	    
 	    try
@@ -115,13 +122,13 @@ public class ViewSelectionAction extends Action
 	        for(int i=0; i<nodeList.getLength(); i++)
 	        {
                 YeastGene yeastGene = new YeastGene((Element) nodeList.item(i));
-                //各ORF情報に色指定を入れる
-                if( colorMap.containsKey(yeastGene.getOrf()) )
-                    yeastGene.setColor(colorMap.get(yeastGene.getOrf()));
+//                //各ORF情報に色指定を入れる
+//                if( colorMap.containsKey(yeastGene.getOrf()) )
+//                    yeastGene.setColor(colorMap.get(yeastGene.getOrf()));
 	            orfList.add(yeastGene);
 	        }
 	        
-	    }
+	    } 
 	    catch(SCMDException e)
 	    {
 	        System.out.println(e);
@@ -131,6 +138,7 @@ public class ViewSelectionAction extends Action
 	        System.out.println(e);
 	    }
 	    
+	    request.setAttribute("gene", new YeastGene(view.getOrf()));
 	    request.setAttribute("orfList", orfList);
 	    
 	    

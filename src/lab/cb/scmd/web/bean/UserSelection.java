@@ -10,8 +10,13 @@
 
 package lab.cb.scmd.web.bean;
 
+import java.util.HashMap;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.Vector;
+
+import lab.cb.scmd.web.design.PlotColor;
 
 /**
  * ユーザーからのORFの入力を記録するフォーム
@@ -22,7 +27,7 @@ public class UserSelection
 {
 
     private TreeSet<String> _selection = new TreeSet<String>();
-    private String[] _color = new String[0];
+    private TreeMap<String, String> _colorMap = new TreeMap<String, String>();
     /**
      * 
      */
@@ -51,16 +56,27 @@ public class UserSelection
     {
         return (Set<String>) _selection.clone();
     }
-    
-    public void setColor(String[] color)
+       
+    public Vector<String> getColorList()
     {
-        _color = color;
-    }
-    public String[] getColor()
-    {
-        return _color;
+        Vector<String> colorMap = new Vector<String>();
+        for(String orf : _colorMap.keySet())
+        {
+            colorMap.add(orf + "_" + _colorMap.get(orf));
+        }
+        return colorMap;
     }
     
+    public void setColor(String orf, String colorName)
+    {
+        _colorMap.put(orf.toLowerCase(), colorName);
+    }
+    
+    
+    public PlotColor getPlotColor(String orf)
+    {
+        return PlotColor.getPlotColor(_colorMap.get(orf.toLowerCase()));
+    }
     
     /**
      *  
@@ -68,6 +84,7 @@ public class UserSelection
     public void clear()
     {
        _selection.clear();
+       _colorMap.clear();
     }
 }
 
