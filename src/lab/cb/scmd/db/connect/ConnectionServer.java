@@ -134,6 +134,13 @@ public class ConnectionServer implements ConfigObserver
                 }
                 connection = _connectionHolder.poll();
             }
+            
+            if(connection.isClosed())
+            {
+                // reset connection
+                connection = createNewConnection();
+            }
+                    
             Object result = _queryRunner.query(connection, sql, rsh);
             // release connection
             synchronized(this)
@@ -165,6 +172,9 @@ public class ConnectionServer implements ConfigObserver
         SCMDConfiguration.addObserver(_instance);
     }
     
+    /**
+     * 後始末を行うメソッド。TOMCATの再起動前に呼び出す 
+     */
     static public void dispose() 
     {
         if(_instance != null)
@@ -190,7 +200,6 @@ public class ConnectionServer implements ConfigObserver
     protected void prepareDataSource() throws SQLException
     {
         closeAll();
-
         try
         {
             Class.forName("org.postgresql.Driver");
@@ -199,20 +208,29 @@ public class ConnectionServer implements ConfigObserver
             e.printStackTrace(System.out);
             return;
         }
-
         
+        for(int i=0; i<_maxConnection; i++)
+        {
+            _connectionHolder.add(createNewConnection());
+        }
+    }
+    
+    private String getConnectionURI()
+    {
         String jdbcConnectionURI = "jdbc:postgresql://";
         jdbcConnectionURI += SCMDConfiguration.getProperty("POSTGRESQL_IP", "localhost").trim() + ":";
         jdbcConnectionURI += SCMDConfiguration.getProperty("POSTGRESQL_PORT", "5432").trim() + "/";
         jdbcConnectionURI += SCMDConfiguration.getProperty("POSTGRESQL_DBNAME", "scmd").trim();
         
+        return jdbcConnectionURI;
+    }
+    
+    private Connection createNewConnection() throws SQLException
+    {
         String user = SCMDConfiguration.getProperty("POSTGRESQL_USER", "postgres");
         String pass = SCMDConfiguration.getProperty("POSTGRESQL_PASSWORD", ""); 
-        for(int i=0; i<_maxConnection; i++)
-        {
-            Connection con = DriverManager.getConnection(jdbcConnectionURI, user, pass);
-            _connectionHolder.add(con);
-        }
+        Connection con = DriverManager.getConnection(getConnectionURI(), user, pass);
+        return con;
     }
     
     // @see lab.cb.scmd.web.common.ConfigObserver#reloaded()
@@ -232,11 +250,15 @@ public class ConnectionServer implements ConfigObserver
     
     protected void closeAll()
     {
+        System.out.print("[scmd-server] closing connections ...");
+        int count = 1;
         for(Connection con : _connectionHolder)
         {
             try
             {
                 con.close();
+                System.out.print(count++);
+                System.out.print(" ");                
             }
             catch(SQLException e)
             {
@@ -244,6 +266,7 @@ public class ConnectionServer implements ConfigObserver
             }
         }
         _connectionHolder.clear();
+        System.out.println("finish.");
     }
 }
 
