@@ -25,7 +25,7 @@ import lab.cb.scmd.web.common.StainType;
  */
 public class GroupViewForm extends ActionForm
 {
-    String orf;
+    String orf = "yor202w";
     int    stainType = StainType.STAIN_ConA;
     int    photoType = PhotoType.ANALYZED_PHOTO;
     PageStatus pageStatus = new PageStatus(1, 1);
