@@ -98,6 +98,8 @@ public class SetupServlet extends HttpServlet implements ConfigObserver, Servlet
     {
         try
         {
+            SCMDThreadManager.initialize(Integer.parseInt(SCMDConfiguration.getProperty("NUM_WORKER_THREAD", "50")),
+                    Integer.parseInt(SCMDConfiguration.getProperty("TASK_QUEUE_SIZE", "100")));
             ViewCustomizeForm.loadParameters();
         }
         catch(SQLException e)
@@ -126,7 +128,8 @@ public class SetupServlet extends HttpServlet implements ConfigObserver, Servlet
     // @see javax.servlet.ServletContextListener#contextDestroyed(javax.servlet.ServletContextEvent)
     public void contextDestroyed(ServletContextEvent arg0)
     {
-        ConnectionServer.dispose();        
+        ConnectionServer.dispose();
+        SCMDThreadManager.joinAll();
     }
 
 }

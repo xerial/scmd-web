@@ -33,6 +33,7 @@ import lab.cb.scmd.web.bean.GroupViewForm;
 import lab.cb.scmd.web.common.Cell;
 import lab.cb.scmd.web.common.DataSheetType;
 import lab.cb.scmd.web.common.SCMDConfiguration;
+import lab.cb.scmd.web.common.SCMDThreadManager;
 import lab.cb.scmd.web.common.StainType;
 import lab.cb.scmd.web.image.ImageCache;
 import lab.cb.scmd.web.table.ColLabelIndex;
@@ -220,7 +221,7 @@ public class GroupViewAction extends Action
             table.addRow(row);
         }
         PhotoClippingProcess photoClippingProcess = new PhotoClippingProcess(imageCache, cellsInThePage, view.getPhotoType(), new int[] { sheetForm.getStainType() } );
-        photoClippingProcess.process();
+        SCMDThreadManager.addTask(photoClippingProcess);
         
         table.decollateCol(0, new StyleDecollator("title"));
         table.decollateCol(0, new AttributeDecollator("width", "40"));

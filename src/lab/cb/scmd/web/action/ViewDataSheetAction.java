@@ -46,6 +46,7 @@ import lab.cb.scmd.web.common.Cell;
 import lab.cb.scmd.web.common.DataSheetType;
 import lab.cb.scmd.web.common.PhotoType;
 import lab.cb.scmd.web.common.SCMDConfiguration;
+import lab.cb.scmd.web.common.SCMDThreadManager;
 import lab.cb.scmd.web.common.StainType;
 import lab.cb.scmd.web.image.ImageCache;
 import lab.cb.scmd.web.image.SCMDImageServer;
@@ -166,7 +167,8 @@ public class ViewDataSheetAction extends Action {
         }
         
         PhotoClippingProcess photoClippingProcess = new PhotoClippingProcess(imageCache, cellsInTheDisplay, view.getPhotoType(), StainType.getStainTypes());
-        photoClippingProcess.process();
+        SCMDThreadManager.addTask(photoClippingProcess);
+
         
         table.appendToBottom(table.getRow(0));
         table.removeCol(StainType.STAIN_MAX); // cell_local_idÇ…ëŒâûÇ∑ÇÈçsÇçÌèú

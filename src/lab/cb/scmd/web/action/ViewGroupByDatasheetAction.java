@@ -33,6 +33,7 @@ import lab.cb.scmd.web.bean.GroupByDatasheetForm;
 import lab.cb.scmd.web.common.Cell;
 import lab.cb.scmd.web.common.DataSheetType;
 import lab.cb.scmd.web.common.SCMDConfiguration;
+import lab.cb.scmd.web.common.SCMDThreadManager;
 import lab.cb.scmd.web.common.StainType;
 import lab.cb.scmd.web.image.ImageCache;
 import lab.cb.scmd.web.table.ColLabelIndex;
@@ -138,7 +139,7 @@ public class ViewGroupByDatasheetAction extends Action
             }
 
             PhotoClippingProcess photoClippingProcess = new PhotoClippingProcess(imageCache, cellsInTheDisplay, view.getPhotoType(), StainType.getStainTypes());
-            photoClippingProcess.process();
+            SCMDThreadManager.addTask(photoClippingProcess);
             
             for (int i = 0; i < StainType.STAIN_MAX; i++)
             {
