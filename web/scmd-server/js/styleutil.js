@@ -13,9 +13,12 @@ function closeAllMenu()
 function nodeContains(a, b)
 {
 // Return true if node a contains node b.
-	while (b.parentNode)
-		if ((b = b.parentNode) == a)
-			return true;
+	if(b)
+	{
+		while (b.parentNode)
+			if ((b = b.parentNode) == a)
+				return true;
+	}
 	return false;
 }
 
