@@ -10,6 +10,7 @@
 
 package lab.cb.scmd.web.image;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -136,8 +137,10 @@ public class Plot2DServlet extends HttpServlet
         
         double x_max = stat.getMaxValue(colIndex.getVerticalIterator("p1"));
         double x_min = stat.getMinValue(colIndex.getVerticalIterator("p1"));
+        double x_ave = stat.calcAverage(colIndex.getVerticalIterator("p1"));
         double y_max = stat.getMaxValue(colIndex.getVerticalIterator("p2"));
         double y_min = stat.getMinValue(colIndex.getVerticalIterator("p2"));
+        double y_ave = stat.calcAverage(colIndex.getVerticalIterator("p2"));
         
 //        xmlout.selfCloseTag("rect", new XMLAttribute("x", "0")
 //                            .add("y", "0")
@@ -146,6 +149,7 @@ public class Plot2DServlet extends HttpServlet
 //                            .add("style", "fill:white; stroke:none;"));
         g.setColor(new Color(0xFFFFFF));
         g.fillRect(0, 0, IMAGEWIDTH, IMAGEWIDTH);
+        
         g.setColor(new Color(0x90C0E0));
         
         LinkedList<Pair<String, Point>> selectedORFPointList = new LinkedList<Pair<String, Point>>();
@@ -188,6 +192,16 @@ public class Plot2DServlet extends HttpServlet
             g.setColor(plotColor.getColor());
             g.fillOval(point.x - 2, point.y - 2, 5, 5);
         }
+
+        // average line
+        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);       
+        g.setColor(new Color(0x90F0C0));
+        g.setComposite(ac);
+        int x_ave_axis = (int) (x_ave * IMAGEWIDTH / x_max);
+        int y_ave_axis = (int) (IMAGEWIDTH - (y_ave * IMAGEWIDTH / y_max));        
+        g.drawLine(x_ave_axis, 0, x_ave_axis, IMAGEWIDTH);
+        g.drawLine(0, y_ave_axis, IMAGEWIDTH, y_ave_axis);
+
 //            xmlout.selfCloseTag("rect", new XMLAttribute("x", Integer.toString(t_x-2))
 //                                .add("y", Integer.toString(t_y-2))
 //                                .add("width", Integer.toString(5))

@@ -23,8 +23,9 @@ import org.apache.struts.action.ActionMapping;
 public class DrawTeardropForm extends ActionForm
 {
     int paramID = 221;
-    double rangeBegin = 0;
-    double rangeEnd = 0;
+    double rangeBegin = -1;
+    double rangeEnd = -1;
+    String orientation = "";
     
     /**
      * 
@@ -68,6 +69,16 @@ public class DrawTeardropForm extends ActionForm
     public void setRangeEnd(double rangeEnd)
     {
         this.rangeEnd = rangeEnd;
+    }
+    
+    
+    public String getOrientation()
+    {
+        return orientation;
+    }
+    public void setOrientation(String orientation)
+    {
+        this.orientation = orientation;
     }
 }
 

@@ -87,12 +87,16 @@ public class DrawTeardropAction extends Action
             tp.setColor(selection.getPlotColor(orf).getColor());
         }
 
-        teardrop.setOrientation(Teardrop.Orientation.horizontal);
+        if(input.getOrientation().equals("vertical"))
+            teardrop.setOrientation(Teardrop.Orientation.vertical);
+        else
+            teardrop.setOrientation(Teardrop.Orientation.horizontal);
         BufferedImage teardropImage  = null;
         try
         {
             teardropImage = teardrop.drawImage(plotList); 
-            teardrop.drawRange(teardropImage, input.getRangeBegin(), input.getRangeEnd());
+            if(input.getRangeBegin() > 0)
+                teardrop.drawRange(teardropImage, input.getRangeBegin(), input.getRangeEnd());
             response.setContentType("image/png");
             ImageIO.write(teardropImage, "png", response.getOutputStream());        
         }
