@@ -156,7 +156,7 @@ public class SearchSimilarShapeAction extends Action {
             String keyName = (String)it.next();
             ParamPair pair = new ParamPair();
             pair.setGroupid(groupid);
-            if (keyName.equals("growthDirection")) {
+            if (shape.getAreaRatio() > 0.0 && keyName.equals("growthDirection")) {
                 pair.setParamid(34);
                 pair.setValue((Double)argMap.get("growthDirection"));
                 pair.setWeight(shape.getWeightGrowthDirection());
@@ -164,7 +164,7 @@ public class SearchSimilarShapeAction extends Action {
                 pair.setParamid(31);
                 pair.setValue((Double)argMap.get("longAxis"));
                 pair.setWeight(shape.getWeightLongAxis());
-            } else if (keyName.equals("neckPosition")) {
+            } else if (shape.getAreaRatio() > 0.0 && keyName.equals("neckPosition")) {
                 pair.setParamid(33);
                 pair.setValue((Double)argMap.get("neckPosition"));
                 pair.setWeight(shape.getWeightNeckPosition());

@@ -55,6 +55,8 @@ public class MorphologicalSearch {
         for(int i = 0; i < paramSets.length; i++ ) {
             ps[0] = paramSets[i]; 
             Table groupAvgSDTable = tableQuery.getGroupAvgSDTable(ps);
+            if( groupAvgSDTable.getRowSize() <= 0 )
+                continue;
             double avg = Double.parseDouble(groupAvgSDTable.get(1, 2).toString());
             double sd = Double.parseDouble(groupAvgSDTable.get(1, 3).toString());
             if( avg != 0.0 )
