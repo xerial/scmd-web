@@ -113,7 +113,7 @@ public class ViewORFTeardropAction extends Action
             ParamUserSelection paramSelection = SCMDSessionManager.getParamUserSelection(request);            
             Set<Integer> paramIDSet = paramSelection.getOrfParamSelection();
             if(paramIDSet.isEmpty())
-                return mapping.findForward("success");
+                return mapping.findForward("selection");
             sql = SQLExpression.assignTo(
                     "select id, name, displayname, shortname, systematicname from $1 where scope='orf' and datatype = 'num' and id in ($2)",
                     SCMDConfiguration.getProperty("DB_PARAMETERLIST", "parameterlist"),

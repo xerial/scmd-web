@@ -19,8 +19,8 @@
 
 <jsp:useBean id="selection" scope="request" class="lab.cb.scmd.web.bean.ORFSelectionForm"/>
 
-<p class="notice"> No ORF parameter is selected.
-<br> Please select some ORF parameters in the
+<p class="notice"> No cell parameter is selected.
+<br> Please select some cell parameters in the
 <a href="CustomizeView.do">My Parameter List</a> page.
 </p>
 

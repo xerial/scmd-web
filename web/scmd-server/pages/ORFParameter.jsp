@@ -21,11 +21,6 @@
 <p class="title">Sortable ORF Parameter Sheet </p>
 
 <html:form action="ViewSelection.do" method="GET">
-<table width="750">
-<tr><td>
-<p align="right"><html:submit value="add selections"/></p>
-</td></tr>
-</table>
 
 <logic-nonel:present name="targetParam" scope="request">
 <table>
@@ -53,9 +48,15 @@
 </td>
 </tr>
 </table>
-<p class="header"> order by ${targetParam.name} </p>
+<%--<span class="header"> order by ${targetParam.name} </span>--%>
 </logic-nonel:present>
+<span class="memo"> click the labels in order to sort the table</span>
 
+<table width="750">
+<tr><td>
+<p align="right"><html:submit value="add selections"/></p>
+</td></tr>
+</table>
 
 <span class="small">
 <%
@@ -94,7 +95,14 @@ format.
 <td></td>
 <%--<td class="small" align="center"> ${gene.aliasString} </td> --%>
 <logic:iterate id="p" name="paramList" scope="request" type="lab.cb.scmd.web.sessiondata.MorphParameter">
-<td align="right"><bean:write name="gene" property="parameter(${p.name})"/></td>
+<logic-nonel:equal name="p" property="id" value="${sortspec}">
+<td align="right" bgcolor="#F0D0D0">
+</logic-nonel:equal>
+<logic-nonel:notEqual name="p" property="id" value="${sortspec}">
+<td align="right">
+</logic-nonel:notEqual>
+<bean:write name="gene" property="parameter(${p.name})"/>
+</td>
 </logic:iterate>
 </tr>
 <tr bgcolor="#F0F0E0" height="15">

@@ -51,6 +51,7 @@ import lab.cb.scmd.web.common.Cell;
 import lab.cb.scmd.web.common.DataSheetType;
 import lab.cb.scmd.web.common.PhotoType;
 import lab.cb.scmd.web.common.SCMDConfiguration;
+import lab.cb.scmd.web.common.SCMDSessionManager;
 import lab.cb.scmd.web.common.SCMDThreadManager;
 import lab.cb.scmd.web.common.StainType;
 import lab.cb.scmd.web.image.ImageCache;
@@ -90,13 +91,9 @@ public class ViewDataSheetAction extends Action {
     	
     	CellViewerForm view = (CellViewerForm) form;
         // session‚ðŽæ“¾
-        HttpSession session = request.getSession(true);
-        ParamUserSelection userSelection = (ParamUserSelection) session.getAttribute("paramSelection");
-        if( userSelection == null )
-            userSelection = new ParamUserSelection();
+        ParamUserSelection userSelection = SCMDSessionManager.getParamUserSelection(request);
 
-
-    	_logic.handleAction(view, request);
+        _logic.handleAction(view, request);
     	CellList cellList = _logic.loadCellList(view);
     	view.loadImage();
     	
@@ -104,6 +101,8 @@ public class ViewDataSheetAction extends Action {
         List<MorphParameter> columns = null;
         if( view.getSheetType() == DataSheetType.SHEET_CUSTOM ) {
             columns = userSelection.getCellParamInfo();
+            if(columns.size() == 0)
+                return mapping.findForward("selection");
         } else {
             columns = getColumnLabels(view.getSheetType());
         }

@@ -8,7 +8,12 @@
 <%@ attribute name="orf" required="false"%>
 
 <logic:equal name="orf" value="">
+<logic:equal name="view" value="">
 <c:set var="orf" value="yor202w"/>
+</logic:equal>
+<logic:notEqual name="view" value="">
+<c:set var="orf" value="${view.orf}"/>
+</logic:notEqual>
 </logic:equal>
 
 <script language="javascript" src="js/styleutil.js"></script>

@@ -270,6 +270,7 @@
         	input="/error.jsp"
         >
         	<forward name="success" path="/pages/DataSheet.jsp"/>
+        	<forward name="selection" path="/pages/NoCellParameter.jsp"/>
         	<forward name="failure" path="/error.jsp"/>
         </action>
 
@@ -409,6 +410,7 @@
 	    		type="lab.cb.scmd.web.action.ViewORFTeardropAction"
 	    		input="/error.jsp">
 	    	<forward name="success" path="/pages/ORFTeardrop.jsp"/>
+			<forward name="selection" path="/pages/NoORFParameter.jsp" />			
    		</action>
 		
 		<action path="/ParamSheet"

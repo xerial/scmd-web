@@ -20,13 +20,17 @@
 	stdname="${gene.standardName}" annot="${gene.annotation}" 
 	title="Individual Cell Datasheet" />
 
+<% if( view.getSheetType() == 4 ) { %>
+<table><tr><td width="500"></td>
+<td class="tool" width="150" align="right"> <a href="CustomizeView.do">customize parameters</a></td>
+</tr></table>
+<% } %>
+
 <table><tr><td>
 <scmd-tags:pageMoveButton actionURL="ViewDataSheet.do" currentPage="${view.photoPage}" maxPage="${view.photoPageMax}"/>
 </td>
-<% if( view.getSheetType() == 4 ) { %>
-<td class="tool" width="150" onMouseOver="switchStyle(this,'tool_on')" onMouseOut="switchStyle(this,'tool')"> <a href="CustomizeView.do">customize parameters</a></td>
-<% } %>
 </tr></table>
+
 
 <%-- データシート切り替えTab --%>
 <table border="0" cellspacing="0" cellpadding="0">
