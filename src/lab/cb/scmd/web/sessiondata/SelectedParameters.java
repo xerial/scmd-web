@@ -9,6 +9,7 @@
 //--------------------------------------
 package lab.cb.scmd.web.sessiondata;
 
+import java.util.TreeSet;
 import java.util.Vector;
 
 /**
@@ -18,8 +19,8 @@ import java.util.Vector;
  */
 public class SelectedParameters
 {
-    private Vector<Integer> _selectedCellParamID = new Vector<Integer>();
-    private Vector<Integer> _selectedORFParamID = new Vector<Integer>();
+    private TreeSet<Integer> _selectedCellParamID = new TreeSet<Integer>();
+    private TreeSet<Integer> _selectedORFParamID = new TreeSet<Integer>();
 
     /**
      * 
@@ -29,8 +30,15 @@ public class SelectedParameters
     }
     
     
+    public void addCellParameter(int paramID)
+    {
+        _selectedCellParamID.add(paramID);
+    }
+    public void addORFParameter(int paramID)
+    {
+        _selectedORFParamID.add(paramID);
+    }
     
-
 }
 
 

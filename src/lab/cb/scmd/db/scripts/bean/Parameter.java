@@ -18,6 +18,7 @@ public class Parameter
 {
     private int id;
     private String name;
+    private String shortName;
     
     /**
      * 
@@ -47,6 +48,16 @@ public class Parameter
     public void setName(String name)
     {
         this.name = name;
+    }
+    
+    
+    public String getShortname()
+    {
+        return shortName;
+    }
+    public void setShortname(String shortName)
+    {
+        this.shortName = shortName;
     }
 }
 
