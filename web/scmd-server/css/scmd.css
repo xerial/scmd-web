@@ -43,7 +43,7 @@ a:visited { color: #666666; }
 	color: white;
 	font-size: 9pt;
 	background: #0056AD;	
-	margin-top: 0pt;	
+	margin-top: 0pt;
 	position: absolute;
 	padding: 0 0 0 0;
 }
@@ -53,7 +53,8 @@ a:visited { color: #666666; }
 	display: block;
 	width: 100%;
 	list-style: none;
-	background: #0056AD;		
+	background: #0056AD;
+	margin-left: 0pt;			
 	margin: 0;
 	padding: 0;
 }
