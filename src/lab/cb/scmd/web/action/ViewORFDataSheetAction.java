@@ -65,7 +65,7 @@ public class ViewORFDataSheetAction extends Action
                 SCMDConfiguration.getProperty("DB_PARAMETERLIST", "parameterlist"), paramID);        
         if(param == null)
             return mapping.findForward("select_parameter");  // parameter‚Ì‘I‘ð‚µ‚È‚¨‚µ
-        request.setAttribute("param", param);        
+        request.setAttribute("para", param);        
         
         // count available orfs 
         Number count = (Number) ConnectionServer.query(new ScalarHandler("count"),
@@ -85,7 +85,7 @@ public class ViewORFDataSheetAction extends Action
             currentPage = maxPage % numORFsInAPage;
         
         PageStatus pageStatus = new PageStatus(currentPage+1, maxPage);    
-        request.setAttribute("page", pageStatus);
+        request.setAttribute("pageStatus", pageStatus);
         
         // data‚ÌŽæ“¾
         List<ORFParamData> orfData = 

@@ -8,37 +8,66 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <jsp:useBean id="view"  scope="session" class="lab.cb.scmd.web.bean.CellViewerForm"/>
-<jsp:useBean id="param"  scope="request" class="lab.cb.scmd.web.sessiondata.MorphParameter"/>
+<jsp:useBean id="para"  scope="request" class="lab.cb.scmd.web.sessiondata.MorphParameter"/>
 <jsp:useBean id="range"  scope="request" class="lab.cb.scmd.web.bean.Range"/>
+<jsp:useBean id="pageStatus"  scope="request" class="lab.cb.scmd.db.common.PageStatus"/>
+<jsp:useBean id="selection" scope="request" class="lab.cb.scmd.web.bean.ORFSelectionForm"/>
 
-<scmd-base:header title="Teardrop View of ${view.orf}" css="/css/tabsheet.css"/>
+<scmd-base:header title="Parameter Sheet of ${para.shortName}" css="/css/tabsheet.css"/>
 <body>
 <center>
 <scmd-tags:menu  toolbar="on" searchframe="on"/>
 <scmd-tags:linkMenu orf="${view.orf}" logo="on"/> 
 
-<scmd-base:pagemover page="ORFDataSheet.do" target="<%= Integer.toString(param.getId())%>" currentPage="${page.currentPage}" maxPage="${page.maxPage}"/>
+<html:form action="ViewSelection.do" method="GET">
+<table width="750">
+<tr><td>
+<p align="right"><html:submit value="add selections"/></p>
+</td></tr>
+</table>
+
+
+
 
 <table>
 <tr>
-<td><img src="DrawTeardrop.do?paramID=<%= param.getId()%>&rangeBegin=${range.min}&rangeEnd=${range.max}"/></td>
+<td width="150"><img src="DrawTeardrop.do?paramID=${para.id}&rangeBegin=${range.min}&rangeEnd=${range.max}"/></td>
+<td>
+<table>
+<tr><td class="small">Parameter Name:</td><td class="genename"><%= para.getName()%></td></tr>
+<tr><td class="small">Short Name:</td><td class="small"><%= para.getShortName()%></td></tr>
+<tr><td class="small">Stain Type:</td><td class="small"><%= para.getStainType()%></td></tr>
+<tr><td class="small">Nucleus Status:</td><td class="small"><%= para.getNucleusStatus() %></td></tr>
+<tr><td class="small">Parameter Type:</td><td class="small"><%= para.getParameterType() %></td></tr>
+<tr><td class="small">Description:</td><td class="small"><%= para.getDisplayname() %></td></tr>
+</table>
+</td>
+<td>
+<% String link = "paramfig.png?param=" + para.getName(); %>
+<img id="param" class="paramview" width="250" height="175" src="<%= link %>">
+</td>
 </tr>
 </table>
 
+<scmd-base:pagemover page="ORFDataSheet.do" target="<%= Integer.toString(para.getId())%>" currentPage="${pageStatus.currentPage}" maxPage="${pageStatus.maxPage}"/>
+
 <table class="datasheet">
 <tr class="sheetlabel">
-<td align="center">ORF</td>
-<td align="center" title="<bean:write name="param" property="displayname"/>">
-<bean:write name="param" property="shortName"/>
+<td align="center" colspan="2">ORF</td>
+<td align="center" title="<bean:write name="para" property="displayname"/>">
+<bean:write name="para" property="shortName"/>
 </td>
 </tr>
 <logic:iterate id="data" name="orfData" scope="request" type="lab.cb.scmd.web.container.ORFParamData">
 <tr>
+<td align="left" width="15"><p align="center"><html:multibox name="selection" property="inputList" value="${data.orf}"/></p></td>
 <td class="orf"><a href="ViewStats.do?orf=${data.orf}">${data.orf}</a></td>
 <td>${data.data}</td>
 </tr>
 </logic:iterate>
 </table>
+
+</html:form>
 
 </center>
 </body>

@@ -38,7 +38,7 @@ public class UserSelection
     
     public void addSelection(String orf)
     {
-        _selection.add(orf.toLowerCase());
+        _selection.add(orf.toUpperCase());
     }
     
     public Set<String> getSelection()
@@ -49,7 +49,7 @@ public class UserSelection
     
     public void removeSelection(String orf)
     {
-        _selection.remove(orf.toLowerCase());
+        _selection.remove(orf.toUpperCase());
     }
     
     public Set<String> orfSet()
@@ -85,7 +85,7 @@ public class UserSelection
     
     public PlotColor getPlotColor(String orf)
     {        
-        return PlotColor.getPlotColor(_colorMap.get(orf.toLowerCase()));
+        return PlotColor.getPlotColor(_colorMap.get(orf.toUpperCase()));
     }
     
     /**

@@ -20,7 +20,7 @@ public class ViewORFDataSheetForm extends ActionForm
 {
     static public enum Order { asc, desc } 
     int paramID = 221;
-    int page = 0;    
+    int page = 1;    
     Order order = Order.asc;
     
 

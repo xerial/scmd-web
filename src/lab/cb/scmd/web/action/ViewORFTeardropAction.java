@@ -221,9 +221,11 @@ public class ViewORFTeardropAction extends Action
             TreeMap<String, String> imgArg = new TreeMap<String, String>();
             imgArg.put("imageID", imageID);
             imgArg.put("encoding", "png"); 
+            
             ImageElement img = new ImageElement("scmdimage.png", imgArg);
-            img.setProperty("alt", "average = " + format.format(teardrop.getAverage()));
-            teardropRow.add(img);
+            img.setProperty("alt", "average = " + format.format(teardrop.getAverage()));            
+            img.setProperty("border", "0");
+            teardropRow.add(new Link("ORFDataSheet.do?paramID=" + paramID, img));
         }
         
         SCMDThreadManager.addTask(new DrowTeardropTask(teardropList, imageCache));
