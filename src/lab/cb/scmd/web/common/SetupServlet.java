@@ -21,7 +21,7 @@ import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.web.formbean.ViewCustomizeForm;
 
 /**
- * Tomcat
+ * web applicationの起動時（再起動時にも）最初に一回だけ実行する処理をまとめたクラス
  * @author leo
  *
  */
