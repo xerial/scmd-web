@@ -32,7 +32,7 @@ public class ViewORFParameterForm extends ActionForm
 
     String format = "";
     Integer[] paramID = new Integer[] {}; // データシートに表示するparameter ID
-    ColumnType columnType = ColumnType.input;
+    ColumnType columnType = ColumnType.custom;
     int page = 0;
     
     
@@ -51,7 +51,7 @@ public class ViewORFParameterForm extends ActionForm
     }
     public void setPage(int page)
     {
-        this.page = page;
+        this.page = page - 1;
     }
     
     
@@ -92,7 +92,11 @@ public class ViewORFParameterForm extends ActionForm
     /**
      * @return Returns the columnType.
      */
-    public ColumnType getColumnType()
+    public String getColumnType()
+    {
+        return columnType.name();
+    }
+    public ColumnType columnType()
     {
         return columnType;
     }

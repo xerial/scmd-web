@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+
+<%@ taglib prefix="scmd-base" uri="http://scmd.gi.k.u-tokyo.ac.jp/taglib/scmd-base" %>
+<%@ taglib prefix="bean" uri="/WEB-INF/struts-bean.tld" %>
+<%@ taglib prefix="html" uri="/WEB-INF/struts-html-el.tld" %>
+<%@ taglib prefix="logic" uri="/WEB-INF/struts-logic-el.tld" %>
+<%@ taglib prefix="scmd-tags" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<jsp:useBean id="view"  scope="session" class="lab.cb.scmd.web.bean.CellViewerForm"/>
+<jsp:useBean id="pageStatus"  scope="request" class="lab.cb.scmd.db.common.PageStatus"/>
+<jsp:useBean id="paramIDs" scope="request" type="java.util.List"/>
+
+<scmd-base:header title="ORF Parameter Sheet" css="/css/tabsheet.css"/>
+<body>
+<center>
+<scmd-tags:menu  toolbar="on" searchframe="on"/>
+<scmd-tags:linkMenu logo="on"/>
+
+<p class="title">ORF Parameter Sheet </p>
+
+<html:form action="ViewSelection.do" method="GET">
+<table width="750">
+<tr><td>
+<p align="right"><html:submit value="add selections"/></p>
+</td></tr>
+</table>
+<span class="small">
+<%
+	int numParam = paramIDs.size();
+	String pid = "";
+	for(java.util.Iterator it = paramIDs.iterator(); it.hasNext(); )
+		pid += "paramID=" + it.next().toString() + "&";
+	pid += "columnType=input";
+%>
+<scmd-base:pagemover page="ViewORFParameter.do" parameter="<%= pid%>" target="${group.groupName}" currentPage="<%= pageStatus.getCurrentPage() %>" maxPage="<%= pageStatus.getMaxPage() %>"/>
+</span>
+<span class="small">Download all data as 
+[<a href="ViewORFParameter.do?<%=pid%>&format=xml"> XML </a> ]
+[<a href="ViewORFParameter.do?<%=pid%>&format=tab"> Tab-separated Sheet</a> ]
+</span>
+ 
+<table class="datasheet" cellpadding="0" cellspacing="0">
+<tr>
+<td class="sheetlabel" align="center">ORF</td>
+<td class="sheetlabel" align="center">Std. Name</td>
+<%-- <td width="150" align="center">Aliases</td> --%>
+<td></td>
+<logic:iterate id="p" name="paramNames" scope="request" type="java.lang.String">
+<td class="sheetlabel" align="center" >${p}</td>
+</logic:iterate>
+</tr>
+<logic:iterate id="gene" name="geneList" scope="request" type="lab.cb.scmd.web.bean.YeastGene">
+<tr>
+<td>
+<html:multibox name="selection" property="inputList" value="<%= gene.getOrf().toLowerCase()%>"/>
+<span class="orf"><html:link page="/ViewStats.do?orf=${yeastGene.orf}"> ${gene.orf} </html:link> </span>
+</td>
+<td class="genename" align="center">${gene.standardName}</td>
+<td></td>
+<%--<td class="small" align="center"> ${gene.aliasString} </td> --%>
+<logic:iterate id="p" name="paramNames" scope="request" type="java.lang.String">
+<td align="right"><bean:write name="gene" property="parameter(${p})"/></td>
+</logic:iterate>
+</tr>
+<tr bgcolor="#F0F0E0" height="15">
+<td colspan="<%= 4 + numParam %>" width="600" class="annotation">${gene.annotation}</td>
+</tr>
+</logic:iterate>
+</table>
+
+</html:form>
+</center>
+<scmd-base:footer/>

@@ -33,6 +33,7 @@ public class PageMover extends TagSupport {
     int maxPage = 1;
     String page = ".";
     String target = "";
+    String parameter = "";
     
     String name = null;
     String property = null;
@@ -119,6 +120,8 @@ public class PageMover extends TagSupport {
         {
             actionURL += "&target=" + target; 
         }
+        if(parameter.length() > 0)
+            actionURL += "&" + parameter;
         actionURL = ((HttpServletResponse) pageContext.getResponse()).encodeURL(actionURL);
         return actionURL;
     }
@@ -187,6 +190,11 @@ public class PageMover extends TagSupport {
     }
     public void setProperty(String property) {
         this.property = property;
+    }
+    
+    public void setParameter(String parameter)
+    {
+        this.parameter = parameter;
     }
 }
 

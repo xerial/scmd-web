@@ -22,6 +22,24 @@ public class SQLUtil
     static public enum QuotationType { none, singleQuote, doubleQuote }     
     static private String[] quotation = {"", "'", "\""}; 
     
+    
+    static private String separate(Collection list, String separator, QuotationType quotationType)
+    {
+        StringBuilder buffer = new StringBuilder();
+        int quoteType = quotationType.ordinal();
+        for(Object o : list)
+        {
+            buffer.append(quotation[quoteType]);
+            buffer.append(o.toString());
+            buffer.append(quotation[quoteType]);
+            buffer.append(separator);
+        }
+        if(buffer.length() >= separator.length())
+            return buffer.substring(0, buffer.length() - separator.length());
+        else
+            return "";        
+    }
+    
     /** 
      * list‚ğƒJƒ“ƒ}‚Å‹æØ‚Á‚½•¶š—ñ‚ğ•Ô‚·
      * 
@@ -31,19 +49,7 @@ public class SQLUtil
      */
     static public String commaSeparatedList(Collection list, QuotationType quotationType) 
     {
-        StringBuilder buffer = new StringBuilder();
-        int quoteType = quotationType.ordinal();
-        for(Object o : list)
-        {
-            buffer.append(quotation[quoteType]);
-            buffer.append(o.toString());
-            buffer.append(quotation[quoteType]);
-            buffer.append(", ");
-        }
-        if(buffer.length() >= 2 )
-            return buffer.substring(0, buffer.length() - 2);
-        else
-            return "";
+        return separate(list, ", ", quotationType);
     }
     
     /** 
@@ -62,6 +68,25 @@ public class SQLUtil
         return commaSeparatedList(v, quotationType);
     }
     
+    /** list‚ğseparator‚Å‹æØ‚Á‚½•¶š—ñ‚ğ•Ô‚·B
+     * @param list
+     * @param separator
+     * @param quotationType
+     * @return list‚ğseparator‚Å‹æØ‚Á‚½•¶š—ñ
+     */
+    static public String separatedList(Collection list, String separator, QuotationType quotationType)
+    {
+        return separate(list, separator, quotationType);
+    }
+    
+    static public String doubleQuote(String input)
+    {
+        return "\"" + input + "\""; 
+    }
+    static public String singleQuote(String input)
+    {
+        return "'" + input + "'";
+    }
     /**
      * 
      */

@@ -13,6 +13,7 @@ package lab.cb.scmd.web.bean;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,7 +44,8 @@ public class YeastGene
     List alias = new LinkedList();
 
     String annotation = null;
-
+    
+    TreeMap<String, Object> property = new TreeMap<String, Object>(); 
 
     /**
      * 
@@ -231,6 +233,23 @@ public class YeastGene
     public void setAnnotation(String annot)
     {
         annotation = annot;
+    }
+    
+    public void setAlias(String aliases)
+    {
+        String[] aliasList = aliases.split("\\|");
+        for(String a : aliasList)
+            this.addAlias(a);
+    }
+    
+    public void setParameter(String key, Object value)
+    {
+        property.put(key, value);
+    }
+    
+    public Object getParameter(String key)
+    {
+        return property.get(key);
     }
 }
 

@@ -18,10 +18,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.Vector;
 
-import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
-import org.xerial.util.Pair;
 
 import lab.cb.scmd.db.sql.SQLExpression;
 import lab.cb.scmd.util.table.AppendableTable;
@@ -203,11 +201,9 @@ public class ConnectionServer implements ConfigObserver
                 connection = _connectionHolder.poll();
             }
             
-            if(connection.isClosed())
-            {
-                // reset connection
+            // confirm the connection
+            if(connection == null || connection.isClosed())
                 connection = createNewConnection();
-            }
                     
             Object result = _queryRunner.query(connection, sql, rsh);
             // release connection

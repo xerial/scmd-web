@@ -12,7 +12,7 @@
 <body>
 <center>
 <scmd-tags:menu searchframe="on" toolbar="on"/>
-</center>
+
 <%@page import="lab.cb.scmd.web.bean.*"%>
 <%@page import="java.util.*"%>
 <%@page import="lab.cb.scmd.db.common.PageStatus"%>

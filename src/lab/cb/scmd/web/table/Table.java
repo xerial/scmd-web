@@ -280,12 +280,14 @@ public class Table implements TableElement
     }
 
     /**
-     * elemがableElementの要素ならそのまま返し、それ以外なら、elem.toStringの結果をStringElementに格納して返す
+     * elemがTableElementの要素ならそのまま返し、それ以外なら、elem.toStringの結果をStringElementに格納して返す
      * 
      * @param elem
      * @return
      */
     public static TableElement translate(Object elem) {
+        if(elem == null)
+            return _emptyElement;
         if(TableElement.class.isAssignableFrom(elem.getClass()))
         {
             return (TableElement) elem;
