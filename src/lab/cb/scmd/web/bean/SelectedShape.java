@@ -133,7 +133,7 @@ public class SelectedShape extends ActionForm
     }
     public void setSearchArgument()
     {
-        searchArgument = getImageArgument();
+        searchArgument = getImageArgument() + "&phase=" + phase;
     }
     
     
