@@ -53,7 +53,7 @@ href="http://scmd.gi.k.u-tokyo.ac.jp">http://scmd.gi.k.u-tokyo.ac.jp</a>
       <span class=title> Current Status </span>
 	</td>
   </tr> 
-  <tr> <td colspan=3 align=center class=time> Updated: Tuesday, June 29, 2004 20:55:37 PM JST (GMT +0900) </td>
+  <tr> <td colspan=3 align=center class=time> Updated: Wednesday, Mar 30, 2005 14:14:37 PM JST (GMT +0900) </td>
   </tr>
 <tr> 
  <td width="63%" height="22" class=item> Mutants analyzed:</td>
