@@ -7,6 +7,10 @@
 // $LastChangedBy$  
 
 usage: ant (-Dconf=build.properties)
+
+環境変数TOMCAT_HOMEを設定しておくこと。
+実行時には、CLASSPATHに、lib/catalina-ant.jar, lib/junit.jar, lib/svnant.jarが
+追加されていることが必要。
 -->
 <project name="SCMDWeb" default="default">
     <description>
@@ -106,7 +110,7 @@ usage: ant (-Dconf=build.properties)
 		    path="/${webapp.context.name}"/>		
 	</target>
 	
-	<target name="deploy" depends="war" description="deplay .war file into TOMCAT_HOME/${dir.deploy}">
+	<target name="deploy" depends="war,confirm.context" description="deplay .war file into TOMCAT_HOME/${dir.deploy}">
 
 	    <taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask">
 	    	<classpath>
@@ -135,12 +139,14 @@ usage: ant (-Dconf=build.properties)
 		</junit>
 	</target>
 	
-	<target name="install.junit">
-		<fail unless="junit.installed">
-			junit.jar is installed into ANT_HOME/lib since it is not found in there.
-			In order to make the junit library effective, please run the Ant again.
+	
+	<target name="confirm.context">
+		<available file="${dir.resources.tomcat}/META-INF/context.xml"  property="is.set.context"/>
+		<fail unless="is.set.context">
+			please edit	a file scmd-server/META-INF/context.xml after the model of "context.xml.sample"
 		</fail>
 	</target>
+	
 	
 	<target name="update">
 	   <svn username="scmd-dev">

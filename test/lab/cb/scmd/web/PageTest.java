@@ -33,7 +33,7 @@ public class PageTest extends TestCase
      */
     public void testPagesExist() throws Exception 
     {
-        String[] pagePath = {"", "about.jsp", "ViewPhoto.do", "ViewStats.do", "publication.jsp", "SelectShape.do", "ViewORFList.do"};
+        String[] pagePath = {"", "about.jsp", "ViewPhoto.do", "ViewStats.do", "publication.jsp", "SelectShape.do", "ViewORFList.do", "ViewDataSheet.do"};
         
         for(String path : pagePath)
         {
