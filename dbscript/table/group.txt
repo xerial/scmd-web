@@ -1,0 +1,22 @@
+1	C	no	nomal	no bud
+2	C	small	nomal	small bud
+3	C	medium	nomal	medium bud
+4	C	large	nomal	large bud
+5	C	complex	abnormal	too complex to process
+6	C	unknown	abnormal	
+7	D	A	nomal	A single nucleus (unbudded cell)
+8	D	A1	nomal	A single nucleus in mother cell (budded cell)
+9	D	A1B	nomal	A1 & B
+10	D	B	nomal	A single nucleus at bud neck
+11	D	C	nomal	Nuclei in both mother and daughter cell
+12	D	D	peculiar	Multi-nucleated mother cell
+13	D	E	peculiar	No nucleus is detected
+14	D	F	peculiar	A single nucleus in daughter cell (budded cel)
+15	D	unknown	abnormal	
+16	A	A	nomal	Delocalized (unbudded cell)
+17	A	B	nomal	Localized at bud size (unbudded cell)
+18	A	api	nomal	Hyperlocalized at bud tip (budded cell)
+19	A	iso	nomal	Localized at bud (budded cell)
+20	A	E	nomal	Delocalized (budded cell)
+21	A	F	nomal	Localized at bud neck (budded cell)
+22	A	unknown	abnormal	
