@@ -31,16 +31,18 @@ You can select all menues described below from the above drop-down menu bar.
 </td>
 </table>
 
-  <table width="700" border="0" class="helpmenu">
+  <table width="650" border="0" class="helpmenu">
     <tr> 
       <td colspan="2" class="menubar">Yeast Mutant</td>
     </tr>
     <tr> 
       <td> 
         <ul>
-	      <li><a href="ViewORFList.do">Yeast Mutant</a></li>
+	      <li><a href="ViewORFList.do">Yeast Mutant</a>
 		  <ul>Display a list of yeast mutants available in SCMD. </ul>
+		  </li>
         </ul>
+        
       </td>
       <td><img src="image/yeastmutant.png" align="middle"/></td>
     </tr>
@@ -51,8 +53,8 @@ You can select all menues described below from the above drop-down menu bar.
       <td valign="top"> 
         <ul>
           <li><a href="ViewPhoto.do?orf=${orf}"> Photo Viewer </a>
-          <ul> Display micrographs of yeast mutants.   
-          <img src="image/photoviewer.png" align="center"/> 
+          <ul> Display micrographs of yeast mutants stained with ConA, DAPI and Rh-Ph.
+		 <p align="center">      <img src="image/photoviewer.png" align="center"/>  </p>   
           </ul>
 		  </li>          
                    
@@ -61,18 +63,24 @@ You can select all menues described below from the above drop-down menu bar.
         </td>
       <td valign="top"> 
         <ul>
-                  <li><a href="ViewDataSheet.do?orf=${orf}"> Individual Cell Datasheet</a> </li>
+                  <li><a href="ViewDataSheet.do?orf=${orf}"> Individual Cell Datasheet</a> 
               <ul> Show individual cells and their morphological prameters (cell 
                 parameters) in the micrographs.
   <img src="image/indivcell.png" align="center"/> 
                 </ul>
-        
+                </li>
+         </ul>
+       </td>
+       </tr>
+       <tr><td colspan="2" align="center">
+		 <ul>       
                   <li> Cells Grouped by <html:link page="/ViewGroupBySheet.do?stainType=0&orf=${orf}">
                            bud size </html:link>, <html:link page="/ViewGroupBySheet.do?stainType=1&orf=${orf}"> 
             nucleus location </html:link>, <html:link page="/ViewGroupBySheet.do?stainType=2&orf=${orf}"> 
-            actin distribution</html:link> </li>
+            actin distribution</html:link> 
               <ul> Show cells grouped by morphological conditions such as bud size, 
                 nucleus location and action distributions. <img src="image/groupcell.png"  /> </ul>
+                </li>
         </ul>
       </td>
     </tr>
@@ -106,17 +114,19 @@ You can select all menues described below from the above drop-down menu bar.
       <td  valign="top"> 
         <ul>
           <li><a href="ORFTeardrop.do?orf=${orf}">Teardrop View of ORF Parameters 
-            </a> </li>
+            </a> 
             <ul>
             Display values and statistical information (average, distribution, 
             etc.) of morphological parameters of an ORF at a glance. By clicking the teardrop images, you can see their <a href="ViewORFParameter.do">ORF Parameter Datasheet</a>.
               <p align="center">
                     <img src="image/orfterdrop.png" align="center"/> </p>
+	                    
             </ul>
+            </li>
           </ul>
 
         <ul>
-          <li><a href="View2DPlot.do?orfType=current">2D Plot</a></li>
+          <li><a href="View2DPlot.do?orfType=current">2D Plot</a>
           <ul>
               Plot pairs of two morphological parameters of all yeast mutants 
                 on a two dimensional plane. 
@@ -124,24 +134,20 @@ You can select all menues described below from the above drop-down menu bar.
                 
                 
 	      </ul>
+	      </li>
         </ul>
         <ul>
         <li>Teardrop View of Average Shapes Grouped by 
-            <ul>
-              <li><html:link page="/ViewGroupByTearDrop.do?stainType=0&orf=${orf}"> 
-                bud size </html:link></li>
-              <li><html:link page="/ViewGroupByTearDrop.do?stainType=1&orf=${orf}"> 
-                nucleus location</html:link></li>
-              <li><html:link page="/ViewGroupByTearDrop.do?stainType=2&orf=${orf}"> 
-                actin distribution </html:link></li>
-			</ul>
-          </li>
+              <html:link page="/ViewGroupByTearDrop.do?stainType=0&orf=${orf}"> bud size </html:link>, 
+			<html:link page="/ViewGroupByTearDrop.do?stainType=1&orf=${orf}">nucleus location</html:link> and
+             <html:link page="/ViewGroupByTearDrop.do?stainType=2&orf=${orf}"> 
+                actin distribution </html:link>
           <ul>
                       Show average shapes and teardrop views of mutants grouped by morphological 
               conditions 
               <p align="center">
                       <img src="image/teardropgroup.png" width="334" height="302" align="center"/></p>  </ul>  
-          
+          </li>
 		</ul>
 	        
         
@@ -164,12 +170,12 @@ You can select all menues described below from the above drop-down menu bar.
       </td>
       <td valign="top"> 
         <ul>
-          <li><a href="CustomizeView.do"> My Parameter List</a></li>
+          <li><a href="CustomizeView.do"> My Parameter List</a>
             <ul>
             By selecting several morphological parameters related to genes(ORFs) or indivial cells, you can customize displayed parameters in the <a href="ViewORFParameter.do">ORF Parameter Datasheet</a>, <a href="ORFTeardrop.do">Teardrop View</a> and <a href="ViewDataSheet.do">Indivisual Cell Parameter Datasheet</a>.
            <img src="image/myparm.png" align="center"/> 
            </ul>
-
+	     </li>
         </ul>
 
       </td>
