@@ -40,18 +40,6 @@ int imageWidth = 696 * view.getMagnification() / 100 + 4;
 int blankTabSize = imageWidth - 70 * 3;
 %>
 
-
-<table width="<%=imageWidth + 10%>"> 
-
-<tr>
-<td>
-<p align="right">
-<scmd-tags:selectorf orf="${gene.orf}"/>
-</p>
-</td>
-</tr>
-</table>
-
 <scmd-tags:linkMenu orf="${gene.orf}" logo="on"/> 
 <scmd-tags:orfInfo  orf="${gene.orf}" 
 	stdname="${gene.standardName}" annot="${gene.annotation}" 
