@@ -36,6 +36,7 @@ public interface TableQuery
      * 各細胞の形態パラメータのテーブルを得る
      */
     public Table getShapeDataSheet(String strain, int photoID, int cellID, int sheetType);
+    public Table getShapeDataSheet(String orf, int photoNum, String[] columnName);
 
     /*
      * bud size毎の平均値 budSize no small medium large longAxis 30 34 ... roundness

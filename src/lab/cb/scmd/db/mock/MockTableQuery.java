@@ -111,6 +111,10 @@ public class MockTableQuery extends MockQueryAPI implements TableQuery
         return row;
     }
 
+    public Table getShapeDataSheet(String orf, int photoNum, String[] columnName){
+        return null;
+    }
+
     Double getRandom(double min, double max) {
         return new Double(min + (rand.nextDouble() * (max - min)));
     }

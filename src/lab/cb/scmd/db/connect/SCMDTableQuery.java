@@ -82,16 +82,28 @@ public class SCMDTableQuery implements TableQuery {
 	/* (non-Javadoc)
 	 * @see lab.cb.scmd.db.common.TableQuery#getShapeDataSheet(java.lang.String, int)
 	 */
-	public Table getShapeDataSheet(String strain, int photoID, int sheetType) {
-		strain = strain.toUpperCase();
-		Table table;
-		try {
-			table = _connection.getDataSheet(strain, photoID, DataSheetType.getParameters(sheetType));
-		} catch (InvalidSQLException e) {
-			return null;
-		}
+    public Table getShapeDataSheet(String strain, int photoID, int sheetType) {
+        strain = strain.toUpperCase();
+        Table table;
+        try {
+            table = _connection.getDataSheet(strain, photoID, DataSheetType.getParameters(sheetType));
+        } catch (InvalidSQLException e) {
+            return null;
+        }
         return table;
-	}
+    }
+    
+    public Table getShapeDataSheet(String strain, int photoID, String[] colName) {
+        strain = strain.toUpperCase();
+        Table table;
+        try {
+            table = _connection.getDataSheet(strain, photoID, colName);
+        } catch (InvalidSQLException e) {
+            return null;
+        }
+        return table;
+    }
+    
 	/* (non-Javadoc)
 	 * @see lab.cb.scmd.db.common.TableQuery#getShapeStatLine(java.lang.String)
 	 */
@@ -303,7 +315,7 @@ public class SCMDTableQuery implements TableQuery {
     }
 
     public List<MorphParameter> getParameterInfo(Set<Integer> parameter) {
-        String sql = "SELECT id, name, shortname, scope, datatype FROM " 
+        String sql = "SELECT id, name, shortname, displayname, scope, datatype FROM " 
             + SCMDConfiguration.getProperty("DB_PARAMETERLIST");
         String sql_where = "";
         for(Object param: parameter) {
@@ -313,7 +325,7 @@ public class SCMDTableQuery implements TableQuery {
                 sql_where += " OR";
             sql_where += " id='"+ param + "'";
         }
-        sql += sql_where + " order by id";
+        sql += sql_where;
         List<MorphParameter> result = null;
         try {
             result = (List<MorphParameter>) ConnectionServer.query(new BeanListHandler(MorphParameter.class), sql);

@@ -78,6 +78,7 @@ public class CustomizeViewAction extends Action
         List<MorphParameter> orfMorphParams = paramSelection.getOrfParamInfo();
         request.setAttribute("cellParameterList", cellMorphParams);
         request.setAttribute("orfParameterList", orfMorphParams);
+        session.setAttribute("paramSelection", paramSelection);
         
         return mapping.findForward("success");
     }

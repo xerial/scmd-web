@@ -15,6 +15,7 @@ public class MorphParameter {
     String scope = "";
     String shortName = "";
     String datatype = "";
+    String displayname = "";
 
     public MorphParameter() {
         
@@ -53,5 +54,11 @@ public class MorphParameter {
     }
     public void setShortName(String shortName) {
         this.shortName = shortName;
+    }
+    public String getDisplayname() {
+        return displayname;
+    }
+    public void setDisplayname(String displayname) {
+        this.displayname = displayname;
     }
 }

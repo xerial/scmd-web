@@ -18,12 +18,14 @@
 
 <jsp:useBean id="cellParameterList" scope="request" type="java.util.List"/>
 <jsp:useBean id="orfParameterList" scope="request" type="java.util.List"/>
+<jsp:useBean id="gene"  scope="request" class="lab.cb.scmd.web.bean.YeastGene"/>
 
 <scmd-base:header title="Customize View" css="/css/tabsheet.css"/>
 <body>
 <center>
 <scmd-tags:menu toolbar="on" searchframe="on"/>
 
+<scmd-tags:linkMenu orf="${gene.orf}" logo="on"/> 
 <table>
 <tr><td align="top">
 <!-- selected cell params -->
@@ -34,7 +36,7 @@
 <tr><td>
 ${morphParam.shortName}
 </td><td>
-${morphParam.name}
+${morphParam.displayname}
 </td></tr>
 </logic:iterate>
 </table>
@@ -61,12 +63,12 @@ ${morphParam.name}
 <p class="title"> Individual Cell Parameters </p>
 <table class="small">
 <% int col = 0; %>
-<logic:iterate id="param" name="viewConfigForm" property="cellParameterList" type="lab.cb.scmd.db.scripts.bean.Parameter">
+<logic:iterate id="param" name="viewConfigForm" property="cellParameterList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
 <% if((col % 10) == 0){%>
 <tr>
 <%}%>
 <td><html:multibox property="selectedCellParameter"><%= param.getId()%></html:multibox> </td>
-<td><%= param.getShortname() %></td>
+<td><%= param.getShortName() %></td>
 <% if((col % 10) == 9){%>
 </tr>
 <%}
@@ -80,12 +82,12 @@ col++;
 <p class="title"> ORF Unit Parameters </p>
 <table class="small">
 <% col = 0; %>
-<logic:iterate id="param" name="viewConfigForm" property="ORFParameterList" type="lab.cb.scmd.db.scripts.bean.Parameter">
+<logic:iterate id="param" name="viewConfigForm" property="ORFParameterList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
 <% if((col % 10) == 0){%>
 <tr>
 <%}%>
 <td><html:multibox property="selectedORFParameter"><%= param.getId()%></html:multibox> </td>
-<td><%= param.getShortname() %></td>
+<td><%= param.getShortName() %></td>
 <% if((col % 10) == 9){%>
 </tr>
 <%}

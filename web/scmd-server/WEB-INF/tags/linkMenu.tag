@@ -13,6 +13,24 @@
 <tr><td>
 </logic:equal>
 <span class="menubutton">
+<logic:equal name="orf" value="">
+[ <html:link page="/ViewPhoto.do"> photo </html:link> ] 
+[ <html:link page="/ViewDataSheet.do"> datasheet </html:link> ] 
+[<span class="small"> Group by: </span> 
+ <html:link page="/ViewGroupBySheet.do?stainType=0"> bud size </html:link>
+ <html:link page="/ViewGroupBySheet.do?stainType=1"> nucleus </html:link>
+ <html:link page="/ViewGroupBySheet.do?stainType=2"> actin </html:link> ] 
+[<span class="small"> Teardrop Stats: </span> 
+ <html:link page="/ViewGroupByTearDrop.do?stainType=0"> bud size </html:link>
+ <html:link page="/ViewGroupByTearDrop.do?stainType=1"> nucleus </html:link>
+ <html:link page="/ViewGroupByTearDrop.do?stainType=2"> actin </html:link> ] 
+[ <html:link page="/ViewStats.do"> stats </html:link> ] 
+[ <html:link page="/View2DPlot.do"> 2D plot </html:link> ] 
+[ <html:link page="/ViewORFList.do"> yeast mutants </html:link> ] 
+[ <html:link page="/ParameterHelp.do"> parameter help </html:link> ] 
+[ <html:link page="/"> top </html:link> ] 
+</logic:equal>
+<logic:notEqual name="orf" value="">
 [ <html:link page="/ViewPhoto.do?orf=${orf}"> photo </html:link> ] 
 [ <html:link page="/ViewDataSheet.do?orf=${orf}"> datasheet </html:link> ] 
 [<span class="small"> Group by: </span> 
@@ -28,6 +46,7 @@
 [ <html:link page="/ViewORFList.do"> yeast mutants </html:link> ] 
 [ <html:link page="/ParameterHelp.do"> parameter help </html:link> ] 
 [ <html:link page="/"> top </html:link> ] 
+</logic:notEqual>
 </span>
 <span class=small>
 ( links to: 

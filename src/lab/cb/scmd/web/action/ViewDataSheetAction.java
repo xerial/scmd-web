@@ -17,12 +17,15 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -31,6 +34,7 @@ import org.apache.struts.action.ActionMapping;
 
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageDecoder;
+import com.sun.java_cup.internal.internal_error;
 
 
 
@@ -42,6 +46,7 @@ import lab.cb.scmd.web.action.logic.ActionLogic;
 import lab.cb.scmd.web.action.logic.DBUtil;
 import lab.cb.scmd.web.bean.CellList;
 import lab.cb.scmd.web.bean.CellViewerForm;
+import lab.cb.scmd.web.bean.UserSelection;
 import lab.cb.scmd.web.common.Cell;
 import lab.cb.scmd.web.common.DataSheetType;
 import lab.cb.scmd.web.common.PhotoType;
@@ -50,6 +55,8 @@ import lab.cb.scmd.web.common.SCMDThreadManager;
 import lab.cb.scmd.web.common.StainType;
 import lab.cb.scmd.web.image.ImageCache;
 import lab.cb.scmd.web.image.SCMDImageServer;
+import lab.cb.scmd.web.sessiondata.MorphParameter;
+import lab.cb.scmd.web.sessiondata.ParamUserSelection;
 import lab.cb.scmd.web.table.ColLabelIndex;
 import lab.cb.scmd.web.table.ImageElement;
 import lab.cb.scmd.web.table.RowLabelIndex;
@@ -64,8 +71,6 @@ import lab.cb.scmd.web.viewer.Photo;
 /**
  * @author leo
  * 
- * TODO To change the template for this generated type comment go to Window -
- * Preferences - Java - Code Style - Code Templates
  */
 public class ViewDataSheetAction extends Action {
 
@@ -84,14 +89,30 @@ public class ViewDataSheetAction extends Action {
             throws Exception {
     	
     	CellViewerForm view = (CellViewerForm) form;
+        // sessionÇéÊìæ
+        HttpSession session = request.getSession(true);
+        ParamUserSelection userSelection = (ParamUserSelection) session.getAttribute("paramSelection");
+        if( userSelection == null )
+            userSelection = new ParamUserSelection();
+
 
     	_logic.handleAction(view, request);
     	CellList cellList = _logic.loadCellList(view);
     	view.loadImage();
     	
-    	
     	// table çÏê¨
-        Table datasheet = (SCMDConfiguration.getTableQueryInstance()).getShapeDataSheet(view.getOrf(), view.getPhotoNum(), view.getSheetType());
+        List<MorphParameter> columns = null;
+        if( view.getSheetType() == DataSheetType.SHEET_CUSTOM ) {
+            columns = userSelection.getCellParamInfo();
+        } else {
+            columns = getColumnLabels(view.getSheetType());
+        }
+        String[] columnName = new String[columns.size()];
+        for(int i = 0; i < columns.size(); i++ ) {
+            columnName[i] = columns.get(i).getName();
+        }
+        //Table datasheet = (SCMDConfiguration.getTableQueryInstance()).getShapeDataSheet(view.getOrf(), view.getPhotoNum(), view.getSheetType());
+        Table datasheet = (SCMDConfiguration.getTableQueryInstance()).getShapeDataSheet(view.getOrf(), view.getPhotoNum(), columnName);
         if(datasheet == null)
         {
             return mapping.findForward("failure");
@@ -101,14 +122,18 @@ public class ViewDataSheetAction extends Action {
         
         Table table = new Table();
         
-        LinkedList colLabelList = new LinkedList();
+        LinkedList<String> colLabelList = new LinkedList<String>();
         String [] imageLabel = new String[] {"Cell", "Nucleus", "Actin"};
         for (int i = 0; i < imageLabel.length; i++)
         {
             colLabelList.add(imageLabel[i]);
         }
+        colLabelList.add("cell_local_id");
+        for (MorphParameter param: columns) {
+            colLabelList.add(param.getShortName());
+        }
         table.addRow(colLabelList);
-        table.paste(0, table.getColSize(), datasheet.getRow(0));
+        //table.paste(0, table.getColSize(), datasheet.getRow(0));
       	
 //        int width[] = new int[StainType.STAIN_MAX];
 //        for(int i=0; i<width.length; i++)
@@ -177,6 +202,10 @@ public class ViewDataSheetAction extends Action {
         table.setProperty("class", "datasheet");
         table.decollateRow(0, new StyleDecollator("sheetlabel"));
         table.decollateRow(table.getRowSize() - 1, new StyleDecollator("sheetlabel"));
+        for(int i = 0; i < columns.size(); i++ ) {
+            table.decollate(0, i + StainType.STAIN_MAX, new AttributeDecollator("title", columns.get(i).getDisplayname()));
+            table.decollate(table.getRowSize() - 1, i  + StainType.STAIN_MAX, new AttributeDecollator("title", columns.get(i).getDisplayname()));
+        }
         table.decollate(new TableRange(1, 0, table.getRowSize()-2, 2), new AttributeDecollator("align", "center"));
         
         // ÇRóÒñàÇ…êFÇïœÇ¶ÇÈ
@@ -200,6 +229,20 @@ public class ViewDataSheetAction extends Action {
         request.setAttribute("gene", DBUtil.getGeneInfo(view.getOrf()));
         
         return mapping.findForward("success");
+    }
+
+    /**
+     * @param sheetType
+     * @return
+     */
+    private List<MorphParameter> getColumnLabels(int sheetType) {
+        int[] paramIds = DataSheetType.getParameterIds(sheetType);
+        ParamUserSelection params = new ParamUserSelection();
+        for(int paramid: paramIds) {
+            params.addCellParamSelection(paramid);
+        }
+        List<MorphParameter> paramList = params.getCellParamInfo();
+        return paramList;
     }
 
    
