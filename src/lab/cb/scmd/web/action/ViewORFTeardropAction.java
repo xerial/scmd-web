@@ -108,7 +108,7 @@ public class ViewORFTeardropAction extends Action
             if(paramIDSet.isEmpty())
                 return mapping.findForward("success");
             sql = SQLExpression.assignTo(
-                    "select id, displayname,    shortname from $1 where scope='orf' and dataytpe in ('double') and id in ($2)",
+                    "select id, displayname, shortname from $1 where scope='orf' and datatype in ('double') and id in ($2)",
                     SCMDConfiguration.getProperty("DB_PARAMETERLIST", "parameterlist"),
                     SQLUtil.commaSeparatedList(paramIDSet, SQLUtil.QuotationType.none)
             );
@@ -187,14 +187,14 @@ public class ViewORFTeardropAction extends Action
                 {
                     double diff  = (value - ave) / sd;
                     double absDiff = Math.abs(diff);
-                    double strength = absDiff / 5.0;
+                    double strength = absDiff / 4.0;
                     if(strength > 1.0) 
                         strength = 1.0;
                     if(strength < -1.0)
                         strength = -1.0;
                     double score = (diff < 0) ? -strength : strength;
                     valRow.add(new AttributeDecollation(new StringElement(format.format(value)), "bgcolor", 
-                            getShadingColorColde(new Color(0x0F357D), new Color(0xFFFFFF), new Color(0xFFAA0B), score)));
+                            getShadingColorColde(new Color(0x0086FF), new Color(0xFFFFFF), new Color(0xFF0070), score)));
                 }
                 else
                     valRow.add(new StringElement(format.format(value)));
@@ -213,6 +213,7 @@ public class ViewORFTeardropAction extends Action
             ImageElement img = new ImageElement("scmdimage.img", imgArg);
             img.setProperty("alt", "average = " + format.format(teardrop.getAverage()));
             img.setProperty("align", "center");
+            img.setProperty("border", "0");
             teardropRow.add(img);
         }
         
