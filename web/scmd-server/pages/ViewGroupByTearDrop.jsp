@@ -14,7 +14,7 @@
 <jsp:useBean id="groupNameList"  scope="request" type="java.lang.String[]"/>
 
 <%
- String groupTitle = lab.cb.scmd.web.common.GroupType.STAIN_GROUP[sheetForm.getStainType()];
+ String groupTitle = "Grouped by " + lab.cb.scmd.web.common.GroupType.STAIN_GROUP[sheetForm.getStainType()];
 %>
 
 <scmd-base:header title="Teardrop View of ${gene.orf}" css="/css/tabsheet.css"/>
@@ -24,23 +24,11 @@
 <scmd-tags:menu  toolbar="on" searchframe="on"/>
 
 <scmd-tags:linkMenu orf="${gene.orf}" logo="on"/> 
-
-
-<table width="700">
-<tr>
-<td>
-<span class="orf"> ${gene.orf} </span> 
-<span class="genename"> ${gene.standardName} </span>
-</td>
-<td align="right">
-<p align="absbottom">
-<scmd-tags:selectorf orf="${gene.orf}"/>
-</p>
-</td>
-</tr>
-<tr> <td colspan="2" align="center"> <span class="title">Averages of Cell Shape Parameters</span> <span class="header"> Grouped by <%= groupTitle%> </span> </td></tr>
-</table>
-
+<scmd-tags:orfInfo  orf="${gene.orf}" 
+	stdname="${gene.standardName}" annot="${gene.annotation}" 
+	headtitle="test"
+	title="Averages of Cell Shape Parameters"  />
+<!-- <%= groupTitle %> -->
 <logic:iterate id="datasheet" name="tableList" type="lab.cb.scmd.web.table.Table">
 <scmd-base:table name="datasheet"/>
 </logic:iterate>

@@ -68,19 +68,10 @@ function writeRegion(e)
 <body>
 <center>
 <scmd-tags:menu  toolbar="on"/>
-
-<table width="700">
-<tr><td align="left">
-<span class="orf"> ${gene.orf} </span> 
-<span class="genename"> ${gene.standardName} </span>
-</td>
-<td align="right">
-<p align="absbottom">
-<scmd-tags:selectorf orf="${gene.orf}"/>
-</p>
-</td>
-</tr>
-</table>
+<scmd-tags:linkMenu orf="${view.orf}" logo="on"/> 
+<scmd-tags:orfInfo  orf="${gene.orf}" 
+	stdname="${gene.standardName}" annot="${gene.annotation}" 
+	title="2D Plot"  />
 
 <img id="plot" class="plotview" src="Write2DPlot.do?${plotForm.cgiArgument}" 
 width="300" height="300" onclick="clk(event)" onmousemove="writeRegion(event)"

@@ -52,6 +52,11 @@ int blankTabSize = imageWidth - 70 * 3;
 </tr>
 </table>
 
+<scmd-tags:linkMenu orf="${gene.orf}" logo="on"/> 
+<scmd-tags:orfInfo  orf="${gene.orf}" 
+	stdname="${gene.standardName}" annot="${gene.annotation}" 
+	title="Photo Viewer" />
+
 <table width="<%=imageWidth + 10%>"> 
 <scmd-base:tablist selected="${view.stainType}">
 <c:forEach var="i" begin="0" end="2">
@@ -61,8 +66,6 @@ int blankTabSize = imageWidth - 70 * 3;
 </c:forEach>
 </scmd-base:tablist>
 <td width="<%= blankTabSize%>" align="right">
-<span class="orf"> ${gene.orf} </span> 
-<span class="genename"> ${gene.standardName} </span>
 </td>
 </tr>
 <tr><td colspan="4" bgcolor="black" align="center" width="<%= imageWidth %>" height="<%= imageHeight%>">

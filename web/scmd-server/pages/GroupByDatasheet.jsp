@@ -40,20 +40,9 @@ function help(url)
 </tr>
 </table>
 
-<table width="700">
-<tr><td align="left">
-<span class="orf"> ${gene.orf} </span> 
-<span class="genename"> ${gene.standardName} </span>
-<td class="title"> Grouped by <%= lab.cb.scmd.web.common.GroupType.STAIN_GROUP[sheetForm.getStainType()] %> (${sheetForm.group}) </td>
-</td>
-<td align="right">
-<p align="absbottom">
-<scmd-tags:selectorf orf="${gene.orf}"/>
-</p>
-</td>
-</tr>
-</table>
-
+<scmd-tags:orfInfo  orf="${gene.orf}" 
+	stdname="${gene.standardName}" annot="${gene.annotation}" 
+	title="Grouped by <%= lab.cb.scmd.web.common.GroupType.STAIN_GROUP[sheetForm.getStainType()] %> (${sheetForm.group})" />
 
 <table><tr><td>
 <scmd-base:pagebutton link="ViewGroupDataSheet.do" page="${sheetForm.page}" maxPage="${sheetForm.maxPage}" name="sheetForm" property="argumentMap"/>

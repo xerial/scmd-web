@@ -13,7 +13,9 @@
 <jsp:useBean id="photoTable"  scope="request" class="lab.cb.scmd.web.table.Table"/>
 <jsp:useBean id="gene"  scope="request" class="lab.cb.scmd.web.bean.YeastGene"/>
 <jsp:useBean id="groupBySheet"  scope="request" class="lab.cb.scmd.web.bean.GroupViewForm"/>
-
+<%
+ String groupTitle = "Cells Grouped by " + lab.cb.scmd.web.common.GroupType.STAIN_GROUP[groupBySheet.getStainType()];
+%>
 <scmd-base:header title="Group By DataSheet ${gene.orf}" css="/css/tabsheet.css"/>
 <script language="JavaScript">
 <!--
@@ -29,22 +31,9 @@ function help(url)
 <center>
 <scmd-tags:menu  toolbar="on" searchframe="on"/>
 <scmd-tags:linkMenu orf="${view.orf}" logo="on"/> 
-
-<table width="700">
-<tr><td align="left">
-<span class="orf"> ${gene.orf} </span> 
-<span class="genename"> ${gene.standardName} </span>
-<span class="annotation"> <%= gene.getAnnotation() %></span>
-</td>
-<td align="right">
-<p align="absbottom">
-<scmd-tags:selectorf orf="${gene.orf}"/>
-</p></td></tr>
-<tr><td colspan=2>
-<p class="header"> Cells Grouped by <%= lab.cb.scmd.web.common.GroupType.STAIN_GROUP[groupBySheet.getStainType()] %> </p>
-</td>
-</tr>
-</table>
+<scmd-tags:orfInfo  orf="${gene.orf}" 
+	stdname="${gene.standardName}" annot="${gene.annotation}" 
+	title="<%= groupTitle %>" />
 
 <scmd-base:table name="photoTable"/>
 
