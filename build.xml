@@ -25,9 +25,8 @@ usage: ant (-Dconf=build.properties)
 	<property name="build" value="build"/>	
 	<property name="lib" value="lib"/>
 	<property name="web" value="web"/>
-	<property name="server.name" value="scmd-server"/>
-	<property name="webinf" value="${web}/${server.name}/WEB-INF"/>
-	<property name="war.name" value="${server.name}.war"/>
+	<property name="webinf" value="${web}/scmd-server/WEB-INF"/>
+	<property name="war.name" value="scmd-server.war"/>
 	<property name="dir.deploy" value="webapps"/>
 	<property name="TOMCAT_HOME" value="${env.TOMCAT_HOME}"/>
 	<property name="manager.url" value="http://localhost:8080/manager"/>
@@ -65,8 +64,8 @@ usage: ant (-Dconf=build.properties)
 	
 	<target name="war" depends="compile" description="create war file">
 	  <mkdir dir="${build}/war"/>
-	  <war destfile="${build}/war/${war.name}" webxml="${webinf}/web.xml" basedir="${web}/${server.name}">
-	  	 <!-- <classes dir="${dir.webinf}/classes"/> -->
+	  <war destfile="${build}/war/${war.name}" webxml="${webinf}/web.xml">
+	  	 <fileset dir="${web}/scmd-server"/>
 	  </war>
 	</target>
 
@@ -88,7 +87,7 @@ usage: ant (-Dconf=build.properties)
 	    		<path location="${lib}/catalina-ant.jar"/>
 	    	</classpath>
 		</taskdef>
-      	<reload url="${manager.url}" username="${manager.username}" password="${manager.password}" path="/${server.name}"/>
+      	<reload url="${manager.url}" username="${manager.username}" password="${manager.password}" path="/scmd-server"/>
     </target>
 
 	<target name="undeploy">
@@ -99,7 +98,7 @@ usage: ant (-Dconf=build.properties)
 		</taskdef>
 		
 		<undeploy 
-			url="${manager.url}" username="${manager.username}" password="${manager.password}" path="/${server.name}"/>
+			url="${manager.url}" username="${manager.username}" password="${manager.password}" path="/scmd-server"/>
 	</target>
 	
 	<target name="deploy" depends="war,confirm.context" description="deplay .war file into TOMCAT_HOME/${dir.deploy}">
@@ -109,7 +108,7 @@ usage: ant (-Dconf=build.properties)
 	    	</classpath>
 		</taskdef>
 		<deploy 
-			url="${manager.url}" username="${manager.username}" password="${manager.password}" path="/${server.name}"
+			url="${manager.url}" username="${manager.username}" password="${manager.password}" path="/scmd-server"
 		   	update="true" war="${build}/war/${war.name}"/>
 	</target>
 
@@ -131,7 +130,7 @@ usage: ant (-Dconf=build.properties)
 	
 	
 	<target name="confirm.context">
-		<available file="${web}/${server.name}/META-INF/context.xml"  property="is.set.context"/>
+		<available file="${web}/scmd-server/META-INF/context.xml"  property="is.set.context"/>
 		<fail unless="is.set.context">
 			please edit	a file scmd-server/META-INF/context.xml after the model of "context.xml.sample"
 		</fail>
