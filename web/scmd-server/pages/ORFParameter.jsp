@@ -69,7 +69,7 @@
 %>
 <scmd-base:pagemover page="ViewORFParameter.do" parameter="<%= pid%>" target="${group.groupName}" currentPage="<%= pageStatus.getCurrentPage() %>" maxPage="<%= pageStatus.getMaxPage() %>"/>
 </span>
-<span class="small">Download all data as an
+<span class="small">Download data selected in <a href="ViewSelection.do">My Gene List</a> as an
 [<a href="ViewORFParameter.do?<%=pid%>&format=xml"> XML </a> ] or 
 [<a href="ViewORFParameter.do?<%=pid%>&format=tab"> Tab-separated sheet</a> ]
 format. 
