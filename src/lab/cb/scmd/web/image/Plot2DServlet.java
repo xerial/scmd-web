@@ -29,6 +29,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.xerial.algorithm.Algorithm;
+import org.xerial.util.MinMax;
 import org.xerial.util.Pair;
 
 import lab.cb.scmd.db.common.TableQuery;
@@ -125,7 +127,11 @@ public class Plot2DServlet extends HttpServlet
         double y_min = stat.getMinValue(colIndex.getVerticalIterator("p2"));
         double y_ave = stat.calcAverage(colIndex.getVerticalIterator("p2"));
         
-        Plot2DCanvas plotCanvas = new Plot2DCanvas(new Range(x_min, x_max), new Range(y_min, y_max), IMAGEWIDTH);        
+        double canvasWidth = Algorithm.<Double>minmax(x_ave-x_min, x_max-x_ave).max();
+        double canvasHeight = Algorithm.<Double>minmax(y_ave-y_min, y_max-y_ave).max();
+        
+        Plot2DCanvas plotCanvas = new Plot2DCanvas(new Range(x_ave - canvasWidth, x_ave + canvasWidth), 
+                                                   new Range(y_ave - canvasHeight, y_ave + canvasHeight), IMAGEWIDTH);        
  
         // convert the table data into a list format
         LinkedList<Point> mutantList = new LinkedList<Point>();
