@@ -4,10 +4,10 @@
 # Please edit properties below according to your environment, and save as build.properties
 #
 
-#TOMCAT_HOME=C:/cygwin/home/leo/gi/scmd/Tomcat 5.0
+TOMCAT_HOME=/usr/local/tomcat
 #dir.deploy=webapps
-#manager.url=http://localhost:8080/manager
-#manager.username=admin
-#manager.password=leoleo
+manager.url=http://localhost:8080/manager
+manager.username=admin
+manager.password=passwd
 
 
