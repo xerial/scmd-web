@@ -37,7 +37,7 @@ import com.sun.image.codec.jpeg.JPEGImageDecoder;
 import lab.cb.scmd.exception.UnfinishedTaskException;
 import lab.cb.scmd.util.ProcessRunner;
 import lab.cb.scmd.util.image.ImageConverter;
-import lab.cb.scmd.util.teardrop.TeardropStatistics;
+import lab.cb.scmd.db.scripts.TeardropStatistics;
 
 public class TeardropGenerator extends ImageConverter {
 

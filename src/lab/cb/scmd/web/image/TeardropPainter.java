@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import lab.cb.scmd.exception.UnfinishedTaskException;
-import lab.cb.scmd.util.teardrop.TeardropStatistics;
+import lab.cb.scmd.db.scripts.TeardropStatistics;
 import lab.cb.scmd.web.common.SCMDConfiguration;
 
 public class TeardropPainter extends HttpServlet{
