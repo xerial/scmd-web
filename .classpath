@@ -17,7 +17,6 @@
 	<classpathentry kind="lib" path="web/scmd-server/WEB-INF/lib/js.jar"/>
 	<classpathentry kind="lib" path="web/scmd-server/WEB-INF/lib/jstl.jar"/>
 	<classpathentry kind="lib" path="web/scmd-server/WEB-INF/lib/pg74.215.jdbc3.jar"/>
-	<classpathentry kind="lib" path="web/scmd-server/WEB-INF/lib/scmd-1.0.jar"/>
 	<classpathentry kind="lib" path="web/scmd-server/WEB-INF/lib/standard.jar"/>
 	<classpathentry kind="lib" path="web/scmd-server/WEB-INF/lib/struts.jar"/>
 	<classpathentry kind="lib" path="web/scmd-server/WEB-INF/lib/struts-el.jar"/>
@@ -28,5 +27,6 @@
 	<classpathentry kind="lib" path="web/scmd-server/WEB-INF/lib/commons-dbutils-1.1-dev.jar"/>
 	<classpathentry kind="lib" path="web/scmd-server/WEB-INF/lib/PhenomeCommons.jar"/>
 	<classpathentry kind="lib" path="web/scmd-server/WEB-INF/lib/XerialJ.jar"/>
+	<classpathentry kind="lib" path="web/scmd-server/WEB-INF/lib/scmd-1.1.jar"/>
 	<classpathentry kind="output" path="web/scmd-server/WEB-INF/classes"/>
 </classpath>

@@ -15,6 +15,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.awt.image.RGBImageFilter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -45,14 +46,16 @@ public class Teardrop
 {
     static public enum Orientation { vertical, horizontal}   
     
-    int paramID;
-    int groupID;
-    Orientation orientation = Orientation.vertical;
+    private int paramID;
+    private int groupID;
+    private Orientation orientation = Orientation.vertical;
     
-    double min;
-    double max;
-    double average;
-    double SD;    
+    private double min;
+    private double max;
+    private double average;
+    private double SD;
+    
+    private String teardropURI = SCMDConfiguration.getProperty("TEARDROP_URI");                        
     
     /**
      * @param paramID
@@ -75,8 +78,8 @@ public class Teardrop
     
     public Teardrop()
     {
-        
     }
+    
 
     public void setOrientation(Orientation orientation)
     {
@@ -138,9 +141,7 @@ public class Teardrop
     
 
     public BufferedImage drawImage(List<TeardropPoint> plotList) throws SCMDException
-    {   
-        String teardropURI = SCMDConfiguration.getProperty("TEARDROP_URI");                
-        
+    {           
         URL imageURL;
         BufferedImage teardrop;
         try
@@ -198,6 +199,7 @@ public class Teardrop
             g2.rotate(Math.toRadians(90));
             g2.drawImage(teardrop, null, 0, -teardrop.getHeight());
             teardrop = rotatedImage;
+            break;
         case vertical:
         default:
             break;
@@ -425,7 +427,46 @@ public class Teardrop
         return null;
     }
 
-   
+    /** 2つのteardropの画像を左右半分ずつ結合する
+     * @param image_a　左側iteardrop
+     * @param image_b  右側のteardrop
+     * @return 結合された画像
+     * @throws SCMDException　a, bの画像サイズが異なるとき
+     */
+    public static BufferedImage composite(BufferedImage image_a, BufferedImage image_b)
+        throws SCMDException
+    {
+        if(image_a.getWidth() != image_b.getWidth() || image_a.getHeight() != image_b.getHeight())
+            throw new SCMDException("sizes of two teardrop images are not equal");
+        
+        changeTeardropColor(image_a, 0x0059E2EF);
+        changeTeardropColor(image_b, 0x0049BCC6);
+        
+        int width = image_a.getWidth();
+        int height = image_a.getHeight();
+        
+        BufferedImage compositeImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = (Graphics2D) compositeImage.getGraphics();
+        g.drawImage(image_a.getSubimage(0, 0, width / 2, height), null, 0, 0);
+        g.drawImage(image_b.getSubimage(width / 2, 0, width / 2, height), null, width / 2, 0);
+        
+        return compositeImage;
+    }
+    
+    private static void changeTeardropColor(BufferedImage image, int newRGB)
+    {
+        for(int x=0; x<image.getWidth(); x++)
+        {
+            for(int y=0; y<image.getHeight(); y++)
+            {
+                int rgb = image.getRGB(x, y);
+                int alpha = rgb & 0xFF000000;
+                if(alpha != 0 && (rgb & 0x00FFFFFF) != 0x00FFFFFF)   
+                    image.setRGB(x, y, newRGB);
+            }
+        }
+    }
+    
     
     public void setParamID(int paramID)
     {

@@ -1,11 +1,11 @@
 //--------------------------------------
-//SCMDWeb Project
+// SCMDWeb Project
 //
-//CreateTearDropBackground.java
-//Since: 2005/02/02
+// CreateTearDropBackground.java
+// Since: 2005/02/02
 //
-//$URL: $ 
-//$Author: $
+// $URL$ 
+// $Author$
 //--------------------------------------
 package lab.cb.scmd.db.scripts;
 
@@ -25,6 +25,7 @@ import java.util.Vector;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.ColumnListHandler;
 
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -35,6 +36,8 @@ import org.xerial.XerialException;
 import lab.cb.common.cui.OptionParser;
 import lab.cb.common.cui.OptionParserException;
 import lab.cb.scmd.db.scripts.bean.GroupType;
+import lab.cb.scmd.db.sql.SQLExpression;
+import lab.cb.scmd.db.sql.TableHandler;
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.exception.UnfinishedTaskException;
 import lab.cb.scmd.util.ProcessRunner;
@@ -56,6 +59,8 @@ import lab.cb.scmd.web.table.TableElement;
  * PostgreSQL専用
  * データ読み出し部分のコードは、CreateTeardropTableから一部流用
  * 
+ * paramavgsd テーブル用の表も同時に生成
+ * 
  * @author sesejun
  * 
  */
@@ -67,9 +72,14 @@ public class CreateTearDropBackground {
 
     private String PREFIX                   = "td_";
     private String SUFFIX                   = ".png";
+    
+    private String _paramstatTable   = "paramstat";
+    private String _converter;
+    private boolean _wildTypeMode = false;
+    
 
     private enum Opt {
-        help, verbose, outfile, server, port, user, passwd, dbname
+        help, verbose, outfile, server, port, user, passwd, dbname, wildtype, group0
     }
 
     public static void main(String[] args) {
@@ -93,6 +103,11 @@ public class CreateTearDropBackground {
         if (optionParser.isSet(Opt.verbose)) {
             log = System.out;
         }
+        if(optionParser.isSet(Opt.wildtype))
+        {
+            _paramstatTable = "paramstat_wt";
+            _wildTypeMode = true;
+        }
 
         PrintStream outFile = new PrintStream(new FileOutputStream(optionParser
                 .getValue(Opt.outfile)));
@@ -107,56 +122,50 @@ public class CreateTearDropBackground {
         dataSource.setMaxConnections(10);
 
         QueryRunner queryRunner = new QueryRunner(dataSource);
-
+        
         // read group types
-        List<GroupType> groupTypeList = (List<GroupType>) queryRunner
-                .query(
-                        "select id, stain, name from groups  where id >= 1 order by id",
-                        new BeanListHandler(GroupType.class));
+        List<GroupType> groupTypeList = null;
+        if(optionParser.isSet(Opt.group0))
+        {
+            groupTypeList = (List<GroupType>) queryRunner
+            .query(
+                    "select id, stain, name from groups where id = 0 order by id",
+                    new BeanListHandler(GroupType.class));
+        }
+        else
+        {
+            groupTypeList = (List<GroupType>) queryRunner
+            .query(
+                    "select id, stain, name from groups order by id",
+                    new BeanListHandler(GroupType.class));
+        }
+        
+        drawProcess(queryRunner, outFile, groupTypeList);
+    }
+    
+    private void drawProcess(QueryRunner queryRunner, PrintStream outFile, List<GroupType> groupTypeList)
+        throws SQLException
+    {
         List<MorphParameter> cellParamList = (List<MorphParameter>) queryRunner
                 .query(
-                        "select id, name, scope, datatype from parameterlist where scope='cell' and datatype='num' order by id",
+                        "select id, name, scope, datatype from parameterlist where scope in ('cell', 'orf') and datatype in ('num', 'double', 'cv') order by id",
                         new BeanListHandler(MorphParameter.class));
 
         Statistics stat = new StatisticsWithMissingValueSupport(new String[] {
                 "-1", "-1.0", "." });
 
-        // for each orf
-        List orfList = (List) queryRunner
-                .query(
-                        "select distinct systematicname from genename_20040719 order by systematicname",
-                        new ColumnListHandler());
-
         // for each param
         for (MorphParameter param : cellParamList) {
             // for each group
             for (GroupType group : groupTypeList) {
-                log.printf("param %5s : group %10s\n", param.getName(), group.getName());
+                log.printf("param %5s : group %10s", param.getId(), group.getName());
+                log.println();
                 log.flush();
 //                String groupName = group.getStain() + "group";
 
                 Table sheet = (Table) queryRunner.query(
-                        "select strainname, average from paramstat where paramid=" + param.getId() 
-                        + " and groupid=" + group.getId(), new ResultSetHandler() {
-                            public Object handle(ResultSet rs) throws SQLException {
-                                Table paramGroupSheet = new Table();
-                                ResultSetMetaData metaData = rs.getMetaData();
-                                Vector<String> columnName = new Vector<String>();
-                                int colSize = metaData.getColumnCount();
-                                for (int i = 1; i <= colSize; i++)
-                                    columnName.add(metaData.getColumnName(i));
-                                
-                                paramGroupSheet.addRow(columnName);
-                                
-                                while (rs.next()) {
-                                    Vector<Object> row = new Vector<Object>();
-                                    for (int i = 1; i <= colSize; i++)
-                                        row.add(rs.getObject(i));
-                                    paramGroupSheet.addRow(row);
-                                }  
-                                return paramGroupSheet;
-                            }
-                        });
+                        "select strainname, average from " + _paramstatTable + " where paramid=" + param.getId() 
+                        + " and groupid=" + group.getId(), new TableHandler());
 
                 ColLabelIndex colLabelIndex = new ColLabelIndex(sheet);
                 LinkedList<TableElement> dataList = new LinkedList<TableElement>();
@@ -173,20 +182,43 @@ public class CreateTearDropBackground {
                     continue;
 
                 TeardropStatistics tds = new TeardropStatistics();
-                tds.setSD(Statistics.calcSD(samples));
-                tds.setAvg(Statistics.calcMean(samples));
-                tds.setMin(Statistics.getMinValue(samples));
-                tds.setMax(Statistics.getMaxValue(samples));
-                tds.setNum(samples.size());
+                
+                double mean = Statistics.calcMean(samples);
+                double sd = Statistics.calcSD(samples);
+                double min = Statistics.getMinValue(samples);
+                double max = Statistics.getMaxValue(samples);                
+                
+                if(_wildTypeMode)
+                {
+                    String sql = SQLExpression.assignTo
+                    ("select paramid, groupid, average, sd, min, max from $1 where groupid=$2 and paramid=$3",
+                     "paramavgsd",
+                     group.getId(),
+                     param.getId());
+                    TDStatParam tdsp = (TDStatParam) queryRunner.query(sql, new BeanHandler(TDStatParam.class));                
+                    // TODO mutantの分布の幅より野生株の分布の幅が大きいときに困る
+                    tds.setSD(tdsp.getSd());
+                    tds.setAvg(tdsp.getAverage());
+                    tds.setMin(tdsp.getMin());
+                    tds.setMax(tdsp.getMax());                    
+                }
+                else
+                {
+                    tds.setSD(sd);
+                    tds.setAvg(mean);
+                    tds.setMin(min);
+                    tds.setMax(max);                    
+                }
                 
                 drawTeardropBackground(param.getId(), group.getId(), samples, tds);
 
                 outFile.println(param.getId() + "\t"
-                        + group.getId() + "\t" + tds.getAvg() + "\t" + tds.getSD() + "\t"
-                        + tds.getMin() + "\t" + tds.getMax() + "\t" + tds.getNum());
+                        + group.getId() + "\t" + mean + "\t" + sd + "\t"
+                        + min + "\t" + max + "\t" + samples.size());
             }
         }
 
+        log.println("finished.");
         outFile.flush();
         outFile.close();
     }
@@ -208,6 +240,10 @@ public class CreateTearDropBackground {
             e.printStackTrace();
             System.exit(1);
         }
+        catch(IOException e)
+        {
+            log.println("failed: " + e.getMessage());
+        }
     }
 
     /**
@@ -217,12 +253,14 @@ public class CreateTearDropBackground {
     {
         optionParser.addOption(Opt.help, "h", "help", "display help messages");
         optionParser.addOption(Opt.verbose, "v", "verbose", "display verbose messages");
-        optionParser.addOptionWithArgment(Opt.outfile, "o", "output", "FILE", "output file name. defalut=teardrop.txt", "teardrop.txt");
+        optionParser.addOptionWithArgment(Opt.outfile, "o", "output", "FILE", "output file name. defalut=paramavnsd.txt", "paramavgsd.txt");
         optionParser.addOptionWithArgment(Opt.server, "s", "server", "SERVER", "postgres server name. defalut=localhost", "localhost");
         optionParser.addOptionWithArgment(Opt.port, "p", "port", "PORT", "port number. defalut=5432", "5432");
         optionParser.addOptionWithArgment(Opt.user, "u", "user", "USER", "user name. defalut=postgres", "postgres");        
         optionParser.addOptionWithArgment(Opt.passwd, "", "passwd", "PASSWORD", "password. defalut=\"\"", "");        
         optionParser.addOptionWithArgment(Opt.dbname, "d", "db", "NAME", "database name. defalut=scmd", "scmd");        
+        optionParser.addOption(Opt.wildtype, "w", "wildtype", "create teardrops for the wildtypes");
+        optionParser.addOption(Opt.group0, "g", "g0", "create teardrops for parameters whose group id = 0");
         initDB();
     }
 
@@ -248,3 +286,5 @@ public class CreateTearDropBackground {
 
     }
 }
+
+

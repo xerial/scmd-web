@@ -10,9 +10,16 @@
 
 package lab.cb.scmd.db.scripts;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.color.ColorSpace;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Collection;
 import java.util.Iterator;
+
+import javax.imageio.ImageIO;
 
 import lab.cb.scmd.exception.UnfinishedTaskException;
 import lab.cb.scmd.util.ProcessRunner;
@@ -31,17 +38,19 @@ public class TeardropStatistics {
 	private int		_maxcount;
 	
 	//private double DIVISIONNUMOFSD = 5.0;
-    private String BGFILE                   = "TeardropBackground.png";
 
-    private String BASE_COLOR               = "#8888FF";
+    private int BASE_COLOR               = 0x8888FF;
     private int IMAGEWIDTH                  = 30;
     private int IMAGEHEIGHT                 = 128;
     private int BARHEIGHT                   = 1;
     private int MARGIN                      = 0;
 
     // program
-    //String _converter = "C:/Program Files/ImageMagick-6.0.3-Q16/convert.exe";
-    String _converter = "/usr/bin/convert";
+    
+    public TeardropStatistics()
+    {
+      
+    }
     
 	/**
 	 * @return Returns the avg.
@@ -114,6 +123,8 @@ public class TeardropStatistics {
 		for( Iterator it = column.iterator();  it.hasNext(); ) {
 			double v = ((Double)it.next()).doubleValue();
 			int index = getIndex(v);
+            if(index >= _count.length || index < 0)
+                continue;  // ‚Í‚Ýo‚½ê‡
 			_count[index]++;
 		}
 		int maxcount = 0;
@@ -125,30 +136,28 @@ public class TeardropStatistics {
 	}
     
 
-    public void drawTeardrop(TeardropStatistics tds, PrintStream out) {
+    public void drawTeardrop(TeardropStatistics tds, PrintStream out)
+        throws IOException
+    {
         int size = tds.getHistgramSize();
         int centerindex = tds.getIndex(tds.getAvg());
-        String drawCommand = "-fill " + BASE_COLOR;
+        
+        BufferedImage image = new BufferedImage(IMAGEWIDTH, IMAGEHEIGHT, ColorSpace.TYPE_RGB);
+        Graphics2D g = (Graphics2D) image.getGraphics();
+        
+        g.setColor(new Color(0xFFFFFF));
+        g.fillRect(0, 0, IMAGEWIDTH, IMAGEHEIGHT);        
+        
+        g.setColor(new Color(BASE_COLOR));
         for( int i = 0; i < size; i++ ) {
             int hpos = ( centerindex - i ) * BARHEIGHT + IMAGEHEIGHT /2 ;
             if( tds.getHistgram(i) != 0 ) {
                 double barwidth = Math.log(tds.getHistgram(i) + 1) * (IMAGEWIDTH - MARGIN) / Math.log(tds.getMaxCount() + 1);
                 double middle = IMAGEWIDTH/2.0;
-                String stpos = (int)(middle - barwidth/2.0) + "," + hpos; 
-                String edpos = (int)(middle + barwidth/2.0) + "," + (hpos + BARHEIGHT);
-                drawCommand += " -draw \"rectangle " + stpos + " " + edpos + "\""; 
+                g.fillRect((int)(middle - barwidth/2.0), hpos, (int)barwidth, BARHEIGHT);                
             }
         }
-        String cmd = _converter + " " + BGFILE + " " + drawCommand + " -"; 
-        
-        System.out.print(size + "\t" + cmd.length() + "\t...");
-        System.out.flush();
-        try {
-            ProcessRunner.run(out, cmd);
-        } catch (UnfinishedTaskException e) {
-            e.printStackTrace();
-        }
-        System.out.println("end");
+        ImageIO.write(image, "png", out);
     }
 
 	

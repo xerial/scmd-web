@@ -92,8 +92,8 @@
 </table>
 <html:submit value="update" property="button"/>
 
-<p>Save as XML file : <html:submit value="save" property="button"/></p>
-<p>Load from XML file : <html:file property="file" /> <html:submit value="load" property="button"/></p>
+<p>Save as an XML file : <html:submit value="save" property="button"/></p>
+<p>Load from an XML file : <html:file property="file" /> <html:submit value="load" property="button"/></p>
 </html:form> 
 
 </center>
