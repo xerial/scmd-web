@@ -29,20 +29,11 @@ function help(url)
 <center>
 <scmd-tags:menu  toolbar="on"/>
 
-<table width="700">
-<tr>
-<td>
- <scmd-tags:linkMenu orf="${gene.orf}" /> 
-</td> 
-<td>
-<a href="/"> <img src="/image/scmd_logo_grad.png"/ border="0"> </a>
-</td>
-</tr>
-</table>
+<scmd-tags:linkMenu orf="${gene.orf}" logo="on"/> 
 
 <scmd-tags:orfInfo  orf="${gene.orf}" 
 	stdname="${gene.standardName}" annot="${gene.annotation}" 
-	title="Grouped by <%= lab.cb.scmd.web.common.GroupType.STAIN_GROUP[sheetForm.getStainType()] %> (${sheetForm.group})" />
+	title="Grouped by ${sheetForm.groupName} (${sheetForm.group})" />
 
 <table><tr><td>
 <scmd-base:pagebutton link="ViewGroupDataSheet.do" page="${sheetForm.page}" maxPage="${sheetForm.maxPage}" name="sheetForm" property="argumentMap"/>
@@ -74,16 +65,7 @@ function help(url)
 <scmd-base:pagebutton link="ViewGroupDataSheet.do" page="${sheetForm.page}" maxPage="${sheetForm.maxPage}" name="sheetForm" property="argumentMap" />
 </td></tr></table>
 
-<table width="700">
-<tr>
-<td>
- <scmd-tags:linkMenu orf="${gene.orf}" /> 
-</td> 
-<td>
-<a href="/"> <img src="/image/scmd_logo_grad.png"/ border="0"> </a>
-</td>
-</tr>
-</table>
+<scmd-tags:linkMenu orf="${gene.orf}" logo="on"/> 
 
 
 <table>

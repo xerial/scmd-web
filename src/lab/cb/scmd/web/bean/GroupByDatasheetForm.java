@@ -21,6 +21,7 @@ import org.apache.struts.action.ActionMapping;
 
 import lab.cb.scmd.db.common.PageStatus;
 import lab.cb.scmd.web.common.DataSheetType;
+import lab.cb.scmd.web.common.GroupType;
 import lab.cb.scmd.web.common.PhotoType;
 import lab.cb.scmd.web.common.StainType;
 
@@ -43,6 +44,8 @@ public class GroupByDatasheetForm extends ActionForm
     PageStatus pageStatus = new PageStatus(1, 1);
     int sheetType = DataSheetType.SHEET_CELL;
     int photoType = PhotoType.ANALYZED_PHOTO;
+
+    
     
     /**
      * 
@@ -86,6 +89,11 @@ public class GroupByDatasheetForm extends ActionForm
     }
     public void setGroup(String group) {
         this.group = group;
+    }
+    
+    public String getGroupName()
+    {
+        return GroupType.STAIN_GROUP[stainType];
     }
     public String getOrf() {
         return orf;
