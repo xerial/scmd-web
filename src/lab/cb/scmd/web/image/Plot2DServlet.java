@@ -12,6 +12,7 @@ package lab.cb.scmd.web.image;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
@@ -120,8 +121,7 @@ public class Plot2DServlet extends HttpServlet
         g.setColor(new Color(0xFFFFFF));
         g.fillRect(0, 0, IMAGEWIDTH, IMAGEWIDTH);
         g.setColor(new Color(0x90C0E0));
-        String targetOrf = view.getOrf().toUpperCase();
-
+        
         LinkedList<Point> selectedORFPointList = new LinkedList<Point>();
         
         for(int i=1; i<plotTable.getRowSize(); i++)
@@ -181,17 +181,88 @@ public class Plot2DServlet extends HttpServlet
         ImageIO.write(image, "png", response.getOutputStream());
     }
     
-    
+    /**
+     * 2DPlotの下地を作成する
+     * @param xParamName 
+     * @param yParamName
+     * @param plotTable (strainname, xParamName, yParamName) というスキーマのテーブルの入力を想定
+     * @param imageWidth
+     * @return 2DPlotの下地
+     */
+    static public BufferedImage create2DPlot(String xParamName, String yParamName, Table plotTable, int imageWidth)
+    {
+        if(plotTable == null)
+        {
+            return createNAImage(imageWidth);
+        }
+        ColLabelIndex colIndex = new ColLabelIndex(plotTable);
+        int param1_col = colIndex.getColIndex(xParamName);
+        int param2_col = colIndex.getColIndex(yParamName);
+        int strain_col = colIndex.getColIndex("strainname");
+        if(param1_col == -1 || param2_col == -1 || strain_col == -1)
+            return createNAImage(imageWidth);
+        
+        // create graphics 
+
+        BufferedImage image = new BufferedImage(imageWidth, imageWidth, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = (Graphics2D) image.getGraphics();
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        
+        StatisticsWithMissingValueSupport stat = new StatisticsWithMissingValueSupport(new String[] {".", "-1", "-1.0"});
+        
+        double x_max = stat.getMaxValue(colIndex.getVerticalIterator(xParamName));
+        double x_min = stat.getMinValue(colIndex.getVerticalIterator(xParamName));
+        double y_max = stat.getMaxValue(colIndex.getVerticalIterator(yParamName));
+        double y_min = stat.getMinValue(colIndex.getVerticalIterator(yParamName));
+        
+        g.setColor(new Color(0xFFFFFF));
+        g.fillRect(0, 0, imageWidth, imageWidth);
+        g.setColor(new Color(0x90C0E0));
+
+        LinkedList<Point> selectedORFPointList = new LinkedList<Point>();
+        
+        for(int i=1; i<plotTable.getRowSize(); i++)
+        {
+            try
+            {
+                double x = Double.parseDouble(plotTable.get(i, param1_col).toString());
+                double y = Double.parseDouble(plotTable.get(i, param2_col).toString());
+                String orf = plotTable.get(i, strain_col).toString();
+                
+                int xplot = (int) (x * imageWidth / x_max);
+                int yplot = (int) (imageWidth - (y * imageWidth / y_max));
+        
+                g.fillOval(xplot-1, yplot-1, 3, 3);
+            }
+            catch(NumberFormatException e)
+            {
+                // skip this point
+            }
+        }
+        
+        return image;
+    }
     
     public void printNAImage(HttpServletRequest request, HttpServletResponse response)
     	throws IOException
     {
-        BufferedImage image = new BufferedImage(IMAGEWIDTH, IMAGEWIDTH, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = (Graphics2D) image.getGraphics();	
-        g.setColor(new Color(0xFFFFFF));
-        g.fillRect(0, 0, IMAGEWIDTH, IMAGEWIDTH);
+        BufferedImage image = createNAImage(IMAGEWIDTH);
         response.setContentType("image/png");
         ImageIO.write(image, "png", response.getOutputStream());        
+    }
+    
+    /** 
+     * plotを作成できないときに、白紙のイメージを返す
+     * @param imageWidth
+     * @return 白紙のイメージ
+     */
+    static public BufferedImage createNAImage(int imageWidth)
+    {
+        BufferedImage image = new BufferedImage(imageWidth, imageWidth, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = (Graphics2D) image.getGraphics();    
+        g.setColor(new Color(0xFFFFFF));
+        g.fillRect(0, 0, imageWidth, imageWidth);
+        return image;
     }
 }
 
