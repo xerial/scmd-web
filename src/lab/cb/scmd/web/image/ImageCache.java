@@ -60,9 +60,13 @@ public class ImageCache
             case not_ready:
                 try
                 {
+                    int loopTimes = 0;
                     while(imageRegistory.get(imageID) == ImageStatus.not_ready)
                     {
-                        wait(30000); // timeout 30•b
+                        wait(5000); // timeout 5•b
+                        loopTimes++;
+                        if(loopTimes >= 2)
+                            break;
                     }
                     if(imageRegistory.get(imageID) == ImageStatus.ready)
                         image = cache.get(imageID);
