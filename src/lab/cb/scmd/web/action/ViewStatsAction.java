@@ -190,7 +190,12 @@ public class ViewStatsAction extends Action
 				map.put("budSize", statParamName[groupIndex][i]);
 			
 			String areaRatioParam = groupPrefix[groupIndex] + "-areaRatio_" + statParamName[groupIndex][i];
-			double areaRatio = Double.parseDouble((String) paramMap.get(areaRatioParam));
+            String areaRatioStr = (String) paramMap.get(areaRatioParam);
+            double areaRatio;
+            if(areaRatioStr == null)
+                areaRatio = 0.0;
+            else
+                areaRatio = Double.parseDouble((String) paramMap.get(areaRatioParam));
 			for(int p = 0; p < param.length; p++)
 			{
 				String data = (String) paramMap.get(groupPrefix[groupIndex] + "-" + param[p] + "_"
