@@ -27,6 +27,12 @@ import lab.cb.scmd.web.common.SCMDConfiguration;
 /**
  * JDBCのコネクションをsemarphoreの形で複数保持し、供給するクラス。Singleton。
  * 使用前には必ずConnectionServer.initialize()を実行しておくこと
+ * 
+ * 使い方は、
+ * <pre>
+ *    ConnectionServer.query("select * from ... ", new BeanHandler(SomeBean.class)); 
+ * </pre>
+ * など。ResultSetHandlerの部分は、Jakarta Commons のDBUtilsで定義されているもの。
  * @author leo
  *
  */
