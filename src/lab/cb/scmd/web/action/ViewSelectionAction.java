@@ -63,6 +63,12 @@ public class ViewSelectionAction extends Action
 	        userSelection = new UserSelection();
 
         String[] inputList = selection.getInputList();
+        
+        if(selection.getButton().equals("remove all"))
+        {
+            userSelection.clear();
+        }
+
         if(selection.getButton().equals("remove"))
         {
             // ƒ†[ƒU[‚Ì“ü—Í‚ğÁ‹

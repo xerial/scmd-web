@@ -29,6 +29,7 @@
 <table width="500">
 <tr><td align="right">
 <html:submit value="remove" property="button"/>
+<html:submit value="remove all" property="button"/>
 </td></tr>
 </table>
 

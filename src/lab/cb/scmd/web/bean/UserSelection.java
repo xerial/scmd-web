@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
+ * ユーザーからのORFの入力を記録するフォーム
  * @author leo
  *
  */
@@ -48,6 +49,14 @@ public class UserSelection
     public Set<String> orfSet()
     {
         return (Set<String>) _selection.clone();
+    }
+
+    /**
+     *  
+     */
+    public void clear()
+    {
+       _selection.clear();
     }
 }
 
