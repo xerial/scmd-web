@@ -30,8 +30,9 @@ public class Header extends TagSupport
         try
         {
             out.println("<html>");            
-            out.println("<link rel=stylesheet type=\"text/css\" href=\"" + getCss() + "\"/>");
-            out.println("<head><title>SCMD " + getTitle() + "</title></head>");
+            out.println("<head><title>SCMD " + getTitle() + "</title>");
+            out.println("<link rel=StyleSheet href=\"" + getCss() + "\" type=\"text/css\">");
+            out.println("</head>");
         }
         catch(IOException e)
         {

@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//w3c//dtd html 4.0 transitional//en">
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="scmd-base" uri="http://scmd.gi.k.u-tokyo.ac.jp/taglib/scmd-base" %>
 <%@ taglib prefix="bean" uri="/WEB-INF/struts-bean.tld" %>
 <%@ taglib prefix="html" uri="/WEB-INF/struts-html-el.tld" %>
@@ -23,10 +22,10 @@
 
 <p class="menubutton">
 [<a href="#yeastmutant">Yeast Mutant</a>]
-[<a href="#photo">Photo Menu</a>]
+[<a href="#pmenu">Photo Menu</a>]
 [<a href="#datamining">Data Mining Menu</a>]
 [<a href="#custom">Customization Menu</a>]
-[<a href="#help">Other Menus</a>]
+[<a href="#other">Other Menus</a>]
 </p>
 
 <table width="500">
@@ -41,8 +40,8 @@ You can select all menus described below from the above drop-down menu bar.
 
   <table width="650" border="0" class="helpmenu">
     <tr> 
-      <a name="yeastmutant"/>
-      <td colspan="2" class="menubar">Yeast Mutant</td>
+
+      <td colspan="2" class="menubar"><a name="yeastmutant"/>Yeast Mutant</td>
     </tr>
     <tr> 
       <td> 
@@ -55,11 +54,10 @@ You can select all menus described below from the above drop-down menu bar.
       </td>
       <td><img src="image/yeastmutant.png" align="middle"/></td>
     </tr>
-    <tr>
-          <a name="photo"/> 
-      <td colspan="2"  class="menubar">Photo Menu </td>
+    <tr>    
+      <td colspan="2"  class="menubar"><a name="pmenu"/>Photo Menu </td>
     </tr>
-    <tr> 
+    <tr>
       <td valign="top"> 
         <ul>
           <li><a href="ViewPhoto.do?orf=${orf}"> Photo Viewer </a>
@@ -95,8 +93,8 @@ You can select all menus described below from the above drop-down menu bar.
       </td>
     </tr>
     <tr> 
-          <a name="datamining"/>    
-      <td colspan="2" class="menubar">Data Mining Menu</td>
+      <td colspan="2" class="menubar"><a name="datamining"/>
+      Data Mining Menu</td>
     </tr>
     <tr> 
       <td valign="top"> 
@@ -164,9 +162,9 @@ You can select all menus described below from the above drop-down menu bar.
         
       </td>
     </tr>
+    
     <tr> 
-          <a name="custom"/>
-      <td colspan="2"  class="menubar">Customization Menu </td>
+      <td colspan="2"  class="menubar"><a name="custom"/>Customization Menu </td>
     </tr>
     <tr> 
       <td valign="top"> 
@@ -192,10 +190,9 @@ You can select all menus described below from the above drop-down menu bar.
 
       </td>
     </tr>
-    <tr><td colspan="2"  class="menubar">Other Menus</td></tr>
+    <tr><td colspan="2"  class="menubar"><a name="other"/>Other Menus</td></tr>
     <tr> 
       <td colspan="2">
-            <a name="help"/>       
         <ul>
           <li>Help Menu 
             <ul>
@@ -207,8 +204,6 @@ You can select all menus described below from the above drop-down menu bar.
       </td>
     </tr>
     <tr> 
-    	<a name="publication"/>    	
-    	<a name="about"/>    	
       <td colspan="2"> 
         <ul>
           <li><a href="publication.jsp">Publications</a> </li>

@@ -16,7 +16,7 @@
 </logic:notEqual>
 </logic:equal>
 
-<script language="javascript" src="js/styleutil.js"></script>
+<script type="text/javascript" language="javascript" src="js/styleutil.js"></script>
 
 
 <table width="700" border="0" cellspacing=0 cellpadding=0>
@@ -29,7 +29,7 @@
 </logic:notEqual>
 <td width="400" valign="bottom" align="left"> 
  <html:link page="/">
-   <html:img page="/image/scmd_title.png" align="absbottom" width="467" height="22" 
+   <html:img page="/image/scmd_title.png" align="bottom" width="467" height="22" 
    alt="Saccharomyces Cerevisiae Morphological Database" border="0"/>
  </html:link>
 </td>
