@@ -14,6 +14,10 @@ import java.util.List;
 
 import lab.cb.scmd.db.connect.ConnectionServer;
 import lab.cb.scmd.db.scripts.bean.Parameter;
+import lab.cb.scmd.db.sql.SQLExpression;
+import lab.cb.scmd.web.action.ViewCellInfoAction;
+import lab.cb.scmd.web.common.ConfigObserver;
+import lab.cb.scmd.web.table.Table;
 
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.struts.action.ActionForm;
@@ -22,15 +26,24 @@ import org.apache.struts.action.ActionForm;
  * @author leo
  *
  */
-public class ViewCustomizeForm extends ActionForm
+public class ViewCustomizeForm extends ActionForm 
 {
-    static private String[] _cellParams;
     static List<Parameter> _cellParameterList; 
+    static List<Parameter> _orfParameterList;
     
     public static void loadParameters() throws SQLException
     {
-        _cellParameterList = (List<Parameter>) ConnectionServer.query("select id, name, scope, datatype from parameterlist where scope='cell' and datatype='num' order by id", new BeanListHandler(Parameter.class));
+        String sql = "select id, name, scope, datatype from parameterlist where scope='$1' and datatype='num' order by id";        
+        _cellParameterList = (List<Parameter>) ConnectionServer.query(new BeanListHandler(Parameter.class), sql, "cell");
+        _orfParameterList = (List<Parameter>) ConnectionServer.query(new BeanListHandler(Parameter.class), sql, "orf");
+        Table table = ConnectionServer.retrieveTable(sql, "orf");
+         
+        System.out.println("[scmd-server] ViewCustomizeForm is initialized");
     }
+
+    
+    private String[] selectedCellParameter = new String[] {};
+    private String[] selectedORFParameter = new String[] {};
     
     /**
      * 
@@ -41,8 +54,26 @@ public class ViewCustomizeForm extends ActionForm
         // TODO Auto-generated constructor stub
     }
 
+
     
-    
+    public String[] getSelectedCellParameter()
+    {
+        return selectedCellParameter;
+    }
+    public void setSelectedCellParameter(String[] selectedCellParameter)
+    {
+        this.selectedCellParameter = selectedCellParameter;
+    }
+    public String[] getSelectedORFParameter()
+    {
+        return selectedORFParameter;
+    }
+    public void setSelectedORFParameter(String[] selectedORFParameter)
+    {
+        this.selectedORFParameter = selectedORFParameter;
+    }
+
+
 }
 
 

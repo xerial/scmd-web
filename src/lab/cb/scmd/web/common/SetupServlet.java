@@ -13,6 +13,8 @@ package lab.cb.scmd.web.common;
 import java.sql.SQLException;
 
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
@@ -25,35 +27,106 @@ import lab.cb.scmd.web.formbean.ViewCustomizeForm;
  * @author leo
  *
  */
-public class SetupServlet extends HttpServlet {
+public class SetupServlet extends HttpServlet implements ConfigObserver, ServletContextListener {
 
     /**
      * Comment for <code>serialVersionUID</code>
      */
     private static final long serialVersionUID = 3256725074139427635L;
 
+    /*
     public void init(ServletConfig config) throws ServletException {
+
         super.init(config);
         
         try
         {
             SCMDConfiguration.Initialize();
             System.out.println("[scmd-server] SCMDConfiguration is initialized");
-                        
+                         
             ConnectionServer.initialize();
+
+            setup();
             
-            
-            // initialize some beans
-            ViewCustomizeForm.loadParameters();
+            // register myself
+            SCMDConfiguration.addObserver(this);
         }
         catch(SCMDException e)
         {
             throw new ServletException(e);
-        }
+        }  
         catch(SQLException e)
         {
             throw new ServletException(e);
         }
+    }
+    */
+
+    public void initialSetup() throws SCMDException, SQLException
+    {
+        SCMDConfiguration.Initialize();
+        System.out.println("[scmd-server] SCMDConfiguration is initialized");
+        
+        ConnectionServer.initialize();
+        
+        setup();
+        
+        // register myself
+        SCMDConfiguration.addObserver(this);
+    }
+    
+    
+    
+    // @see lab.cb.scmd.web.common.ConfigObserver#reloaded()
+    public void reloaded() 
+    {
+        try
+        {
+            setup();
+        }
+        catch(SCMDException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * èâä˙âªéûÇ…ïKóvÇ»ëÄçÏÇÇ±Ç±Ç…Ç‹Ç∆ÇﬂÇƒèëÇ≠
+     * @throws SCMDException
+     */
+    private void setup() throws SCMDException
+    {
+        try
+        {
+            ViewCustomizeForm.loadParameters();
+        }
+        catch(SQLException e)
+        {   
+            throw new SCMDException(e);
+        }
+    }
+
+    // @see javax.servlet.ServletContextListener#contextInitialized(javax.servlet.ServletContextEvent)
+    public void contextInitialized(ServletContextEvent arg0)
+    {
+        try
+        {
+            initialSetup();
+        }
+        catch (SCMDException e)
+        {
+            e.printStackTrace(System.out);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace(System.out);
+        }
+    }
+
+    // @see javax.servlet.ServletContextListener#contextDestroyed(javax.servlet.ServletContextEvent)
+    public void contextDestroyed(ServletContextEvent arg0)
+    {
+        ConnectionServer.dispose();        
     }
 
 }

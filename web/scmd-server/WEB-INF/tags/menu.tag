@@ -43,7 +43,7 @@
     <table>
      <tr align="top">
 	    <td class="tool" width="150" onMouseOver="switchStyle(this,'tool_on')" onMouseOut="switchStyle(this,'tool')"> <a href="ViewSelection.do">view your selection</a> </td>
-    	<td class="tool" width="150" onMouseOver="switchStyle(this,'tool_on')" onMouseOut="switchStyle(this,'tool')"> customize view </td>
+    	<td class="tool" width="150" onMouseOver="switchStyle(this,'tool_on')" onMouseOut="switchStyle(this,'tool')"> <a href="CustomizeView.do">customize view</a></td>
      </tr>
 	</table>    
    </td>

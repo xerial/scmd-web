@@ -3,12 +3,19 @@
     
   <display-name>SCMD Server Application </display-name>
   
+  <listener>    
+    <listener-class>lab.cb.scmd.web.common.SetupServlet</listener-class>
+  </listener>
+  
+  
   <!-- Standard Action Servlet Configuration (with debugging) -->
+  <!--
   <servlet>
   	<servlet-name>SetupServlet</servlet-name>
   	<servlet-class>lab.cb.scmd.web.common.SetupServlet</servlet-class>
   	<load-on-startup>1</load-on-startup>
   </servlet>
+  -->
   
   <servlet>
     <servlet-name>action</servlet-name>
@@ -29,11 +36,12 @@
   </servlet>
 
   <!-- Standard Action Servlet Mapping -->
-  
+ <!-- 
   <servlet-mapping>
 	<servlet-name>SetupServlet</servlet-name>
 	<url-pattern>/setup</url-pattern>
   </servlet-mapping>
+  -->
   
   <servlet-mapping>
     <servlet-name>action</servlet-name>
