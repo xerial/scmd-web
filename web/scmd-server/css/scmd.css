@@ -50,6 +50,8 @@ a:visited { color: #666666; }
 }
 .dropdownmenu ul 
 {
+	display: block;
+	width: 100%;
 	list-style: none;
 	background: #0056AD;		
 	margin: 0;
