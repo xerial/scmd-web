@@ -61,10 +61,11 @@
 <span class="small">
 <%
 	int numParam = paramIDs.size();
-	String pid = "";
+	String pid = "", labelLink="";
 	for(java.util.Iterator it = paramIDs.iterator(); it.hasNext(); )
 		pid += "paramID=" + it.next().toString() + "&";
 	pid += "columnType=input";
+	labelLink = pid;
 	pid += "&sortspec=" + sortspec;	
 %>
 <scmd-base:pagemover page="ViewORFParameter.do" parameter="<%= pid%>" target="${group.groupName}" currentPage="<%= pageStatus.getCurrentPage() %>" maxPage="<%= pageStatus.getMaxPage() %>"/>
@@ -82,7 +83,7 @@ format.
 <%-- <td width="150" align="center">Aliases</td> --%>
 <td></td>
 <logic:iterate id="p" name="paramList" scope="request" type="lab.cb.scmd.web.sessiondata.MorphParameter">
-<td class="sheetlabel" align="center" ><a href="ViewORFParameter.do?<%= pid%>">${p.name}</a></td>
+<td class="sheetlabel" align="center" ><a href="ViewORFParameter.do?<%= labelLink%>&sortspec=${p.id}">${p.name}</a></td>
 </logic:iterate>
 </tr>
 <logic:iterate id="gene" name="geneList" scope="request" type="lab.cb.scmd.web.bean.YeastGene">
