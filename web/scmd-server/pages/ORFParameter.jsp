@@ -82,7 +82,7 @@ format.
 <%-- <td width="150" align="center">Aliases</td> --%>
 <td></td>
 <logic:iterate id="p" name="paramList" scope="request" type="lab.cb.scmd.web.sessiondata.MorphParameter">
-<td class="sheetlabel" align="center" ><a href="ViewORFParameter.do?sortspec=${p.id}">${p.name}</a></td>
+<td class="sheetlabel" align="center" ><a href="ViewORFParameter.do?<%= pid%>">${p.name}</a></td>
 </logic:iterate>
 </tr>
 <logic:iterate id="gene" name="geneList" scope="request" type="lab.cb.scmd.web.bean.YeastGene">
@@ -96,7 +96,7 @@ format.
 <%--<td class="small" align="center"> ${gene.aliasString} </td> --%>
 <logic:iterate id="p" name="paramList" scope="request" type="lab.cb.scmd.web.sessiondata.MorphParameter">
 <logic-nonel:equal name="p" property="id" value="${sortspec}">
-<td align="right" bgcolor="#F0D0D0">
+<td align="right" bgcolor="#FFE0E0">
 </logic-nonel:equal>
 <logic-nonel:notEqual name="p" property="id" value="${sortspec}">
 <td align="right">
