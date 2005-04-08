@@ -78,7 +78,7 @@ format.
 
 <table class="datasheet" cellpadding="0" cellspacing="1">
 <tr>
-<td class="sheetlabel" align="center"><a href="ViewORFParameter.do?sortspec=-1">ORF</a></td>
+<td class="sheetlabel" align="center"><a href="ViewORFParameter.do?<%= labelLink%>&sortspec=-1">ORF</a></td>
 <td class="sheetlabel" align="center">Std. Name</td>
 <%-- <td width="150" align="center">Aliases</td> --%>
 <td></td>
