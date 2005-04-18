@@ -4,7 +4,7 @@
 <%@ taglib prefix="html" uri="/WEB-INF/struts-html-el.tld" %>
 <%@ taglib prefix="logic" uri="/WEB-INF/struts-logic.tld" %>
 <%@ taglib prefix="scmd-tags" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="/WEB-INF/c-rt.tld"%>
 
 <logic:equal name="view" value="">
 <c:set var="orf" value="yor202w"/>
