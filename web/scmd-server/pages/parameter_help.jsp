@@ -173,7 +173,7 @@
 <logic:iterate id="p" name="cellParamList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
 <tr>
 <td>
-${p.name}
+<a href="ViewORFParameter.do?columnType=input&paramID=${p.id}&sortspec=${p.id}">${p.name}</a>
 </td>
 <td bgcolor="#FFEFEF">${p.displayname} </td>
 <td bgcolor="#EFEFEF" align="center">${p.stain} </td>

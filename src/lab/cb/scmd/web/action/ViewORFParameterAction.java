@@ -76,7 +76,7 @@ public class ViewORFParameterAction extends Action
                 (List<MorphParameter>)
                 ConnectionServer.query(new BeanListHandler(MorphParameter.class), 
                         "select * from $1 where scope='orf' and id in ($2)",
-                        SCMDConfiguration.getProperty("DB_PARAMETERLIST", "parameterlist"),
+                        SCMDConfiguration.getProperty("DB_PARAMETERLIST", "visible_parameterlist"),
                         SQLUtil.commaSeparatedList(input.getParamID(), SQLUtil.QuotationType.singleQuote));
             break;
         case custom:
@@ -86,7 +86,23 @@ public class ViewORFParameterAction extends Action
 
         if(selectedORFParameter == null || selectedORFParameter.size() <= 0)
         {
-            return mapping.findForward("selection");
+            // cell parameter‚©‚Ç‚¤‚©’²‚×‚é
+            List<MorphParameter> selectedCellParameter = null;
+            selectedCellParameter = 
+                (List<MorphParameter>)
+                ConnectionServer.query(new BeanListHandler(MorphParameter.class), 
+                        "select * from $1 where scope='cell' and id in ($2)",
+                        SCMDConfiguration.getProperty("DB_PARAMETERLIST", "visible_parameterlist"),
+                        SQLUtil.commaSeparatedList(input.getParamID(), SQLUtil.QuotationType.singleQuote));
+    
+            if(selectedCellParameter == null || selectedCellParameter.size() <= 0)
+                return mapping.findForward("selection");
+            else
+            {
+                MorphParameter targetParam = selectedCellParameter.get(0);
+                request.setAttribute("targetParam", targetParam);                
+                return mapping.findForward("cellparam");
+            }
         }
 
         selectedOrfSet = (TreeSet<String>) SCMDSessionManager.getUserSelection(request).orfSet();

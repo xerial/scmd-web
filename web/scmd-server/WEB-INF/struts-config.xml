@@ -438,6 +438,7 @@
 			input="/error.jsp">
 			<forward name="selection" path="/pages/NoORFParameter.jsp" />			
 			<forward name="success" path="/pages/ORFParameter.jsp" />			
+			<forward name="cellparam" path="/pages/CellParameter.jsp"/>
 		</action>
 		
 				

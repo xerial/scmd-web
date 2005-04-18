@@ -41,6 +41,7 @@
 <tr><td class="small">Nucleus Status:</td><td class="small">${targetParam.nucleusStatus} </td></tr>
 <tr><td class="small">Parameter Type:</td><td class="small">${targetParam.parameterType}</td></tr>
 <tr><td class="small">Description:</td><td class="small" width="250">${targetParam.displayname}</td></tr>
+<tr><td class="small">Definition:</td><td class="small" width="250">${targetParam.htmlDefinition}</td></tr>
 </table>
 </td>
 <td>

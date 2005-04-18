@@ -9,6 +9,15 @@
 //--------------------------------------
 package lab.cb.scmd.web.sessiondata;
 
+import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.commons.dbutils.handlers.ScalarHandler;
+
+import lab.cb.scmd.db.connect.ConnectionServer;
+import lab.cb.scmd.web.common.SCMDConfiguration;
+
 public class MorphParameter {
     int id = 0; 
     String name = "";
@@ -19,6 +28,7 @@ public class MorphParameter {
     String stain = "";
     String groupid = "";
     String systematicname = "";
+    String definition = "";
     
     String groupName = "";
 
@@ -119,4 +129,58 @@ public class MorphParameter {
     {
         this.stain = stain;
     }
+
+    public String getDefinition()
+    {
+        return definition;
+    }
+
+    public void setDefinition(String definition)
+    {
+        this.definition = definition;
+    }
+    
+    public String getHtmlDefinition()
+    {
+        final Pattern p = Pattern.compile("[ACD](CV)?[0-9]+(-[0-9])?(_(A|A1B|C))?");
+        if(definition == null)
+            return "";
+        Matcher m = p.matcher(definition);
+        StringBuffer buffer = new StringBuffer();
+        while(m.find())
+        {
+            String paramName = definition.substring(m.start(), m.end());
+            int paramID = parameterID(paramName);
+            if(paramID != -1)
+                m.appendReplacement(buffer, "<a href=\"ViewORFParameter.do?columnType=input&paramID=" + paramID + "&sortspec=" + paramID + "\">" + paramName + "</a>");
+            else
+                m.appendReplacement(buffer, paramName);
+        }
+        m.appendTail(buffer);
+        
+        return buffer.toString();
+    }
+
+    static public int parameterID(String parameterName) 
+    {
+        try
+        {
+            Integer id = (Integer) ConnectionServer.query(new ScalarHandler("id"), 
+                    "select id from $1 where name='$2'",
+                    SCMDConfiguration.getProperty("DB_PARAMETERLIST", "visible_parameterlist"),
+                    parameterName
+                    );
+            if(id != null)
+                return id.intValue();
+            else
+                return -1;
+        }
+        catch(SQLException e)
+        {
+            // cannot find id
+            e.printStackTrace();
+            return -1;
+        }
+    }
+    
 }
