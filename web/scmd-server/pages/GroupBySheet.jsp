@@ -4,7 +4,7 @@
 <%@ taglib prefix="scmd-tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="html" uri="/WEB-INF/struts-html.tld" %>
 <%--
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
+<%@ taglib prefix="c" uri="/WEB-INF/c-rt.tld"%>
 <%@ taglib prefix="bean" uri="/WEB-INF/struts-bean.tld" %>
 
 <%@ taglib prefix="logic" uri="/WEB-INF/struts-logic.tld" %>

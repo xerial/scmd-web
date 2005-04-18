@@ -19,7 +19,7 @@
 <%@ taglib prefix="logic" uri="/WEB-INF/struts-logic.tld" %>
 <%@ taglib prefix="logic-el" uri="/WEB-INF/struts-logic-el.tld" %>
 <%@ taglib prefix="scmd-tags" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="/WEB-INF/c-rt.tld"%>
 
 <%@page import="lab.cb.scmd.web.bean.*"%>
 

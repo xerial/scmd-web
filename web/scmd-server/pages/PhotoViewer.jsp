@@ -17,7 +17,7 @@
 <%@ taglib prefix="html" uri="/WEB-INF/struts-html.tld" %>
 <%@ taglib prefix="logic" uri="/WEB-INF/struts-logic.tld" %>
 <%@ taglib prefix="scmd-tags" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="/WEB-INF/c-rt.tld"%>
 
 
 <jsp:useBean id="view"  scope="session" class="lab.cb.scmd.web.bean.CellViewerForm"/>
