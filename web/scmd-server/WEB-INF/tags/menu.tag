@@ -1,6 +1,6 @@
 <%@ taglib prefix="logic" uri="/WEB-INF/struts-logic.tld" %>
 <%@ taglib prefix="html" uri="/WEB-INF/struts-html.tld" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<%@ taglib uri="/WEB-INF/c-rt.tld" prefix="c" %> 
 <%@ taglib prefix="scmd-tags" tagdir="/WEB-INF/tags" %>
 <%@ attribute name="toolbar" required="false" %>
 <%@ attribute name="searchframe" required="false" %>

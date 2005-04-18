@@ -1,6 +1,7 @@
 <%@ taglib prefix="html" uri="/WEB-INF/struts-html.tld" %>
 <%@ taglib prefix="logic" uri="/WEB-INF/struts-logic.tld" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<%@ taglib prefix="c" uri="/WEB-INF/c-rt.tld"%>
+
 <%@ attribute name="orf" required="false" %>
 <%@ attribute name="logo" required="false" %>
 <%@ attribute name="width" required="false" %>
