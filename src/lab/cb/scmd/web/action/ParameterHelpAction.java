@@ -48,9 +48,9 @@ public class ParameterHelpAction extends Action
     {
         
         String sql = SQLExpression.assignTo(
-                "select t1.id, t1.name, displayname, scope, t1.stain, t2.specifier as \"groupName\" from $1 as t1 left join $2 as t2 on groupid = t2.id where datatype='num' and scope ='$3' order by t1.id ",
+                "select t1.id, t1.name, displayname, scope, t1.stain, t2.specifier as \"groupName\", t1.datatype as datatype from $1 as t1 left join $2 as t2 on groupid = t2.id where datatype in ('num', 'coordinate') and scope ='$3' order by t1.id ",
                 SCMDConfiguration.getProperty("DB_PARAMETERLIST", "visible_parameterlist"),
-                SCMDConfiguration.getProperty("DB_GROUPLIST", "groups"));
+                SCMDConfiguration.getProperty("DB_GROUPLIST", "groups")); 
                 
 
         List<MorphParameter> cellParamList = (List<MorphParameter>) ConnectionServer.query(

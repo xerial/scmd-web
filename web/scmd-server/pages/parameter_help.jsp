@@ -169,6 +169,7 @@
 <td>parameter name</td>
 <td>description</td>
 <td>category</td>
+<td>value type</td>
 </tr>
 <logic:iterate id="p" name="cellParamList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
 <tr>
@@ -177,6 +178,7 @@
 </td>
 <td bgcolor="#FFEFEF">${p.displayname} </td>
 <td bgcolor="#EFEFEF" align="center">${p.stain} </td>
+<td bgcolor="#EFFFEF" align="center">${p.datatype} </td>
 </tr>
 </logic:iterate>
 </table>
