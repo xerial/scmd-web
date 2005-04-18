@@ -151,7 +151,7 @@
 <logic:iterate id="p" name="orfParamList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
 <tr>
 <td>
-<a href="ORFDataSheet.do?paramID=${p.id}">${p.name}</a>
+<a href="ViewORFParameter.do?columnType=input&paramID=${p.id}&sortspec=${p.id}">${p.name}</a>
 </td>
 <td bgcolor="#FFEFEF">${p.displayname} </td>
 <td bgcolor="#EFEFEF" align="center">${p.stain} </td>
