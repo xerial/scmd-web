@@ -10,12 +10,18 @@
 
 package lab.cb.scmd.web.bean;
 
+import java.io.Serializable;
+
 /**
  * @author leo
  *
  */
-public class Range
+public class Range implements Serializable
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 3257284751210656310L;
     double _min;
     double _max;
     /**
