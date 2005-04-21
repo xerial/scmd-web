@@ -18,6 +18,7 @@
 
 <scmd-tags:orfInfo  orf="${gene.orf}" 
 	stdname="${gene.standardName}" annot="${gene.annotation}" 
+	cellimage="on"
 	title="Teardrop View of ORF Parameters" />
 
 <table>

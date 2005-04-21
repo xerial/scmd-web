@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 //import java.io.PrintStream;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletConfig;
@@ -27,6 +28,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import lab.cb.scmd.db.common.TableQuery;
+import lab.cb.scmd.exception.SCMDException;
+import lab.cb.scmd.web.common.SCMDConfiguration;
 
 //import lab.cb.scmd.exception.UnfinishedTaskException;
 
@@ -38,7 +43,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class CellPainter extends HttpServlet
 {
-    HashMap budSizeToSizeRatioMap = new HashMap();
+    HashMap<String, Double> budSizeToSizeRatioMap = new HashMap<String, Double>();
 
     public void init(ServletConfig config) throws ServletException
     {
@@ -55,20 +60,73 @@ public class CellPainter extends HttpServlet
 
         try
         {
+            String budSize = null;
+            double sizeRatio = 0.0;
 
-            String budSize = request.getParameter("budSize");
-            double sizeRatio = getParameter(request, "areaRatio");
-
-            double longAxis = getParameter(request, "longAxis");
-            String roundnessStr = request.getParameter("roundness");
-            double roundness = Double.parseDouble(roundnessStr == null ? "-1" : roundnessStr);
+            double longAxis = 0.0;
+            String roundnessStr = "";
+            double roundness = 0.0;
             double neckPosition = -1.0;
             double growthDirection = -1.0;
-            if (sizeRatio != 0.0)
-            {
-                neckPosition = getParameter(request, "neckPosition");
-                growthDirection = getParameter(request, "growthDirection");
-            }
+
+            if( request.getParameter("orf") != null ) {
+            	// use orf name
+        		// default: DNA, A1|B 
+        		String orf = request.getParameter("orf");
+        		String stain = "D";
+        		if( request.getParameter("stain") != null ) {
+        			stain = request.getParameter("stain");
+        		}
+        		String group = "A1|B"; 
+        		if( request.getParameter("group") != null ) {
+        			group = request.getParameter("group");
+        			if( stain.equals("A1B") )
+        				group = "A1|B";
+        		}
+        		
+        		TableQuery query = SCMDConfiguration.getTableQueryInstance();
+        		try {
+					Map statParamMap = query.getShapeStatLine(orf);
+					String num = (String) statParamMap.get(stain + "-num-" + group);
+					
+					final String[] param = new String[] { "longAxis", "roundness", "budNeckPosition",
+							"budGrowthDirection", "areaRatio" };
+					for(int p = 0; p < param.length; p++)
+					{
+			            budSize = null;
+			            if( group.equals("no") || group.equals("small") || group.equals("medium") || group.equals("large") )
+			            	budSize = group;
+			            sizeRatio = Double.parseDouble((String)statParamMap.get(stain +  "-areaRatio_" + group));
+
+			            longAxis = Double.parseDouble((String)statParamMap.get(stain +  "-longAxis_" + group));
+			            roundnessStr = (String) statParamMap.get(stain +  "-roundness_" + group);
+			            roundness = Double.parseDouble(roundnessStr == null ? "-1" : roundnessStr);
+			            if (sizeRatio != 0.0)
+			            {
+			                neckPosition = Double.parseDouble((String)statParamMap.get(stain + "-budNeckPosition_" + group) );
+			                growthDirection = Double.parseDouble((String)statParamMap.get(stain + "-budGrowthDirection_" + group) );
+			            }
+					}
+        		} catch (NullPointerException e) {
+        			return;
+				} catch (SCMDException e) {
+					e.printStackTrace();
+					return;
+				}
+        	} else {
+                budSize = request.getParameter("budSize");
+                sizeRatio = getParameter(request, "areaRatio");
+
+                longAxis = getParameter(request, "longAxis");
+                roundnessStr = request.getParameter("roundness");
+                roundness = Double.parseDouble(roundnessStr == null ? "-1" : roundnessStr);
+                if (sizeRatio != 0.0)
+                {
+                    neckPosition = getParameter(request, "neckPosition");
+                    growthDirection = getParameter(request, "growthDirection");
+                }
+        	}
+
             if (longAxis < 0
                     || longAxis > 80
                     || roundness < 1.0
