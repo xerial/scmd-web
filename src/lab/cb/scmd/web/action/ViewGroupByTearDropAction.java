@@ -143,6 +143,9 @@ public class ViewGroupByTearDropAction extends Action
 
             // TODO refactoring
             boolean displayValueFlag = true;
+            if(dataMap.get(paramName) == null || dataMap.get(numParamName) == null)
+                continue;
+            
             double paramValue = Double.parseDouble(dataMap.get(paramName).toString());
             int numCells = Integer.parseInt(dataMap.get(numParamName).toString());
 
