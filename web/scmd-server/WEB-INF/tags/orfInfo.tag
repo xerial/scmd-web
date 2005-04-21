@@ -21,7 +21,9 @@
 </td>
 <logic:equal name="cellimage"  value="on">
 <td align="left" valign="bottom">
-<img src="cellshape.png?orf=${orf}" alt="${orf}" />
+<html:link page="/ViewStats.do?orf=${orf}">
+<img src="cellshape.png?orf=${orf}" border="0" alt="${orf}" />
+</html:link>
 </td>
 </logic:equal>
 <td align="right" rowspan="2">
