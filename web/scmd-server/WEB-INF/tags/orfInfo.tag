@@ -31,7 +31,7 @@
 </td>
 </tr>
 <logic:equal name="cellimage"  value="on">
-<tr><td align="center"><span class="small">Average Shape</span></td></tr>
+<tr><td align="center"><span class="annotation">Average Shape</span></td></tr>
 </logic:equal>
 </table>
 
