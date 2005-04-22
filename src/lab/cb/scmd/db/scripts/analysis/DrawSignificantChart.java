@@ -12,12 +12,14 @@ import java.awt.image.BufferedImage;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +27,14 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import javax.imageio.ImageIO;
+
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableImage;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -83,6 +93,18 @@ public class DrawSignificantChart {
     QueryRunner queryRunner = null;
     HashMap<String, List<Strainname>> orflistMap = new HashMap<String, List<Strainname>> ();
     HashMap<String, String> gotermMap = new HashMap<String, String> ();
+    
+    // for excel sheet
+    private boolean useExcel = true;
+    WritableWorkbook workbook = null;
+    WritableSheet fwdlowsheet = null;
+    WritableSheet fwdhighsheet = null;
+    WritableSheet revlowsheet = null;
+    WritableSheet revhighsheet = null;
+    int fwdlowcount = 0;
+    int fwdhighcount = 0;
+    int revlowcount = 0;
+    int revhighcount = 0;
 
     Color lowCellColor = new Color(102, 153, 0); // 996600
     Color middleCellColor = Color.BLACK;
@@ -112,20 +134,33 @@ public class DrawSignificantChart {
         double revprobthres = 0.01 / (double)gonum;
         
         if(binomialfile.length() != 0 ) {
-            try {
-                fwdlowout = new PrintStream(new FileOutputStream("fwdlow.html"));
-                fwdhighout = new PrintStream(new FileOutputStream("fwdhigh.html"));
-                revlowout = new PrintStream(new FileOutputStream("revlow.html"));
-                revhighout = new PrintStream(new FileOutputStream("revhigh.html"));
-                
-                fwdlowout.println("<table>");
-                fwdhighout.println("<table>");
-                revlowout.println("<table>");
-                revhighout.println("<table>");
-            } catch (FileNotFoundException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
+        	if( useExcel ) {
+        		try {
+					workbook = Workbook.createWorkbook(new File("Supplementary_Table.xls"));
+					fwdlowsheet = workbook.createSheet("fwdlow", 0);
+					fwdhighsheet = workbook.createSheet("fwdhigh", 1);
+					revlowsheet = workbook.createSheet("revlow", 2);
+					revhighsheet = workbook.createSheet("revhigh", 3);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+        		
+        	} else {
+                try {
+                    fwdlowout = new PrintStream(new FileOutputStream("fwdlow.html"));
+                    fwdhighout = new PrintStream(new FileOutputStream("fwdhigh.html"));
+                    revlowout = new PrintStream(new FileOutputStream("revlow.html"));
+                    revhighout = new PrintStream(new FileOutputStream("revhigh.html"));
+                    
+                    fwdlowout.println("<table>");
+                    fwdhighout.println("<table>");
+                    revlowout.println("<table>");
+                    revhighout.println("<table>");
+                } catch (FileNotFoundException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+        	}
 
             try {
                 List<GOTerm> goannot = (List<GOTerm>) queryRunner.query("select goid, name from term",
@@ -185,15 +220,24 @@ public class DrawSignificantChart {
                         drawChart(true, true, gonum, signum, specificnum);
                     }
                 }
-                fwdlowout.println("</table>");
-                fwdhighout.println("</table>");
-                revlowout.println("</table>");
-                revhighout.println("</table>");
+                if( useExcel ) {
+        			workbook.write();
+        			try {
+						workbook.close();
+					} catch (WriteException e1) {
+						e1.printStackTrace();
+					}
+                } else {
+                    fwdlowout.println("</table>");
+                    fwdhighout.println("</table>");
+                    revlowout.println("</table>");
+                    revhighout.println("</table>");
 
-                fwdlowout.close();
-                fwdhighout.close();
-                revlowout.close();
-                revhighout.close();
+                    fwdlowout.close();
+                    fwdhighout.close();
+                    revlowout.close();
+                    revhighout.close();
+                }
 
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
@@ -208,7 +252,76 @@ public class DrawSignificantChart {
         }
     }
 
-    /**
+    private void addRow(String param, String goid, double value, double ratio, boolean fwd, boolean high, 
+    		WritableSheet sheet, int count, 
+    		int gonum, int signum, int targetnum) {
+        addRow(param, goid, value, ratio, null, fwd, high, sheet, count, gonum, signum, targetnum);
+    }
+    
+    private void addRow(String param, String goid, double value, double ratio, 
+    		HashMap<String, ArrayList<String>> orfnames, boolean fwd, boolean high, 
+    		WritableSheet sheet, int count, 
+    		int gonum, int signum, int targetnum) {
+        if( value < 2.2e-16 ) {
+            value = 2.2e-16;
+        }
+		try {
+			int col = 0;
+			sheet.addCell(new Label(col++, count, param));
+			sheet.addCell(new Label(col++, count, goid));
+			sheet.addCell(new Label(col++, count, gotermMap.get(goid)));
+	        if(fwd) {
+	            String filename = paramname + "-" + goid.replaceFirst("GO:", "") + "_fg.png"; 
+	            File imageFile = new File(filename);
+	            WritableImage img = new WritableImage(col++, count, 1, 1, imageFile);
+				sheet.addImage(img);
+				
+				String lowOrfStr = getOrfStr(orfnames, "low");
+				sheet.addCell(new Label(col++, count, lowOrfStr));
+				String middleOrfStr = getOrfStr(orfnames, "middle");
+				sheet.addCell(new Label(col++, count, middleOrfStr));
+				String highOrfStr = getOrfStr(orfnames, "high");
+				sheet.addCell(new Label(col++, count, highOrfStr));
+				String lethalOrfStr = getOrfStr(orfnames, "lethal");
+				sheet.addCell(new Label(col++, count, lethalOrfStr));
+	        } else {
+	            String filename = paramname + "_rg.png";
+	            String pifile = "";
+	            if( high ) {
+	                pifile = paramname + "-" + goid.replaceFirst("GO:", "") + "_high.png";
+	            } else {
+	                pifile = paramname + "-" + goid.replaceFirst("GO:", "") + "_low.png";
+	            }
+	            String piwholefile = paramname + "-" + goid.replaceFirst("GO:", "") + "_whole.png";
+	            WritableImage barChart = new WritableImage(col++, count, 1, 1, new File(filename));
+	            WritableImage pichart  = new WritableImage(col++, count, 1, 1, new File(pifile));
+	            WritableImage piwholechart = new WritableImage(col++, count, 1, 1, new File(piwholefile));
+	            sheet.addImage(barChart);
+	            sheet.addImage(pichart);
+	            sheet.addImage(piwholechart);
+	        }
+	        sheet.addCell(new Label(col++, count, gonum + ""));
+	        sheet.addCell(new Label(col++, count, signum + ""));
+	        sheet.addCell(new Label(col++, count, targetnum + ""));
+	        sheet.addCell(new Label(col++, count, value + ""));
+	        sheet.addCell(new Label(col++, count, ratio + ""));
+		} catch (RowsExceededException e) {
+			e.printStackTrace();
+		} catch (WriteException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+    private String getOrfStr(HashMap<String, ArrayList<String>> orfnames, String index) {
+    	String orfstr = "";
+		for(String s: orfnames.get(index)) {
+			orfstr += s + ", ";
+		}
+		return orfstr.substring(0, orfstr.length() - 2);
+	}
+
+	/**
      * @param string
      * @param string2
      * @param string3
@@ -217,10 +330,10 @@ public class DrawSignificantChart {
      */
     private void outHtml(String param, String goid, double value, double ratio, boolean fwd, boolean high, PrintStream out,
             int gonum, int signum, int targetnum) {
-        outHtml(param, goid, value, ratio, "", fwd, high, out, gonum, signum, targetnum);
+        outHtml(param, goid, value, ratio, null, fwd, high, out, gonum, signum, targetnum);
     }
 
-    private void outHtml(String param, String goid, double value, double ratio, String orfnames, boolean fwd, boolean high, PrintStream out,
+    private void outHtml(String param, String goid, double value, double ratio, HashMap<String, ArrayList<String>> orfnames, boolean fwd, boolean high, PrintStream out,
             int gonum, int signum, int targetnum) {
         if( value < 2.2e-16 ) {
             value = 2.2e-16;
@@ -232,6 +345,7 @@ public class DrawSignificantChart {
         if(fwd) {
             String filename = paramname + "-" + goid.replaceFirst("GO:", "") + "_fg.png"; 
             out.println("<td>" + "<img src=\"" +  filename + "\" />" + "</td>");
+            //TODO: hashmap ‘Î‰ž‚É‚·‚é
             out.println("<td>" + orfnames + "</td>");
         } else {
             String filename = paramname + "_rg.png";
@@ -305,21 +419,46 @@ public class DrawSignificantChart {
             if(drawReverse) {
                 drawReserseChart(goid, paramname, anavalueList, orfMap);
                 if(drawHigh) {
-                    outHtml(paramname, goid, curpval, curratio, false, true, revhighout,
-                            gonum, signum, targetnum);
+                	if(useExcel) {
+                        addRow(paramname, goid, curpval, curratio, false, true, 
+                        		revhighsheet, revhighcount++,
+                                gonum, signum, targetnum);
+                	} else {
+                        outHtml(paramname, goid, curpval, curratio, false, true, 
+                        		revhighout,
+                                gonum, signum, targetnum);
+                	}
                 } else {
-                    outHtml(paramname, goid, curpval, curratio, false, false, revlowout,
-                            gonum, signum, targetnum);
+                	if( useExcel) {
+                        addRow(paramname, goid, curpval, curratio, false, false, 
+                        		revlowsheet, revlowcount++,
+                                gonum, signum, targetnum);
+                	} else {
+                        outHtml(paramname, goid, curpval, curratio, false, false, revlowout,
+                                gonum, signum, targetnum);
+                	}
                 }
             } else {
-                String orfnames = "";
+            	HashMap<String, ArrayList<String>> orfnames = new HashMap<String, ArrayList<String>>();
                 orfnames = drawForwardDistribution(goid, paramname, anavalueList, orfMap);
                 if(drawHigh) {
-                    outHtml(paramname, goid, curpval, curratio, orfnames, true, true, fwdhighout,
-                            gonum, signum, targetnum);
+                	if( useExcel) {
+                        addRow(paramname, goid, curpval, curratio, orfnames, true, true, 
+                        		fwdhighsheet, fwdhighcount++,
+                                gonum, signum, targetnum);
+                	} else {
+                        outHtml(paramname, goid, curpval, curratio, orfnames, true, true, 
+                        		fwdhighout, gonum, signum, targetnum);
+                	}
                 } else {
-                    outHtml(paramname, goid, curpval, curratio, orfnames, true, false, fwdlowout,
-                            gonum, signum, targetnum);
+                	if( useExcel ) {
+                        addRow(paramname, goid, curpval, curratio, orfnames, true, false, 
+                        		fwdlowsheet, fwdlowcount++,
+                                gonum, signum, targetnum);
+                	} else {
+                        outHtml(paramname, goid, curpval, curratio, orfnames, true, false, 
+                        		fwdlowout, gonum, signum, targetnum);
+                	}
                 }
             }
         } catch (SQLException e) {
@@ -327,7 +466,7 @@ public class DrawSignificantChart {
         }
     }
 
-    /**
+	/**
      * @param goid2
      * @param paramname2
      * @param anavalueList
@@ -399,13 +538,21 @@ public class DrawSignificantChart {
         wholePi.fill(new Arc2D.Double(0, 0, PICHARTRAD * 2, PICHARTRAD * 2, 90 - wholerad, wholerad, Arc2D.PIE));
 
         try {
-            ImageIO.write(arrayImage, "png", new PrintStream(new FileOutputStream(paramname + "_rg.png")));
+        	PrintStream ps = new PrintStream(new FileOutputStream(paramname + "_rg.png"));
+            ImageIO.write(arrayImage, "png", ps);
+            ps.close();
             if(drawHigh) {
-                ImageIO.write(highPiImage, "png", new PrintStream(new FileOutputStream(paramname + "-" + goid.replaceFirst("GO:", "") + "_high.png")));
+            	ps = new PrintStream(new FileOutputStream(paramname + "-" + goid.replaceFirst("GO:", "") + "_high.png"));
+                ImageIO.write(highPiImage, "png", ps);
+                ps.close();
             } else {
-                ImageIO.write(lowPiImage, "png", new PrintStream(new FileOutputStream(paramname + "-" + goid.replaceFirst("GO:", "") + "_low.png")));
+            	ps = new PrintStream(new FileOutputStream(paramname + "-" + goid.replaceFirst("GO:", "") + "_low.png"));
+                ImageIO.write(lowPiImage, "png", ps);
+                ps.close();
             }
-            ImageIO.write(wholePiImage, "png", new PrintStream(new FileOutputStream(paramname + "-" + goid.replaceFirst("GO:", "") + "_whole.png")));
+        	ps = new PrintStream(new FileOutputStream(paramname + "-" + goid.replaceFirst("GO:", "") + "_whole.png"));
+            ImageIO.write(wholePiImage, "png", ps);
+            ps.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -418,14 +565,18 @@ public class DrawSignificantChart {
      * @param anavalueList
      * @param orfMap
      */
-    private String drawForwardDistribution(String goid, String paramname, ORFValueSet[] anavalueList, TreeMap<String, Strainname> orfMap) {
+    private HashMap<String, ArrayList<String>> drawForwardDistribution(String goid, String paramname, ORFValueSet[] anavalueList, TreeMap<String, Strainname> orfMap) {
         BufferedImage arrayImage = new BufferedImage( (int)(CELLWIDTH * anavalueList.length), HEIGHT, BufferedImage.TYPE_INT_BGR);
         Graphics2D g = (Graphics2D) arrayImage.getGraphics();
         int lowcount = 0;
         int highcount = 0;
         
         // draw back ground
-        String orfnames = "";
+        HashMap<String, ArrayList<String>> orfnames = new HashMap<String, ArrayList<String>>();
+        orfnames.put("low", new ArrayList<String>());
+        orfnames.put("middle", new ArrayList<String>());
+        orfnames.put("high", new ArrayList<String>());
+        orfnames.put("lethal", new ArrayList<String>());
         TreeSet<String> orfset = new TreeSet();
         for(String o: orfMap.keySet()) {
             orfset.add(o);
@@ -439,17 +590,17 @@ public class DrawSignificantChart {
             if( anavalueList[i].getPVal() <= LOWTHRESHOLD ) {
                 lowcount++;
                 if( flag == true )
-                    orfnames += "<font color=\"#2E8B57\">" + orfMap.get(anavalueList[i].getOrf()).getPrimaryname() + "</font>, ";
+                    orfnames.get("low").add(orfMap.get(anavalueList[i].getOrf()).getPrimaryname());
             } else if( anavalueList[i].getPVal() >= HIGHTHRESHOLD ) {
                 highcount++;
                 if( flag == true )
-                    orfnames += "<font color=\"#CC0066\">" + orfMap.get(anavalueList[i].getOrf()).getPrimaryname() + "</font>, ";
+                    orfnames.get("high").add(orfMap.get(anavalueList[i].getOrf()).getPrimaryname());
             } else if ( flag == true ) {
-                orfnames += "<font color=\"#000000\">" + orfMap.get(anavalueList[i].getOrf()).getPrimaryname() + "</font>, ";
+                orfnames.get("middle").add(orfMap.get(anavalueList[i].getOrf()).getPrimaryname());
             }
         }
         for(String o: orfset) {
-            orfnames += "<font color=\"#999999\">" + orfMap.get(o).getPrimaryname() + "</font>, ";
+        	orfnames.get("lethal").add(orfMap.get(o).getPrimaryname());
         }
         g.setColor(lowCellColor);
         g.fillRect( 0, 0, (int)(CELLWIDTH * lowcount), HEIGHT);
@@ -467,14 +618,14 @@ public class DrawSignificantChart {
                 orfset.remove(orf);
             }
         }
-        log.println(orfnames.replaceFirst(", $", ""));
+        //log.println(orfnames.replaceFirst(", $", ""));
 
         try {
             ImageIO.write(arrayImage, "png", new PrintStream(new FileOutputStream(paramname + "-" + goid.replaceFirst("GO:", "") + "_fg.png")));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return orfnames.replaceFirst(", $", "");
+        return orfnames;
     }
 
     /**
