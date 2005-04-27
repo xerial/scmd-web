@@ -29,7 +29,11 @@ import java.util.TreeSet;
 import javax.imageio.ImageIO;
 
 import jxl.Workbook;
+import jxl.format.Colour;
 import jxl.write.Label;
+import jxl.write.Number;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableFont;
 import jxl.write.WritableImage;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
@@ -137,10 +141,14 @@ public class DrawSignificantChart {
         	if( useExcel ) {
         		try {
 					workbook = Workbook.createWorkbook(new File("Supplementary_Table.xls"));
-					fwdlowsheet = workbook.createSheet("fwdlow", 0);
-					fwdhighsheet = workbook.createSheet("fwdhigh", 1);
-					revlowsheet = workbook.createSheet("revlow", 2);
-					revhighsheet = workbook.createSheet("revhigh", 3);
+					fwdlowsheet = workbook.createSheet("reverse_low", 2);
+                    makeSheetIndex(fwdlowsheet, true, true, fwdlowcount++);
+					fwdhighsheet = workbook.createSheet("reverse_high", 3);
+                    makeSheetIndex(fwdhighsheet, true, false, fwdhighcount++);
+					revlowsheet = workbook.createSheet("forward_low", 0);
+                    makeSheetIndex(revlowsheet, false, true, revlowcount++);
+					revhighsheet = workbook.createSheet("forward_high", 1);
+                    makeSheetIndex(revhighsheet, false, false, revhighcount++);
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -252,6 +260,65 @@ public class DrawSignificantChart {
         }
     }
 
+    /**
+     * @param fwdlowsheet2
+     * @param b
+     * @param i
+     */
+    private void makeSheetIndex(WritableSheet sheet, boolean isFwd, boolean isLow, int i) {
+        int col = 0;
+        try {
+            sheet.addCell(new Label(col++, 0, "Parameter"));
+            sheet.addCell(new Label(col++, 0, "GO ID"));
+            sheet.addCell(new Label(col++, 0, "GO Term"));
+            sheet.addCell(new Label(col++, 0, "Significant Morphology Graph"));
+            if( isFwd ) {
+                sheet.addCell(new Label(col++, 0, "Genes having significant low value and associated with the GO Term"));
+                sheet.addCell(new Label(col++, 0, "Genes having no significnat values but associated with the GO Term"));
+                sheet.addCell(new Label(col++, 0, "Genes having significant high value and associated with the GO Term"));
+                sheet.addCell(new Label(col++, 0, "Lethal Genes associated with the GO Term"));
+            } else {
+                if( isLow ) {
+                    sheet.addCell(new Label(col++, 0, "Pichart of genes having both the GO term and significant low value (yellow) to significant low genes (green)"));
+                    sheet.addCell(new Label(col++, 0, "Pichart of genes having both the GO term and significant low value (yellow) to all genes (gray)"));
+                } else {
+                    sheet.addCell(new Label(col++, 0, "Pichart of genes having both the GO term and significant high value (yellow) to significant high genes (red)"));
+                    sheet.addCell(new Label(col++, 0, "Pichart of genes having both the GO term and significant high value (yellow) to all genes (gray)"));
+                }
+            }
+            sheet.addCell(new Label(col++, 0, "# of genes associated with the GO term"));
+            if( isLow ) {
+                sheet.addCell(new Label(col++, 0, "# of genes having significant low value in this parameter"));
+                sheet.addCell(new Label(col++, 0, "# of genes associated withe the GO term adn having significant low value"));
+            } else {
+                sheet.addCell(new Label(col++, 0, "# of genes having significant high value in this parameter"));
+                sheet.addCell(new Label(col++, 0, "# of genes associated withe the GO term adn having significant high value"));
+            }
+            sheet.addCell(new Label(col++, 0, "P-value (<= 0.01, Bonferroni-corrected)"));
+            if( isFwd ) {
+                if( isLow ) {
+                    sheet.addCell(new Label(col++, 0, "Ratio of # of genes having both the GO term and significant low value to number of genes having the GO term"));
+                } else {
+                    sheet.addCell(new Label(col++, 0, "Ratio of # of genes having both the GO term and significant high value to number of genes having the GO term"));
+                }
+                
+            } else {
+                if( isLow ) {
+                    sheet.addCell(new Label(col++, 0, "Ratio of # of genes having both the GO term and significant low value to number of genes having significant low value"));
+                } else {
+                    sheet.addCell(new Label(col++, 0, "Ratio of # of genes having both the GO term and significant high value to number of genes having significant high value"));
+                }
+            }
+            
+        } catch (RowsExceededException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (WriteException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
     private void addRow(String param, String goid, double value, double ratio, boolean fwd, boolean high, 
     		WritableSheet sheet, int count, 
     		int gonum, int signum, int targetnum) {
@@ -270,20 +337,33 @@ public class DrawSignificantChart {
 			sheet.addCell(new Label(col++, count, param));
 			sheet.addCell(new Label(col++, count, goid));
 			sheet.addCell(new Label(col++, count, gotermMap.get(goid)));
+            
 	        if(fwd) {
 	            String filename = paramname + "-" + goid.replaceFirst("GO:", "") + "_fg.png"; 
-	            File imageFile = new File(filename);
+
+                sheet.setRowView(count, 500);
+                sheet.setColumnView(col, 100);
+
+                File imageFile = new File(filename);
 	            WritableImage img = new WritableImage(col++, count, 1, 1, imageFile);
 				sheet.addImage(img);
 				
 				String lowOrfStr = getOrfStr(orfnames, "low");
-				sheet.addCell(new Label(col++, count, lowOrfStr));
+                WritableFont lowCellFont = new WritableFont(WritableFont.ARIAL, 10);
+                lowCellFont.setColour(Colour.BRIGHT_GREEN);
+				sheet.addCell(new Label(col++, count, lowOrfStr, new WritableCellFormat(lowCellFont)));
 				String middleOrfStr = getOrfStr(orfnames, "middle");
 				sheet.addCell(new Label(col++, count, middleOrfStr));
-				String highOrfStr = getOrfStr(orfnames, "high");
-				sheet.addCell(new Label(col++, count, highOrfStr));
-				String lethalOrfStr = getOrfStr(orfnames, "lethal");
-				sheet.addCell(new Label(col++, count, lethalOrfStr));
+
+                String highOrfStr = getOrfStr(orfnames, "high");
+                WritableFont highCellFont = new WritableFont(WritableFont.ARIAL, 10);
+                highCellFont.setColour(Colour.RED);
+                sheet.addCell(new Label(col++, count, highOrfStr, new WritableCellFormat(highCellFont)));
+
+                String lethalOrfStr = getOrfStr(orfnames, "lethal");
+                WritableFont lethalCellFont = new WritableFont(WritableFont.ARIAL, 10);
+                lethalCellFont.setColour(Colour.GRAY_80);
+				sheet.addCell(new Label(col++, count, lethalOrfStr, new WritableCellFormat(lethalCellFont)));
 	        } else {
 	            String filename = paramname + "_rg.png";
 	            String pifile = "";
@@ -293,18 +373,23 @@ public class DrawSignificantChart {
 	                pifile = paramname + "-" + goid.replaceFirst("GO:", "") + "_low.png";
 	            }
 	            String piwholefile = paramname + "-" + goid.replaceFirst("GO:", "") + "_whole.png";
+                sheet.setRowView(count, 500);
+                sheet.setColumnView(col, 50);
+                sheet.setRowView(count, 1250);
 	            WritableImage barChart = new WritableImage(col++, count, 1, 1, new File(filename));
+                sheet.setColumnView(col, 10);
 	            WritableImage pichart  = new WritableImage(col++, count, 1, 1, new File(pifile));
+                sheet.setColumnView(col, 10);
 	            WritableImage piwholechart = new WritableImage(col++, count, 1, 1, new File(piwholefile));
 	            sheet.addImage(barChart);
 	            sheet.addImage(pichart);
 	            sheet.addImage(piwholechart);
 	        }
-	        sheet.addCell(new Label(col++, count, gonum + ""));
-	        sheet.addCell(new Label(col++, count, signum + ""));
-	        sheet.addCell(new Label(col++, count, targetnum + ""));
-	        sheet.addCell(new Label(col++, count, value + ""));
-	        sheet.addCell(new Label(col++, count, ratio + ""));
+	        sheet.addCell(new Number(col++, count, gonum));
+	        sheet.addCell(new Number(col++, count, signum));
+	        sheet.addCell(new Number(col++, count, targetnum));
+	        sheet.addCell(new Number(col++, count, value ));
+	        sheet.addCell(new Number(col++, count, ratio ));
 		} catch (RowsExceededException e) {
 			e.printStackTrace();
 		} catch (WriteException e) {
@@ -318,7 +403,7 @@ public class DrawSignificantChart {
 		for(String s: orfnames.get(index)) {
 			orfstr += s + ", ";
 		}
-		return orfstr.substring(0, orfstr.length() - 2);
+		return orfstr.substring(0, Math.max(0, orfstr.length() - 2));
 	}
 
 	/**
@@ -507,7 +592,7 @@ public class DrawSignificantChart {
         g.setColor(middleCellColor);
         g.fillRect( (int)(CELLWIDTH * lowm), 0, (int)(CELLWIDTH * (anavalueList.length - lowm - highm)), HEIGHT);
         g.setColor(highCellColor);
-        g.fillRect( (int)(CELLWIDTH * (anavalueList.length - highm)), 0, (int)(CELLWIDTH * highm), HEIGHT);
+        g.fillRect( (int)Math.ceil(CELLWIDTH * (anavalueList.length - highm)), 0, (int)(CELLWIDTH * highm), HEIGHT);
 
         
         int PICHARTRAD = 75;
