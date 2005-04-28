@@ -13,7 +13,7 @@
 <jsp:useBean id="statsTable1"  scope="request" class="lab.cb.scmd.web.table.Table"/>
 <jsp:useBean id="statsTable2"  scope="request" class="lab.cb.scmd.web.table.Table"/>
 
-<scmd-base:header title="Stats ${view.orf}" css="/css/tabsheet.css"/>
+<scmd-base:header title="Average Shape ${view.orf}" css="/css/tabsheet.css"/>
 
 
 <script language="JavaScript">

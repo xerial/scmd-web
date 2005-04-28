@@ -148,23 +148,28 @@ public class ViewStatsAction extends Action
 			switch (groupIndex)
 			{
 			case 0:
-				dataTable.set(1, i + 1, name);
+                link = new  StringElement(name);
+                link = new AttributeDecollation(link, "id", groupPrefix[groupIndex] + i + statParamName[groupIndex][i]);
+                link = new JavaScriptDecollation(link, "onMouseOver", "on(this.id);");
+                link = new JavaScriptDecollation(link, "onMouseOut", "off(this.id);");
+                link = new JavaScriptDecollation(link, "onClick", "javascript:help('ParameterHelp.do#cgroup');");
+                dataTable.set(1, i + 1, link);
 				break;
 			case 1:
 			case 2:
-				link = new  StringElement(name);
-				link = new AttributeDecollation(link, "id", groupPrefix[groupIndex] + i + statParamName[groupIndex][i]);
-				link = new JavaScriptDecollation(link, "onMouseOver", "on(this.id);");
-				link = new JavaScriptDecollation(link, "onMouseOut", "off(this.id);");
-				link = new JavaScriptDecollation(link, "onClick", "javascript:help('help/nucleus_param.html');");
-				dataTable.set(1, i + 1, link);
-				break;
+                link = new  StringElement(name);
+                link = new AttributeDecollation(link, "id", groupPrefix[groupIndex] + i + statParamName[groupIndex][i]);
+                link = new JavaScriptDecollation(link, "onMouseOver", "on(this.id);");
+                link = new JavaScriptDecollation(link, "onMouseOut", "off(this.id);");
+                link = new JavaScriptDecollation(link, "onClick", "javascript:help('ParameterHelp.do#ngroup');");
+                dataTable.set(1, i + 1, link);
+                break;
 			case 3:
 				link = new StringElement(name);
 				link = new AttributeDecollation(link, "id", groupPrefix[groupIndex] + i + statParamName[groupIndex][i]);
 				link = new JavaScriptDecollation(link, "onMouseOver", "on(this.id);");
 				link = new JavaScriptDecollation(link, "onMouseOut", "off(this.id);");
-				link = new JavaScriptDecollation(link, "onClick", "javascript:help('help/actin_param.html');");
+				link = new JavaScriptDecollation(link, "onClick", "javascript:help('ParameterHelp.do#agroup');");
 				dataTable.set(1, i + 1, link);
 				break;
 			}

@@ -17,6 +17,7 @@
 
 <span class="menubutton">
 [<a href="#cellshapeparam">Cell Shape Parameters</a>] 
+[<a href="#cgroup">Bud Size Groups</a>]
 [<a href="#ngroup">Nucleus Location Groups</a>]
 [<a href="#agroup">Actin Localization Groups</a>]
 [<a href="#cellparam">Cell Parameter List</a>] 
@@ -52,6 +53,41 @@
 	  Cell walls of some disruptants are more rectangular than elliptical. The <i class=label>fitness</i> is useful to distinguish such shapes.  <br>
 	  <span class=memo> (note:  7.71e-05 := 7.71 / 100000 ) </span>   </td>
     </tr>
+
+ <tr> <td height=30> </td></tr>
+
+   <tr>
+   <td colspan=3 class=tablelabel><a name="cgroup">Bud Size Groups</a> </td>
+   </tr>
+
+<tr> 
+  <td bgcolor=black align=center><html:img page="/help/budsize-no.jpg"/></td> 
+  <td class=label width=50>no</td> 
+  <td class=notation> No bud </td>
+</tr>
+<tr> 
+  <td bgcolor=black align=center><html:img page="/help/budsize-medium.jpg"/></td> 
+  <td class=label width=50>small</td> 
+  <td class=notation> small bud cell <br /><span class=memo>(0 &lt; cell size ratio<sup><font color=red>*1</font></sup> &lt; 0.5)</span></td>
+</tr>
+<tr> 
+  <td bgcolor=black align=center><html:img page="/help/budsize-medium.jpg"/></td> 
+  <td class=label width=50>medium</td> 
+  <td class=notation> medium bud cell <br /><span class=memo>(0.5 &le; cell size ratio<sup><font color=red>*1</font></sup> &lt; 0.7)</span></td>
+</tr>
+<tr> 
+  <td bgcolor=black align=center><html:img page="/help/budsize-large.jpg"/></td> 
+  <td class=label width=50>large</td> 
+  <td class=notation> large bud cell <br /><span class=memo>(0.7 &le; cell size ratio<sup><font color=red>*1</font></sup> )</span></td> 
+</tr>
+<tr> 
+  <td bgcolor=black align=center><html:img page="/help/budsize-complex.jpg"/></td> 
+  <td class=label width=50>complex</td> 
+  <td class=notation> complexed cells </td> 
+</tr>
+<tr>
+  <td colspan=3><span class=memo><font color=red>(*1)</font>cell size ratio := bud size / mother cell size (= <a href="ViewORFParameter.do?columnType=input&paramID=321">C118</a>)</span></td>
+</tr>
 
  <tr> <td height=30> </td></tr>
 
