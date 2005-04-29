@@ -19,6 +19,7 @@
 <jsp:useBean id="selection"  scope="page" class="lab.cb.scmd.web.bean.ORFSelectionForm"/>
 <jsp:useBean id="orfList"  scope="request" type="java.util.List"/>
 <jsp:useBean id="pageStatus" scope="request" class="lab.cb.scmd.db.common.PageStatus"/>
+<jsp:useBean id="keywordList" scope="request" type="java.util.List"/>
 
 <scmd-base:header title="Your Selection" css="/css/tabsheet.css"/>
 <body>
@@ -32,8 +33,13 @@
 <tr><td>
 <p align="right"><html:submit value="add selections"/></p>
 </td></tr>
+<tr><td align="left" class="annotation">
+Results for 
+<logic:iterate id="key" name="keywordList" type="java.lang.String">
+<b><a href="Search.do?keyword=<%=key%>"><%=key%></a></b>
+</logic:iterate>
+</td></tr>
 </table>
-
 
 
 <scmd-base:pagemover page="Search.do" name="search" property="argumentMap" currentPage="${pageStatus.currentPage}" maxPage="${pageStatus.maxPage}"/>

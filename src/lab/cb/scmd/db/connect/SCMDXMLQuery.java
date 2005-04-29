@@ -282,12 +282,25 @@ public class SCMDXMLQuery implements XMLQuery {
         for(int i = 0; i < keyword.length; i++ ) {
             if( i != 0 )
                 whereClause += " AND ";
-            String exp = "'" + keyword[i] + "%'";
-            String exp_annot = "'%" + keyword[i] + "%'";
-            whereClause += "(systematicname ILIKE " + exp 
-                + " OR primaryname ILIKE " + exp 
-                + " OR aliasname ILIKE " + exp
-                + " OR annotation ILIKE " + exp_annot + ")";
+            String curkey = keyword[i];
+            if( curkey.matches("^GO:[0-9]+") ) {
+                while(curkey.length() < 10) {
+                    curkey = "GO:0" + curkey.substring(3);
+                }
+                    
+                whereClause += "systematicname in " +
+                        "( select distinct strainname as systematicname " +
+                        "from goassociation where goid in " +
+                        "( select cid as goid from term_graph " +
+                        "where pid = '" + curkey + "'))";
+            } else {
+                String exp = "'" + keyword[i] + "%'";
+                String exp_annot = "'%" + keyword[i] + "%'";
+                whereClause += "(systematicname ILIKE " + exp 
+                    + " OR primaryname ILIKE " + exp 
+                    + " OR aliasname ILIKE " + exp
+                    + " OR annotation ILIKE " + exp_annot + ")";
+            }
         }
 		String sql = "SELECT systematicname, primaryname, aliasname, annotation FROM "
             + "(SELECT strainname FROM " + summaryTable + ") AS GT INNER JOIN " 

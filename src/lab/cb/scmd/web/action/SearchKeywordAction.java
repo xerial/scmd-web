@@ -45,7 +45,6 @@ public class SearchKeywordAction extends Action
     public SearchKeywordAction()
     {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -57,6 +56,10 @@ public class SearchKeywordAction extends Action
             return mapping.findForward("failure");
         
         Vector orfList = null;
+        Vector<String> keywordList = new Vector<String>();
+        for(String k: keyword.split("[ \\,/]+") ){
+            keywordList.add(k);
+        }
         PageStatus pageStatus = new PageStatus(1, 1);
         try
         {
@@ -97,6 +100,7 @@ public class SearchKeywordAction extends Action
         
 	    request.setAttribute("orfList", orfList);
 	    request.setAttribute("pageStatus", pageStatus);
+        request.setAttribute("keywordList", keywordList);
 
         
         return mapping.findForward("success");
