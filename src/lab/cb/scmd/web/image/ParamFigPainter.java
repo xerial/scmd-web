@@ -54,6 +54,8 @@ public class ParamFigPainter extends HttpServlet {
             {
                 imageURL = new URL(paramFigURI + "/" + parameter + ".png");
                 image = ImageIO.read(imageURL);
+                if( image == null )
+                    throw new SCMDException("no image found");
             }
             catch (MalformedURLException e)
             {
