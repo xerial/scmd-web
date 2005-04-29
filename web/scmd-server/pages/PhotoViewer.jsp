@@ -42,6 +42,7 @@ int blankTabSize = imageWidth - 70 * 3;
 
 <scmd-tags:orfInfo  orf="${gene.orf}" 
 	stdname="${gene.standardName}" annot="${gene.annotation}" 
+	cellimage="on"
 	title="Photo Viewer" />
 
 <table width="<%=imageWidth + 10%>"> 
