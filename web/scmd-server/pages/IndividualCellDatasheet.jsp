@@ -8,8 +8,6 @@
 <%@ taglib prefix="c" uri="/WEB-INF/c-rt.tld"%>
 
 <jsp:useBean id="view"  scope="session" class="lab.cb.scmd.web.bean.CellViewerForm"/>
-<jsp:useBean id="datasheet"  scope="request" class="lab.cb.scmd.web.table.Table"/>
-<jsp:useBean id="gene"  scope="request" class="lab.cb.scmd.web.bean.YeastGene"/>
 
 <scmd-base:header title="Individual Cell Datasheet of ${view.orf}" css="/css/tabsheet.css"/>
 <body>
@@ -20,18 +18,22 @@
 	stdname="${gene.standardName}" annot="${gene.annotation}" 
 	title="Individual Cell Datasheet" />
 
-<% if( view.getSheetType() == 4 ) { %>
-<table><tr><td width="500"></td>
+<c:if test="${view.sheetType == 4}">
+<table>
+<tr>
+<td width="500"></td>
 <td class="tool" width="150" align="right"> <a href="CustomizeView.do">customize parameters</a></td>
-</tr></table>
-<% } %>
+</tr>
+</table>
+</c:if>
 
 <table>
 <tr><td class="menubutton" align="center">[<a href="ViewPhoto.do?orf=${view.orf}">Photo Viewer</a>]</td></tr>
 <tr><td>
 <scmd-tags:pageMoveButton actionURL="ViewDataSheet.do" currentPage="${view.photoPage}" maxPage="${view.photoPageMax}"/>
 </td>
-</tr></table>
+</tr>
+</table>
 
 
 <%-- データシート切り替えTab --%>
@@ -50,8 +52,42 @@
 </tr>
 </table></td></tr>
 
-<tr><td>
-<scmd-base:table name="datasheet"/>
+<tr>
+<td>
+<table class="datasheet">
+
+<tr class="sheetlabel">
+<logic:iterate id="stainName" collection="<%= lab.cb.scmd.web.common.StainType.TAB_NAME%>">
+<td>${stainName}</td>
+</logic:iterate>
+<logic:iterate id="p" name="paramList" scope="request" type="lab.cb.scmd.web.sessiondata.MorphParameter">
+<td title="${p.displayname}">
+<html:link page="/ViewORFParameter.do?columnType=input&paramID=${p.id}">${p.name}</html:link>
+</td>
+</logic:iterate>
+</tr>
+
+<logic:iterate id="c" name="cells" scope="request" type="lab.cb.scmd.web.bean.IndividualCell">
+<tr>
+<logic:iterate id="stain" collection="<%= lab.cb.scmd.web.common.StainType.getStainTypes()%>">
+<td class="cellimg">
+<html:img page="/scmdimage.png?encoding=jpeg&imageID=${c.imageID[stain]}" border="0"/> 
+</td>
+</logic:iterate>
+
+<logic:iterate id="p" indexId="col" name="paramList" scope="request" type="lab.cb.scmd.web.sessiondata.MorphParameter">
+<td align="right" 
+<c:if test="${col % 3 == 0}">bgcolor="#F8F8F8"</c:if>
+<c:if test="${col % 3 == 1}">bgcolor="#E0F0F0"</c:if>
+<c:if test="${col % 3 == 2}">bgcolor="#F0F0E0"</c:if>
+>
+<bean:write name="c" property="value(${p.name})"/>
+</td>
+</logic:iterate>
+</tr>
+
+</logic:iterate>
+</table>
 </td>
 </tr>
 </table>

@@ -28,7 +28,7 @@ import lab.cb.scmd.web.viewer.Photo;
  */
 public class CellList implements Iterable<Cell>
 {
-    LinkedList _cellList = new LinkedList();
+    LinkedList<Cell> _cellList = new LinkedList<Cell>();
     Photo	_photo = null;
     YeastGene gene = null;
     
@@ -45,13 +45,13 @@ public class CellList implements Iterable<Cell>
         
     }
     
-    public Iterator iterator()
+    public Iterator<Cell> iterator()
     {
     	return  _cellList.iterator();
     }
     
     
-    public List getCellList()
+    public List<Cell> getCellList()
     {
         return _cellList;
     }

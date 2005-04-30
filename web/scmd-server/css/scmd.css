@@ -82,6 +82,7 @@ a:visited { color: #666666; }
 	border-bottom: 1px solid #369;
 }
 
+.cellimg { background-color: black; text-align: center; }
 
 .small { font-family: Arial, Helvetica, sans-serif; font-size: 10pt}
 .annotation { font-family: Arial, Helvetica, sans-serif; font-size: 10pt; color: #705030;}

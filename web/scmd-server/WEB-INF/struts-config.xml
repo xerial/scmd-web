@@ -264,11 +264,11 @@
         	path="/ViewDataSheet" 
         	name="view" 
         	scope="session"
-        	type="lab.cb.scmd.web.action.ViewDataSheetAction"
+        	type="lab.cb.scmd.web.action.ViewIndividualCellDatasheetAction"
         	validate="true"
         	input="/error.jsp"
         >
-        	<forward name="success" path="/pages/DataSheet.jsp"/>
+        	<forward name="success" path="/pages/IndividualCellDatasheet.jsp"/>
         	<forward name="selection" path="/pages/NoCellParameter.jsp"/>
         	<forward name="failure" path="/error.jsp"/>
         </action>

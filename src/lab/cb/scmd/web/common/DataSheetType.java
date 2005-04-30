@@ -47,7 +47,7 @@ public class DataSheetType
         return new String [0];
     }
 
-    public static int [] getParameterIds(int n) {
+    public static Integer[] getParameterIds(int n) {
         switch (n) {
             case SHEET_SHAPE:
                 return shapeParameterIds;
@@ -58,7 +58,7 @@ public class DataSheetType
             case SHEET_ACTIN:
                 return actinParameterIds;
         }
-        return new int [0];
+        return new Integer[0];
     }
 
     //パラメータ名から、パラメータのIDに変更 => getDetailParameterIds(int n)
@@ -76,7 +76,7 @@ public class DataSheetType
         return new String [0];
     }
 
-    public static int [] getDetailParameterIds(int n) {
+    public static Integer [] getDetailParameterIds(int n) {
         switch (n) {
             case SHEET_SHAPE:
                 return shapeDetailParameterIds;
@@ -87,7 +87,7 @@ public class DataSheetType
             case SHEET_ACTIN:
                 return actinDetailParameterIds;
         }
-        return new int [0];
+        return new Integer[0];
     }
 
     private final static String [] shapeParameters = 
@@ -142,7 +142,7 @@ public class DataSheetType
             "A123"
     };
 
-    private final static int [] shapeParameterIds = 
+    private final static Integer [] shapeParameterIds = 
     {
         8, // "Cgroup",
         79, //"Dgroup",
@@ -156,7 +156,7 @@ public class DataSheetType
         34 // "C106"
     };
     
-    private final static int [] cellParameterIds = {
+    private final static Integer [] cellParameterIds = {
         8, // "Cgroup",
         35,//    "C107",
         36,//    "C108",
@@ -169,7 +169,7 @@ public class DataSheetType
         43 //    "C115"
     };
     
-    private final static int [] nucleusParameterIds = {
+    private final static Integer [] nucleusParameterIds = {
         79,//    "Dgroup",
         126,//    "D104",
         127,//    "D105",
@@ -182,7 +182,7 @@ public class DataSheetType
         134 //    "D112",
     };
     
-    private final static int [] actinParameterIds = {
+    private final static Integer [] actinParameterIds = {
         50,//    "Agroup",
         71,//    "A101",
         72,//    "A102",
@@ -227,7 +227,7 @@ public class DataSheetType
 
     };
 
-    private final static int [] shapeDetailParameterIds = 
+    private final static Integer [] shapeDetailParameterIds = 
     {
         8, // "Cgroup",
         79, //"Dgroup",
@@ -239,20 +239,20 @@ public class DataSheetType
         32  // "C104"
     };
     
-    private final static int [] cellDetailParameterIds = {
+    private final static Integer [] cellDetailParameterIds = {
         8, //"Cgroup",
         79, //"Dgroup",
         50 // "Agroup"
             
     };
     
-    private final static int [] nucleusDetailParameterIds = {
+    private final static Integer [] nucleusDetailParameterIds = {
         8, //"Cgroup",
         79, //"Dgroup",
         50 // "Agroup"
     };
     
-    private final static int [] actinDetailParameterIds = {
+    private final static Integer [] actinDetailParameterIds = {
         8, //"Cgroup",
         79, //"Dgroup",
         50 // "Agroup"

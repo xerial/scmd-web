@@ -12,7 +12,6 @@ package lab.cb.scmd.web.table;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -68,7 +67,7 @@ public class ColLabelIndex extends UpdateObserverBase
             return new VerticalIterator(_table, 0, 0, 0);
     }
     
-    public Collection getColLabelList()
+    public Collection<String> getColLabelList()
     {
         return _indexToColLabelMap.values();
     }
@@ -115,8 +114,8 @@ public class ColLabelIndex extends UpdateObserverBase
     }
 
     
-    HashMap _colLabelToIndexMap = new HashMap();
-    TreeMap _indexToColLabelMap = new TreeMap();
+    HashMap<String, Integer> _colLabelToIndexMap = new HashMap<String, Integer>();
+    TreeMap<Integer, String> _indexToColLabelMap = new TreeMap<Integer, String>();
 
 
     /* (non-Javadoc)
@@ -124,15 +123,13 @@ public class ColLabelIndex extends UpdateObserverBase
      */
     public void afterColInsertion(Table table, int col, Object[] colElement) {
         // col‚æ‚è‘å‚«‚¢index‚ª‚Â‚¢‚Ä‚¢‚é‚à‚Ì‚ÍA‚P‚¸‚Â‚¸‚ç‚·
-        SortedMap updateRegion = _indexToColLabelMap.tailMap(new Integer(col));
-        TreeMap updatedMap = new TreeMap();
-        for(Iterator it = updateRegion.keySet().iterator(); it.hasNext(); )
+        SortedMap<Integer, String> updateRegion = _indexToColLabelMap.tailMap(new Integer(col));
+        TreeMap<Integer, String> updatedMap = new TreeMap<Integer, String>();
+        for(Integer key : updateRegion.keySet())
         {
-            Integer key = (Integer) it.next();
-            String value = (String) updateRegion.get(key);
-            Integer newKey = new Integer(key.intValue() + 1);
-            updatedMap.put(newKey, updateRegion.get(key));
-            
+            String value = updateRegion.get(key);
+            Integer newKey = key + 1;
+            updatedMap.put(newKey, updateRegion.get(key));            
             _colLabelToIndexMap.remove(value);
             _colLabelToIndexMap.put(value, newKey);
         }
@@ -191,13 +188,12 @@ public class ColLabelIndex extends UpdateObserverBase
     public void afterColDeletion(Table table, int col) {
         removeColIndex(col);
         // col‚æ‚è‘å‚«‚¢index‚ª‚Â‚¢‚Ä‚¢‚é‚à‚Ì‚ÍA1‚Â‘O‚É‚¸‚ç‚·
-        SortedMap updateRegion = _indexToColLabelMap.tailMap(new Integer(col));
-        TreeMap updatedMap = new TreeMap();
-        for(Iterator it = updateRegion.keySet().iterator(); it.hasNext(); )
+        SortedMap<Integer, String> updateRegion = _indexToColLabelMap.tailMap(new Integer(col));
+        TreeMap<Integer, String> updatedMap = new TreeMap<Integer, String>();
+        for(Integer key : updateRegion.keySet())
         {
-            Integer key = (Integer) it.next();
-            String value = (String) updateRegion.get(key);
-            Integer newKey = new Integer(key.intValue() - 1);
+            String value = updateRegion.get(key);
+            Integer newKey = key + 1;
             updatedMap.put(newKey, updateRegion.get(key));
             
             _colLabelToIndexMap.remove(value);
