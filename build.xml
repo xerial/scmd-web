@@ -41,7 +41,8 @@
 	<target name="compile" description="compile java files">
 	   <fail unless="TOMCAT_HOME">Please set the TOMCAT_HOME environment variable</fail>
 	   <mkdir dir="${webinf}/classes"/>
-	   <javac srcdir="${src}" destdir="${webinf}/classes" encoding="SJIS" target="1.5">
+	   <javac srcdir="${src}" destdir="${webinf}/classes" encoding="SJIS" target="1.5" 
+	          debug="on" debuglevel="lines">
 	   	   <classpath>
 		     <fileset dir="${webinf}/lib">
 		   	     <include name="*.jar"/>
