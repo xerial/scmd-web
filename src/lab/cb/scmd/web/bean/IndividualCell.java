@@ -25,7 +25,10 @@ import lab.cb.scmd.web.common.StainType;
 public class IndividualCell
 {
     public TreeMap<String, String> valueMap = new TreeMap<String, String>();
-    public String[] imageIDArray = new String[StainType.STAIN_MAX];    
+    public String[] imageIDArray = new String[StainType.STAIN_MAX];
+    int width = 0;
+    int height = 0;
+    
     /**
      * 
      */
@@ -63,6 +66,28 @@ public class IndividualCell
         if(value != null)
             valueMap.put(paramName, value.toString());
     }
+
+    public int getHeight()
+    {
+        return height;
+    }
+
+    public void setHeight(int height)
+    {
+        this.height = height;
+    }
+
+    public int getWidth()
+    {
+        return width;
+    }
+
+    public void setWidth(int width)
+    {
+        this.width = width;
+    }
+    
+    
 
 }
 

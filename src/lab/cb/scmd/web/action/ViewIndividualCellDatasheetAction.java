@@ -152,6 +152,8 @@ public class ViewIndividualCellDatasheetAction extends Action
                 String imageID = cell.getImageID(view.getPhotoType(), stainType);
                 imageCache.registerImage(imageID); 
                 c.setImageID(stainType, imageID);
+                c.setHeight(h);
+                c.setWidth(w);
             }
                    
             for(MorphParameter param : columns)
