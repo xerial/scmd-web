@@ -14,6 +14,7 @@ By using a redirect, the user-agent will change address to match the path of our
 <scmd-base:header title="Sacharomyces Cerevisiae Morphological Database" css="/css/toppage.css"/>
 <body class="toppage">
 <scmd-tags:menu searchframe="on" top="true"/>
+<scmd-tags:orfmenu />
  
 
 <table width="650" border="0">
@@ -38,11 +39,6 @@ EUROSCARF.  From the micrographs, disruptant cells are automatically
 extracted by our novel cell-image processing software developed at <a
 href="http://www.gi.k.u-tokyo.ac.jp">Morishita Group</a>, <a
 href="http://www.u-tokyo.ac.jp">University of Tokyo</a>.</p>
-       
-<p>We plan to update <a href="http://scmd.gi.k.u-tokyo.ac.jp">the
-SCMD </a> weekly and made the data available at <a
-href="http://scmd.gi.k.u-tokyo.ac.jp">http://scmd.gi.k.u-tokyo.ac.jp</a>
-.</p>
 
 </td>
 </tr>

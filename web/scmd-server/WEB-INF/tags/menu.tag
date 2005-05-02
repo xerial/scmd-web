@@ -38,59 +38,10 @@
 
 <table width="700" border="0" cellpadding="0" cellspacing="0">
 <tr class="menubar" >  
-<td align="center" id="yeast" onMouseOver="closeAllMenu();"><a href="ViewORFList.do">Yeast Mutant</a></td>
-
-<td align="center" id="photo" onMouseOver="selectMenu('photomenu');" onMouseOut="detectMouseOut(event,this);">
-<table cellpadding="0" cellspacing="0">
-<tr class="menubar"><td><a href="ViewPhoto.do">Photo</a></td></tr>
-<tr><td>
-<table width="200" id="photomenu" class="dropdownmenu"> 
-<tr>
-<td  nowrap="nowrap">
-<ul>
-<li><a href="ViewPhoto.do?orf=${orf}"> Photo Viewer </a></li>
-<li><a href="ViewDataSheet.do?orf=${orf}"> Individual Cell Datasheet</a> </li>
-<li> Cells Grouped by </li>
-<ul>
-<li> <html:link page="/ViewGroupBySheet.do?stainType=0&orf=${orf}"> bud size </html:link></li>
-<li> <html:link page="/ViewGroupBySheet.do?stainType=1&orf=${orf}"> nucleus location </html:link></li>
-<li> <html:link page="/ViewGroupBySheet.do?stainType=2&orf=${orf}"> actin distribution </html:link> </li>
-</ul>
-</ul>
-</td>
-</tr>
-</table>   
-</td>
-</tr>
-</table>
-</td>
-    
-<td align="center" id="data" onMouseOver="selectMenu('dataminingmenu');" onMouseOut="detectMouseOut(event,this);">
-<table cellpadding="0" cellspacing="0">
-<tr class="menubar"><td><a href=".">Data Mining</a></td></tr>
-<tr><td>
-<table  width="300" class="dropdownmenu" cellpadding="0" id="dataminingmenu" align="left">
-<tr>
-<td  nowrap="nowrap">
-<ul>
-<li> <a href="SelectShape.do">Morphology Search </a></li>
-<li> <a href="ORFTeardrop.do?orf=${orf}">Teardrop View of ORF Parameters </a></li>
-<li> <a href="ViewORFParameter.do">ORF Parameter Datasheet</a></li>
-<li><a href="View2DPlot.do?orfType=current">2D Plot</a></li>
-<li> <a href="ViewStats.do?orf=${orf}">Average Shapes</a> </li>
-<li>Teardrop View of Average Shapes Grouped by</li>
-<ul>
-<li><html:link page="/ViewGroupByTearDrop.do?stainType=0&orf=${orf}"> bud size </html:link></li>
-<li><html:link page="/ViewGroupByTearDrop.do?stainType=1&orf=${orf}"> nucleus location</html:link></li>
-<li><html:link page="/ViewGroupByTearDrop.do?stainType=2&orf=${orf}"> actin distribution </html:link></li>
-</ul>
-</ul>
-</td>
-</tr>
-</table>
-</td></tr>
-</table>
-</td>
+<td align="center" id="yeast" onMouseOver="closeAllMenu();"><a href="ViewORFList.do">Mutant List</a></td>
+<td align="center" id="yeast" onMouseOver="closeAllMenu();"><a href="ParameterHelp.do">Parameter List</a></td>
+<td align="center" id="yeast" onMouseOver="closeAllMenu();"><a href="sitemap.jsp">Site Map</a></td>
+<td align="center" id="yeast" onMouseOver="closeAllMenu();"><a href="SelectShape.do">Morphology Search</a></td>
 
 <td align="center" id="customize" onMouseOver="selectMenu('customizemenu');" onMouseOut="detectMouseOut(event,this);">
 <table cellpadding="0" cellspacing="0">
@@ -109,27 +60,30 @@
 </td></tr>
 </table>    
 </td>     
-    
-    
-<td align="center" id="help" onMouseOver="selectMenu('hmenu');" onMouseOut="detectMouseOut(event,this);">
+<!--    
+    <td align="center" onMouseOver="closeAllMenu();"> <a href="publication.jsp">Publications</a> </td>
+    <td align="center" onMouseOver="closeAllMenu();"> <a href="about.jsp">About SCMD</a> </td>
+-->
+<td align="center" id="about" onMouseOver="selectMenu('aboutscmd');" onMouseOut="detectMouseOut(event,this);">
 <table cellpadding="0" cellspacing="0">
-<tr class="menubar"><td><a href="."> Help </a></td></tr>
+<tr class="menubar"><td><a href="."> About SCMD</a></td></tr>
 <tr><td>
-<table width="150" border="0" class="dropdownmenu" cellpadding="0" id="hmenu" align="left">
-<tr><td nowrap="nowrap"> 
+<table width="150" border="0" class="dropdownmenu" cellpadding="0" id="aboutscmd" align="left">
+<tr>
+<td  nowrap="nowrap">
 <ul>
-<li><a href="ParameterHelp.do">Parameter Help</a> </li>
-<li> <a href="sitemap.jsp">Site Map </a></li>
+<li> <a href="publication.jsp"> Publications</a> </li>
+<li> <a href="about.jsp"> Info. & Staffs </a> </li>
 </ul>
-</td></tr>
+</td>
+</tr>
 </table>
 </td></tr>
 </table>    
+</td></tr>
+</table>   
+</td>
 
-</td>     
-
-    <td align="center" onMouseOver="closeAllMenu();"> <a href="publication.jsp">Publications</a> </td>
-    <td align="center" onMouseOver="closeAllMenu();"> <a href="about.jsp">About SCMD</a> </td>
 </tr>
 </table>
 

@@ -12,7 +12,7 @@
 <scmd-base:header title="Individual Cell Datasheet of ${view.orf}" css="/css/tabsheet.css"/>
 <body>
 <center>
-<scmd-tags:menu  toolbar="on" orf="${gene.orf}"/>
+<scmd-tags:menu searchframe="on" toolbar="on" orf="${gene.orf}" />
 
 <scmd-tags:orfInfo  orf="${gene.orf}" 
 	stdname="${gene.standardName}" annot="${gene.annotation}" 
