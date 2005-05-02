@@ -37,38 +37,34 @@
 </table>
 
 <table width="700" border="0" cellpadding="0" cellspacing="0">
-<tr class="menubar" >  
+<tr class="menubar">
+<td width="5"></td>
 <td align="center" id="yeast" onMouseOver="closeAllMenu();"><a href="ViewORFList.do">Mutant List</a></td>
-<td align="center" id="yeast" onMouseOver="closeAllMenu();"><a href="ParameterHelp.do">Parameter List</a></td>
-<td align="center" id="yeast" onMouseOver="closeAllMenu();"><a href="sitemap.jsp">Site Map</a></td>
-<td align="center" id="yeast" onMouseOver="closeAllMenu();"><a href="SelectShape.do">Morphology Search</a></td>
+<td align="center" id="parameter" onMouseOver="closeAllMenu();"><a href="ParameterHelp.do">Parameter List</a></td>
+<td align="center" id="sitemap" onMouseOver="closeAllMenu();"><a href="sitemap.jsp">Site Map</a></td>
+<td align="center" id="morphsearch" onMouseOver="closeAllMenu();"><a href="SelectShape.do">Morphology Search</a></td>
 
 <td align="center" id="customize" onMouseOver="selectMenu('customizemenu');" onMouseOut="detectMouseOut(event,this);">
 <table cellpadding="0" cellspacing="0">
-<tr class="menubar"><td><a href="."> Customization</a></td></tr>
+<tr class="menubar"><td><a href=".">Customization</a></td></tr>
 <tr><td>
-<table width="150" border="0" class="dropdownmenu" cellpadding="0" id="customizemenu" align="left">
-<tr>
-<td  nowrap="nowrap">
+<table border="0" width="150" class="dropdownmenu" id="customizemenu">
+<tr><td>
 <ul>
 <li> <a href="ViewSelection.do"> My Gene List</a> </li>
 <li> <a href="CustomizeView.do"> My Parameter List </a></li>
 </ul>
-</td>
-</tr>
+</td></tr>
 </table>
 </td></tr>
-</table>    
-</td>     
-<!--    
-    <td align="center" onMouseOver="closeAllMenu();"> <a href="publication.jsp">Publications</a> </td>
-    <td align="center" onMouseOver="closeAllMenu();"> <a href="about.jsp">About SCMD</a> </td>
--->
+</table>
+</td>
+
 <td align="center" id="about" onMouseOver="selectMenu('aboutscmd');" onMouseOut="detectMouseOut(event,this);">
 <table cellpadding="0" cellspacing="0">
 <tr class="menubar"><td><a href="."> About SCMD</a></td></tr>
 <tr><td>
-<table width="150" border="0" class="dropdownmenu" cellpadding="0" id="aboutscmd" align="left">
+<table width="120" border="0" class="dropdownmenu" cellpadding="0" id="aboutscmd" align="left">
 <tr>
 <td  nowrap="nowrap">
 <ul>
