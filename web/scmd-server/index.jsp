@@ -14,8 +14,6 @@ By using a redirect, the user-agent will change address to match the path of our
 <scmd-base:header title="Sacharomyces Cerevisiae Morphological Database" css="/css/toppage.css"/>
 <body class="toppage">
 <scmd-tags:menu searchframe="on" top="true"/>
-<scmd-tags:orfmenu />
- 
 
 <table width="650" border="0">
 <tr> 
