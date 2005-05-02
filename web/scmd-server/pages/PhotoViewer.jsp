@@ -62,7 +62,7 @@ int blankTabSize = imageWidth - 70 * 3;
 
 <tr>
 <td colspan="4" align="center">
-<scmd-tags:pageMoveButton actionURL="ViewPhoto.do" currentPage="${view.photoPage}" maxPage="${view.photoPageMax}"/>
+<scmd-tags:pageMoveButton actionURL="ViewPhoto.do" orf="${view.orf}" currentPage="${view.photoPage}" maxPage="${view.photoPageMax}"/>
 </td>
 </tr>
 <tr>

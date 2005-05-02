@@ -82,7 +82,7 @@
 <img src="cellshape.png?orf=${orf}" border="0" alt="${orf}" />
 </td></tr>
 <tr><td align="center">
-<span class="annotation">Significant Shape</span>
+<span class="annotation">Characteristic Shape</span>
 </td></tr>
 </table>
 </td>
