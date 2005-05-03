@@ -32,7 +32,7 @@ import lab.cb.scmd.web.common.StainType;
  */
 public class CellViewerForm extends ActionForm
 {
-    String orf = "yor202w";  
+    String orf = null;  
     int stainType = StainType.STAIN_ConA;
     int photoType = PhotoType.ANALYZED_PHOTO;
     int magnification = 50;
@@ -96,6 +96,9 @@ public class CellViewerForm extends ActionForm
         {
             sheetType = DataSheetType.SHEET_SHAPE;
         }
+        
+        if(orf == null)
+            orf = "yor202w";
         
         return errors;
     }
