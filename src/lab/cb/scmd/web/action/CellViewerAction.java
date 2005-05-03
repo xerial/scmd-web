@@ -47,7 +47,7 @@ public class CellViewerAction extends Action
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response)   throws Exception
     {
-        CellViewerForm viewerForm = SCMDSessionManager.getCellViewerForm(request);
+        CellViewerForm viewerForm = (CellViewerForm) form;
         
         _logic.handleAction(viewerForm, request);
         
