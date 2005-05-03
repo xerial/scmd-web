@@ -1,7 +1,9 @@
 <!-- rename this file to context.xml, and edit it according to your environment -->
 <Context docBase="scmd-server.war"
           path="/scmd-server" 
-          reloadable="true">        
+          reloadable="true"
+		  cookies="false"
+		  >        
     <Environment description="absolute path to the SCMD server root directory" 
 	        name="SCMD_ROOT" 
 	        type="java.lang.String" 
