@@ -46,7 +46,7 @@ You can select all menus described below from the above drop-down menu bar.
     <tr> 
       <td> 
         <ul>
-	      <li><a href="ViewORFList.do">Yeast Mutant</a>
+	      <li><html:link page="/ViewORFList.do">Yeast Mutant</html:link>
 		  <ul>Display a list of yeast mutants available in SCMD. </ul>
 		  </li>
         </ul>
@@ -60,7 +60,7 @@ You can select all menus described below from the above drop-down menu bar.
     <tr>
       <td valign="top"> 
         <ul>
-          <li><a href="ViewPhoto.do?orf=${orf}"> Photo Viewer </a>
+          <li><html:link page="/ViewPhoto.do?orf=${orf}"> Photo Viewer </html:link>
           <ul> Display micrographs of yeast mutants stained with ConA, DAPI and Rh-Ph.
 		 <p align="center">      <img src="image/photoviewer.png" align="center"/>  </p>   
           </ul>
@@ -71,7 +71,7 @@ You can select all menus described below from the above drop-down menu bar.
         </td>
       <td valign="top"> 
         <ul>
-                  <li><a href="ViewDataSheet.do?orf=${orf}"> Individual Cell Datasheet</a> 
+                  <li><html:link page="/ViewDataSheet.do?orf=${orf}"> Individual Cell Datasheet</html:link> 
               <ul> Show individual cells and their morphological prameters (cell 
                 parameters) in the micrographs.
   <img src="image/indivcell.png" align="center"/> 
@@ -99,20 +99,20 @@ You can select all menus described below from the above drop-down menu bar.
     <tr> 
       <td valign="top"> 
         <ul>
-          <li><a href="SelectShape.do">Morphology Search </a> 
+          <li><html:link page="/SelectShape.do">Morphology Search </html:link> 
              <ul>
               By inputting or selecting cell chapes displayed in dialogue, 
                search yeast mutants that are similar in shapes. 
                <img src="image/morphologysearch.png"/>               
              </ul>
               </li>
-          <li><a href="ViewORFParameter.do">ORF Parameter Datasheet</a> 
+          <li><html:link page="/ViewORFParameter.do">ORF Parameter Datasheet</html:link> 
             <ul>
               Show descriptions of ORF parameters and their datasheet sorted by values. 
               <img src="image/orfdatasheet.png" width="385" height="233"> 
             </ul>
           </li>
-          <li><a href="ViewStats.do?orf=${orf}">Average Shapes</a> 
+          <li><html:link page="/ViewStats.do?orf=${orf}">Average Shapes</html:link> 
             <ul>
               Display average shapes of mutants grouped by morphological conditions 
               <img src="image/averageshape.png" width="344" height="159"> 
@@ -122,12 +122,12 @@ You can select all menus described below from the above drop-down menu bar.
       </td>
       <td  valign="top"> 
         <ul>
-          <li><a href="ORFTeardrop.do?orf=${orf}">Teardrop View of ORF Parameters 
+          <li><html:link page="/ORFTeardrop.do?orf=${orf}">Teardrop View of ORF Parameters 
             </a> 
             <ul>
             Display values and statistical information (average, distribution, 
-            etc.) of morphological parameters of an ORF at a glance. By clicking the teardrop images, you can see their <a href="ViewORFParameter.do">ORF Parameter Datasheet</a>.
-              <p align="center">
+            etc.) of morphological parameters of an ORF at a glance. By clicking the teardrop images, you can see their <html:link page="/ViewORFParameter.do">ORF Parameter Datasheet</html:link>.
+ </html:link>         <p align="center">
                     <img src="image/orfterdrop.png" align="center"/> </p>
 	                    
             </ul>
@@ -135,7 +135,7 @@ You can select all menus described below from the above drop-down menu bar.
           </ul>
 
         <ul>
-          <li><a href="View2DPlot.do?orfType=current">2D Plot</a>
+          <li><html:link page="/View2DPlot.do?orfType=current">2D Plot</html:link>
           <ul>
               Plot pairs of two morphological parameters of all yeast mutants 
                 on a two dimensional plane. 
@@ -169,7 +169,7 @@ You can select all menus described below from the above drop-down menu bar.
     <tr> 
       <td valign="top"> 
         <ul>
-          <li><a href="ViewSelection.do"> My Gene List</a> 
+          <li><html:link page="/ViewSelection.do"> My Gene List</html:link> 
             <ul>
               By selecting genes in this page, positions of these genes are shown 
               in the teardrop view and the 2D plot display. Inputted data can 
@@ -180,9 +180,9 @@ You can select all menus described below from the above drop-down menu bar.
       </td>
       <td valign="top"> 
         <ul>
-          <li><a href="CustomizeView.do"> My Parameter List</a>
+          <li><html:link page="/CustomizeView.do"> My Parameter List</html:link>
             <ul>
-            By selecting several morphological parameters related to genes(ORFs) or indivial cells, you can customize displayed parameters in the <a href="ViewORFParameter.do">ORF Parameter Datasheet</a>, <a href="ORFTeardrop.do">Teardrop View</a> and <a href="ViewDataSheet.do">Indivisual Cell Parameter Datasheet</a>.
+            By selecting several morphological parameters related to genes(ORFs) or indivial cells, you can customize displayed parameters in the <html:link page="/ViewORFParameter.do">ORF Parameter Datasheet</html:link>, <html:link page="/ORFTeardrop.do">Teardrop View</html:link> and <html:link page="/ViewDataSheet.do">Indivisual Cell Parameter Datasheet</html:link>.
            <img src="image/myparm.png" align="center"/> 
            </ul>
 	     </li>
@@ -196,8 +196,8 @@ You can select all menus described below from the above drop-down menu bar.
         <ul>
           <li>Help Menu 
             <ul>
-              <li><a href="ParameterHelp.do">Parameter Help</a> </li>
-              <li><a href="sitemap.jsp">Site Map</a></li>
+              <li><html:link page="/ParameterHelp.do">Parameter Help</html:link> </li>
+              <li><html:link page="/sitemap.jsp">Site Map</html:link></li>
             </ul>
           </li>
         </ul>
@@ -206,8 +206,8 @@ You can select all menus described below from the above drop-down menu bar.
     <tr> 
       <td colspan="2"> 
         <ul>
-          <li><a href="publication.jsp">Publications</a> </li>
-          <li><a href="about.jsp">About SCMD</a> </li>
+          <li><html:link page="/publication.jsp">Publications</html:link> </li>
+          <li><html:link page="/about.jsp">About SCMD</html:link> </li>
         </ul>
       </td>
     </tr>

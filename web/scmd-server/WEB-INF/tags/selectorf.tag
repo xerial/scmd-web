@@ -3,5 +3,5 @@
 
 <html:form action="ViewSelection.do" method="POST">
 <html:hidden property="inputList" value="${orf}"/>
-<html:submit value="select this mutant"/>
+<html:submit value="Add to My Gene List"/>
 </html:form>

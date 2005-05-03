@@ -30,7 +30,7 @@
 <table>
 <tr><td class="menubutton" align="center">[<a href="ViewPhoto.do?orf=${view.orf}">Photo Viewer</a>]</td></tr>
 <tr><td>
-<scmd-tags:pageMoveButton orf="${view.orf}" actionURL="ViewDataSheet.do" currentPage="${view.photoPage}" maxPage="${view.photoPageMax}"/>
+<scmd-tags:pageMoveButton actionURL="ViewDataSheet.do" currentPage="${view.photoPage}" maxPage="${view.photoPageMax}"/>
 </td>
 </tr>
 </table>

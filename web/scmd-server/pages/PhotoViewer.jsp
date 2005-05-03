@@ -31,7 +31,7 @@
 
 <body>
 <center> 
-<scmd-tags:menu toolbar="on" orf="${gene.orf}" searchframe="on"/>
+<scmd-tags:menu toolbar="on" orf="${gene.orf}"/>
  
 <%
 // 画像サイズの計算
@@ -62,12 +62,12 @@ int blankTabSize = imageWidth - 70 * 3;
 
 <tr>
 <td colspan="4" align="center">
-<scmd-tags:pageMoveButton actionURL="ViewPhoto.do" orf="${view.orf}" currentPage="${view.photoPage}" maxPage="${view.photoPageMax}"/>
+<scmd-tags:pageMoveButton actionURL="ViewPhoto.do" currentPage="${view.photoPage}" maxPage="${view.photoPageMax}"/>
 </td>
 </tr>
 <tr>
 <td colspan="4" align="center" class="menubutton">
-[<a href="ViewDataSheet.do?orf=${view.orf}">Individual Cell Datasheet</a>]
+[<html:link page="/ViewDataSheet.do?orf=${view.orf}">Individual Cell Datasheet</html:link>]
 </td>
 </tr>
 </table>

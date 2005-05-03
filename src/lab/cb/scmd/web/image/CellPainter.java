@@ -29,6 +29,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.xerial.algorithm.Algorithm;
+
 import lab.cb.scmd.db.common.TableQuery;
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.web.common.SCMDConfiguration;
@@ -67,6 +69,12 @@ public class CellPainter extends HttpServlet
             double roundness = 0.0;
             double neckPosition = -1.0;
             double growthDirection = -1.0;
+            boolean isClip = false;
+            
+            if(request.getParameter("clip") != null)
+            {
+                isClip = true;
+            }
 
             if( request.getParameter("orf") != null ) {
             	// use orf name
@@ -141,7 +149,7 @@ public class CellPainter extends HttpServlet
             try
             {
                 response.setContentType("image/png");
-                drawCellImage(response.getOutputStream(), sizeRatio, longAxis, roundness, neckPosition, growthDirection);
+                drawCellImage(response.getOutputStream(), sizeRatio, longAxis, roundness, neckPosition, growthDirection, isClip);
             }
             catch (IOException e)
             {
@@ -175,7 +183,7 @@ public class CellPainter extends HttpServlet
     }
 
     static public void drawCellImage(OutputStream out, double budSizeRatio, double longAxis, double roundness,
-            double neckPosition, double budGrowthDirection) throws IOException
+            double neckPosition, double budGrowthDirection, boolean isClip) throws IOException
     {
         double shortAxis = longAxis / roundness;
         double radian = Math.PI / 180;
@@ -188,8 +196,11 @@ public class CellPainter extends HttpServlet
         double yRange = (shortAxis / 2.0) * (Math.sin(neckPosition * radian) + 1) + longAxisOfBud
                 * Math.sin(budGrowthDirection * radian);
 
-        int xCenter = (int) (50 - (xRange / 2.0) + (longAxis / 2.0));
-        int yCenter = (int) (118 - (shortAxis / 2.0 + 0.5));
+        int X_BASE = 50;
+        int Y_BASE = 118;
+        
+        int xCenter = (int) (X_BASE - (xRange / 2.0) + (longAxis / 2.0));
+        int yCenter = (int) (Y_BASE - (shortAxis / 2.0 + 0.5));
 
         int xOfBudOffset = xCenter
                 + (int) ((longAxis / 2.0) * Math.cos(neckPosition * radian) + (longAxisOfBud / 2.0)
@@ -198,19 +209,19 @@ public class CellPainter extends HttpServlet
                 - (int) ((shortAxis / 2.0) * Math.sin(neckPosition * radian) + (longAxisOfBud / 2.0)
                         * Math.sin(budGrowthDirection * radian) + 0.5);
 
-        int sizeRatioOfBudLongAxis = (int) (longAxisOfBud / 2.0 + 0.5);
-        int sizeRatioOfBudShortAxis = (int) (shortAxisOfBud / 2.0 + 0.5);
+        int radiusOfBudLongAxis = (int) (longAxisOfBud / 2.0 + 0.5);
+        int radiusOfBudShortAxis = (int) (shortAxisOfBud / 2.0 + 0.5);
 
-        int sizeRatioOfLongAxis = (int) (longAxis / 2.0 + 0.5);
-        int sizeRatioOfShortAxis = (int) (shortAxis / 2.0 + 0.5);
+        int radiusOfLongAxis = (int) (longAxis / 2.0 + 0.5);
+        int radiusOfShortAxis = (int) (shortAxis / 2.0 + 0.5);
 
         BufferedImage cellImage = new BufferedImage(128, 128, BufferedImage.TYPE_INT_RGB);
         Graphics2D g = (Graphics2D) cellImage.createGraphics();
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        Ellipse2D motherCellEllipse = new Ellipse2D.Double(-sizeRatioOfLongAxis, -sizeRatioOfShortAxis,
-                sizeRatioOfLongAxis * 2, sizeRatioOfShortAxis * 2);
-        Ellipse2D budCellEllipse = new Ellipse2D.Double(-sizeRatioOfBudLongAxis, -sizeRatioOfBudShortAxis,
-                sizeRatioOfBudLongAxis * 2, sizeRatioOfBudShortAxis * 2);
+        Ellipse2D motherCellEllipse = new Ellipse2D.Double(-radiusOfLongAxis, -radiusOfShortAxis,
+                radiusOfLongAxis * 2, radiusOfShortAxis * 2);
+        Ellipse2D budCellEllipse = new Ellipse2D.Double(-radiusOfBudLongAxis, -radiusOfBudShortAxis,
+                radiusOfBudLongAxis * 2, radiusOfBudShortAxis * 2);
 
         g.setColor(new Color(0xFFFFFF));
         g.fillRect(0, 0, 128, 128);
@@ -225,6 +236,16 @@ public class CellPainter extends HttpServlet
         g.setColor(new Color(0x9FC7D7));
         g.fill(budCellEllipse);
 
+        // clip the cell region
+        if(isClip)
+        {
+            int x1 = xCenter - radiusOfLongAxis;
+            int y1 = Algorithm.<Integer>minmax(yOfBudOffset - radiusOfBudLongAxis, yCenter - radiusOfShortAxis).min();
+            int xwidth = Algorithm.<Integer>minmax(xOfBudOffset + radiusOfBudLongAxis, xCenter + radiusOfLongAxis).max() - x1;
+            int ywidth = yCenter + radiusOfShortAxis - y1;
+            cellImage = cellImage.getSubimage(x1, y1, xwidth, ywidth);
+        }
+        
         ImageIO.write(cellImage, "png", out);
     }
 

@@ -190,7 +190,7 @@ public class ViewStatsAction extends Action
 			if(percentage != null) 
 				dataTable.set(2, i + 1, percentage);
 			
-			TreeMap map = new TreeMap();
+			TreeMap<String, String> map = new TreeMap<String, String>();
 			if(groupIndex == 0)
 				map.put("budSize", statParamName[groupIndex][i]);
 			
@@ -211,8 +211,10 @@ public class ViewStatsAction extends Action
 				map.put(cellShapeParam[p], data);
 				dataTable.set(p + 3, i + 1, data);
 			}
-			dataTable.set(0, i + 1, new Width(128, new Height(128, new ImageElement(
-					"cellshape.png", map))));
+            map.put("clip", "t");
+            ImageElement cellImage = new ImageElement("cellshape.png", map);
+			dataTable.set(0, i + 1, cellImage);
+            dataTable.decollate(0, i+1, new StyleDecollator("averageshape"));
 
 			TreeMap sheetMap = new TreeMap();
 			sheetMap.put("orf", orf);
