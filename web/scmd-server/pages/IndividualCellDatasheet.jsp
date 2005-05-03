@@ -22,13 +22,13 @@
 <table>
 <tr>
 <td width="500"></td>
-<td class="tool" width="150" align="right"> <a href="CustomizeView.do">customize parameters</a></td>
+<td class="tool" width="150" align="right"> <html:link page="/CustomizeView.do">customize parameters</html:link></td>
 </tr>
 </table>
 </c:if>
 
 <table>
-<tr><td class="menubutton" align="center">[<a href="ViewPhoto.do?orf=${view.orf}">Photo Viewer</a>]</td></tr>
+<tr><td class="menubutton" align="center">[<html:link page="/ViewPhoto.do?orf=${view.orf}">Photo Viewer</html:link>]</td></tr>
 <tr><td>
 <scmd-tags:pageMoveButton actionURL="ViewDataSheet.do" currentPage="${view.photoPage}" maxPage="${view.photoPageMax}"/>
 </td>

@@ -86,7 +86,7 @@
   <td class=notation> complexed cells </td> 
 </tr>
 <tr>
-  <td colspan=3><span class=memo><font color=red>(*1)</font>cell size ratio := bud size / mother cell size (= <a href="ViewORFParameter.do?columnType=input&paramID=321">C118</a>)</span></td>
+  <td colspan=3><span class=memo><font color=red>(*1)</font>cell size ratio := bud size / mother cell size (= <html:link page="/ViewORFParameter.do?columnType=input&paramID=321">C118</html:link>)</span></td>
 </tr>
 
  <tr> <td height=30> </td></tr>
@@ -187,7 +187,7 @@
 <logic:iterate id="p" name="orfParamList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
 <tr>
 <td>
-<a href="ViewORFParameter.do?columnType=input&paramID=${p.id}&sortspec=${p.id}">${p.name}</a>
+<html:link page="/ViewORFParameter.do?columnType=input&paramID=${p.id}&sortspec=${p.id}">${p.name}</html:link>
 </td>
 <td bgcolor="#FFEFEF">${p.displayname} </td>
 <td bgcolor="#EFEFEF" align="center">${p.stain} </td>
@@ -210,7 +210,7 @@
 <logic:iterate id="p" name="cellParamList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
 <tr>
 <td>
-<a href="ViewORFParameter.do?columnType=input&paramID=${p.id}&sortspec=${p.id}">${p.name}</a>
+<html:link page="/ViewORFParameter.do?columnType=input&paramID=${p.id}&sortspec=${p.id}">${p.name}</html:link>
 </td>
 <td bgcolor="#FFEFEF">${p.displayname} </td>
 <td bgcolor="#EFEFEF" align="center">${p.stain} </td>

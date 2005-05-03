@@ -58,13 +58,13 @@ ${morphParam.displayname}
 <table align="center">
 <tr>
 <td class="menubutton" align="center">
-[<a href="ViewORFParameter.do">Display Datasheet</a>]
-[<a href="ORFTeardrop.do?orf=${view.orf}&sheetType=3">Teardrop View</a>]
+[<html:link page="/ViewORFParameter.do">Display Datasheet</html:link>]
+[<html:link page="/ORFTeardrop.do?orf=${view.orf}&sheetType=3">Teardrop View</html:link>]
 </td>
 </tr>
 <tr>
 <td class="menubutton" align="center">
-download as [<a href="ViewORFParameter.do?format=xml">XML</a>] [<a href="ViewORFParameter.do?format=tab">tab-separated sheet</a>]
+download as [<html:link page="/ViewORFParameter.do?format=xml">XML</html:link>] [<html:link page="/ViewORFParameter.do?format=tab">tab-separated sheet</html:link>]
 </td>
 </tr>
 </table>
@@ -89,7 +89,7 @@ download as [<a href="ViewORFParameter.do?format=xml">XML</a>] [<a href="ViewORF
 <logic:iterate id="morphParam" name="cellParameterList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
 <tr><td>
 <html:multibox name="viewConfigForm" property="removeCellParamList" value="<%= morphParam.getIdStr() %>"/>
-</td><td>${morphParam.name}</td>
+</td><td><html:link page="/ViewORFParameter.do?paramID=${morphParam.id}&columnType=input">${morphParam.name}</html:link></td>
 <td>${morphParam.displayname}</td>
 </tr>
 </logic:iterate>
@@ -99,7 +99,7 @@ download as [<a href="ViewORFParameter.do?format=xml">XML</a>] [<a href="ViewORF
 <table align="center">
 <tr>
 <td class="menubutton" align="center">
-[<a href="ViewDataSheet.do?sheetType=4">Photo Datasheet</a>]
+[<html:link page="/ViewDataSheet.do?sheetType=4">Photo Datasheet</html:link>]
 </td>
 </tr>
 </table>
@@ -119,7 +119,7 @@ download as [<a href="ViewORFParameter.do?format=xml">XML</a>] [<a href="ViewORF
 <% } %>
 </p>
 
-<p> <span class="title"> ORF Parameters List </span> <span class="menubutton">[<a href="ParameterHelp.do#orfparam">help</a>]</p>
+<p> <span class="title"> ORF Parameters List </span> <span class="menubutton">[<html:link page="/ParameterHelp.do#orfparam">help</html:link>]</p>
 <p class="small"> Select and add parameters below. (press CTRL or SHIFT key to choose multiple items)</p>
 <table>
 <tr><td>Category</td><td></td><td>Parameter Description</td></tr>
@@ -141,7 +141,7 @@ download as [<a href="ViewORFParameter.do?format=xml">XML</a>] [<a href="ViewORF
 </td></tr>
 </table>
 
-<p> <span class="title"> Cell Parameters List </span> <span class="menubutton">[<a href="ParameterHelp.do#cellparam">help</a>]</p>
+<p> <span class="title"> Cell Parameters List </span> <span class="menubutton">[<html:link page="/ParameterHelp.do#cellparam">help</html:link>]</p>
 <p class="small"> Select and add parameters below (press CTRL or SHIFT key to choose multiple items) </p>
 <table>
 <tr><td>Category</td><td></td><td>Parameter Description</td></tr>

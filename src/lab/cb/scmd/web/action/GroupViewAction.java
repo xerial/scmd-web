@@ -212,7 +212,7 @@ public class GroupViewAction extends Action
                 imageCache.registerImage(imageID);
                 imageMap.put("imageID", imageID);
                 imageMap.put("encoding", "jpeg");
-                ImageElement img = new ImageElement("scmdimage.img", imageMap);
+                ImageElement img = new ImageElement(response.encodeURL("scmdimage.img"), imageMap);
                 img.setProperty("width", Integer.toString(w));
                 img.setProperty("height", Integer.toString(h));
                 img.setProperty("alt", "cell ID=" + colIndex.get(i, "cell_local_id"));                

@@ -11,6 +11,7 @@
 package lab.cb.scmd.web.action;
 
 import java.lang.reflect.InvocationTargetException;
+import java.net.ResponseCache;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
@@ -67,7 +68,7 @@ public class ViewGroupByTearDropAction extends Action
     }
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse responce) {
+            HttpServletResponse response) {
         GroupByDatasheetForm sheetForm = (GroupByDatasheetForm) form;
 
         HttpSession session = request.getSession(true);
@@ -77,11 +78,11 @@ public class ViewGroupByTearDropAction extends Action
 
         TableQuery query = SCMDConfiguration.getTableQueryInstance();
 
-        LinkedList tableList = new LinkedList();
+        LinkedList<Table> tableList = new LinkedList<Table>();
         int stainType = sheetForm.getStainType();
         for (int i = 0; i < GroupType.GROUP_NAME[stainType].length; i++)
         {
-            tableList.add(getTearDropSheet(selection, query, sheetForm, orfSet, GroupType.GROUP_NAME[stainType][i], GroupType.GROUP_PARAM_ID[stainType][i]));
+            tableList.add(getTearDropSheet(selection, query, sheetForm, orfSet, GroupType.GROUP_NAME[stainType][i], GroupType.GROUP_PARAM_ID[stainType][i], response));
         }
 
 
@@ -91,7 +92,8 @@ public class ViewGroupByTearDropAction extends Action
         return mapping.findForward("success");
     }
 
-    public Table getTearDropSheet(UserSelection selection, TableQuery query, GroupByDatasheetForm sheetForm, Set orfSet, String group, int groupParamID) {
+    public Table getTearDropSheet(UserSelection selection, TableQuery query, GroupByDatasheetForm sheetForm, Set orfSet, String group, int groupParamID, HttpServletResponse response)
+    {
         Table datasheet = new Table();
         final String[] label = { "Long Axis", "Roundness", "Bud Neck Position", "Bud Growth Direction",
                 "Daughtor / Mother"};
@@ -172,7 +174,7 @@ public class ViewGroupByTearDropAction extends Action
             }
 
             // add point
-            ImageElement img = new ImageElement("DrawTeardrop.do", argMap);
+            ImageElement img = new ImageElement(response.encodeURL("DrawTeardrop.do"), argMap);
             img.setProperty("width", "134");
             img.setProperty("height", "30");
 
@@ -215,7 +217,7 @@ public class ViewGroupByTearDropAction extends Action
         Table frame = new Table();
         Table imageTable = new Table();
 
-        ImageElement cellImg = new ImageElement("cellshape.png", cellShape.getArgumentMap());
+        ImageElement cellImg = new ImageElement(response.encodeURL("cellshape.png"), cellShape.getArgumentMap());
         cellImg.setProperty("width", "128");
         cellImg.setProperty("height", "128");
         TableElementList datasheetLink = new TableElementList();
@@ -224,7 +226,7 @@ public class ViewGroupByTearDropAction extends Action
         linkMap.put("orf", sheetForm.getOrf());
         linkMap.put("stainType", Integer.toString(sheetForm.getStainType()));
         linkMap.put("group", group);
-        datasheetLink.add(new Style(new Link("ViewGroupDataSheet.do", linkMap, "datasheet"), "button"));
+        datasheetLink.add(new Style(new Link(response.encodeURL("ViewGroupDataSheet.do"), linkMap, "datasheet"), "button"));
         datasheetLink.add("]");
         imageTable.addCol(new TableElement[] { cellImg, new Style(new StringElement(group), "title"), datasheetLink});
         imageTable.decollateCol(0, new AttributeDecollator("align", "center"));

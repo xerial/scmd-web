@@ -71,20 +71,20 @@
 %>
 <scmd-base:pagemover page="ViewORFParameter.do" parameter="<%= pid%>" target="${group.groupName}" currentPage="<%= pageStatus.getCurrentPage() %>" maxPage="<%= pageStatus.getMaxPage() %>"/>
 </span>
-<span class="small">Download data selected in <a href="ViewSelection.do">My Gene List</a> as an
-[<a href="ViewORFParameter.do?<%=pid%>&format=xml"> XML </a> ] or 
-[<a href="ViewORFParameter.do?<%=pid%>&format=tab"> Tab-separated sheet</a> ]
+<span class="small">Download data selected in <html:link page="/ViewSelection.do">My Gene List</html:link> as an
+[<html:link page="/ViewORFParameter.do?<%=pid%>&format=xml"> XML </html:link> ] or 
+[<html:link page="/ViewORFParameter.do?<%=pid%>&format=tab"> Tab-separated sheet</html:link> ]
 format. 
 </span>
 
 <table class="datasheet" cellpadding="0" cellspacing="1">
 <tr>
-<td class="sheetlabel" align="center"><a href="ViewORFParameter.do?<%= labelLink%>&sortspec=-1">ORF</a></td>
+<td class="sheetlabel" align="center"><html:link page="/ViewORFParameter.do?<%= labelLink%>&sortspec=-1">ORF</html:link></td>
 <td class="sheetlabel" align="center">Std. Name</td>
 <%-- <td width="150" align="center">Aliases</td> --%>
 <td></td>
 <logic:iterate id="p" name="paramList" scope="request" type="lab.cb.scmd.web.sessiondata.MorphParameter">
-<td class="sheetlabel" align="center" ><a href="ViewORFParameter.do?<%= labelLink%>&sortspec=${p.id}">${p.name}</a></td>
+<td class="sheetlabel" align="center" ><html:link page="/ViewORFParameter.do?<%= labelLink%>&sortspec=${p.id}">${p.name}</html:link></td>
 </logic:iterate>
 </tr>
 <logic:iterate id="gene" name="geneList" scope="request" type="lab.cb.scmd.web.bean.YeastGene">

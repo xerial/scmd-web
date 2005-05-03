@@ -163,7 +163,7 @@ public class ViewORFTeardropAction extends Action
             linkMap.put("paramID", paramID);
             linkMap.put("sortspec", paramID);
             linkMap.put("columnType", "input");            
-            Link label = new Link("ViewORFParameter.do", linkMap, param.getName());
+            Link label = new Link(response.encodeURL("ViewORFParameter.do"), linkMap, param.getName());
             //labelRow.add(new AttributeDecollation(label, "title", param.getDisplayname()));
             labelRow.add(new AttributeDecollation(label, "title", param.getSystematicname()));
 
@@ -229,13 +229,13 @@ public class ViewORFTeardropAction extends Action
             imgArg.put("imageID", imageID);
             imgArg.put("encoding", "png"); 
             
-            ImageElement img = new ImageElement("scmdimage.png", imgArg);
+            ImageElement img = new ImageElement(response.encodeURL("scmdimage.png"), imgArg);
             img.setProperty("alt", "avg. of all mutants = " + format.format(teardrop.getAverage()) + "\navg. of wildtype = " + format.format(teardrop.getWt_average()));            
             img.setProperty("border", "0");
             img.setProperty("width", "134");            
             img.setProperty("height", "30");            
             
-            teardropRow.add(new Link("ViewORFParameter.do", linkMap, img));
+            teardropRow.add(new Link(response.encodeURL("ViewORFParameter.do"), linkMap, img));
         }
         
         SCMDThreadManager.addTask(new DrowTeardropTask(teardropList, imageCache));

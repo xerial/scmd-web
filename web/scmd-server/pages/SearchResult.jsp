@@ -36,7 +36,7 @@
 <tr><td align="left" class="annotation">
 Results for 
 <logic:iterate id="key" name="keywordList" type="java.lang.String">
-<b><a href="Search.do?keyword=<%=key%>"><%=key%></a></b>
+<b><html:link page="/Search.do?keyword=<%=key%>"><%=key%></html:link></b>
 </logic:iterate>
 </td></tr>
 </table>

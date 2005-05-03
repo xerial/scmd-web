@@ -86,7 +86,7 @@ function writeRegion(e)
 <td bgcolor="<%= userSelection.getColor(orf) %>" width="25"></td>
 <td width="5"></td>
 <td class="orf" width="100" align="left">
-<a href="ViewStats.do?orf=${orf}"><%= lab.cb.scmd.web.bean.YeastGene.formatedOrf(orf) %></a> 
+<html:link page="/ViewStats.do?orf=${orf}"><%= lab.cb.scmd.web.bean.YeastGene.formatedOrf(orf) %></html:link> 
 </td>
 </tr>
 </logic:iterate>
@@ -96,11 +96,11 @@ function writeRegion(e)
 
 <td align="center">
 <c:if test="${plotForm.param2 != -1}">
-<a href="ViewORFParameter.do?paramID=${plotForm.param2}&sortspec=${plotForm.param2}&columnType=input"><img src="DrawTeardrop.do?paramID=${plotForm.param2}&orientation=vertical&plotTargetORF=${addViewORF}&plotUserORF=${!addViewORF}" border="0"/></a>
+<html:link page="/ViewORFParameter.do?paramID=${plotForm.param2}&sortspec=${plotForm.param2}&columnType=input"><html:img page="/DrawTeardrop.do?paramID=${plotForm.param2}&orientation=vertical&plotTargetORF=${addViewORF}&plotUserORF=${!addViewORF}" border="0"/></html:link>
 </c:if>
 </td>
 <td>
-<img id="plot" class="plotview" src="Write2DPlot.do?${plotForm.cgiArgument}&plotTargetORF=${addViewORF?"true":"false"}&plotUserORF=${addViewORF?"false":"true"}" width="320" height="320"/>
+<html:img styleClass="plotview" page="/Write2DPlot.do?${plotForm.cgiArgument}&plotTargetORF=${addViewORF ? 'true' : 'false'}&plotUserORF=${addViewORF?'false':'true'}" width="320" height="320"/>
 </td>
 </tr>
 <tr>
@@ -108,7 +108,7 @@ function writeRegion(e)
 <td/>
 <td align="center">
 <c:if test="${plotForm.param1 != -1}">
-<a href="ViewORFParameter.do?paramID=${plotForm.param1}&sortspec=${plotForm.param1}&columnType=input"><img src="DrawTeardrop.do?paramID=${plotForm.param1}&plotTargetORF=${addViewORF}&plotUserORF=${!addViewORF}" border="0"/></a>
+<html:link page="/ViewORFParameter.do?paramID=${plotForm.param1}&sortspec=${plotForm.param1}&columnType=input"><html:img page="/DrawTeardrop.do?paramID=${plotForm.param1}&plotTargetORF=${addViewORF}&plotUserORF=${!addViewORF}" border="0"/></html:link>
 </c:if>
 </td>
 </tr>

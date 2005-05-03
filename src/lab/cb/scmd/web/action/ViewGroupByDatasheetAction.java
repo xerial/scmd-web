@@ -61,7 +61,7 @@ public class ViewGroupByDatasheetAction extends Action
     }
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse responce) throws Exception {
+            HttpServletResponse response) throws Exception {
 
         GroupByDatasheetForm datasheetForm = (GroupByDatasheetForm) form;
 
@@ -124,7 +124,7 @@ public class ViewGroupByDatasheetAction extends Action
                     imageCache.registerImage(imageID);
                     argMap.put("imageID", imageID);
                     argMap.put("encoding", "jpeg");
-                    ImageElement img = new ImageElement("scmdimage.img", (Map) argMap.clone());
+                    ImageElement img = new ImageElement(response.encodeURL("scmdimage.img"), (Map) argMap.clone());
                     img.setProperty("alt", "cell ID=" + colIndex.get(row, "cell_local_id"));
                     img.setProperty("width", Integer.toString(w));
                     img.setProperty("height", Integer.toString(h));

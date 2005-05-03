@@ -106,7 +106,7 @@ public class ViewStatsAction extends Action
 
 		for(int i = 0; i < 4; i++)
 		{
-			Table table = createStatTable(orf, statParamMap, i);
+			Table table = createStatTable(orf, statParamMap, i, response);
 			request.setAttribute("statsTable" + i, table);
 		}
 		
@@ -114,7 +114,7 @@ public class ViewStatsAction extends Action
 		return mapping.findForward("success");
 	}
 
-	protected Table createStatTable(String orf, Map paramMap, int groupIndex) {
+	protected Table createStatTable(String orf, Map paramMap, int groupIndex, HttpServletResponse response) {
 		final String statParamName[][] = new String[][] { { "no", "small", "medium", "large" },
 				{ "A", "A1", /* "A1|B", */"B", "C" }, { "D", "E", "F" },
 				{ "A", "B", "api", "iso", "E", "F" }, };
@@ -212,7 +212,7 @@ public class ViewStatsAction extends Action
 				dataTable.set(p + 3, i + 1, data);
 			}
             map.put("clip", "t");
-            ImageElement cellImage = new ImageElement("cellshape.png", map);
+            ImageElement cellImage = new ImageElement(response.encodeURL("cellshape.png"), map);
 			dataTable.set(0, i + 1, cellImage);
             dataTable.decollate(0, i+1, new StyleDecollator("averageshape"));
 
@@ -222,7 +222,7 @@ public class ViewStatsAction extends Action
 			sheetMap.put("group", statParamName[groupIndex][i]);
 			TableElementList sheetLink = new TableElementList();
 			sheetLink.add("[");
-			sheetLink.add(new Link("ViewGroupDataSheet.do", sheetMap, "datasheet"));
+			sheetLink.add(new Link(response.encodeURL("ViewGroupDataSheet.do"), sheetMap, "datasheet"));
 			sheetLink.add("]");
 			dataTable.set(dataTable.getRowSize() - 3, i + 1, new AttributeDecollation(sheetLink,
 					"align", "center"));
@@ -230,7 +230,7 @@ public class ViewStatsAction extends Action
 
 			TableElementList teardropLink = new TableElementList();
 			teardropLink.add("[");
-			teardropLink.add(new Link("ViewGroupByTearDrop.do", sheetMap, "teardrop view"));
+			teardropLink.add(new Link(response.encodeURL("ViewGroupByTearDrop.do"), sheetMap, "teardrop view"));
 			teardropLink.add("]");
 			dataTable.set(dataTable.getRowSize() - 2, i + 1, new AttributeDecollation(teardropLink,
 					"align", "center"));
@@ -240,7 +240,7 @@ public class ViewStatsAction extends Action
 			link.add("[");
 			TreeMap linkMap = (TreeMap) map.clone();
 			linkMap.put("phase", "5");
-			link.add(new Link("SelectShape.do", linkMap, "search"));
+			link.add(new Link(response.encodeURL("SelectShape.do"), linkMap, "search"));
 			link.add("]");
 			dataTable.set(dataTable.getRowSize() - 1, i + 1, new AttributeDecollation(link,
 					"align", "center"));
@@ -268,7 +268,7 @@ public class ViewStatsAction extends Action
 		TreeMap map = new TreeMap();
 		map.put("orf", orf); 
 		map.put("stainType", new Integer(groupIndex > 1 ? groupIndex - 1 : groupIndex));
-		groupBySheetLink.add(new Link("ViewGroupBySheet.do",map, "group by sheet"));
+		groupBySheetLink.add(new Link(response.encodeURL("ViewGroupBySheet.do"),map, "group by sheet"));
 		groupBySheetLink.add("]");
 		dataTable.set(8, 0, new Style(groupBySheetLink, "button"));
 		return dataTable;

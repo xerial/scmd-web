@@ -21,7 +21,7 @@
 
 <p class="notice"> No cell parameter is selected.
 <br> Please select some cell parameters in the
-<a href="CustomizeView.do">My Parameter List</a> page.
+<html:link page="/CustomizeView.do">My Parameter List</html:link> page.
 </p>
 
 
