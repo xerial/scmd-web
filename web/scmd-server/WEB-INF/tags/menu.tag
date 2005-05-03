@@ -39,19 +39,19 @@
 <table width="700" border="0" cellpadding="0" cellspacing="0">
 <tr class="menubar">
 <td width="5"></td>
-<td align="center" id="yeast" onMouseOver="closeAllMenu();"><a href="ViewORFList.do">Mutant List</a></td>
-<td align="center" id="parameter" onMouseOver="closeAllMenu();"><a href="ParameterHelp.do">Parameter List</a></td>
+<td align="center" id="yeast" onMouseOver="closeAllMenu();"><html:link page="/ViewORFList.do">Mutant List</html:link></td>
+<td align="center" id="parameter" onMouseOver="closeAllMenu();"><html:link page="/ParameterHelp.do">Parameter List</html:link></td>
 
 <td align="center" id="photo" onMouseOver="selectMenu('photomenu');" onMouseOut="detectMouseOut(event,this);">
 <table cellpadding="0" cellspacing="0">
-<tr class="menubar"><td><a href="ViewPhoto.do">Photo</a></td></tr>
+<tr class="menubar"><td><html:link page="/ViewPhoto.do">Photo</html:link></td></tr>
 <tr><td>
 <table width="200" id="photomenu" class="dropdownmenu"> 
 <tr>
 <td  nowrap="nowrap">
 <ul>
-<li><a href="ViewPhoto.do?orf=${orf}"> Photo Viewer </a></li>
-<li><a href="ViewDataSheet.do?orf=${orf}"> Individual Cell Datasheet</a> </li>
+<li><html:link page="/ViewPhoto.do?orf=${orf}"> Photo Viewer </html:link></li>
+<li><html:link page="/ViewDataSheet.do?orf=${orf}"> Individual Cell Datasheet</html:link> </li>
 <li> Cells Grouped by </li>
 <ul>
 <li> <html:link page="/ViewGroupBySheet.do?stainType=0&orf=${orf}"> bud size </html:link></li>
@@ -75,11 +75,11 @@
 <tr>
 <td  nowrap="nowrap">
 <ul>
-<li> <a href="SelectShape.do">Morphology Search </a></li>
-<li> <a href="ORFTeardrop.do?orf=${orf}">Teardrop View of ORF Parameters </a></li>
-<li> <a href="ViewORFParameter.do">ORF Parameter Datasheet</a></li>
-<li><a href="View2DPlot.do?orfType=current">2D Plot</a></li>
-<li> <a href="ViewStats.do?orf=${orf}">Average Shapes</a> </li>
+<li> <html:link page="/SelectShape.do">Morphology Search </html:link></li>
+<li> <html:link page="/ORFTeardrop.do?orf=${orf}">Teardrop View of ORF Parameters </html:link></li>
+<li> <html:link page="/ViewORFParameter.do">ORF Parameter Datasheet</html:link></li>
+<li><html:link page="/View2DPlot.do?orfType=current">2D Plot</html:link></li>
+<li> <html:link page="/ViewStats.do?orf=${orf}">Average Shapes</html:link> </li>
 <li>Teardrop View of Average Shapes Grouped by</li>
 <ul>
 <li><html:link page="/ViewGroupByTearDrop.do?stainType=0&orf=${orf}"> bud size </html:link></li>
@@ -115,13 +115,13 @@
 
 <td align="center" id="help" onMouseOver="selectMenu('hmenu');" onMouseOut="detectMouseOut(event,this);">
 <table cellpadding="0" cellspacing="0">
-<tr class="menubar"><td><a href="."> Help </a></td></tr>
+<tr class="menubar"><td><html:link page="/."> Help </html:link></td></tr>
 <tr><td>
 <table width="150" border="0" class="dropdownmenu" cellpadding="0" id="hmenu" align="left">
 <tr><td nowrap="nowrap"> 
 <ul>
-<li><a href="ParameterHelp.do">Parameter Help</a> </li>
-<li> <a href="sitemap.jsp">Site Map </a></li>
+<li><html:link page="/ParameterHelp.do">Parameter Help</html:link> </li>
+<li> <html:link page="/sitemap.jsp">Site Map </html:link></li>
 </ul>
 </td></tr>
 </table>
@@ -133,14 +133,14 @@
 
 <td align="center" id="about" onMouseOver="selectMenu('aboutscmd');" onMouseOut="detectMouseOut(event,this);">
 <table cellpadding="0" cellspacing="0">
-<tr class="menubar"><td><a href="."> About SCMD</a></td></tr>
+<tr class="menubar"><td><html:link page="/."> About SCMD</html:link></td></tr>
 <tr><td>
 <table width="120" border="0" class="dropdownmenu" cellpadding="0" id="aboutscmd" align="left">
 <tr>
 <td  nowrap="nowrap">
 <ul>
-<li> <a href="publication.jsp"> Publications</a> </li>
-<li> <a href="about.jsp"> Info. & Staffs </a> </li>
+<li> <html:link page="/publication.jsp"> Publications</html:link> </li>
+<li> <html:link page="/about.jsp"> Info. & Staffs </html:link> </li>
 </ul>
 </td>
 </tr>
@@ -161,8 +161,8 @@
    <td align="right">
     <table>
      <tr align="top">
-	    <td class="tool" width="150"> <a href="ViewSelection.do">My Gene List</a> </td>
-    	<td class="tool" width="150"> <a href="CustomizeView.do">My Parameter List</a></td>
+	    <td class="tool" width="150"> <html:link page="/ViewSelection.do">My Gene List</html:link> </td>
+    	<td class="tool" width="150"> <html:link page="/CustomizeView.do">My Parameter List</html:link></td>
      </tr>
 	</table>    
    </td>
