@@ -167,7 +167,7 @@ public class CellPainter extends HttpServlet
     void printWhiteBoard(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
     {
         response.setContentType("image/png");
-        request.getRequestDispatcher("/png/na.png").forward(request, response);
+        request.getRequestDispatcher("/png/na_cell.png").forward(request, response);
         return;
     }
 
