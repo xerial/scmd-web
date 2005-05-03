@@ -79,7 +79,9 @@
 </table>
 <!-- end of links for photo and mining pages -->
 </td>
-<td valign="absbottom"><scmd-tags:selectorf orf="${orf}"/></td>
+
+<td class="averageshape" height="10" nowrap="nowrap"><p valign="bottom" class="small"><scmd-tags:selectorf orf="${orf}"/></p></td>
+
 <logic:equal name="cellimage"  value="on">
 <!-- cell synthetic image -->
 <td align="left" valign="bottom" rowspan="2">
