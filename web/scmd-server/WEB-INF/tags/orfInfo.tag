@@ -50,7 +50,7 @@
     
 <td id="subdata" onMouseOver="selectMenu('subdataminingmenu');" onMouseOut="detectMouseOut(event,this);">
 <table cellpadding="0" cellspacing="0">
-<tr><td class="button">[<html:link page=".">stats & mining</html:link>]</td></tr>
+<tr><td class="button">[<html:link page="/ViewStats.do?orf=${orf}">stats & mining</html:link>]</td></tr>
 <tr><td>
 <table  width="300" class="dropdownmenu" cellpadding="0" id="subdataminingmenu" align="left">
 <tr>

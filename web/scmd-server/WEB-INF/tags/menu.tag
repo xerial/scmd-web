@@ -69,7 +69,7 @@
 
 <td align="center" id="data" onMouseOver="selectMenu('dataminingmenu');" onMouseOut="detectMouseOut(event,this);">
 <table cellpadding="0" cellspacing="0">
-<tr class="menubar"><td><a href=".">Data Mining</a></td></tr>
+<tr class="menubar"><td><html:link page="/ViewStats.do?orf=${orf}">Data Mining</html:link></td></tr>
 <tr><td>
 <table  width="300" class="dropdownmenu" cellpadding="0" id="dataminingmenu" align="left">
 <tr>
@@ -99,7 +99,7 @@
 
 <td align="center" id="customize" onMouseOver="selectMenu('customizemenu');" onMouseOut="detectMouseOut(event,this);">
 <table cellpadding="0" cellspacing="0">
-<tr class="menubar"><td><a href=".">Customization</a></td></tr>
+<tr class="menubar"><td><html:link page="/CustomizeView.do">Customization</html:link></td></tr>
 <tr><td>
 <table border="0" width="150" class="dropdownmenu" id="customizemenu">
 <tr><td>
