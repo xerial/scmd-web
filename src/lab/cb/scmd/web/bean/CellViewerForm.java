@@ -32,7 +32,7 @@ import lab.cb.scmd.web.common.StainType;
  */
 public class CellViewerForm extends ActionForm
 {
-    String orf = null;  
+    String orf = "";  
     int stainType = StainType.STAIN_ConA;
     int photoType = PhotoType.ANALYZED_PHOTO;
     int magnification = 50;
