@@ -1,9 +1,12 @@
-/*
- * Created on 2005/03/20
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
+//--------------------------------------
+//SCMDWeb
+//
+//DrawSignificantChart.java 
+//Since: 2005/03/20
+//
+//$URL: http://phenome.gi.k.u-tokyo.ac.jp/devel/svn/phenome/trunk/SCMDWeb/src/lab/cb/scmd/web/action/CellViewerAction.java $ 
+//$LastChangedBy: leo $ 
+//--------------------------------------
 package lab.cb.scmd.db.scripts.analysis;
 
 import java.awt.Color;
@@ -18,6 +21,8 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,6 +39,7 @@ import jxl.write.Label;
 import jxl.write.Number;
 import jxl.write.WritableCellFormat;
 import jxl.write.WritableFont;
+import jxl.write.WritableHyperlink;
 import jxl.write.WritableImage;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
@@ -55,8 +61,9 @@ import lab.cb.scmd.web.table.Table;
 /**
  * @author sesejun
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * forward genetics, reverse genetics ÇÃê}Çï`Ç≠ÉvÉçÉOÉâÉÄ
+ * forward Ç∆reverseÇÃíËã`Ç™ãtÇÁÇµÇ¢ÇÃÇ≈íçà”ÅB
+ * (ïœêîñºÇ™ëSÇƒãtÇ…Ç»Ç¡ÇƒÇ¢ÇÈ) 
  */
 public class DrawSignificantChart {
 
@@ -97,6 +104,7 @@ public class DrawSignificantChart {
     QueryRunner queryRunner = null;
     HashMap<String, List<Strainname>> orflistMap = new HashMap<String, List<Strainname>> ();
     HashMap<String, String> gotermMap = new HashMap<String, String> ();
+    HashMap<String, String> parameterMap = new HashMap<String, String> ();
     
     // for excel sheet
     private boolean useExcel = true;
@@ -170,6 +178,7 @@ public class DrawSignificantChart {
                 }
         	}
 
+            // get go list
             try {
                 List<GOTerm> goannot = (List<GOTerm>) queryRunner.query("select goid, name from term",
                         new BeanListHandler(GOTerm.class));
@@ -179,16 +188,20 @@ public class DrawSignificantChart {
                     }
                 }
             } catch (SQLException e2) {
-                // TODO Auto-generated catch block
                 e2.printStackTrace();
             }
-            
-//            List<Strainname> goannot = (List<Strainname>) queryRunner.query(
-//                    "select systematicname as strainname, primaryname from genename_20040719 where systematicname in " +
-//                    "( select distinct strainname from goassociation where goid "
-//                    + "in (select cid as goid from term_graph where pid = '" 
-//                    + goid + "') )", 
-//                    new BeanListHandler(Strainname.class));
+            // get parameter list
+            List<ParameterList> paramList;
+            try {
+                paramList = (List<ParameterList>) queryRunner.query(
+                        "select id as pid, name from parameterlist where scope='orf'", 
+                        new BeanListHandler(ParameterList.class));
+                for(ParameterList p: paramList) {
+                    parameterMap.put(p.getName(), p.getPid() + "");
+                }
+            } catch (SQLException e3) {
+                e3.printStackTrace();
+            }
             
             BufferedReader fileReader = null;
             try {
@@ -334,8 +347,22 @@ public class DrawSignificantChart {
         }
 		try {
 			int col = 0;
-			sheet.addCell(new Label(col++, count, param));
-			sheet.addCell(new Label(col++, count, goid));
+
+            if( parameterMap.get(param) == null ) {
+                System.err.println("NO VALID PARAM! --" + param + "--");
+            }
+            URL url = new URL("http://scmd.gi.k.u-tokyo.ac.jp/datamine/ViewORFParameter.do?columnType=input&paramID="+ parameterMap.get(param));
+            WritableHyperlink link = new WritableHyperlink(col++, count, url);
+            link.setDescription(param);
+            sheet.addHyperlink(link);
+            
+            URL gourl = new URL("http://scmd.gi.k.u-tokyo.ac.jp/datamine/Search.do?keyword=" + goid);
+            WritableHyperlink golink = new WritableHyperlink(col++, count, gourl);
+            golink.setDescription(goid);
+            sheet.addHyperlink(golink);
+            
+			//sheet.addCell(new Label(col++, count, param));
+			//sheet.addCell(new Label(col++, count, goid));
 			sheet.addCell(new Label(col++, count, gotermMap.get(goid)));
             
 	        if(fwd) {
@@ -373,9 +400,8 @@ public class DrawSignificantChart {
 	                pifile = paramname + "-" + goid.replaceFirst("GO:", "") + "_low.png";
 	            }
 	            String piwholefile = paramname + "-" + goid.replaceFirst("GO:", "") + "_whole.png";
-                sheet.setRowView(count, 500);
                 sheet.setColumnView(col, 50);
-                sheet.setRowView(count, 1250);
+                sheet.setRowView(count, 1150);
 	            WritableImage barChart = new WritableImage(col++, count, 1, 1, new File(filename));
                 sheet.setColumnView(col, 10);
 	            WritableImage pichart  = new WritableImage(col++, count, 1, 1, new File(pifile));
@@ -394,7 +420,9 @@ public class DrawSignificantChart {
 			e.printStackTrace();
 		} catch (WriteException e) {
 			e.printStackTrace();
-		}
+		} catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
 		
 	}
 
@@ -692,7 +720,7 @@ public class DrawSignificantChart {
         g.setColor(middleCellColor);
         g.fillRect( (int)(CELLWIDTH * lowcount), 0, (int)(CELLWIDTH * (anavalueList.length - lowcount - highcount)), HEIGHT);
         g.setColor(highCellColor);
-        g.fillRect( (int)(CELLWIDTH * (anavalueList.length - highcount)), 0, (int)(CELLWIDTH * highcount), HEIGHT);
+        g.fillRect( (int)Math.ceil(CELLWIDTH * (anavalueList.length - highcount)), 0, (int)(CELLWIDTH * highcount), HEIGHT);
         
         // draw foreground
         g.setColor(selectedColor);
