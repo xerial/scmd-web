@@ -140,26 +140,6 @@ public class MorphParameter {
         this.definition = definition;
     }
     
-    public String getHtmlDefinition()
-    {
-        final Pattern p = Pattern.compile("[ACD](CV)?[0-9]+(-[0-9])?(_(A|A1B|C))?");
-        if(definition == null)
-            return "";
-        Matcher m = p.matcher(definition);
-        StringBuffer buffer = new StringBuffer();
-        while(m.find())
-        {
-            String paramName = definition.substring(m.start(), m.end());
-            int paramID = parameterID(paramName);
-            if(paramID != -1)
-                m.appendReplacement(buffer, "<a href=\"ViewORFParameter.do?columnType=input&paramID=" + paramID + "&sortspec=" + paramID + "\">" + paramName + "</a>");
-            else
-                m.appendReplacement(buffer, paramName);
-        }
-        m.appendTail(buffer);
-        
-        return buffer.toString();
-    }
 
     static public int parameterID(String parameterName) 
     {

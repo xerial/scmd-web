@@ -189,7 +189,7 @@
 <td>
 <html:link page="/ViewORFParameter.do?columnType=input&paramID=${p.id}&sortspec=${p.id}">${p.name}</html:link>
 </td>
-<td bgcolor="#FFEFEF">${p.displayname} </td>
+<td bgcolor="#FFEFEF"><scmd-base:paramdef def="${p.displayname}"/></td>
 <td bgcolor="#EFEFEF" align="center">${p.stain} </td>
 <td bgcolor="#EFFFEF" align="center">${p.groupName} </td>
 </tr>
@@ -212,7 +212,7 @@
 <td>
 <html:link page="/ViewORFParameter.do?columnType=input&paramID=${p.id}&sortspec=${p.id}">${p.name}</html:link>
 </td>
-<td bgcolor="#FFEFEF">${p.displayname} </td>
+<td bgcolor="#FFEFEF"><scmd-base:paramdef def="${p.displayname}"/></td>
 <td bgcolor="#EFEFEF" align="center">${p.stain} </td>
 <td bgcolor="#EFFFEF" align="center">${p.datatype} </td>
 </tr>

@@ -174,4 +174,15 @@
         </attribute>
 	</tag>
 
+    <tag>
+    	<name>paramdef</name>
+    	<tagclass>lab.cb.scmd.web.taglib.ParamDef</tagclass>
+    	<info> add links to the parameter descriptions to parameter names </info>
+        <attribute>
+            <name>def</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+	</tag>
+
 </taglib>
