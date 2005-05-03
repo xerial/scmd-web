@@ -97,7 +97,7 @@ public class CellViewerForm extends ActionForm
             sheetType = DataSheetType.SHEET_SHAPE;
         }
         
-        if(orf == null)
+        if(orf == null || orf.length() <= 0)
             orf = "yor202w";
         
         return errors;
@@ -118,9 +118,9 @@ public class CellViewerForm extends ActionForm
             return orf.toUpperCase();
     }
     public void setOrf(String orf) {
-    	String previousORF = this.orf;
-    	String newORF = orf.toLowerCase();
-    	if(!previousORF.equals(newORF))
+        String previousORF = this.orf;
+        String newORF = orf.toLowerCase();
+        if(this.orf == null || !previousORF.equals(newORF))
     	{
     		this.orf = newORF;
     		_photoPageStatus = new PageStatus(1, 1); // reset page
