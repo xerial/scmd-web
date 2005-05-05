@@ -28,7 +28,7 @@ function off(idname)
 }
 function help(url)
 {
-	helpWin = window.open(url, 'parameter', 'width=400, height=500, status=no, menubar=no, scrollbar=yes');
+	helpWin = window.open(url, 'parameter');
 	helpWin.focus();
 }
 //-->
