@@ -41,7 +41,15 @@ href="http://www.u-tokyo.ac.jp">University of Tokyo</a>.</p>
 </td>
 </tr>
 </table>
+<table width="500" class="newsframe">
+  <tr>
+    <td>
+    	<span class="notice">keywords:</span> S.cerevisiae, yeast, bioinformatics, data mining	
+    </td>
+  </tr>
+</table>
 <table width="400" border="0" class=newsframe>
+
   <tr> 
     <td colspan=3 align=center>
       <span class=title> Current Status </span>
