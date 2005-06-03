@@ -40,7 +40,9 @@
 <tr class="menubar">
 <td width="5"></td>
 <td align="center" id="yeast" onMouseOver="closeAllMenu();"><html:link page="/ViewORFList.do">Mutant List</html:link></td>
-<td align="center" id="parameter" onMouseOver="closeAllMenu();"><html:link page="/ParameterHelp.do">Parameter List</html:link></td>
+
+<td align="center" id="parameter" onMouseOver="closeAllMenu();"><html:link page="/ParameterHelp.do">Parameter Help</html:link></td>
+
 
 <td align="center" id="photo" onMouseOver="selectMenu('photomenu');" onMouseOut="detectMouseOut(event,this);">
 <table cellpadding="0" cellspacing="0">
