@@ -20,8 +20,10 @@
 [<a href="#cgroup">Bud Size Groups</a>]
 [<a href="#ngroup">Nucleus Location Groups</a>]
 [<a href="#agroup">Actin Localization Groups</a>]
+<%--
 [<a href="#cellparam">Cell Parameter List</a>] 
-<%--[<a href="#orfparam">ORF Parameter List</a>]--%>
+[<a href="#orfparam">ORF Parameter List</a>]
+--%>
 </span>
 
 <p></p>
@@ -196,7 +198,7 @@
 </tr>
 </logic:iterate>
 </table>
---%>
+
 
 <a name="cellparam">
 <p class="title"> Cell Parameter List </p>
@@ -221,6 +223,7 @@
 </logic:iterate>
 </table>
 
+--%>
 </center>
 </body>
 </html>
