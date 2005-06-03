@@ -133,7 +133,7 @@
 
 <td align="center" id="about" onMouseOver="selectMenu('aboutscmd');" onMouseOut="detectMouseOut(event,this);">
 <table cellpadding="0" cellspacing="0">
-<tr class="menubar"><td><html:link page="/."> About SCMD</html:link></td></tr>
+<tr class="menubar"><td><html:link page="/about.jsp"> About SCMD</html:link></td></tr>
 <tr><td>
 <table width="120" border="0" class="dropdownmenu" cellpadding="0" id="aboutscmd" align="left">
 <tr>

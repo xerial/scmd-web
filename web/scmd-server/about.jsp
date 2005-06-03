@@ -21,10 +21,31 @@
 <body class="toppage">
 <scmd-tags:menu searchframe="on" top="true"/>
 
+<table width="600" class="infoframe">
+<tr>
+<td class="title"> Data Release Policy </td>
+</tr>
+<tr>
+<td>
+<p>
+We (the Saccharomyces Cerevisiae Morphological Database project) herein make a collection of micrographs, processed images, and morphological parameter values of yeast mutants publicly available by providing image browsing and data mining functions before scientific publication. We reserve the exclusive right to publish, in a timely manner, the comprehensive analysis of all the data in the SCMD. Reserved analyses include the overall statistics of morphological parameters, and the comprehensive analysis of correlations between morphological parameters and other biological data such as gene ontology categories, gene expressions, gene localizations, and gene interactions. All users may search and use the SCMD database freely under the restrictions of the previous paragraph. Since the current version is still a preliminary one and may contain mistakes, users should use the data at their own risk and are not allowed to redistribute or repackage the data.
+</p>
+<p>
+When users publish the analysis of individual genes using the data of this site, they should include the acknowledgement "The SCMD database has been provided freely by the University of Tokyo for use in this publication/correspondence only."
+</p>
+</p>
+Finally, we are continuing to improve the SCMD database; therefore, any feedback information from the users should be highly welcomed. 
+</p>
+</td>
+</tr>
+</table>
+
 <table width="600" border="0" class="infoframe">
   <tr>
     <td>
       <table width="100%" border="0">
+      
+      
         <tr> 
           <td colspan="3" height="50" align=left class=title> Materials </td>
         </tr>
