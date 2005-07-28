@@ -32,13 +32,13 @@ import lab.cb.scmd.web.common.SCMDSessionManager;
 import lab.cb.scmd.web.common.SCMDThreadManager;
 import lab.cb.scmd.web.common.StainType;
 import lab.cb.scmd.web.image.ImageCache;
+import lab.cb.scmd.web.image.PhotoClippingProcess;
 import lab.cb.scmd.web.sessiondata.MorphParameter;
 import lab.cb.scmd.web.sessiondata.ParamUserSelection;
 import lab.cb.scmd.web.table.ColLabelIndex;
 import lab.cb.scmd.web.table.RowLabelIndex;
 import lab.cb.scmd.web.table.Table;
 import lab.cb.scmd.web.table.TableElement;
-import lab.cb.scmd.web.util.task.PhotoClippingProcess;
 
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.struts.action.Action;
