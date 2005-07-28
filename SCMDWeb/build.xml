@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<!-- 
+// SCMDWeb Project 
+// Since 2004/07/07 22:48:21                                                        
+//	 
+// $URL$	 
+// $LastChangedBy$  
+
+-->
+<project name="SCMDWeb" default="default">
+    <description>
+ Ant script for building SCMDWeb server.
+ usage: > ant -lib=lib (-Dconf=[configuration file: default=build.properties])
+    </description>
+	
+	<property environment="env"/> <!-- load environment variables -->
+	<property name="conf" value="build.properties"/>
+	<property file="${conf}"/>  <!-- load user defined properties -->
+	<property name="src" value="src"/>
+	<property name="test" value="test"/>
+	<property name="build" value="build"/>	
+	<property name="lib" value="lib"/>
+	<property name="web" value="web"/>
+	<property name="webinf" value="${web}/scmd-server/WEB-INF"/>
+	<property name="war.name" value="scmd-server.war"/>
+	<property name="webapp.path" value="/scmd-server"/>
+	<property name="dir.deploy" value="webapps"/>
+	<property name="TOMCAT_HOME" value="${env.TOMCAT_HOME}"/>
+	<property name="manager.url" value="http://localhost:8080/manager"/>
+	<property name="manager.username" value="tomcat"/>
+	<property name="manager.password" value="tomcat"/>
+	
+	
+	<!-- ================================= 
+          target: default              
+         ================================= -->
+    <target name="default"  description="compile and deploy SCMDWeb">
+     <antcall target="deploy"/>
+    </target>
+	
+	<target name="compile" description="compile java files">
+	   <fail unless="TOMCAT_HOME">Please set the TOMCAT_HOME environment variable</fail>
+	   <mkdir dir="${webinf}/classes"/>
+	   <javac srcdir="${src}" destdir="${webinf}/classes" encoding="SJIS" target="1.5" 
+	          debug="on" debuglevel="lines">
+	   	   <classpath>
+		     <fileset dir="${webinf}/lib">
+		   	     <include name="*.jar"/>
+			 </fileset>
+			 <fileset dir="${TOMCAT_HOME}/common/lib">
+			     <include name="*.jar"/>
+			 </fileset>
+		   </classpath>
+	   </javac>
+	</target>	
+
+    <target name="clean" description="clean .class &amp; .war files">
+	   <delete includeEmptyDirs="true">
+	      <fileset dir="${webinf}/classes" includes="**/*.class"/>   	
+	      <file name="${build}/war/${war.name}"/>
+	   </delete>
+    </target>
+	
+	<target name="war" depends="compile" description="create war file">
+	  <mkdir dir="${build}/war"/>
+	  <war destfile="${build}/war/${war.name}" webxml="${webinf}/web.xml">
+	  	 <fileset dir="${web}/scmd-server"/>
+	  </war>
+	</target>
+
+
+    <target name="scmd" description="build scmd.jar">
+	   <ant dir="../SCMD" target="jar" inheritAll="false"/>
+       <copy file="../SCMD/scmd.jar" todir="${webinf}/lib"/>
+	</target>
+  
+    <target name="jar" depends="compile" description="create SCMDWeb.jar">
+       <mkdir dir="${build}/lib/SCMDWeb.jar"/>
+	   <jar basedir="${webinf}/classes" destfile="${build}/lib/SCMDWeb.jar"/>
+	</target>
+	
+	
+	<target name="reload">
+	    <taskdef name="reload" classname="org.apache.catalina.ant.ReloadTask">
+	    	<classpath>
+	    		<path location="${lib}/catalina-ant.jar"/>
+	    	</classpath>
+		</taskdef>
+      	<reload url="${manager.url}" username="${manager.username}" password="${manager.password}" path="/scmd-server"/>
+    </target>
+
+	<target name="undeploy">
+	    <taskdef name="undeploy" classname="org.apache.catalina.ant.UndeployTask">
+	    	<classpath>
+	    		<path location="${lib}/catalina-ant.jar"/>
+	    	</classpath>
+		</taskdef>
+		
+		<undeploy 
+			url="${manager.url}" username="${manager.username}" password="${manager.password}" path="/scmd-server"/>
+	</target>
+	
+	<target name="deploy" depends="war,confirm.context" description="deplay .war file into TOMCAT_HOME/${dir.deploy}">
+	    <taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask">
+	    	<classpath>
+	    		<path location="${lib}/catalina-ant.jar"/>
+	    	</classpath>
+		</taskdef>
+		<deploy 
+			url="${manager.url}" username="${manager.username}" password="${manager.password}" path="${webapp.path}"
+		   	update="true" war="${build}/war/${war.name}"/>
+	</target>
+
+	<target name="jsp.precompile" description="fetch .jsp pages from the web server">
+		<!--
+		<taskdef name="junit" classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask">
+			<classpath> <path location="${lib}/junit.jar"/> </classpath>
+		</taskdef>
+		-->
+		<junit printsummary="on" showoutput="true" failureproperty="test.failed">
+			<classpath>
+				 <pathelement path="${webinf}/classes"/>
+			     <fileset dir="${webinf}/lib">
+			   	     <include name="*.jar"/>
+				 </fileset>
+				 <fileset dir="${TOMCAT_HOME}/common/lib">
+				     <include name="*.jar"/>
+				 </fileset>
+			</classpath>
+			<formatter type="plain" usefile="false"/>
+		   	<test name="lab.cb.scmd.web.PageTest"/>
+		</junit>
+	</target>
+	
+	
+	<target name="confirm.context">
+		<available file="${web}/scmd-server/META-INF/context.xml"  property="is.set.context"/>
+		<fail unless="is.set.context">
+			please edit	a file scmd-server/META-INF/context.xml after the model of "context.xml.sample"
+		</fail>
+	</target>
+	
+	
+	<target name="update">
+	   <taskdef name="svn" classname="org.tigris.subversion.svnant.SvnTask">
+	      <classpath> 
+    		<fileset dir="${lib}"/>
+	      </classpath>
+	   </taskdef>
+	   <svn>
+		 <update dir="."/>
+	   </svn>
+	</target>
+
+	<!-- 
+	 java -cp web/scmd-server/WEB-INF/classes -Djava.ext.dirs=web/scmd-server/WEB-INF/lib lab.cb.scmd.db.scripts.CreateTearDropTable -v -o build/teardrop.txt
+	-->
+	<target name="table.teardrop" depends="compile" description="generate teardrop table">
+		<java classname="lab.cb.scmd.db.scripts.CreateTearDropTable" fork="true"  >
+			<mkdir dir="build"/>
+			<jvmarg line="-Xmx512M -server"/>
+			<arg line="-v -o build/teardrop.txt"/>
+			<classpath>
+				<dirset dir="${webinf}/classes"/>
+				<fileset dir="${webinf}/lib"/>
+			</classpath>
+		</java>
+	</target>
+	
+	<target name="javadoc" description="generate javadoc">
+		<mkdir dir="javadoc"/>
+		<ant antfile="javadoc.xml"/>
+	</target>
+	
+	
+</project>

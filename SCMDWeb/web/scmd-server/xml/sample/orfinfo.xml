@@ -1,0 +1,18 @@
+<scmdresult>
+
+<orflist>
+
+<orf orfname="yor202w">
+ <standardname name="his3"/>
+ <alias name="his10"/>
+ <annotation> Standard Gene </annotation>
+</orf>
+
+<orf orfname="yal004w"/>
+<orf orfname="yal005c">
+ <standardname name="ssa1"/>
+</orf>
+
+</orflist>
+
+</scmdresult>

@@ -1,0 +1,76 @@
+<html>
+<head>
+<title>SCMD Cell Parameters</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head> 
+<style type="text/css">
+<!--
+.arialsmall {  font-family: "Arial", "Helvetica", "sans-serif"; font-size: 10pt}
+.arial {  font-family: "Arial", "Helvetica", "sans-serif"; font-size: 12pt}
+.menulink {  text-decoration: none; color: #ffffff; }
+.linkcolor {  text-decoration: none; color: #222222; }
+.unlink { text-decoration: none; }
+-->
+
+</style>
+<body bgcolor="#FFFFFF" link="#006699" vlink="#666666">
+<center>
+  <table width="305" border="0" cellspacing=0 cellpadding=0>
+    <tr>
+      <td width="110"><a href="/"><img src="../image/scmd_logo_grad.png" alt="SCMD" border="0"></a></td>
+      <td width="178" valign="bottom"> 
+       </td>
+  </tr>
+</table>
+  <br>
+<font color="#006699" class=arialsmall><b>Cell Parameters</b></font>
+  <table border="0" width="305">
+    <tr>
+      <td width="74"><img src="paramimage/longaxis.gif" width="74" height="53"></td>
+      <td width="221"> 
+        <p class=arialsmall><font color="#006699">long axis length</font></p>
+        </td>
+    </tr>
+    <tr>
+      <td width="74"><img src="paramimage/roundness.gif" width="74" height="53"></td>
+      <td width="221"> 
+        <p class=arialsmall><font color="#006699">roundness</font><br>
+        <font color=#666666>  := long axis length / short axis length</font></p>
+        </td>
+    </tr>
+    <tr>
+      <td width="74"><img src="paramimage/budneck.gif" width="74" height="53"></td>
+      <td width="221"><p class=arialsmall><font color="#006699">bud neck position angle (0-90)</font></p> </td>
+    </tr>
+    <tr>
+      <td width="74"><img src="paramimage/budgrowthdir.gif" width="70" height="53"></td>
+      <td width="221"><p class=arialsmall><font color="#006699">bud growth direction angle (0-90)</font></p></td>
+    </tr>
+  </table>
+ <font color="#006699" class=arialsmall><b>Definition of distance</b></font>
+  <table border="0" width="305">
+	<tr>
+		<td><p class=arialsmall>
+			<br>Distance is defined as a weighted Euclidian distance.</br>
+			<br><font color="#006699">
+			Distance </font>
+			<font color=#666666> := the sum of ( user specified weight scores of individual parameters * 
+				( SD-score of morphological parameter values of mutant 
+				- SD-score of user specified morphological value) )^2</font>, where
+			</br>
+			<br>
+				<font color="#006699">SD-score of a value</font>
+				<font color="#666666"> :=  
+				( the parameter value - the value of the wild type ) / ( standard 
+				deviation of the wild type distribution )</font>
+			</br>
+		</p></td>			
+	</tr>
+  </table>
+</center>
+<p align=center>
+ <input type="button" value="close" onClick="window.close()">
+</p>
+
+</body>
+</html>

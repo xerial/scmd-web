@@ -1,0 +1,245 @@
+/*
+//--------------------------------------
+// SCMDProject
+// 
+// scmd.css
+// Since: 2004/07/05
+//
+// $Date: 2004/09/07 18:07:35 $ ($Author$)
+// $Revision: 1.17 $
+//--------------------------------------
+*/
+
+body 
+{
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 12pt;
+}
+
+body.center
+{
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+a:link 	{ color: #006699; }
+a:visited { color: #666666; }
+
+.menubar
+{	
+    font-size: 10pt;
+	text-align: center;
+	background: #70b0b0;
+	margin-top: 0pt;
+	color: white;
+	background-image: url("../image/border.png");	
+}
+.menubar a:link, .menubar a:visited { display: block; text-decoration: none; color: white; }
+.menubar a:hover { 	display: block; text-decoration: none; color: white; background: #10D0F0; }
+
+.dropdownmenu
+{ 
+	display: none; 
+	color: white;
+	font-size: 9pt;
+	background: #0056AD;	
+	margin-top: 0pt;
+	position: absolute;
+	padding: 0 0 0 0;
+}
+.dropdownmenu ul 
+{
+	text-align: left;
+	display: block;
+	width: 100%;
+	list-style: none;
+	background: #0056AD;
+	margin-left: 0pt;			
+	margin: 0;
+	padding: 0;
+}
+.dropdownmenu li a:link, .dropdownmenu li a:visited
+{ 
+	text-align: left;
+	display: block;
+	padding: 2px 2px 2px 0.5em;
+	border-left: 10px solid #369;
+	border-right: 1px solid #69c;
+	border-bottom: 1px solid #369;
+	background-color: #036;
+	width: 100%;
+	text-decoration: none; 	
+	color: white; 
+}
+.dropdownmenu li a:hover 
+{ 
+	text-align: left;
+	text-decoration: none; 
+	color: white; 
+	background-color: #4CB5F8;
+	border-left: 10px solid #369;
+	border-right: 1px solid #69c;
+	border-bottom: 1px solid #369;
+}
+
+.cellimg { background-color: black; text-align: center; }
+.averageshape { text-align: center; vertical-align: bottom; }
+
+.small { font-family: Arial, Helvetica, sans-serif; font-size: 10pt}
+.annotation { font-family: Arial, Helvetica, sans-serif; font-size: 10pt; color: #705030;}
+.default { font-family: Arial, Helvetica, sans-serif; font-size: 12pt}
+
+.title { color: #006699; font-weight: bold; font-size:12pt }
+.notice { color: #f08080; font-weight: bold; }
+.time { font-size: 8pt; }
+
+.orf { color: #0066b0; font-size: 12pt; font-weight: bold; }
+.orf a:link { font-weight: normal; color: #0066b0; }
+.orf a:visited { font-weight: normal; color: #666666; }
+.orf a:hover { background: #90f0f0; }
+
+.genename { color: black; font-size: 10pt; font-weight: bold; }
+
+.item { color: #006699; }
+.datasheet { font-size: 8pt; }
+.datasheet_gray { font-size: 8pt; background: #E0F0F0; }
+.sheetlabel { color: white; font-size: 8pt; text-align: center; background: #4096B9; 
+	background-image: url("../image/label.png");
+	font-weight: bold; 
+	white-space: nowrap;
+}
+.sheetlabel a:link, .sheetlabel a:visited 
+{ 
+	text-decoration: none; font-weight: bold; color: white; 
+	display: block;
+	width: 100%;
+}
+.sheetlabel a:hover 
+{ 
+	text-decoration:none; color: white; background: #90C0F0; 
+	display: block;
+	width: 100%;
+}
+.sheetlabel_on { 
+    color: white; 
+    font-size: 8pt; 
+    text-align: center; 
+    background: #90C0F0; 
+	font-weight: bold; 
+    white-space: nowrap;
+}
+.sheetlabel_on a:link { text-decoration: none; font-weight: bold; color: white; }
+.sheetlabel_on a:visited { text-decoration: none; font-weight: bold; color: white; }
+.sheetlabel_on a:hover { text-decoration:none; color: white; background: #90C0F0; }
+
+.label { color: #006699; font-weight: bold; text-align: center; }
+.notation { color: #444444; font-size: 11pt; }
+.memo { color: #6688E0; }
+
+.tablelabel 
+{ 
+	color: #006699; font-size: 10pt; 
+	font-weight: bold; text-align: left; 
+	white-space: nowrap;
+}
+.tablelabel_bright 
+{ 
+	color: #B06080; font-size: 10pt; 
+	font-weight: bold; text-align: left; 
+	white-space: nowrap;
+}
+.tabledata
+{
+	color: black; font-size: 9pt;
+	text-align: right;
+}
+
+
+.tool
+{ 
+	color: white;
+	background: #FDC060;
+	font-size: 10pt; 
+	font-weight: bold; 
+	text-align: center;
+}
+.tool a:link, .tool a:visited
+{ 
+	text-decoration: none; font-weight: bold; color: white; 
+	display: block;
+	width: 100%;	
+}
+.tool a:hover 
+{ font-weight: bold; background: #F0A040; 
+	display: block;
+	width: 100%;	
+}
+
+.button 
+{ 
+	font-size: 10pt; 
+}
+.button a:link { text-decoration: none; font-weight: bold; color: #666699; }
+.button a:visited { text-decoration: none; font-weight: bold; color: #666699; }
+.button a:hover { font-weight: bold; background: #e0c0f0; }
+
+.menubutton 
+{ 
+	font-size: 10pt; 
+}
+.menubutton a:link { color: #006699; }
+.menubutton a:visited { color: #666666; }
+.menubutton a:hover { text-decoration: none; color: #006699; background: #b0e0f0; }
+
+.header 
+{ 
+	text-align: center; 
+	color: #666666; 
+	font-weight: bold; 
+	font-size: 12pt;  
+}
+
+.marginabove { margin-top: 15pt; }
+.searchframe { margin-top: 2pt; text-align: center; }
+.plain { text-decoration: none; }
+.noret { white-space: nowrap; }
+
+
+.plotview
+{
+ border-style: solid;
+ border-width: 2px;
+ border-color: white white #60A0A0 #80C0C0;
+}
+
+.helpmenu 
+{
+	font-size: 9pt;
+}
+
+.helpmenu ul
+{
+	margin-bottom: 5pt;	
+	margin-left: 0;
+	margin-right: 0;
+	padding: 3pt;
+}
+.helpmenu ul ul
+{
+	color: #507080;
+	font-size: 9pt;
+	font-weight: normal;
+	margin-left: 5pt;
+}
+.helpmenu li, .helpmenu ul a, .helpmenu ul a:visited, .helpmenu ul a:link
+{
+	text-align: left;
+	color: #077aaf;
+	font-size: 12pt;
+	list-style-type: none;
+	background-color: #D1FFED;
+	margin-left: 0;
+	margin-right: 0;
+}
+.helpmenu ul a:hover { color: white; text-decoration: none; background-color: #01CFFF; }
+

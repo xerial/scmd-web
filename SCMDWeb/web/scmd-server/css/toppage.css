@@ -1,0 +1,10 @@
+@import url(scmd.css);
+
+.newsframe { margin-left: 150pt; margin-top: 15pt; }
+.infoframe { margin-left: 100pt; margin-top: 15pt; }
+.topsearchframe { margin-top: 2pt; margin-left: 150pt; }
+.toppage
+{
+	background-image: url("../image/scmd_background.png");
+	background-repeat: repeat-y;
+}

@@ -1,0 +1,1 @@
+select paramid, groupid, avg(average) as average, stddev(average) as sd, min(average), max(average), count(*) as num into paramavgsd_wt from (select distinct * from paramstat_wt where groupid = 0) as  t group by paramid, groupid

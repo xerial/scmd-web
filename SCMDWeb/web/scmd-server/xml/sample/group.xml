@@ -1,0 +1,28 @@
+<scmdresult>
+ <datasheet currentpage="1" maxpage="12" numcell="10">
+   <category name="budsize">
+     <group name="no" num="113">
+	   <orf orfname="yor202w">
+         <photo id="1">
+      	    <cell id="23" x1="10" x2="25" y1="23" y2="35"/>
+      	    <cell id="24" x1="10" x2="25" y1="23" y2="35"/>
+         </photo>
+		 <photo id="2">
+		    <cell id="23" x1="10" x2="25" y1="23" y2="35"/>						
+		 </photo>
+       </orf>
+     </group>
+
+     <group name="small" num="72">
+     </group>
+	 
+	 <group name="medium" num="80">
+		
+	 </group>
+	 <group name="large" num="94">
+		
+	 </group>
+   </category>
+ </datasheet>
+</scmdresult>
+

@@ -1,0 +1,48 @@
+SCMDWeb Installation Documentation
+
+
+[build]
+ > ant 
+で、web serverをtomcatにdeployします。
+Tomcatの位置等の情報を修正するには、build.propertiesファイルを作成します。
+build.properties.sampleファイルを参考にしてください。
+
+設定できるプロパティは、以下の通り。
+
+TOMCAT_HOME			TOMCATのインストールフォルダ。デフォルトでは、環境変数のTOMCAT_HOMEを読み込みます
+dir.deploy			デフォルトは、${TOMCAT_HOME}/webapps 
+manager.url			Tomcat ManagerのURL。デフォルトは http://localhost:8080/manager
+manager.username	Tomcat Managerにアクセスするための、ユーザー名。デフォルトはtomcat
+manager.password	Tomcat Manggerにアクセスするための、パスワード。
+
+尚、passwordをファイルに書くことは危険なので、ant実行時に、
+> ant -Dmanager.password="pass" 
+としても良い。
+
+[JSPページのprecompile]
+-JSPのページに初めてアクセスすると、JSPファイルをJavaに変換して、compileという操作が入るため、
+初動がやや遅いです。
+そのため、あらかじめ、各jspファイルに自動アクセスするためのant taskを用意してあります。
+
+> ant jsp.precomiple
+
+で、各ページをHTTPのGETで取得し、JSPページのコンパイルをTomcatに促します。
+
+この操作の実行には、lib/junit.jar, lib/svnant.jar をCLASSPATHに追加するか、
+これらのファイルを、 ${ANT_HOME}/lib にコピーしておく必要があります。
+
+
+[SCMDの設定]
+web/scmd-server/META-INF/context.xml にJNDI resourceなどの情報を書きます。
+
+2005/01/09の時点では、
+SCMD_ROOT	SCMDWeb/web フォルダの絶対パス(ファイルシステム上） を設定しなくてはならない仕様になっています。
+
+この設定を頼りに、
+SCMD_ROOT/web/config/SCMDServer.config を呼んで、必要な情報を設定するという操作を行っています。
+
+このSCMDServer.configによる設定は将来的にすべて、context.xmlへ移植される予定です。
+
+
+ 
+
