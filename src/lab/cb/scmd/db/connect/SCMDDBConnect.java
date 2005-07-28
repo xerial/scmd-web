@@ -23,6 +23,11 @@ import lab.cb.scmd.web.exception.DBConnectException;
 import lab.cb.scmd.web.exception.InvalidSQLException;
 import lab.cb.scmd.web.table.Table;
 
+/**
+ * データベース接続の統括
+ * @author mattun
+ *
+ */
 public class SCMDDBConnect extends DBConnect {
     private String _groupQueryTableFile	= ""; 
     private String _cellBoxQueryTableFile = "";
