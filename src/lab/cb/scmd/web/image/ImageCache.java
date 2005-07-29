@@ -96,7 +96,13 @@ public class ImageCache
     
     synchronized void recallImages()
     {
-        LinkedList<String> removeList = new LinkedList<String>(); 
+        LinkedList<String> removeList = new LinkedList<String>();
+        
+        // ’Pƒ‚É‚·‚×‚ÄƒNƒŠƒA‚·‚é‚æ‚¤‚É‚µ‚Ä‚İ‚½
+        imageRegistory.clear();
+        cache.clear();
+        
+        /*
         for(String imageID : imageRegistory.keySet())
         {
             ImageStatus status = imageRegistory.get(imageID);
@@ -113,7 +119,8 @@ public class ImageCache
         {
             imageRegistory.remove(imageID);
             cache.remove(imageID);
-        }        
+        }
+        */
     }
     
     /**
