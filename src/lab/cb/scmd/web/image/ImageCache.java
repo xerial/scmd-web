@@ -179,8 +179,8 @@ public class ImageCache
                     e.printStackTrace();
                 }
                 imageCache.recallImages();
-                System.gc();
-            }            
+            }
+            System.gc();
         }
     }
 }
