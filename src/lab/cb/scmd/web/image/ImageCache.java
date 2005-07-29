@@ -180,6 +180,7 @@ public class ImageCache
                 }
                 imageCache.recallImages();
             }
+            System.out.println("[ImageRecallProcess]: invoke gc");
             System.gc();
         }
     }
