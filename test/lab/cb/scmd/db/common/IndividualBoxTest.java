@@ -38,6 +38,9 @@ public class IndividualBoxTest extends TestCase {
         IndividualBox individualBox = new IndividualBox("YOR202W");
         individualBox.setCurrentPage(2);
 
+        // sample message
+        
+        
         try {
             individualBox.setData(dbconnect);
         } catch (SCMDException e) {
