@@ -11,14 +11,12 @@ package lab.cb.scmd.web.image;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.TreeMap;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGEncodeParam;

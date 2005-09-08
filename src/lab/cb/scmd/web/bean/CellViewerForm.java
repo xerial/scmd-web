@@ -11,26 +11,27 @@
 package lab.cb.scmd.web.bean;
 
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
-
 import lab.cb.scmd.db.common.PageStatus;
 import lab.cb.scmd.web.common.DataSheetType;
 import lab.cb.scmd.web.common.PhotoType;
 import lab.cb.scmd.web.common.StainType;
 
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionMapping;
+
 /**
  * @author leo
  *
  */
-public class CellViewerForm extends ActionForm
+public class CellViewerForm extends ActionForm implements Serializable
 {
     String orf = "";  
     int stainType = StainType.STAIN_ConA;

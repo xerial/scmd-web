@@ -9,6 +9,7 @@
 //--------------------------------------
 package lab.cb.scmd.web.sessiondata;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -22,7 +23,7 @@ import lab.cb.scmd.web.common.SCMDConfiguration;
  * @author sesejun
  * 
  */
-public class ParamUserSelection {
+public class ParamUserSelection implements Serializable{
     private TreeSet<Integer> _orfParam  = new TreeSet<Integer>();
     private TreeSet<Integer> _cellParam = new TreeSet<Integer>();
     

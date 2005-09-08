@@ -13,29 +13,27 @@ package lab.cb.scmd.web.bean;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.Writer;
+import java.io.Serializable;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
 
-import org.apache.commons.dbutils.handlers.ScalarHandler;
-import org.apache.struts.upload.FormFile;
-import org.omg.stub.java.rmi._Remote_Stub;
-import org.xerial.util.Pair;
-import org.xerial.util.XMLParserException;
-import org.xerial.util.xml.InvalidXMLException;
-import org.xerial.util.xml.bean.XMLBeanException;
-import org.xerial.util.xml.bean.XMLBeanUtil;
-
 import lab.cb.scmd.db.connect.ConnectionServer;
 import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.design.PlotColor;
 import lab.cb.scmd.web.xmlbean.Item;
 import lab.cb.scmd.web.xmlbean.Selection;
+
+import org.apache.commons.dbutils.handlers.ScalarHandler;
+import org.apache.struts.upload.FormFile;
+import org.xerial.util.Pair;
+import org.xerial.util.XMLParserException;
+import org.xerial.util.xml.InvalidXMLException;
+import org.xerial.util.xml.bean.XMLBeanException;
+import org.xerial.util.xml.bean.XMLBeanUtil;
 
 /**
  * ユーザーからのORFの入力を記録するフォーム
@@ -44,7 +42,7 @@ import lab.cb.scmd.web.xmlbean.Selection;
  * @author leo
  *
  */
-public class UserSelection
+public class UserSelection implements Serializable
 {
 
     private TreeSet<String> _selection = new TreeSet<String>();

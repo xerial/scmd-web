@@ -12,6 +12,7 @@ package lab.cb.scmd.web.common;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import lab.cb.scmd.db.common.HttpSessionDB;
 import lab.cb.scmd.web.bean.CellViewerForm;
 import lab.cb.scmd.web.bean.UserSelection;
 import lab.cb.scmd.web.sessiondata.ParamUserSelection;
@@ -23,14 +24,32 @@ import lab.cb.scmd.web.sessiondata.ParamUserSelection;
  */
 public class SCMDSessionManager
 {
-    /**
+	
+	/**
+	 * 
+	 * SCMDSessionManagerからデータベースを使用するか設定を取り出す
+	 * 毎度のパースはオーバーヘッドかも
+	 * @return
+	 */
+	protected static boolean useHttpSessionDB() {
+    	boolean useDB = false;
+    	try{
+    		useDB = Boolean.parseBoolean(SCMDConfiguration.getProperty("HTTPSESSIONDB_USE"));
+    	} catch(Exception e) {
+    		
+    	}
+    	return useDB;
+	}
+	
+	/**
      * セッションに記録されたUserSelectionの情報を返す
      * @param request
      * @return requestに応じたUserSelectionのインスタンス
      */
     public static UserSelection getUserSelection(HttpServletRequest request)
     {
-        HttpSession session = getSession(request);
+    	//HttpSession session = getSession(request);
+    	HttpSession session = new HttpSessionDB(request,useHttpSessionDB());
         UserSelection userSelection = (UserSelection) session.getAttribute("userSelection");
         if(userSelection == null)
         {
@@ -47,7 +66,8 @@ public class SCMDSessionManager
      */
     public static ParamUserSelection getParamUserSelection(HttpServletRequest request)
     {
-        HttpSession session = getSession(request);
+//        HttpSession session = getSession(request);
+    	HttpSession session = new HttpSessionDB(request,useHttpSessionDB());
         ParamUserSelection paramUserSelection = (ParamUserSelection) session.getAttribute("paramSelection");
         if(paramUserSelection == null)
         {
@@ -56,7 +76,6 @@ public class SCMDSessionManager
         }
         return paramUserSelection;
     }
-
     
     public static HttpSession getSession(HttpServletRequest request)
     {
@@ -76,7 +95,8 @@ public class SCMDSessionManager
      */
     public static CellViewerForm getCellViewerForm(HttpServletRequest request)
     {
-        HttpSession session = getSession(request);
+//        HttpSession session = getSession(request);
+    	HttpSession session = new HttpSessionDB(request,useHttpSessionDB());
         CellViewerForm view = (CellViewerForm) session.getAttribute("view");
         if(view == null)
         {

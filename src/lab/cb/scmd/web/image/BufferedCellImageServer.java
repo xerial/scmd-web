@@ -17,14 +17,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import lab.cb.scmd.web.bean.CellViewerForm;
+import lab.cb.scmd.web.bean.PhotoBuffer;
+import lab.cb.scmd.web.common.SCMDSessionManager;
 
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGEncodeParam;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
-
-import lab.cb.scmd.web.bean.CellViewerForm;
-import lab.cb.scmd.web.bean.PhotoBuffer;
 
 /**
  * @author leo
@@ -40,8 +40,10 @@ public class BufferedCellImageServer extends HttpServlet
             HttpServletResponse response) throws ServletException, IOException {
         
         
-        HttpSession session = request.getSession(true);
-        CellViewerForm view = (CellViewerForm) session.getAttribute("view");
+//        HttpSession session = request.getSession(true);
+//        CellViewerForm view = (CellViewerForm) session.getAttribute("view");
+    	CellViewerForm view = SCMDSessionManager.getCellViewerForm(request);
+
         if(view == null)
         {
             // TODO return black image

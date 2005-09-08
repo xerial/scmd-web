@@ -10,18 +10,21 @@
 package lab.cb.scmd.web.image;
 
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import lab.cb.scmd.db.common.HttpSessionDB;
+
 /**
  * Image‚ð•Û‘¶‚µ‚Ä‚¨‚­ƒNƒ‰ƒX
  * @author leo
  *
  */
-public class ImageCache 
+public class ImageCache implements Serializable
 {
     public final static String IMAGA_CACHE = "imageCache"; 
     
@@ -130,7 +133,8 @@ public class ImageCache
      */
     static public ImageCache getImageCache(HttpServletRequest request)
     {
-        HttpSession session = request.getSession(true);
+        //HttpSession session = request.getSession(true);
+    	HttpSession session = new HttpSessionDB(request);
         
         ImageCache imageCache = (ImageCache) session.getAttribute(IMAGA_CACHE);
         if(imageCache == null)
