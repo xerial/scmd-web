@@ -341,6 +341,45 @@ public class ConnectionServer implements ConfigObserver
         _connectionHolder.clear();
         System.out.println("finish.");
     }
+    public void update(String sql,Object ...obj) throws SQLException{
+        try
+        {
+            Connection connection = null;
+            // achieve a connection
+            synchronized(this)
+            {
+                while(_connectionHolder.isEmpty())
+                {
+                    wait(60000);  // timeout ÇPï™
+                }
+                connection = _connectionHolder.poll();
+            }
+            
+            // confirm the connection
+            if(connection == null || connection.isClosed())
+                connection = createNewConnection();
+                    
+            _queryRunner.update(connection,sql,obj);
+            // release connection
+            synchronized(this)
+            {
+                _connectionHolder.add(connection);
+                notify();
+            }
+        }
+        catch(InterruptedException e)
+        {
+            // connectionÇÃéÊìæë“ÇøÇ™íÜífÇ≥ÇÍÇΩèÍçá
+        }
+    }
+   
+    public static void Update(String sql,Object ...obj) {
+    	try{
+    		getInstance().update(sql,obj);
+    	} catch(SQLException e) {
+    		
+    	}
+    }
 }
 
 
