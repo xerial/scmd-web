@@ -12,6 +12,7 @@ package lab.cb.scmd.web.bean;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 
 //import javax.imageio.ImageIO;
@@ -28,7 +29,7 @@ import lab.cb.scmd.web.viewer.Photo;
  * TODO To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Style - Code Templates
  */
-public class PhotoBuffer {
+public class PhotoBuffer implements Serializable{
 
     /**
      *  
