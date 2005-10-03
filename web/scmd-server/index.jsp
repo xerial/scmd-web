@@ -11,7 +11,7 @@ By using a redirect, the user-agent will change address to match the path of our
 <%@ taglib prefix="html" uri="/WEB-INF/struts-html.tld" %>
 <%@ taglib prefix="scmd-base"  uri="http://scmd.gi.k.u-tokyo.ac.jp/taglib/scmd-base"%>
 <%@ taglib prefix="scmd-tags" tagdir="/WEB-INF/tags"  %>
-<scmd-base:header title="Sacharomyces Cerevisiae Morphological Database" css="/css/toppage.css"/>
+<scmd-base:header title="Saccharomyces Cerevisiae Morphological Database" css="/css/toppage.css"/>
 <body class="toppage">
 <scmd-tags:menu searchframe="on" top="true"/>
 
