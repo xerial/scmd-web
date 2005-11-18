@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- RELAX NG FORMAT -->
+<db>
+	<!-- グローバル変数設定 -->
+	<global>
+		<param name="DB_GENENAME">genename_20040719</param>
+		<param name="DB_STRAIN">strain_20040730</param>
+		<param name="DB_ORFALIAS">orfaliasname_20040719</param>
+		<param name="DB_SUMMARY">analysisdata_20050131</param>
+		<param name="DB_INDIVIDUAL">individual_20050131</param>
+		<param name="DB_AVERAGESHAPE">average_shape_20040813</param>
+		<param name="DB_TD_AVERAGESHAPE">td_average_shape_20040820</param>
+		<param name="DB_PARAMETERLIST">visible_parameterlist</param>
+		<param name="DB_ZSCORE">paramzscore</param>
+		<param name="DB_PARAM_AVG_SD">paramavgsd</param>
+		<param name="DB_PARAM_AVG_SD_WT">paramavgsd_wt</param>
+		<param name="DB_PARAMSTAT">paramstat</param>
+		<param name="DB_PARAMSTAT_WT">paramstat_wt</param>
+		<param name="DB_TMP_ANALYSISZSCORE">analysiszscore</param>
+		<param name="DB_GROUPLIST">groups</param>
+		<param name="DB_HTTPSESSION">httpsession</param>
+<!--		<param name="DB_SUMMARY">summary_20040719</param> -->
+	</global>
+	<!-- lab.cb.scmd.web.bean.UserSelection -->
+	<query name="lab.cb.scmd.web.bean.UserSelection:orfalias" sql="select orf from ${DB_ORFALIAS} where alias ilike '${genename}'">
+		<param name="genename"/>
+	</query>
+	<!-- lab.cb.scmd.web.image.Plot2DServlet -->
+	<query name="lab.cb.scmd.web.image.Plot2DServlet:plot_wt" sql="select t1.average as p1, t2.average as p2 from ${DB_PARAMSTAT} as t1 inner join ${DB_PARAMSTAT} as t2 using (strainname) where t1.paramid=${param1} and t2.paramid=${param2} and t1.groupid=0 and t2.groupid=0">
+		<param name="param1"/>
+		<param name="param2"/>
+	</query>
+	<query name="lab.cb.scmd.web.image.Plot2DServlet:plot" sql="SELECT t1.strainname, p1, p2 from 
+						(select strainname, average as p1 from ${DB_PARAMSTAT} where paramid=${param1} and groupid=0) as t1 
+						left join (select strainname, average as p2 from ${DB_PARAMSTAT} where paramid=${param2} and groupid=0) as t2 
+						on t1.strainname = t2.strainname">
+		<param name="param1"/>
+		<param name="param2"/>
+	</query>
+	<!-- lab.cb.scmd.web.bean.ParamPlotForm -->
+	<query name="lab.cb.scmd.web.bean.ParamPlotForm:paramlist" sql="select id, name, shortname, displayname from ${DB_PARAMETERLIST} where scope='orf' and datatype = 'num' order by id">
+	</query>
+	<!-- lab.cb.scmd.web.action.ViewORFParameterAction -->
+	<query name="lab.cb.scmd.web.action.ViewORFParameterAction:genelist1" 
+		sql="select strainname as &quot;ORF&quot;,primaryname, aliasname, annotation, ${separatedList} from ${DB_SUMMARY} left join ${DB_GENENAME} on strainname = systematicname order by ${sortparamname} limit ${limitrows} offset ${offset}">
+		<param name="separatedList"/>
+		<param name="sortparamname"/>
+		<param name="limitrows"/>
+		<param name="offset"/>
+	</query>
+	<query name="lab.cb.scmd.web.action.ViewORFParameterAction:genelist2" sql="select strainname as &quot;ORF&quot;,primaryname, aliasname, annotation, ${separatedList} from ${DB_SUMMARY} left join ${DB_GENENAME} on strainname = systematicname ${selectedorfset} order by ${sortparamname}">
+		<param name="separatedList"/>
+		<param name="sortparamname"/>
+		<param name="limitrows"/>
+		<param name="offset"/>
+		<param name="selectedorfset"/>
+	</query>
+	<query name="lab.cb.scmd.web.action.ViewORFParameterAction:parameterlistORF" sql="select * from ${DB_PARAMETERLIST} where scope='orf' and id in (${paramID})">
+		<param name="paramID"/>
+	</query>
+	<query name="lab.cb.scmd.web.action.ViewORFParameterAction:parameterlistCell" sql="select * from ${DB_PARAMETERLIST} where scope='cell' and id in (${paramID})">
+		<param name="paramID"/>
+	</query>
+	<query name="lab.cb.scmd.web.action.ViewORFParameterAction:analysisdata" sql="select cast(count(*) as int4) from ${DB_SUMMARY}">
+	</query>
+	<!-- SCMDTableQuery.java -->
+	<query name="TableQuery:getAveragePlot1" sql="SELECT strainname,${param1},${param2} FROM ${$DB_STRAINTABLE} RIGHT JOIN ${DB_SUMMARY} USING(strainid)">
+		<param name="param1"/>
+		<param name="param2"/>
+	</query>
+	<query name="TableQuery:getAveragePlot2" sql="SELECT strainname,${param1},${param2} FROM ${$DB_STRAINTABLE} RIGHT JOIN ${DB_SUMMARY} USING(strainid) WHERE ${param1} BETWEEN ${rangebegin1} AND ${rangeend1} AND ${param2} BETWEEN ${rangebegin2} AND ${rangeend2}">
+		<param name="param1"/>
+		<param name="param2"/>
+		<param name="rangebegin1"/>
+		<param name="rangebegin2"/>
+	</query>
+	<query name="TableQuery:getGroupByDatasheet" sql="SELECT ${selectParam} FROM ${DB_INDIVIDUAL} WHERE strainname='${orf}' AND &quot;${straintype}&quot; = '${groupname}' ORDER BY cell_local_id">
+		<param name="selectParam"/>
+		<param name="orf"/>
+		<param name="straintype"/>
+		<param name="groupname"/>
+	</query>
+	<query name="TableQuery:getGroupByDatasheetUseLimit" sql="SELECT ${selectParam} FROM ${DB_INDIVIDUAL} WHERE strainname='${orf}' AND &quot;${straintype}&quot; = '${groupname}' ORDER BY cell_local_id LIMIT ${limit} OFFSET ${offset}">
+		<param name="selectParam"/>
+		<param name="straintype"/>
+		<param name="orf"/>
+		<param name="groupname"/>
+		<param name="limit"/>
+		<param name="offset"/>
+	</query>
+	<query name="TableQuery:getGroupCount" sql="SELECT &quot;${strainname}&quot;,COUNT(cell_local_id) FROM ${DB_INDIVIDUAL} WHERE strainname='${orf}' GROUP BY &quot;${strainname}&quot;">
+		<param name="strainname"/>
+		<param name="orf"/>
+	</query>
+	<query name="TableQuery:getParameterList" sql="select id,name,shortname,scope,datatype from ${DB_PARAMETERLIST} WHERE scope='${scope}' and datatype='${datatype}' order by id">
+		<param name="scope"/>
+		<param name="datatype"/>
+	</query>
+	<query name="SCMDTableQuery.getParameterInfo" sql="SELECT id, name, shortname, displayname, scope, datatype,description, systematicname FROM ${DB_PARAMETERLIST} ${sqlwhere}">
+		<param name="sqlwhere"/>
+	</query>
+	<query name="TableQuery:getParameterTable" sql="select id, name, shortname, scope, datatype from ${DB_PARAMETERLIST} where scope='${}' and datatype='${}' order by id">
+		<param name="scope"/>
+		<param name="datatype"/>
+	</query>
+	<query name="TableQuery:getOneParameterInfo" sql="SELECT id,name,shortname,displayname,scope,datatype,description FROM ${DB_PARAMETERLIST} WHERE name='${param}' and scope='${scope}'">
+		<param name="param"/>
+		<param name="scope"/>
+	</query>
+	<!-- ViewORFTeadrop -->
+	<query name="ViewORFTeadrop:parameterlist" sql="select id, name, displayname, shortname from ${DB_PARAMETERLIST} where scope='orf' and datatype = 'num' and stain = '${stainName}' order by id">
+		<param name="stainName"/>
+	</query>
+	<query name="ViewORFTeadrop:parameterlist2" sql="select id, name, displayname, shortname, systematicname from ${DB_PARAMETERLIST} where scope='orf' and datatype = 'num' and id in (${separatedList})">
+		<param name="separatedList"/>
+	</query>
+	<query name="ViewORFTeadrop:paramavgsd" sql="select t1.paramid as &quot;paramID&quot;, t1.groupid, t1.average, t1.sd, t1.min, t1.max, t2.average as wt_average, t2.sd as wt_sd from ${DB_PARAM_AVG_SD} as t1 inner join ${DB_PARAM_AVG_SD_WT} as t2 using(paramid) where t1.groupid=0 and t2.groupid=0 and paramid=${paramID}">
+		<param name="paramID"/>
+	</query>
+	<query name="ViewORFTeadrop:paramstat" sql="select strainname, average from ${DB_PARAMSTAT} where groupid='0' and strainname in (${separatedList}) and paramid=${paramID}">
+		<param name="separatedList"/>
+		<param name="paramID"/>
+	</query>
+	<!-- MorphParameter.java -->
+	<query name="MorphParameter:parameterID" sql="select id from ${DB_PARAMETERLIST} where name='${parameterName}'">
+		<param name="parameterName"/>
+	</query>
+	<!-- ViewORFDataSheet.java -->
+	<query name="ViewORFDataSheet:parameterlist" sql="select * from ${DB_PARAMETERLIST} list where id=${paramID} and scope='orf'">
+		<param name="paramID"/>
+	</query>
+	<query name="ViewORFDataSheet:paramstatCount" sql="select count(*) from ${DB_PARAMSTAT} where paramid=${paramID}">
+		<param name="paramID"/>
+	</query>
+	<query name="ViewORFDataSheet:paramstat" sql="select strainname as orf, average as data, primaryname as standardname, annotation from ${DB_PARAMSTAT} left join ${DB_GENENAME} on ${DB_PARAMSTAT}.strainname = ${DB_GENENAME}.systematicname where paramid=${paramID} order by average ${ordername} limit ${numORFsInAPage} offset ${currentPageXnumORFsInAPage}">
+		<param name="paramID"/>
+		<param name="currentPageXnumORFsInAPage"/>
+		<param name="ordername"/>
+	</query>
+	<!-- ViewIndividualCellDatasheetAction.java -->
+	<query name="ViewIndividualCellDatasheet:parameterlist" sql="select * from ${DB_PARAMETERLIST} where id in (${separatedList});">
+		<param name="separatedList"/>
+	</query>
+	<!-- ViewDatasheetAction.java -->
+	<query name="ViewDatasheet:parameterlist" sql="select * from ${DB_PARAMETERLIST} where id in ${separatedList};">
+		<param name="separatedList"/>
+	</query>
+	
+	<!-- ParameterHelpAction.java -->
+	<query name="ParameterHelp:cellParamList" sql="select t1.id, t1.name, displayname, scope, t1.stain, t2.specifier as &quot;groupName&quot;, t1.datatype as datatype 
+												from ${DB_PARAMETERLIST} as t1 left join ${DB_GROUPLIST} as t2 on groupid = t2.id where datatype in ('num', 'coordinate') and scope ='cell' order by t1.id">
+	</query>
+	<query name="ParameterHelp:orfParamList" sql="select t1.id, t1.name, displayname, scope, t1.stain, t2.specifier as &quot;groupName&quot;, t1.datatype as datatype 
+												from ${DB_PARAMETERLIST} as t1 left join ${DB_GROUPLIST} as t2 on groupid = t2.id where datatype in ('num', 'coordinate') and scope ='orf' order by t1.id">
+	</query>
+	
+	<!-- DrawTeardropAction.java -->
+	<query name="DrawTeardrop:teardrop" sql="select t1.paramid as &quot;paramID&quot;, t1.groupid, t1.average, t1.sd, t1.min, t1.max, t2.average as wt_average, t2.sd as wt_sd from ${DB_PARAM_AVG_SD} as t1 inner join ${DB_PARAM_AVG_SD_WT} as t2 using(paramid) where t1.groupid=${paramID} and t2.groupid=${paramID} and paramid=${groupID}">
+		<param name="groupID"/>
+		<param name="paramID"/>
+	</query>
+	<query name="DrawTeardrop:plotlist" sql="select strainname, average from ${DB_PARAMSTAT} where groupid='${groupID}' and strainname in (${separatedlist}) and paramid=${paramID}">
+		<param name="groupID"/>
+		<param name="paramID"/>
+		<param name="separatedlist"/>
+	</query>
+	
+	<!-- lab.cb.scmd.db.common.HttpSessionDB -->
+	<query name="lab.cb.scmd.db.common.HttpSessionDB:searchParams" sql="SELECT jsession,name,object FROM ${DB_HTTPSESSION} WHERE jsession = '${jsession}';">
+		<param name="jsession"/>
+	</query>
+	<query name="lab.cb.scmd.db.common.HttpSessionDB:searchParam" sql="SELECT jsession,name,obj FROM ${DB_HTTPSESSION} WHERE jsession = '${jsession}' AND name = '${name}';">
+		<param name="jsession"/>
+		<param name="name"/>
+	</query>
+	<query name="lab.cb.scmd.db.common.HttpSessionDB:setattributeInsert" sql="INSERT INTO ${DB_HTTPSESSION}(jsession,name,obj) VALUES(${jsession},${name},${bytes})">
+		<param name="jsession"/>
+		<param name="name"/>
+		<param name="bytes"/>
+	</query>
+	<query name="lab.cb.scmd.db.common.HttpSessionDB:setattributeUpdate" sql="UPDATE ${DB_HTTPSESSION} SET obj=${bytes} WHERE jsession=${jsession} AND name=${name}">
+		<param name="jsession"/>
+		<param name="name"/>
+		<param name="bytes"/>
+	</query>
+	
+	<!-- lab.cb.scmd.db.connect.SCMDTableQuery -->
+	<query name="lab.cb.scmd.db.connect.SCMDTableQuery:getGroupAvgSDTable" sql="select paramid, groupid, average, sd FROM ${DB_PARAM_AVG_SD} WHERE ${parampair}">
+		<param name="parampair"/>
+	</query>
+	<query name="lab.cb.scmd.db.connect.SCMDTableQuery:getAnalysisAVGandSD" sql="SELECT paramname, average, sd FROM ${DB_TMP_ANALYSISZSCORE}">
+	</query>
+	<query name="lab.cb.scmd.db.connect.SCMDTableQuery:getSelectedAnalysisValue" sql="SELECT * FROM ${DB_SUMMARY} WHERE ${orfs}">
+		<param name="orfs"/>
+	</query>
+	<query name="lab.cb.scmd.db.connect.SCMDTableQuery:getShapeZScoreTable1" sql="SELECT * FROM ${DB_SUMMARY} WHERE ${orfs}">
+		<param name="params"/>
+	</query>
+	<!-- ちょっと複雑なので今のところこれで対処 -->
+	<query name="lab.cb.scmd.db.connect.SCMDTableQuery:getShapeZScoreTable2" sql="${sql}">
+		<param name="sql"/>
+	</query>
+	<!-- SCMDDBConnect -->
+	<query name="SCMDDBConnect.cellBoxQuery" sql="SELECT ${columns} FROM ${DB_INDIVIDUAL} WHERE strainname = '${strain}' AND image_number = ${photoid} AND cell_local_id = '${cellid}' ORDER BY cell_local_id">
+		<param name="columns"/>
+		<param name="photoid"/>
+		<param name="cellid"/>
+		<param name="strain"/>
+	</query>
+	
+	<query name="SCMDDBConnect.getDataSheet1" sql="SELECT ${columns} FROM ${individualTable} 
+		WHERE strainname = '${strain}' AND image_number = ${photoid}">
+		<param name="columns"/>
+		<param name="strain"/>
+		<param name="photoid"/>
+	</query>
+	<query name="SCMDDBConnect.getDataSheet2" sql="SELECT ${columns} FROM ${individualTable} 
+		WHERE strainname = '${strain}' AND image_number = ${photoid} AND cell_local_id = ${cellid}">
+		<param name="columns"/>
+		<param name="strain"/>
+		<param name="photoid"/>
+		<param name="cellid"/>
+	</query>
+	
+	<query name="SCMDDBConnect.getAverageShapeStatSheet" sql="SELECT * FROM ${averageShapeTable} WHERE strainname = '${strain}'">
+		<param name="averageShapeTable"/>
+		<param name="strain"/>
+	</query>
+
+	<query name="SCMDDBConnection.getNumberOfCellsGroupedBy" sql="SELECT &quot;${category}&quot;, count(strainname) FROM ${individualTable} WHERE strainname = '${strain}' GROUP BY &quot;${category}&quot;">
+		<param name="category"/>
+		<param name="individualTable"/>
+		<param name="strain"/>
+	</query>
+	<query name="SCMDDBConnection.getShapeStatOfParameter" sql="SELECT paramname, average, sd, maxvalue, minvalue FROM ${DB_TD_AVERAGESHAPE} WHERE paramname = '${param}'">
+		<param name="param"/>
+	</query>
+	
+	<!-- SCMDXMLQuery.java -->
+	<query name="lab.cb.scmd.db.connect:getSearchResult" sql="SELECT systematicname, primaryname, aliasname, annotation FROM 
+		(SELECT strainname FROM ${DB_SUMMARY} AS GT INNER JOIN
+		(SELECT systematicname, primaryname, aliasname, annotation FROM ${DB_GENENAME} ${whereCaluse}) 
+		AS QT ON systematicname = strainname">
+		<param name="whereCaluse"/>
+	</query>
+	
+	<!-- SCMDDBConnect.java -->
+	<query name="lab.cb.scmd.db.connect.SCMDConnect.getAverageShapeStatSheet" sql="SELECT * FROM ${DB_AVERAGESHAPE} WHERE strainname = '${strain}'">
+		<param name="strain"/>
+	</query>
+	<query name="lab.cb.scmd.db.connect.SCMDConnect.getAverageShapeStatSheet" sql="SELECT * FROM ${DB_AVERAGESHAPE} WHERE strainname = '${strain}'">
+		<param name="strain"/>
+	</query>
+	<!-- DBConnect.java -->
+	<query name="DBConnect.geneGroupQuery" 
+		sql="SELECT ${columns} FROM (SELECT ${columnbs} FROM ${DB_GENENAME} WHERE systematicname='${systematicname}' ${orsystematicnames})
+			AS genetable INNER JOIN ${DB_SUMMARY} ON genetable.systematicname=${DB_SUMMARY}.strainname ORDER BY systematicname;">
+		<param name="columns"/>
+		<param name="systematicname"/>
+		<param name="orsystematicnames"/>
+	</query>
+</db>

@@ -1,23 +1,28 @@
-/**
- * 
- */
 package lab.cb.scmd.db.sql;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.dbutils.QueryRunner;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
- * GoF Design Pattern Type Singleton 
+ * 
+ * JDK 1.5.0
+ * 
+ * GoF Design Pattern Type **** 
  *
  * XMLからSQL発行文章を読み出して
  *
@@ -32,6 +37,8 @@ public class SqlManager {
 	private DocumentBuilder builder;
 	HashMap<String,SqlQuery> sqlquerys = null;
 	HashMap<String,String> global;
+	QueryRunner queryrunner = new QueryRunner();
+
 	/**
 	 * SQLが記述してあるXMLとスキーマのパスを渡す
 	 * Connectionはすでに接続してあるコネクションを渡す 
@@ -41,7 +48,7 @@ public class SqlManager {
 	 * @param conn
 	 * @throws Exception
 	 */
-	public SqlManager(String xmlpath,String schemepath) throws Exception {
+	public SqlManager(String xmlpath,String schemepath) throws ParserConfigurationException,IOException,SAXException {
 		sqlquerys = new HashMap<String,SqlQuery>();
 		global = new HashMap<String,String>();
 		String args[] = {xmlpath,schemepath};
@@ -55,14 +62,26 @@ public class SqlManager {
 		query.setConnection(conn);
 		return query;
 	}
-	
+
+	/**
+	 * PrepareStatementのように?を使うことができる
+	 * @param conn
+	 * @param sql
+	 * @param obj String,Integer,ByteなどSQLの型マッピングできるデータ
+	 * @return　変更された行数
+	 * @throws SQLException
+	 */
+	public int executeUpdate(Connection conn,String sql,Object ...obj) throws SQLException{
+		return queryrunner.update(conn,sql,obj);
+	}
+
 	/**
 	 * XMLを取得してSqlQueryを生成する
 	 * 
 	 * @param filepath
 	 * @param object
 	 */
-	protected void XMLLoad(String filepath,String schmepath) throws Exception {
+	protected void XMLLoad(String filepath,String schmepath) throws ParserConfigurationException,IOException,SAXException {
 		global.clear();
 		//	最初にRelaxNGの検証
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -117,6 +136,7 @@ public class SqlManager {
 							//System.out.println(paramName.getNodeValue()+"/"+nodeParam.getTextContent());
 						}
 					}
+					query.name = queryName.getNodeValue();
 					sqlquerys.put(queryName.getNodeValue(),query);								
 				} else {
 					//	TODO もしnameがほかと被っていたらエラーを出す
@@ -131,3 +151,4 @@ public class SqlManager {
 //	-------------------------
 //	$log: $
 //	-------------------------
+

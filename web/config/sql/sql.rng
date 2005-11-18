@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar 
+  xmlns="http://relaxng.org/ns/structure/1.0"
+  xmlns:xsp="http://apache.org/xsp/core/v1"
+  xmlns:s="http://www.ascc.net/xml/schematron"
+  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+  xmlns:f="http://axkit.org/NS/xsp/perform/v1"
+  xmlns:sql="http://www.relaxer.org/xmlns/relaxer/sql"
+  datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+	<start>
+		<element name="db">
+	<!--	<interleave>	順不同にさせる-->
+			<ref name="global"/>
+			<ref name="query"/>
+	<!--	</interleave>	-->
+		</element>
+	</start>
+
+	<define name="global">
+		<optional>
+			<element name="global">
+				<zeroOrMore>
+					<element name="param">
+						<attribute name="name">
+							<data type="string"/>
+						</attribute>
+						<data type="string"/>
+					</element>
+				</zeroOrMore>
+			</element>
+		</optional>
+	</define>
+	
+	<define name="query">
+		<oneOrMore>
+			<element name="query">
+				<attribute name="sql">
+					<text/>
+				</attribute>
+				<attribute name="name">
+					<!-- 複数個禁止のデータタイプとかないですよね・・・-->
+					<data type="ID">
+						<param name="pattern">[a-zA-Z0-9]+</param>
+					</data>
+				</attribute>
+				<ref name="query-param"/>
+			</element>
+		</oneOrMore>
+	</define>
+	
+	<define name="query-param">
+		<!-- あってもなくてもよいという意味 -->
+		<zeroOrMore>
+			<element name="param">
+				<attribute name="name">
+					<!-- なぜか上のIDとごっちゃになってしまってIDが使えない(IDは全体でひとつしか定義できない？) -->
+					<data type="string">
+						<param name="pattern">[a-zA-Z0-9]+</param>
+					</data>
+				</attribute>
+				<optional><!-- defaultは省略してもよい -->
+					<!-- 選択すると使用or使用しない 記述しない場合はハードコーディング側のデータが優先ない場合はデフォルト値参照 -->
+					<attribute name="default">
+						<choice>
+							<value>true</value>
+							<value>false</value>
+						</choice>
+					</attribute>
+				</optional>
+				<text/>
+			</element>
+		</zeroOrMore>
+	</define>
+</grammar>
+<!-- SAMPLE XML
+	<db>
+		<query sql="SELECT * FROM tablename WHERE columnname1='${param1}'">
+			<param name="param1"></param>
+			<param name="param1" default="true">test</param>
+		</query>
+	</db>
+ -->

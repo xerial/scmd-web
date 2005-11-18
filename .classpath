@@ -29,5 +29,6 @@
 	<classpathentry kind="lib" path="web/scmd-server/WEB-INF/lib/XerialJ.jar"/>
 	<classpathentry kind="lib" path="web/scmd-server/WEB-INF/lib/scmd-1.1.jar"/>
 	<classpathentry kind="lib" path="web/scmd-server/WEB-INF/lib/jxl.jar"/>
+	<classpathentry kind="lib" path="web/scmd-server/WEB-INF/lib/peacedb.jar"/>
 	<classpathentry kind="output" path="web/scmd-server/WEB-INF/classes"/>
 </classpath>

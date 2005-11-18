@@ -7,9 +7,17 @@ SCMD_PHOTO_DIR_URL = http://scmd.gi.k.u-tokyo.ac.jp/database/photos/
 XMLQUERY = lab.cb.scmd.db.connect.SCMDXMLQuery
 TABLEQUERY = lab.cb.scmd.db.connect.SCMDTableQuery
 VALUEQUERY = lab.cb.scmd.db.connect.SCMDValueQuery
-POSTGRESQL_IP = scmd.gi.k.u-tokyo.ac.jp
-POSTGRESQL_PORT = 5432
-POSTGRESQL_DBNAME = scmd
+
+#DB_TYPE = mysql
+DB_TYPE = pgsql
+DB_HOST = scmd.gi.k.u-tokyo.ac.jp
+DB_PORT = 5432
+DB_NAME = scmd
+DB_USER = postgres
+DB_PASSWORD = 
+DB_MAXCONNECTION = 10
+DB_DRIVER = org.postgresql.Driver
+
 TEARDROP_URI = http://scmd.gi.k.u-tokyo.ac.jp/database/teardrop/composite
 PARAMFIG_URI = http://scmd.gi.k.u-tokyo.ac.jp/database/paramfig
 
