@@ -18,6 +18,9 @@ DB_PASSWORD =
 DB_MAXCONNECTION = 10
 DB_DRIVER = org.postgresql.Driver
 
+# HTTPSESSIONをデータベースに保存する
+HTTPSESSIONDB_USE=true
+
 TEARDROP_URI = http://scmd.gi.k.u-tokyo.ac.jp/database/teardrop/composite
 PARAMFIG_URI = http://scmd.gi.k.u-tokyo.ac.jp/database/paramfig
 
