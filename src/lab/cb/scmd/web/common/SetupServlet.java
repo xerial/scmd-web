@@ -10,18 +10,19 @@
 
 package lab.cb.scmd.web.common;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Level;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
 import lab.cb.scmd.db.connect.ConnectionServer;
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.web.bean.ParamPlotForm;
 import lab.cb.scmd.web.formbean.ViewCustomizeForm;
+import lab.cb.scmd.web.log.SCMDLogging;
 
 /**
  * web applicationの起動時（再起動時にも）最初に一回だけ実行する処理をまとめたクラス
@@ -69,7 +70,15 @@ public class SetupServlet extends HttpServlet implements ConfigObserver, Servlet
         System.out.println("[scmd-server] SCMDConfiguration is initialized");
         
         ConnectionServer.initialize();
-        
+//        SCMDManager.initialize();
+//        ConnectionServer.initialize();
+
+        try{
+        	SCMDLogging.Initialize(SCMDConfiguration.getProperty("SCMD_ROOT")+SCMDConfiguration.getProperty("LOG_FILEPATH"),Level.ALL,true);
+            System.out.println("[scmd-server] SCMDLogging is initialized");
+        } catch(IOException e) {
+        	
+        }
         setup();
         
         // register myself

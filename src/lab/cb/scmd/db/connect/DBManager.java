@@ -61,7 +61,8 @@ public class DBManager implements SCMDManagerModel{
 
 		//	SQLマネージャーを作成する
 		try{
-			sqlManager = new SqlManager(SCMDConfiguration.getProperty("DB_SQLCONFIGPATH").trim(),"");
+			System.out.println(SCMDConfiguration.getProperty("SCMD_ROOT")+SCMDConfiguration.getProperty("DB_SQLCONFIGPATH"));
+			sqlManager = new SqlManager(SCMDConfiguration.getProperty("SCMD_ROOT")+SCMDConfiguration.getProperty("DB_SQLCONFIGPATH").trim(),"");
 		} catch( Exception e) {
 			return false;
 		}

@@ -22,10 +22,13 @@ import lab.cb.scmd.db.common.HttpSessionDB;
 /**
  * Imageを保存しておくクラス
  * @author leo
- *
+ * @version $Revision$ $LastChangedDate$
+ * $LastChangedBy$
  */
 public class ImageCache implements Serializable
 {
+	//	sessionに入れるための名前
+	//	TODO 他でもかぶらないためにどこかに一まとめにする必要あり？
     public final static String IMAGA_CACHE = "imageCache"; 
     
     private enum ImageStatus { not_ready, ready, not_available, removable} 
