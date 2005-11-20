@@ -24,6 +24,8 @@ HTTPSESSIONDB_USE=true
 TEARDROP_URI = http://scmd.gi.k.u-tokyo.ac.jp/database/teardrop/composite
 PARAMFIG_URI = http://scmd.gi.k.u-tokyo.ac.jp/database/paramfig
 
+DB_SQLCONFIGPATH=F:/eclipse/scmd/SCMDWeb/web/config/sql/scmd-sql.xml
+LOG_FILEPATH=./WEB-INF/log/scmd.log
 
 # DBÇÃÉeÅ[ÉuÉãÇí«â¡ (2005/02/08)
 DB_GENENAME = genename_20040719
