@@ -222,8 +222,7 @@
 		<param name="cellid"/>
 	</query>
 	
-	<query name="SCMDDBConnect.getAverageShapeStatSheet" sql="SELECT * FROM ${averageShapeTable} WHERE strainname = '${strain}'">
-		<param name="averageShapeTable"/>
+	<query name="SCMDDBConnect.getAverageShapeStatSheet" sql="SELECT * FROM ${DB_AVERAGESHAPE} WHERE strainname = '${strain}'">
 		<param name="strain"/>
 	</query>
 
