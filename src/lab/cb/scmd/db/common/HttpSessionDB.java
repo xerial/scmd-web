@@ -41,7 +41,7 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 public class HttpSessionDB extends DBConnect implements HttpSession{
 	protected String jsessionid = null;
 	protected HttpSession session = null;	//	インスタンス生成時に入れる
-	protected boolean useDB = true;			//	データベースを使用するか？デフォルトでは使用する
+	protected boolean useDB = false;		//	データベースを使用するか？デフォルトでは使用しない
 
 	/**
 	 * 
