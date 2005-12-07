@@ -162,6 +162,7 @@
 		<form-bean name="paramForm" type="lab.cb.scmd.web.formbean.ViewParamSheetForm"/>
 		<form-bean name="drawTeardropForm" type="lab.cb.scmd.web.formbean.DrawTeardropForm"/>
 		<form-bean name="orfParamForm" type="lab.cb.scmd.web.formbean.ViewORFParameterForm"/>
+		<form-bean name="singleCellForm" type="lab.cb.scmd.web.formbean.DisplaySingleCellForm"/>
     </form-beans>
 
 
@@ -440,6 +441,15 @@
 			<forward name="success" path="/pages/ORFParameter.jsp" />			
 			<forward name="cellparam" path="/pages/CellParameter.jsp"/>
 		</action>
+		
+		<action path="/DisplaySingleCell"
+			name="singleCellForm"
+			scope="page"
+			validate="true"
+			type="lab.cb.scmd.web.action.DisplaySingleCellAction"
+			input="/png/na_small.png">
+		</action>
+			
 		
 				
     <!-- sample input and input submit actions

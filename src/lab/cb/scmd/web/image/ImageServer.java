@@ -29,7 +29,7 @@ import lab.cb.scmd.web.viewer.Photo;
 
 /**
  * @author leo
- *  
+ * @deprecated 
  */
 public class ImageServer extends HttpServlet
 {

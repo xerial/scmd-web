@@ -4,13 +4,12 @@
 // CellImageServer.java 
 // Since: 2004/08/06
 //
-// $URL$ 
-// $LastChangedBy$ 
+// $URL: http://phenome.gi.k.u-tokyo.ac.jp/devel/svn/phenome/trunk/SCMDWeb/src/lab/cb/scmd/web/image/CellImageServer.java $ 
+// $LastChangedBy: leo $ 
 //--------------------------------------
 
-package lab.cb.scmd.web.image;
+package lab.cb.scmd.web.action;
 
-//import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -18,34 +17,41 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.URL;
 
-//import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-//import com.sun.image.codec.jpeg.JPEGCodec;
-//import com.sun.image.codec.jpeg.JPEGEncodeParam;
-//import com.sun.image.codec.jpeg.JPEGImageEncoder;
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+
 
 import lab.cb.scmd.exception.SCMDException;
-//import lab.cb.scmd.util.image.BoundingRectangle;
-import lab.cb.scmd.web.bean.SingleCell;
 import lab.cb.scmd.web.common.SCMDConfiguration;
+import lab.cb.scmd.web.formbean.DisplaySingleCellForm;
+import lab.cb.scmd.web.image.ImageMagick;
 import lab.cb.scmd.web.viewer.Photo;
 
-/**
+/*
+ * é ê^Ç©ÇÁcellÇÇ≠ÇËÇ Ç¢ÇƒèoóÕÇ∑ÇÈAction
  * @author leo
  *  
+ * TODO ñ¢äÆê¨Ç≈Ç∑
  */
-public class CellImageServer extends ImageServer 
+public class DisplaySingleCellAction extends Action
 {
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        SingleCell  cell = (SingleCell) request.getAttribute("cell");
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception
+    {
+        DisplaySingleCellForm cell = (DisplaySingleCellForm) form;
+        
         if(cell == null)
         {
-            throw new ServletException("SingleCell (cell) is not found in the request");
+            printNAimage(request, response);
+            return super.execute(mapping, form, request, response);
         }
+        
         OutputStream out = response.getOutputStream();
 
         try
@@ -54,7 +60,7 @@ public class CellImageServer extends ImageServer
             URL photoURL = photo.getPhotoURL();
 
           	ByteArrayOutputStream bufferOut = new ByteArrayOutputStream();
-            _imageConverter.clipImage(new PrintStream(response.getOutputStream()), photoURL,  cell.getBoundingRectangle(), 100, 2);
+            ImageMagick.clipImage(new PrintStream(response.getOutputStream()), photoURL,  cell.getBoundingRectangle(), 100, 2);
 			response.setContentType("image/jpeg");
 			out.write(bufferOut.toByteArray());
 
@@ -69,7 +75,7 @@ public class CellImageServer extends ImageServer
 		}
         catch(IOException e)
 		{
-        	log(e.getMessage());
+        	System.err.println(e.getMessage());
         	printNAimage(request, response);
 		}
         catch(SCMDException e)
@@ -78,6 +84,7 @@ public class CellImageServer extends ImageServer
             printNAimage(request, response);
         }
         
+        return super.execute(mapping, form, request, response);
     }
     
     protected void printNAimage(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException 
