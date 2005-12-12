@@ -315,7 +315,6 @@ public class SCMDXMLQuery implements XMLQuery {
             + " " + whereClause + ") AS QT ON systematicname = strainname";
 //		    + " genename_20040719 " + whereClause;
 
-		System.err.println(sql);
         try {
             Table orfTable = _connection.getQueryResult(sql);
             ColLabelIndex colLabelIndex = new ColLabelIndex(orfTable);
