@@ -287,20 +287,27 @@ public class SCMDXMLQuery implements XMLQuery {
                 while(curkey.length() < 10) {
                     curkey = "GO:0" + curkey.substring(3);
                 }
-                    
-                whereClause += "systematicname in " +
-                        "( select distinct strainname as systematicname " +
-                        "from goassociation where goid in " +
-                        "( select cid as goid from term_graph " +
-                        "where pid = '" + curkey + "'))";
-            } else {
-                String exp = "'" + keyword[i] + "%'";
-                String exp_annot = "'%" + keyword[i] + "%'";
-                whereClause += "(systematicname ILIKE " + exp 
+            }
+            String exp = "'" + keyword[i] + "%'";
+            String exp_annot = "'%" + keyword[i] + "%'";
+            
+            whereClause += "(";
+            whereClause += "(" + "systematicname in " +
+                        "( SELECT DISTINCT strainname AS systematicname " +
+                        "FROM goassociation WHERE " +
+                        // curkey ‚ª goid ‚Ìê‡‚É‚ÍA‚±‚Ìwhere ‹å‚Å‚Ð‚Á‚©‚©‚é        
+                        "( goid IN ( SELECT cid AS goid FROM term_graph " +
+                        "WHERE pid = '" + curkey + "') )" +
+                        // curkey ‚ª go name ‚Ìê‡‚É‚ÍA‚±‚Ìwhere ‹å‚Å‚Ð‚Á‚©‚©‚é        
+                        "OR " +
+                        "( goid IN ( SELECT goid FROM term WHERE name ILIKE " + exp_annot +") ) "+ 
+                        ") )" ;
+            // curkey ‚ª primaryname ,alias, annotation ‚Ìê‡‚É‚ÍA‚±‚Ìwhere ‹å‚Å‚Ð‚Á‚©‚©‚é        
+            whereClause += "OR (" + "(systematicname ILIKE " + exp 
                     + " OR primaryname ILIKE " + exp 
                     + " OR aliasname ILIKE " + exp
-                    + " OR annotation ILIKE " + exp_annot + ")";
-            }
+                    + " OR annotation ILIKE " + exp_annot + ")" + ")";
+            whereClause += ")";
         }
 		String sql = "SELECT systematicname, primaryname, aliasname, annotation FROM "
             + "(SELECT strainname FROM " + summaryTable + ") AS GT INNER JOIN " 
@@ -308,6 +315,7 @@ public class SCMDXMLQuery implements XMLQuery {
             + " " + whereClause + ") AS QT ON systematicname = strainname";
 //		    + " genename_20040719 " + whereClause;
 
+		System.err.println(sql);
         try {
             Table orfTable = _connection.getQueryResult(sql);
             ColLabelIndex colLabelIndex = new ColLabelIndex(orfTable);
