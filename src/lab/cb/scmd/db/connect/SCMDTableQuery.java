@@ -19,6 +19,7 @@ import org.xerial.util.Pair;
 
 
 import lab.cb.scmd.algorithm.Algorithm;
+import lab.cb.scmd.db.common.GOQuery;
 import lab.cb.scmd.db.common.QueryRange;
 import lab.cb.scmd.db.common.TableQuery;
 import lab.cb.scmd.db.sql.SQLExpression;
@@ -374,5 +375,24 @@ public class SCMDTableQuery implements TableQuery {
         return result.get(0);        
     }
     
-
+    public Table getAssociatedGO(String[] keywords) {
+    	String sql = "SELECT goid, name, namespace, def FROM term WHERE ";
+    	String where = "";
+    	Table table = null;
+    	for(String keyword: keywords) {
+    		if( where.length() != 0 ) {
+    			where += " AND ";
+    		}
+    		where += "( goid ILIKE '%" + keyword + "%'";
+    		where += " OR ";
+    		where += "name ILIKE '%" + keyword + "%' )";
+    	}
+    	sql = sql + where;
+        try {
+            table = ConnectionServer.retrieveTable(sql, "go");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    	return table;
+    }
 }

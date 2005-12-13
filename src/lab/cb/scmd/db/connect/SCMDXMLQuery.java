@@ -19,6 +19,7 @@ import java.util.Vector;
 //import java.util.Iterator;
 //import java.util.Set;
 
+import lab.cb.scmd.db.common.GOQuery;
 import lab.cb.scmd.db.common.PageStatus;
 import lab.cb.scmd.db.common.XMLQuery;
 import lab.cb.scmd.exception.SCMDException;
@@ -282,31 +283,18 @@ public class SCMDXMLQuery implements XMLQuery {
         for(int i = 0; i < keyword.length; i++ ) {
             if( i != 0 )
                 whereClause += " AND ";
-            String curkey = keyword[i];
-            if( curkey.matches("^GO:[0-9]+") ) {
-                while(curkey.length() < 10) {
-                    curkey = "GO:0" + curkey.substring(3);
-                }
-            }
             String exp = "'" + keyword[i] + "%'";
             String exp_annot = "'%" + keyword[i] + "%'";
             
-            whereClause += "(";
-            whereClause += "(" + "systematicname in " +
-                        "( SELECT DISTINCT strainname AS systematicname " +
-                        "FROM goassociation WHERE " +
-                        // curkey ‚ª goid ‚Ìê‡‚É‚ÍA‚±‚Ìwhere ‹å‚Å‚Ð‚Á‚©‚©‚é        
-                        "( goid IN ( SELECT cid AS goid FROM term_graph " +
-                        "WHERE pid = '" + curkey + "') )" +
-                        // curkey ‚ª go name ‚Ìê‡‚É‚ÍA‚±‚Ìwhere ‹å‚Å‚Ð‚Á‚©‚©‚é        
-                        "OR " +
-                        "( goid IN ( SELECT goid FROM term WHERE name ILIKE " + exp_annot +") ) "+ 
-                        ") )" ;
+            // curkey ‚ª Gene Ontology‚Éˆê’v‚·‚éê‡
+            whereClause += "( "; 
+            whereClause	+= GOQuery.searchBoxWhereClause(keyword[i]);
+    		whereClause += " OR ";
             // curkey ‚ª primaryname ,alias, annotation ‚Ìê‡‚É‚ÍA‚±‚Ìwhere ‹å‚Å‚Ð‚Á‚©‚©‚é        
-            whereClause += "OR (" + "(systematicname ILIKE " + exp 
+            whereClause += "(" + "systematicname ILIKE " + exp 
                     + " OR primaryname ILIKE " + exp 
                     + " OR aliasname ILIKE " + exp
-                    + " OR annotation ILIKE " + exp_annot + ")" + ")";
+                    + " OR annotation ILIKE " + exp_annot + ")";
             whereClause += ")";
         }
 		String sql = "SELECT systematicname, primaryname, aliasname, annotation FROM "

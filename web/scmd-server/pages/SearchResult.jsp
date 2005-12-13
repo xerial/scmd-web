@@ -14,12 +14,17 @@
 <%@ taglib prefix="scmd-tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="logic" uri="/WEB-INF/struts-logic.tld" %>
 <%@ taglib prefix="html" uri="/WEB-INF/struts-html.tld" %>
+<%@ taglib prefix="bean" uri="/WEB-INF/struts-bean.tld" %>
 
 <jsp:useBean id="userSelection"  scope="session" class="lab.cb.scmd.web.bean.UserSelection"/>
 <jsp:useBean id="selection"  scope="page" class="lab.cb.scmd.web.bean.ORFSelectionForm"/>
 <jsp:useBean id="orfList"  scope="request" type="java.util.List"/>
+<jsp:useBean id="goList" scope="request" type="java.util.List"/>
 <jsp:useBean id="pageStatus" scope="request" class="lab.cb.scmd.db.common.PageStatus"/>
 <jsp:useBean id="keywordList" scope="request" type="java.util.List"/>
+
+<bean:define id="gosize" value="<%= Integer.toString(goList.size()) %>" />
+<bean:define id="orfsize" value="<%= Integer.toString(orfList.size()) %>" />
 
 <scmd-base:header title="Your Selection" css="/css/tabsheet.css"/>
 <body>
@@ -41,7 +46,39 @@ Results for
 </td></tr>
 </table>
 
+<!-- Search Results for Gene Ontology ID and Terms -->
+<logic:notEqual name="gosize" value="0" >
+<table border="0" cellspacing="0" cellpadding="0">
+<tr><td colspan="4" class="tablename">Gene Ontology Results</td></tr>
+<tr>
+<td colspan="2" class="sheetlabel" width="150"> GO ID </td> 
+<td class="sheetlabel" witdh="95"> Component </td> 
+<td class="sheetlabel" width="333"> </td> 
+</tr>
+<logic:iterate id="goElement" name="goList" type="lab.cb.scmd.web.bean.GeneOntology">
+<tr class="small">
+<td align="left" width="15"></td>
+<td align="left" class="orf" width="135">
+<html:link page="/Search.do?keyword=${goElement.goid}"> ${goElement.goid} </html:link> 
+</td>
+<td align="left" class="small"> ${goElement.namespace}</td>
+</tr>
+<tr bgcolor="#F0F0E0" height="15">
+<td></td>
+<td colspan="3" width="530" class="annotation"> ${goElement.name}</td> 
+</tr>
+<tr height="7"><td> </td></tr>
+</logic:iterate>
+</logic:notEqual>
 
+<!-- Search Results for ORF Name, Gene Name and Gene Annotation -->
+<logic:notEqual name="orfsize" value="0" >
+<logic:notEqual name="gosize" value="0">
+<table border="0" cellspacing="0" cellpadding="0">
+<tr><td height="10"></td></tr>
+<tr><td width="593" class="tablename">Gene Results</td></tr>
+</table>
+</logic:notEqual>
 <scmd-base:pagemover page="Search.do" name="search" property="argumentMap" currentPage="${pageStatus.currentPage}" maxPage="${pageStatus.maxPage}"/>
 
 <table border="0" cellspacing="0" cellpadding="0">
@@ -74,6 +111,7 @@ Results for
 <tr height="10"><td> </td></tr>
 </logic:iterate>
 </table>
+</logic:notEqual>
 
 </html:form>
 

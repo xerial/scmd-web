@@ -136,6 +136,11 @@ a:visited { color: #666666; }
 .notation { color: #444444; font-size: 11pt; }
 .memo { color: #6688E0; }
 
+.tablename
+{
+	color: #0066b0; font-size: 10pt; font-weight: bold; 
+}
+
 .tablelabel 
 { 
 	color: #006699; font-size: 10pt; 

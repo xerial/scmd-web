@@ -10,6 +10,7 @@
 
 package lab.cb.scmd.web.action;
 
+import java.util.LinkedList;
 import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,11 +25,15 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import lab.cb.scmd.db.common.PageStatus;
+import lab.cb.scmd.db.common.TableQuery;
 import lab.cb.scmd.db.common.XMLQuery;
 import lab.cb.scmd.exception.SCMDException;
+import lab.cb.scmd.web.bean.GeneOntology;
 import lab.cb.scmd.web.bean.SearchResultViewForm;
 import lab.cb.scmd.web.bean.YeastGene;
 import lab.cb.scmd.web.common.SCMDConfiguration;
+import lab.cb.scmd.web.table.ColLabelIndex;
+import lab.cb.scmd.web.table.Table;
 import lab.cb.scmd.web.xml.DOMParser;
 import lab.cb.scmd.web.xml.XMLReaderThread;
 
@@ -55,12 +60,32 @@ public class SearchKeywordAction extends Action
         if(keyword.equals(""))
             return mapping.findForward("failure");
         
+        String[] keywords = keyword.split("[ \\,/]+"); 
         Vector orfList = null;
         Vector<String> keywordList = new Vector<String>();
-        for(String k: keyword.split("[ \\,/]+") ){
+        for(String k: keywords){
             keywordList.add(k);
         }
         PageStatus pageStatus = new PageStatus(1, 1);
+        
+        // Gene Ontology ÇÃèÓïÒåüçıåãâ Ç∆èÓïÒÇGO id & term Ç≈éÊìæ
+        TableQuery goquery = SCMDConfiguration.getTableQueryInstance();
+        Table gotable = goquery.getAssociatedGO(keywords);
+        LinkedList<GeneOntology> goList = new LinkedList<GeneOntology>();
+        if( gotable != null ) {
+            ColLabelIndex colIndex = new ColLabelIndex(gotable);        
+            for(int i=1; i<gotable.getRowSize(); i++)
+            {
+                GeneOntology go = new GeneOntology();
+                go.setGoid(colIndex.get(i, "goid").toString());
+                go.setName(colIndex.get(i, "name").toString());
+                go.setNamespace(colIndex.get(i, "namespace").toString());
+                go.setDef(colIndex.get(i, "def").toString());
+                goList.add(go);
+            }
+        }
+        
+        // à‚ì`éqñº, GOìôÇÃåüçıåãâ Ç ORFñºÇ≈éÊìæ
         try
         {
             XMLQuery query = SCMDConfiguration.getXMLQueryInstance();
@@ -101,6 +126,7 @@ public class SearchKeywordAction extends Action
 	    request.setAttribute("orfList", orfList);
 	    request.setAttribute("pageStatus", pageStatus);
         request.setAttribute("keywordList", keywordList);
+        request.setAttribute("goList", goList);
 
         
         return mapping.findForward("success");

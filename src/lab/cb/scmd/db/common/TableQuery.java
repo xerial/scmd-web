@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Vector;
 
 import org.xerial.util.Pair;
 
@@ -117,6 +118,8 @@ public interface TableQuery
 
     public List<MorphParameter> getParameterInfo(Set<Integer> parameter);
     public MorphParameter getOneParameterInfo(String param, String type);
+
+	public Table getAssociatedGO(String[] keywordList);
 
     
 }
