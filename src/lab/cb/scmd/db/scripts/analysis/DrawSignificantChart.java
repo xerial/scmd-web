@@ -68,7 +68,7 @@ import lab.cb.scmd.web.table.Table;
 public class DrawSignificantChart {
 
     private enum Opt {
-        help, verbose, outfile, server, port, user, passwd, dbname, 
+        help, verbose, outfile, outputexcel, server, port, user, passwd, dbname, 
         pvaluefile, analysisfile, binomialfile, log, goid, paramname, reverse
     }
     private OptionParser<Opt> optionParser = new OptionParser<Opt>();
@@ -107,7 +107,7 @@ public class DrawSignificantChart {
     HashMap<String, String> parameterMap = new HashMap<String, String> ();
     
     // for excel sheet
-    private boolean useExcel = true;
+    private boolean useExcel = false;
     WritableWorkbook workbook = null;
     WritableSheet fwdlowsheet = null;
     WritableSheet fwdhighsheet = null;
@@ -757,6 +757,9 @@ public class DrawSignificantChart {
         if(optionParser.isSet(Opt.reverse)) {
             drawReverse = true;
         }
+        if(optionParser.isSet(Opt.outputexcel)) {
+        	useExcel = true;
+        }
        
         dataSource = new Jdbc3PoolingDataSource();
         dataSource.setDataSourceName("SCMD Data Source");
@@ -794,6 +797,7 @@ public class DrawSignificantChart {
         optionParser.addOption(Opt.help, "h", "help", "display help messages");
         optionParser.addOption(Opt.verbose, "v", "verbose", "display verbose messages");
         optionParser.addOption(Opt.reverse, "r", "reverse", "reverse genetics chart");
+        optionParser.addOption(Opt.outputexcel, "x", "outputexcel", "output excel sheet");
         optionParser.addOptionWithArgment(Opt.outfile, "o", "output", "FILE", "output file name. defalut=stdout", "");
         optionParser.addOptionWithArgment(Opt.pvaluefile, "f", "pvalue", "FILE", "pvalue file name. defalut=", "");
         optionParser.addOptionWithArgment(Opt.analysisfile, "a", "analysisfile", "FILE", "analysis file name. defalut=", "");
