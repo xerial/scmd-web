@@ -68,7 +68,7 @@ import lab.cb.scmd.web.table.Table;
 public class DrawSignificantChart {
 
     private enum Opt {
-        help, verbose, outfile, outputexcel, server, port, user, passwd, dbname, 
+        help, verbose, outfile, outputmethod, server, port, user, passwd, dbname, 
         pvaluefile, analysisfile, binomialfile, log, goid, paramname, reverse
     }
     private OptionParser<Opt> optionParser = new OptionParser<Opt>();
@@ -107,7 +107,9 @@ public class DrawSignificantChart {
     HashMap<String, String> parameterMap = new HashMap<String, String> ();
     
     // for excel sheet
-    private boolean useExcel = false;
+    private enum Method { db, excel, html };
+	Method outputMethod = Method.db; 
+
     WritableWorkbook workbook = null;
     WritableSheet fwdlowsheet = null;
     WritableSheet fwdhighsheet = null;
@@ -146,7 +148,16 @@ public class DrawSignificantChart {
         double revprobthres = 0.01 / (double)gonum;
         
         if(binomialfile.length() != 0 ) {
-        	if( useExcel ) {
+        	if( outputMethod == Method.db ) {
+                try {
+					fwdlowout = new PrintStream(new FileOutputStream("fwdlow.tab"));
+	                fwdhighout = new PrintStream(new FileOutputStream("fwdhigh.tab"));
+	                revlowout = new PrintStream(new FileOutputStream("revlow.tab"));
+	                revhighout = new PrintStream(new FileOutputStream("revhigh.tab"));
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+        	} else if( outputMethod == Method.excel ) {
         		try {
 					workbook = Workbook.createWorkbook(new File("Supplementary_Table.xls"));
 					fwdlowsheet = workbook.createSheet("reverse_low", 2);
@@ -160,7 +171,6 @@ public class DrawSignificantChart {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-        		
         	} else {
                 try {
                     fwdlowout = new PrintStream(new FileOutputStream("fwdlow.html"));
@@ -241,7 +251,18 @@ public class DrawSignificantChart {
                         drawChart(true, true, gonum, signum, specificnum);
                     }
                 }
-                if( useExcel ) {
+                if( outputMethod == Method.db ) {
+                    fwdlowout.println();
+                    fwdhighout.println();
+                    revlowout.println();
+                    revhighout.println();
+
+                    fwdlowout.close();
+                    fwdhighout.close();
+                    revlowout.close();
+                    revhighout.close();
+                	
+                } else if( outputMethod == Method.excel ) {
         			workbook.write();
         			try {
 						workbook.close();
@@ -481,6 +502,47 @@ public class DrawSignificantChart {
         out.println("</tr>");
     }
 
+    private void outTabRow(String param, String goid, double value, double ratio, boolean fwd, boolean high, PrintStream out,
+            int gonum, int signum, int targetnum) {
+    	outTabRow(param, goid, value, ratio, null, fwd, high, out, gonum, signum, targetnum);
+    }
+
+    private void outTabRow(String param, String goid, double value, double ratio, HashMap<String, ArrayList<String>> orfnames, boolean fwd, boolean high, PrintStream out,
+            int gonum, int signum, int targetnum) {
+        if( value < 2.2e-16 ) {
+            value = 2.2e-16;
+        }
+        HashMap<String,String> values = new HashMap<String,String>();
+        values.put("param",param);
+        values.put("goid",goid);
+        values.put("goterm", gotermMap.get(goid));
+        // orf–¼‚Í•K—v‚È‚ç db‚Ìgoassoc‚©‚ç“¾‚é 
+        //values.put("orfs", orfnames);
+        if( fwd ) {
+            values.put("fwd", "1");
+        } else {
+        	values.put("fwd", "0");
+        }
+        if( high ) {
+        	values.put("high", "1");
+        } else {
+        	values.put("high", "0");
+        }
+        values.put("gonum", Integer.valueOf(gonum).toString());
+        values.put("signum", Integer.valueOf(signum).toString());
+        values.put("targetnum", Integer.valueOf(targetnum).toString());
+        values.put("pvalue", Double.valueOf(value).toString());
+        values.put("ratio", Double.valueOf(ratio).toString());
+        
+        String[] keys = {"param", "goid", "fwd", "high", "gonum", "signum", "targetnum", "pvalue", "ratio"};
+        for(int i = 0; i < keys.length; i++ ) {
+        	if( i != 0 )
+        		out.print("\t");
+        	out.print(values.get(keys[i]));
+        }
+        out.println();
+    }
+
     /**
      * @param b
      * @param c
@@ -532,7 +594,12 @@ public class DrawSignificantChart {
             if(drawReverse) {
                 drawReserseChart(goid, paramname, anavalueList, orfMap);
                 if(drawHigh) {
-                	if(useExcel) {
+                	if( outputMethod == Method.db ) {
+                        outTabRow(paramname, goid, curpval, curratio, false, true, 
+                        		revhighout, 
+                                gonum, signum, targetnum);
+                		
+                	} else if( outputMethod == Method.excel ) {
                         addRow(paramname, goid, curpval, curratio, false, true, 
                         		revhighsheet, revhighcount++,
                                 gonum, signum, targetnum);
@@ -542,7 +609,12 @@ public class DrawSignificantChart {
                                 gonum, signum, targetnum);
                 	}
                 } else {
-                	if( useExcel) {
+                	if( outputMethod == Method.db ) {
+                        outTabRow(paramname, goid, curpval, curratio, false, false, 
+                        		revlowout, 
+                                gonum, signum, targetnum);
+                	
+                	} else if ( outputMethod == Method.excel ) {
                         addRow(paramname, goid, curpval, curratio, false, false, 
                         		revlowsheet, revlowcount++,
                                 gonum, signum, targetnum);
@@ -555,7 +627,11 @@ public class DrawSignificantChart {
             	HashMap<String, ArrayList<String>> orfnames = new HashMap<String, ArrayList<String>>();
                 orfnames = drawForwardDistribution(goid, paramname, anavalueList, orfMap);
                 if(drawHigh) {
-                	if( useExcel) {
+                	if( outputMethod == Method.db ) {
+                        outTabRow(paramname, goid, curpval, curratio, orfnames, true, true, 
+                        		fwdhighout, 
+                                gonum, signum, targetnum);
+                	} else if( outputMethod == Method.excel ) {
                         addRow(paramname, goid, curpval, curratio, orfnames, true, true, 
                         		fwdhighsheet, fwdhighcount++,
                                 gonum, signum, targetnum);
@@ -564,7 +640,11 @@ public class DrawSignificantChart {
                         		fwdhighout, gonum, signum, targetnum);
                 	}
                 } else {
-                	if( useExcel ) {
+                	if( outputMethod == Method.db ) {
+                        outTabRow(paramname, goid, curpval, curratio, orfnames, true, false, 
+                        		fwdlowout, 
+                                gonum, signum, targetnum);
+                	} else if( outputMethod == Method.excel ) {
                         addRow(paramname, goid, curpval, curratio, orfnames, true, false, 
                         		fwdlowsheet, fwdlowcount++,
                                 gonum, signum, targetnum);
@@ -757,8 +837,8 @@ public class DrawSignificantChart {
         if(optionParser.isSet(Opt.reverse)) {
             drawReverse = true;
         }
-        if(optionParser.isSet(Opt.outputexcel)) {
-        	useExcel = true;
+        if( optionParser.isSet(Opt.outputmethod) ) {
+        	outputMethod = Method.valueOf(optionParser.getValue(Opt.outputmethod));
         }
        
         dataSource = new Jdbc3PoolingDataSource();
@@ -797,7 +877,7 @@ public class DrawSignificantChart {
         optionParser.addOption(Opt.help, "h", "help", "display help messages");
         optionParser.addOption(Opt.verbose, "v", "verbose", "display verbose messages");
         optionParser.addOption(Opt.reverse, "r", "reverse", "reverse genetics chart");
-        optionParser.addOption(Opt.outputexcel, "x", "outputexcel", "output excel sheet");
+        optionParser.addOptionWithArgment(Opt.outputmethod, "m", "outputmethod", "METHOD", "output excel sheet", "db");
         optionParser.addOptionWithArgment(Opt.outfile, "o", "output", "FILE", "output file name. defalut=stdout", "");
         optionParser.addOptionWithArgment(Opt.pvaluefile, "f", "pvalue", "FILE", "pvalue file name. defalut=", "");
         optionParser.addOptionWithArgment(Opt.analysisfile, "a", "analysisfile", "FILE", "analysis file name. defalut=", "");
