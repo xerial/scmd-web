@@ -10,9 +10,9 @@
 package lab.cb.scmd.web.action;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -20,18 +20,15 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import lab.cb.scmd.db.connect.ConnectionServer;
-import lab.cb.scmd.db.sql.SQLExpression;
+import lab.cb.scmd.db.connect.SCMDManager;
 import lab.cb.scmd.db.sql.SQLUtil;
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.web.action.logic.DBUtil;
 import lab.cb.scmd.web.bean.CellViewerForm;
 import lab.cb.scmd.web.bean.UserSelection;
-import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.common.SCMDSessionManager;
 import lab.cb.scmd.web.common.SCMDThreadManager;
 import lab.cb.scmd.web.formbean.ViewORFTeardropForm;
@@ -40,20 +37,15 @@ import lab.cb.scmd.web.image.TeardropPoint;
 import lab.cb.scmd.web.image.teaddrop.Teardrop;
 import lab.cb.scmd.web.sessiondata.MorphParameter;
 import lab.cb.scmd.web.sessiondata.ParamUserSelection;
-import lab.cb.scmd.web.table.ColLabelIndex;
 import lab.cb.scmd.web.table.ImageElement;
 import lab.cb.scmd.web.table.Link;
 import lab.cb.scmd.web.table.StringElement;
 import lab.cb.scmd.web.table.Table;
 import lab.cb.scmd.web.table.TableElement;
-import lab.cb.scmd.web.table.Width;
 import lab.cb.scmd.web.table.decollation.AttributeDecollation;
 import lab.cb.scmd.web.table.decollation.AttributeDecollator;
-import lab.cb.scmd.web.table.decollation.NumberFormatDecollator;
 import lab.cb.scmd.web.table.decollation.StyleDecollator;
 
-import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -96,16 +88,23 @@ public class ViewORFTeardropAction extends Action
         else
             view.setSheetType(sheetType);
         String sql = null;
+        List<MorphParameter> parameterList = null;
         if(sheetType >= 0 && sheetType < 3)
         {
             int stainType = sheetType;
             // stainTypeに該当するparameter IDのリストを取得
             final String[] stainName = {"cell wall", "nucleus", "actin"};
+
+            HashMap<String,String> map = new HashMap<String,String>();
+            map.put("strainName",stainName[stainType]);
+            parameterList = SCMDManager.getDBManager().queryResults("ViewORFTeadrop:parameterlist",map,MorphParameter.class);
+
+/*
             sql = SQLExpression.assignTo(
                     "select id, name, displayname, shortname from $1 where scope='orf' and datatype = 'num' and stain = '$2' order by id",
                     SCMDConfiguration.getProperty("DB_PARAMETERLIST", "parameterlist"),
                     stainName[stainType]
-            );        
+            );*/
         }
         else
         {
@@ -114,13 +113,18 @@ public class ViewORFTeardropAction extends Action
             Set<Integer> paramIDSet = paramSelection.getOrfParamSelection();
             if(paramIDSet.isEmpty())
                 return mapping.findForward("selection");
-            sql = SQLExpression.assignTo(
+/*            sql = SQLExpression.assignTo(
                     "select id, name, displayname, shortname, systematicname from $1 where scope='orf' and datatype = 'num' and id in ($2)",
                     SCMDConfiguration.getProperty("DB_PARAMETERLIST", "parameterlist"),
                     SQLUtil.commaSeparatedList(paramIDSet, SQLUtil.QuotationType.none)
             );
+*/
+            HashMap<String,String> map = new HashMap<String,String>();
+            map.put("separatedList",SQLUtil.commaSeparatedList(paramIDSet, SQLUtil.QuotationType.none));
+            parameterList = SCMDManager.getDBManager().queryResults("ViewORFTeadrop:parameterlist2",map,MorphParameter.class);
         }
-        List<MorphParameter> parameterList = (List<MorphParameter>) ConnectionServer.query(sql, new BeanListHandler(MorphParameter.class));
+
+      //  List<MorphParameter> parameterList = (List<MorphParameter>) ConnectionServer.query(sql, new BeanListHandler(MorphParameter.class));
 
         Vector<Integer> paramIDList = new Vector<Integer>();
         for(MorphParameter param : parameterList)
@@ -138,8 +142,9 @@ public class ViewORFTeardropAction extends Action
         
         
 
-
-        ImageCache imageCache = ImageCache.getImageCache(request);
+        // @deprecated ImageCacheを使わない実装に変更 
+        //ImageCache imageCache = ImageCache.getImageCache(request);
+        
         Table teardropSheet = new Table();
 
         Vector<TableElement> labelRow = new Vector<TableElement>();
@@ -166,13 +171,18 @@ public class ViewORFTeardropAction extends Action
             Link label = new Link(response.encodeURL("ViewORFParameter.do"), linkMap, param.getName());
             //labelRow.add(new AttributeDecollation(label, "title", param.getDisplayname()));
             labelRow.add(new AttributeDecollation(label, "title", param.getSystematicname()));
-
+/*
             String sql2 = SQLExpression.assignTo(
                     "select t1.paramid as \"paramID\", t1.groupid, t1.average, t1.sd, t1.min, t1.max, t2.average as wt_average, t2.sd as wt_sd from $1 as t1 inner join $2 as t2 using(paramid) where t1.groupid=0 and t2.groupid=0 and paramid=$3", 
                     SCMDConfiguration.getProperty("DB_PARAM_AVG_SD", "paramavgsd"), 
                     SCMDConfiguration.getProperty("DB_PARAM_AVG_SD_WT", "paramavgsd_wt"),                     
-                    paramID);
-            Teardrop teardrop = (Teardrop) ConnectionServer.query(sql2, new BeanHandler(Teardrop.class));
+                    paramID);*/
+
+            HashMap<String,String> map = new HashMap<String,String>();
+            map.put("paramID",String.valueOf(paramID));
+            Teardrop teardrop = SCMDManager.getDBManager().query("ViewORFTeadrop:paramavgsd",map,Teardrop.class);
+
+            //Teardrop teardrop = (Teardrop) ConnectionServer.query(sql2, new BeanHandler(Teardrop.class));
             teardrop.setGroupID(0);
             teardrop.setParamID(paramID);
             teardrop.setOrientation(Teardrop.Orientation.horizontal);
@@ -181,12 +191,17 @@ public class ViewORFTeardropAction extends Action
             maxRow.add(roughFormat.format(teardrop.getMax()));
             
             // Teardrop上の点の位置情報を取得
-            String sql3 = SQLExpression.assignTo("select strainname, average from $1 where groupid='0' and strainname in ($2) and paramid=$3",
+/*            String sql3 = SQLExpression.assignTo("select strainname, average from $1 where groupid='0' and strainname in ($2) and paramid=$3",
                     SCMDConfiguration.getProperty("DB_PARAMSTAT", "paramstat"),
                         SQLUtil.commaSeparatedList(orfSet, SQLUtil.QuotationType.singleQuote),
                         paramID
-                );
-            List<TeardropPoint> plotList = (List<TeardropPoint>) ConnectionServer.query(sql3, new BeanListHandler(TeardropPoint.class));
+                );*/
+            map.clear();
+            map.put("paramID",String.valueOf(paramID));
+            map.put("separatedList",SQLUtil.commaSeparatedList(orfSet, SQLUtil.QuotationType.singleQuote));
+
+            List<TeardropPoint> plotList = SCMDManager.getDBManager().queryResults("ViewORFTeadrop:paramstat",map,TeardropPoint.class);
+            //List<TeardropPoint> plotList = (List<TeardropPoint>) ConnectionServer.query(sql3, new BeanListHandler(TeardropPoint.class));
             double value = -1;
             for(TeardropPoint tp : plotList)
             {
@@ -220,14 +235,18 @@ public class ViewORFTeardropAction extends Action
             else
                 valRow.add(new StringElement(""));
             
+            // Teardrop（グラフ）, TeardropPoint(グラフにプロットする点の情報） 
             teardropList.add(new Pair<Teardrop, List<TeardropPoint>>(teardrop, plotList));
             
+            /*
             String imageID = teardrop.getImageID();
             imageCache.registerImage(imageID);
             
+            */
             TreeMap<String, String> imgArg = new TreeMap<String, String>();
-            imgArg.put("imageID", imageID);
+            //imgArg.put("imageID", imageID);
             imgArg.put("encoding", "png"); 
+            
             
             ImageElement img = new ImageElement(response.encodeURL("scmdimage.png"), imgArg);
             img.setProperty("alt", "avg. of all mutants = " + format.format(teardrop.getAverage()) + "\navg. of wildtype = " + format.format(teardrop.getWt_average()));            
@@ -238,7 +257,8 @@ public class ViewORFTeardropAction extends Action
             teardropRow.add(new Link(response.encodeURL("ViewORFParameter.do"), linkMap, img));
         }
         
-        SCMDThreadManager.addTask(new DrowTeardropTask(teardropList, imageCache));
+        // Threadを使わない実装に変更 （画像を描画する部分）
+        // SCMDThreadManager.addTask(new DrowTeardropTask(teardropList, imageCache));
         
         teardropSheet.addCol(labelRow);
         teardropSheet.addCol(valRow);
@@ -364,6 +384,7 @@ public class ViewORFTeardropAction extends Action
                 List<TeardropPoint> tdlist = teardrop.getSecond();
                 try
                 {
+                    // drawImageで完全な画像を描画している
                     imageCache.addImage(td.getImageID(), td.drawImage(tdlist));
                 }
                 catch(SCMDException e)
