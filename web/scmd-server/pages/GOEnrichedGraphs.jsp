@@ -44,8 +44,8 @@ Blue: Low-enriched mutants, Red: High-enriched mutants<br/>
 <logic:iterate id="enrich" name="enrichList" type="lab.cb.scmd.web.container.Enrichments">
 <tr>
 <td class="tablelabel" colspan="2">
-<html:link page="/ViewORFParameter.do?columnType=input&paramID=${enrich.param}&sortspec=${enrich.param}"><%=enrich.getMorphParameter().getName()%></html:link>
-p-value: <scmd-base:format format="%.2e">${enrich.pvalue}</scmd-base:format>
+Parameter: <html:link page="/ViewORFParameter.do?columnType=input&paramID=${enrich.param}&sortspec=${enrich.param}"><%=enrich.getMorphParameter().getName()%></html:link>
+, p-value: <scmd-base:format format="%.2e"> ${enrich.pvalue} </scmd-base:format>
 <div class="annotation"><%= enrich.getMorphParameter().getDisplayname() %></div>
 </td>
 </tr>

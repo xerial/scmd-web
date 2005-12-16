@@ -55,14 +55,19 @@ Results for
 <td class="sheetlabel"> </td> 
 </tr>
 <logic:iterate id="goElement" name="goList" type="lab.cb.scmd.web.bean.GeneOntology">
+<bean:define id="paramsize" value="<%= Integer.toString(goElement.getFwdRev().size()) %>" />
 <tr class="small">
 <td align="left" width="20"></td>
 <td align="left" class="orf" width="135">
-<html:link page="/Search.do?keyword=${goElement.goid}"> ${goElement.goid} </html:link> 
+<logic:equal name="paramsize" value="0">
+${goElement.goid}
+</logic:equal>
+<logic:notEqual name="paramsize" value="0">
+<html:link page="/GOEnrichedGraphs.do?goid=${goElement.goid}">${goElement.goid}</html:link> 
+</logic:notEqual>
 </td>
 <td align="center" class="small"> ${goElement.namespace}</td>
 <td />
-<bean:define id="paramsize" value="<%= Integer.toString(goElement.getFwdRev().size()) %>" />
 <td width="240" align="left">
 <logic:equal name="paramsize" value="0">
 No enriched parameters
