@@ -10,6 +10,10 @@
 
 package lab.cb.scmd.web.bean;
 
+import java.util.Vector;
+
+import lab.cb.scmd.web.container.Enrichments;
+
 /**
  * gene ontology‚Ìî•ñ‚ğ‚à‚ÂƒNƒ‰ƒX
  * @author sesejun
@@ -20,6 +24,7 @@ public class GeneOntology {
 	String name = "";
 	String namespace = "";
 	String def = "";
+	Vector<Enrichments> fwdrev = new Vector<Enrichments>();
 	
 	public String getDef() {
 		return def;
@@ -44,5 +49,11 @@ public class GeneOntology {
 	}
 	public void setNamespace(String namespace) {
 		this.namespace = namespace;
-	}	
+	}
+	public void addFwdRev(Enrichments fwdrev) {
+		this.fwdrev.add(fwdrev);
+	}
+	public Vector<Enrichments> getFwdRev() {
+		return fwdrev;
+	}
 }

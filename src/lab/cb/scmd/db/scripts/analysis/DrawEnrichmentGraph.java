@@ -60,12 +60,15 @@ import lab.cb.scmd.web.table.Table;
 
 /**
  * @author sesejun
- *
+ *	
+ * DrawSignificantChartから、fork
+ * パラーメータの名称などを、数値の通し番号にするため。
+ * また、DB用に特化。
  * forward genetics, reverse genetics の図を描くプログラム
  * forward とreverseの定義が逆らしいので注意。
  * (変数名が全て逆になっている) 
  */
-public class DrawSignificantChart {
+public class DrawEnrichmentGraph {
 
     private enum Opt {
         help, verbose, outfile, outputmethod, server, port, user, passwd, dbname, 
@@ -120,26 +123,20 @@ public class DrawSignificantChart {
     int revlowcount = 0;
     int revhighcount = 0;
 
-//  Color lowCellColor = new Color(102, 153, 0); // 996600
-//  Color middleCellColor = Color.BLACK;
-//  Color highCellColor =  new Color(240, 48, 128);// old -- Color.MAGENTA;
-    Color lowCellColor = new Color(0, 134, 255); // 0086FF
-    Color middleCellColor = new Color(30,104,115);
-    Color highCellColor =  new Color(255, 0, 112);// 
+    Color lowCellColor = new Color(102, 153, 0); // 996600
+    Color middleCellColor = Color.BLACK;
+    Color highCellColor =  new Color(240, 48, 128);// old -- Color.MAGENTA;
     Color selectedColor = Color.YELLOW;
-    Color pibaseColor = new Color(30,104,115); // new Color(128,128,128);
 
     public static void main(String[] args) {
-        DrawSignificantChart dsc = null;
+        DrawEnrichmentGraph dsc = null;
         try {
-            dsc = new DrawSignificantChart();
+            dsc = new DrawEnrichmentGraph();
             dsc.parse(args);
             dsc.process();
         } catch (OptionParserException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (DatabaseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -224,7 +221,6 @@ public class DrawSignificantChart {
                 while ((line = fileReader.readLine()) != null) {
                     String[] cols = line.split("\t");
                     paramname = cols[0];
-
                     goid = cols[1];
                     gonum = Integer.parseInt(cols[3]);
                     if( Double.parseDouble(cols[8]) < fwdprobthres && gonum >= 3 && gonum <= 50 ) {
@@ -287,10 +283,8 @@ public class DrawSignificantChart {
                 }
 
             } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             
@@ -517,12 +511,9 @@ public class DrawSignificantChart {
         if( value < 2.2e-16 ) {
             value = 2.2e-16;
         }
-        if( parameterMap.get(param) == null ) {
-            System.err.println("NO VALID PARAM! --" + param + "--");
-        }
         HashMap<String,String> values = new HashMap<String,String>();
-        values.put("param", parameterMap.get(param));
-        values.put("goid", goid);
+        values.put("param",param);
+        values.put("goid",goid);
         values.put("goterm", gotermMap.get(goid));
         // orf名は必要なら dbのgoassocから得る 
         //values.put("orfs", orfnames);
@@ -600,11 +591,7 @@ public class DrawSignificantChart {
             }
             Arrays.sort(anavalueList, new ValueComparator());
             if(drawReverse) {
-            	if(outputMethod == Method.db) {
-                    drawReserseChart(goid, parameterMap.get(paramname), anavalueList, orfMap);
-            	} else {
-                    drawReserseChart(goid, paramname, anavalueList, orfMap);
-            	}
+                drawReserseChart(goid, paramname, anavalueList, orfMap);
                 if(drawHigh) {
                 	if( outputMethod == Method.db ) {
                         outTabRow(paramname, goid, curpval, curratio, false, true, 
@@ -637,11 +624,7 @@ public class DrawSignificantChart {
                 }
             } else {
             	HashMap<String, ArrayList<String>> orfnames = new HashMap<String, ArrayList<String>>();
-            	if(outputMethod == Method.db) {
-            		orfnames = drawForwardDistribution(goid, parameterMap.get(paramname), anavalueList, orfMap);
-            	} else {
-            		orfnames = drawForwardDistribution(goid, paramname, anavalueList, orfMap);
-            	}
+                orfnames = drawForwardDistribution(goid, paramname, anavalueList, orfMap);
                 if(drawHigh) {
                 	if( outputMethod == Method.db ) {
                         outTabRow(paramname, goid, curpval, curratio, orfnames, true, true, 
@@ -681,7 +664,7 @@ public class DrawSignificantChart {
      * @param anavalueList
      * @param orfMap
      */
-    private void drawReserseChart(String goid2, String paramname_png, ORFValueSet[] anavalueList, TreeMap<String, Strainname> orfMap) {
+    private void drawReserseChart(String goid2, String paramname2, ORFValueSet[] anavalueList, TreeMap<String, Strainname> orfMap) {
         BufferedImage arrayImage = new BufferedImage( (int)(CELLWIDTH * anavalueList.length), HEIGHT, BufferedImage.TYPE_INT_BGR);
         Graphics2D g = (Graphics2D) arrayImage.getGraphics();
         int lowm = 0;
@@ -711,11 +694,10 @@ public class DrawSignificantChart {
                 highm++;
             }
         }
-        g.setColor(middleCellColor);
-//        g.fillRect( (int)(CELLWIDTH * lowm), 0, (int)(CELLWIDTH * (anavalueList.length - lowm - highm)), HEIGHT);
-        g.fillRect( 0, 0, (int)(CELLWIDTH * anavalueList.length) , HEIGHT);
         g.setColor(lowCellColor);
         g.fillRect( 0, 0, (int)(CELLWIDTH * lowm), HEIGHT);
+        g.setColor(middleCellColor);
+        g.fillRect( (int)(CELLWIDTH * lowm), 0, (int)(CELLWIDTH * (anavalueList.length - lowm - highm)), HEIGHT);
         g.setColor(highCellColor);
         g.fillRect( (int)Math.ceil(CELLWIDTH * (anavalueList.length - highm)), 0, (int)(CELLWIDTH * highm), HEIGHT);
 
@@ -741,26 +723,26 @@ public class DrawSignificantChart {
 
         BufferedImage wholePiImage = new BufferedImage( PICHARTRAD * 2, PICHARTRAD * 2, BufferedImage.TYPE_INT_BGR);
         Graphics2D wholePi = (Graphics2D) wholePiImage.getGraphics();
-        wholePi.setColor(pibaseColor);
+        wholePi.setColor(new Color(128,128,128));
         wholePi.fill(new Ellipse2D.Double(0, 0, PICHARTRAD * 2, PICHARTRAD * 2));
         wholePi.setColor(selectedColor);
         double wholerad = (double)y / (double)anavalueList.length * 360.0;
         wholePi.fill(new Arc2D.Double(0, 0, PICHARTRAD * 2, PICHARTRAD * 2, 90 - wholerad, wholerad, Arc2D.PIE));
 
         try {
-        	PrintStream ps = new PrintStream(new FileOutputStream(paramname_png + "_rg.png"));
+        	PrintStream ps = new PrintStream(new FileOutputStream(paramname + "_rg.png"));
             ImageIO.write(arrayImage, "png", ps);
             ps.close();
             if(drawHigh) {
-            	ps = new PrintStream(new FileOutputStream(paramname_png + "-" + goid.replaceFirst("GO:", "") + "_high.png"));
+            	ps = new PrintStream(new FileOutputStream(paramname + "-" + goid.replaceFirst("GO:", "") + "_high.png"));
                 ImageIO.write(highPiImage, "png", ps);
                 ps.close();
             } else {
-            	ps = new PrintStream(new FileOutputStream(paramname_png + "-" + goid.replaceFirst("GO:", "") + "_low.png"));
+            	ps = new PrintStream(new FileOutputStream(paramname + "-" + goid.replaceFirst("GO:", "") + "_low.png"));
                 ImageIO.write(lowPiImage, "png", ps);
                 ps.close();
             }
-        	ps = new PrintStream(new FileOutputStream(paramname_png + "-" + goid.replaceFirst("GO:", "") + "_whole.png"));
+        	ps = new PrintStream(new FileOutputStream(paramname + "-" + goid.replaceFirst("GO:", "") + "_whole.png"));
             ImageIO.write(wholePiImage, "png", ps);
             ps.close();
         } catch (Exception e) {
@@ -775,7 +757,7 @@ public class DrawSignificantChart {
      * @param anavalueList
      * @param orfMap
      */
-    private HashMap<String, ArrayList<String>> drawForwardDistribution(String goid, String paramname_orf, ORFValueSet[] anavalueList, TreeMap<String, Strainname> orfMap) {
+    private HashMap<String, ArrayList<String>> drawForwardDistribution(String goid, String paramname, ORFValueSet[] anavalueList, TreeMap<String, Strainname> orfMap) {
         BufferedImage arrayImage = new BufferedImage( (int)(CELLWIDTH * anavalueList.length), HEIGHT, BufferedImage.TYPE_INT_BGR);
         Graphics2D g = (Graphics2D) arrayImage.getGraphics();
         int lowcount = 0;
@@ -831,7 +813,7 @@ public class DrawSignificantChart {
         //log.println(orfnames.replaceFirst(", $", ""));
 
         try {
-            ImageIO.write(arrayImage, "png", new PrintStream(new FileOutputStream(paramname_orf + "-" + goid.replaceFirst("GO:", "") + "_fg.png")));
+            ImageIO.write(arrayImage, "png", new PrintStream(new FileOutputStream(paramname + "-" + goid.replaceFirst("GO:", "") + "_fg.png")));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -890,7 +872,7 @@ public class DrawSignificantChart {
         }
     }
 
-    public DrawSignificantChart() throws OptionParserException, DatabaseException {
+    public DrawEnrichmentGraph() throws OptionParserException, DatabaseException {
         optionParser.addOption(Opt.help, "h", "help", "display help messages");
         optionParser.addOption(Opt.verbose, "v", "verbose", "display verbose messages");
         optionParser.addOption(Opt.reverse, "r", "reverse", "reverse genetics chart");

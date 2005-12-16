@@ -130,6 +130,15 @@
     <url-pattern>/teardrop.png</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>EnrichGraphPainter</servlet-name>
+    <servlet-class>lab.cb.scmd.web.image.EnrichGraphPainter</servlet-class>
+  </servlet>  	
+  <servlet-mapping>
+    <servlet-name>EnrichGraphPainter</servlet-name>
+    <url-pattern>/enrich.png</url-pattern>
+  </servlet-mapping>
+  
   
   <!-- The Usual Welcome File List -->
   <welcome-file-list>

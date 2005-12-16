@@ -136,10 +136,11 @@ Finally, we are continuing to improve the SCMD database; therefore, any feedback
 
                 <li><span class=notation>Research Associate</span>
 				<ul> 
-				  <li>Jun Sese </li>
+				  <li><a href="http://www.gi.k.u-tokyo.ac.jp/%7Esesejun">Jun Sese</a>
 					<ul>
 					  <li><span class="arialsmall">image processing & data mining</span></li>
 					</ul>
+				  </li>
 				</ul>
                 <li><span class=notation>Graduate Students</span>
                 <ul>

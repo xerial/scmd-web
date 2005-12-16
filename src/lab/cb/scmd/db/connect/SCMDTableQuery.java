@@ -395,4 +395,15 @@ public class SCMDTableQuery implements TableQuery {
         }
     	return table;
     }
+    
+    public Table getForwardReverseAssociations(String goid) {
+    	String sql = "SELECT * FROM goenrich WHERE goid = '" + goid + "'";
+    	Table table = null;
+    	try {
+			table = ConnectionServer.retrieveTable(sql, "fwdrev");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    	return table;
+    }
 }

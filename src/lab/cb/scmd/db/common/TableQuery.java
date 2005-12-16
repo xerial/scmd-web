@@ -121,7 +121,7 @@ public interface TableQuery
 
 	public Table getAssociatedGO(String[] keywordList);
 
-    
+	public Table getForwardReverseAssociations(String goid);
 }
 
 //--------------------------------------

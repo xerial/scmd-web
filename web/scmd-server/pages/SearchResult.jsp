@@ -31,9 +31,7 @@
 <center>
 <scmd-tags:menu toolbar="on" searchframe="on"/>
 
-
 <html:form action="ViewSelection.do" method="POST">
-
 <table width="750">
 <tr><td>
 <p align="right"><html:submit value="add selections"/></p>
@@ -52,20 +50,31 @@ Results for
 <tr><td colspan="4" class="tablename">Gene Ontology Results</td></tr>
 <tr>
 <td colspan="2" class="sheetlabel" width="150"> GO ID </td> 
-<td class="sheetlabel" witdh="95"> Component </td> 
-<td class="sheetlabel" width="333"> </td> 
+<td class="sheetlabel" width="150"> Component </td> 
+<td class="sheetlabel" width="50"> </td>
+<td class="sheetlabel"> </td> 
 </tr>
 <logic:iterate id="goElement" name="goList" type="lab.cb.scmd.web.bean.GeneOntology">
 <tr class="small">
-<td align="left" width="15"></td>
+<td align="left" width="20"></td>
 <td align="left" class="orf" width="135">
 <html:link page="/Search.do?keyword=${goElement.goid}"> ${goElement.goid} </html:link> 
 </td>
-<td align="left" class="small"> ${goElement.namespace}</td>
+<td align="center" class="small"> ${goElement.namespace}</td>
+<td />
+<bean:define id="paramsize" value="<%= Integer.toString(goElement.getFwdRev().size()) %>" />
+<td width="240" align="left">
+<logic:equal name="paramsize" value="0">
+No enriched parameters
+</logic:equal>
+<logic:notEqual name="paramsize" value="0">
+<html:link page="/GOEnrichedGraphs.do?goid=${goElement.goid}">Enriched in ${paramsize} params</html:link> 
+</logic:notEqual>
+</td>
 </tr>
 <tr bgcolor="#F0F0E0" height="15">
 <td></td>
-<td colspan="3" width="530" class="annotation"> ${goElement.name}</td> 
+<td colspan="4" width="530" class="annotation"> ${goElement.name}</td> 
 </tr>
 <tr height="7"><td> </td></tr>
 </logic:iterate>

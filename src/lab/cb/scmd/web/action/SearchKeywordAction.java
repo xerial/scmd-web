@@ -32,6 +32,7 @@ import lab.cb.scmd.web.bean.GeneOntology;
 import lab.cb.scmd.web.bean.SearchResultViewForm;
 import lab.cb.scmd.web.bean.YeastGene;
 import lab.cb.scmd.web.common.SCMDConfiguration;
+import lab.cb.scmd.web.container.Enrichments;
 import lab.cb.scmd.web.table.ColLabelIndex;
 import lab.cb.scmd.web.table.Table;
 import lab.cb.scmd.web.xml.DOMParser;
@@ -81,6 +82,21 @@ public class SearchKeywordAction extends Action
                 go.setName(colIndex.get(i, "name").toString());
                 go.setNamespace(colIndex.get(i, "namespace").toString());
                 go.setDef(colIndex.get(i, "def").toString());
+                
+                Table fwdrevtable = goquery.getForwardReverseAssociations(go.getGoid());
+                ColLabelIndex colIndex2 = new ColLabelIndex(fwdrevtable);
+                for( int j = 1; j < fwdrevtable.getRowSize(); j++ ) {
+                	Enrichments fwdrev = new Enrichments();
+                	fwdrev.setParam(colIndex2.get(j, "param").toString());
+                	fwdrev.setFwd(Integer.parseInt(colIndex2.get(j,"fwd" ).toString()));
+                	fwdrev.setHigh(Integer.parseInt(colIndex2.get(j,"high" ).toString()));
+                	fwdrev.setIngo(Integer.parseInt(colIndex2.get(j, "ingo").toString()));
+                	fwdrev.setInabnorm(Integer.parseInt(colIndex2.get(j, "inabnorm").toString()));
+                	fwdrev.setIntarget(Integer.parseInt(colIndex2.get(j, "intarget").toString()));
+                	fwdrev.setPvalue(Double.parseDouble(colIndex2.get(j, "pvalue").toString()));
+                	fwdrev.setRatio(Double.parseDouble(colIndex2.get(j, "ratio").toString()));
+                	go.addFwdRev(fwdrev);
+                }
                 goList.add(go);
             }
         }
@@ -120,6 +136,7 @@ public class SearchKeywordAction extends Action
         }
         catch(SCMDException e)
         {
+        	// 1‚Â‚àŠY“–ˆâ“`Žq‚ª–³‚¢ê‡‚àAexception
             e.what();
         }
         
