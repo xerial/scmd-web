@@ -40,8 +40,11 @@ CalMorph is a program that can obtain a large amount of data on cell cycle phase
 </tr>
 <td>
 <ul>
-  <li><html:link page="/calmorph/CalMorph.jar">Download CalMorph Version 1.1</html:link> </li>
-  <li>Requres <a href="http://java.sun.com/j2se/1.4.2/index.jsp">Java 1.4.2 or later</a></li>
+  <li><html:link page="/calmorph/CalMorph.jar">Download CalMorph Version 1.1</html:link> 
+   <ul>
+    <li>Requres <a href="http://java.sun.com/j2se/1.4.2/index.jsp">Java 1.4.2 or later</a></li>
+   </ul>
+  </li>
   <li>Sample micrographs: <html:link page="/calmorph/his3.zip">his3.zip</html:link>
   <ul>
     <li>The zip file contains 57 photos
