@@ -34,13 +34,16 @@ public class Format extends BodyTagSupport
         super();
     }
     
+    public int doStartTag() throws JspException
+    {
+        return EVAL_BODY_BUFFERED;
+    }
 
     public int doEndTag() throws JspException
     {
         try
         {
-            if(value == null)
-                value = Double.parseDouble(getBodyContent().getString());
+            value = Double.parseDouble(getBodyContent().getString());
         }
         catch(NumberFormatException e) 
         {
