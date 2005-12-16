@@ -65,8 +65,11 @@ public class SearchKeywordAction extends Action
         Vector orfList = null;
         Vector<String> keywordList = new Vector<String>();
         for(String k: keywords){
-            keywordList.add(k);
+        	if( k.length() > 2 )
+        		keywordList.add(k);
         }
+        if( keywordList.isEmpty() )
+            return mapping.findForward("notfound");
         PageStatus pageStatus = new PageStatus(1, 1);
         
         // Gene Ontology ‚Ìî•ñŒŸõŒ‹‰Ê‚Æî•ñ‚ğGO id & term ‚Åæ“¾
