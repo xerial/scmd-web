@@ -23,6 +23,7 @@ HTTPSESSIONDB_USE=true
 
 TEARDROP_URI = http://scmd.gi.k.u-tokyo.ac.jp/database/teardrop/composite
 PARAMFIG_URI = http://scmd.gi.k.u-tokyo.ac.jp/database/paramfig
+ENRICHFIG_URI = http://scmd.gi.k.u-tokyo.ac.jp/database/fwdrevgenet
 
 DB_SQLCONFIGPATH=./config/sql/scmd-sql.xml
 LOG_FILEPATH=./log/scmd.log
