@@ -4,7 +4,6 @@
 <input type="submit" value="search"/>
 <span class="small">(ex. 
 <html:link href="Search.do?keyword=rad52">rad52</html:link>, 
-<html:link href="Search.do?keyword=polarisome">polarisome</html:link>, 
-<html:link href="Search.do?keyword=GO:0005678">GO:0005678</html:link>)
+<html:link href="Search.do?keyword=polarisome">polarisome</html:link>)
 </span>
 </form> 
