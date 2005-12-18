@@ -142,6 +142,7 @@
 <td  nowrap="nowrap">
 <ul>
 <li> <html:link page="/publication.jsp"> Publications</html:link> </li>
+<li> <html:link page="/calmorph/"> CalMorph </html:link></li>
 <li> <html:link page="/about.jsp"> Info. & Staffs </html:link> </li>
 </ul>
 </td>

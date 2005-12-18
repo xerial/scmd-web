@@ -207,6 +207,10 @@ You can select all menus described below from the above drop-down menu bar.
       <td colspan="2"> 
         <ul>
           <li><html:link page="/publication.jsp">Publications</html:link> </li>
+          <li><html:link page="/calmorph">CalMorph</html:link></li>
+            <ul>
+              <li>Software to obtain yeast shape values using SCMD</li>
+            </ul>
           <li><html:link page="/about.jsp">About SCMD</html:link> </li>
         </ul>
       </td>

@@ -48,8 +48,15 @@ href="http://www.u-tokyo.ac.jp">University of Tokyo</a>.</p>
     </td>
   </tr>
 </table>
+<table width="500" class="newsframe">
+  <tr>
+    <td>
+    	<span class="notice">News:</span> CalMorph Released ! <html:link page="/calmorph">CalMorph</html:link> is 
+    	a software used in SCMD to obtain various data from yeast micrographs. (Dec. 18, 2005)
+    </td>
+  </tr>
+</table>
 <table width="400" border="0" class=newsframe>
-
   <tr> 
     <td colspan=3 align=center>
       <span class=title> Current Status </span>

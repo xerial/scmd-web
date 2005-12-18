@@ -2,11 +2,11 @@
 //--------------------------------------
 // SCMDServer
 // 
-// about.jsp
-// Since: 2004/07/14
+// index.jsp
+// Since: 2005/12/16
 //
-// $Date: 2004/08/14 15:59:33 $ ($Author: leo $)
-// $Revision: 1.4 $
+// $Date: $ ($Author: $)
+// $Revision: $
 //--------------------------------------
 --%>
 
@@ -29,7 +29,8 @@ CalMorph
 </tr>
 <tr>
 <td>
-CalMorph is a program that can obtain a large amount of data on cell cycle phase, cell forms, etc., for individual cells, from a set of pictures of cell walls, cell nuclei, and actins.
+CalMorph is a program that can obtain a large amount of data on cell cycle phase, cell forms, etc., for individual cells, from a set of pictures of cell walls, cell nuclei, and actins.<br/>
+<img src="processing_small.png" />
 </td>
 </tr>
 </table>
