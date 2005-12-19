@@ -29,7 +29,7 @@ CalMorph
 </tr>
 <tr>
 <td>
-CalMorph is a program that coutputs a large amount of data on cell cycle phase, cell forms, etc., for individual cells, from a set of pictures of cell walls, cell nuclei, and actins.<br/>
+CalMorph is a program that outputs a large amount of data on cell cycle phase, cell forms, etc., for individual cells, from a set of pictures of cell walls, cell nuclei, and actins.<br/>
 <img src="processing_small.png" />
 </td>
 </tr>
