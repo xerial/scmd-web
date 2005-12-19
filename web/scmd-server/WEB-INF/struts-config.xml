@@ -162,8 +162,6 @@
 		<form-bean name="paramForm" type="lab.cb.scmd.web.formbean.ViewParamSheetForm"/>
 		<form-bean name="drawTeardropForm" type="lab.cb.scmd.web.formbean.DrawTeardropForm"/>
 		<form-bean name="orfParamForm" type="lab.cb.scmd.web.formbean.ViewORFParameterForm"/>
-		<form-bean name="singleCellForm" type="lab.cb.scmd.web.formbean.DisplaySingleCellForm"/>
-		<form-bean name="paramsForm" type="lab.cb.scmd.web.formbean.EnrichedParamsForm"/>
     </form-beans>
 
 
@@ -266,11 +264,11 @@
         	path="/ViewDataSheet" 
         	name="view" 
         	scope="session"
-        	type="lab.cb.scmd.web.action.ViewIndividualCellDatasheetAction"
+        	type="lab.cb.scmd.web.action.ViewDataSheetAction"
         	validate="true"
         	input="/error.jsp"
         >
-        	<forward name="success" path="/pages/IndividualCellDatasheet.jsp"/>
+        	<forward name="success" path="/pages/ViewDataSheet.jsp"/>
         	<forward name="selection" path="/pages/NoCellParameter.jsp"/>
         	<forward name="failure" path="/error.jsp"/>
         </action>
@@ -281,7 +279,7 @@
 				type="lab.cb.scmd.web.action.ViewORFListAction"
 				validate="true"
 				input="/error.jsp">
-			<forward name="success" path="/pages/ORFList.jsp"/>
+			<forward name="success" path="/pages/ViewORFList.jsp"/>
 		</action>
 		
 
@@ -302,7 +300,7 @@
 				type="lab.cb.scmd.web.action.ViewCellInfoAction"
 				validate="true"
 				input="/error.jsp">
-			<forward name="success" path="/pages/CellInfo.jsp"/>
+			<forward name="success" path="/pages/ViewCellInfo.jsp"/>
 			<forward name="failure" path="/error.jsp"/>
 		</action>
 
@@ -312,7 +310,7 @@
 				type="lab.cb.scmd.web.action.SelectShapeAction"
 				validate="true"
 				input="/error.jsp">
-			<forward name="success" path="/pages/MorphologySearch.jsp"/>
+			<forward name="success" path="/pages/SelectShape.jsp"/>
 			<forward name="failure" path="/error.jsp"/>
 		</action>
 
@@ -356,10 +354,10 @@
 		<action path="/ViewGroupBySheet"
 				name="groupBySheet"
 				scope="request"
-				type="lab.cb.scmd.web.action.GroupViewAction"
+				type="lab.cb.scmd.web.action.ViewGroupBySheetAction"
 				validate="true"
 				input="/error.jsp">
-			<forward name="success" path="/pages/GroupBySheet.jsp"/>
+			<forward name="success" path="/pages/ViewGroupBySheet.jsp"/>
 		</action>
 				
 		<action path="/ViewGroupDataSheet"
@@ -368,7 +366,7 @@
 				type="lab.cb.scmd.web.action.ViewGroupByDatasheetAction"
 				validate="true"
 				input="/error.jsp">
-			<forward name="success" path="/pages/GroupByDatasheet.jsp"/>
+			<forward name="success" path="/pages/ViewGroupDataSheet.jsp"/>
 		</action>
 
 		<action path="/ViewGroupByTearDrop"
@@ -442,7 +440,7 @@
 			<forward name="success" path="/pages/ORFParameter.jsp" />			
 			<forward name="cellparam" path="/pages/CellParameter.jsp"/>
 		</action>
-		
+
 		<action path="/DisplaySingleCell"
 			name="singleCellForm"
 			scope="page"
@@ -460,7 +458,7 @@
 			<forward name="success" path="/pages/GOEnrichedGraphs.jsp"/>
         	<forward name="failure" path="/error.jsp"/>
 		</action>
-				
+
     <!-- sample input and input submit actions
 
 
