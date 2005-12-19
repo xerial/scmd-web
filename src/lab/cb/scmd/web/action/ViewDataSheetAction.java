@@ -50,14 +50,14 @@ import org.apache.struts.action.ActionMapping;
  * @author leo
  *
  */
-public class ViewDataSheet extends Action
+public class ViewDataSheetAction extends Action
 {
     ActionLogic _logic = new ActionLogic();
 
     /**
      * 
      */
-    public ViewDataSheet()
+    public ViewDataSheetAction()
     {
         super();
         // TODO Auto-generated constructor stub

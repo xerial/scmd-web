@@ -97,7 +97,7 @@ public class ViewORFTeardropAction extends Action
             final String[] stainName = {"cell wall", "nucleus", "actin"};
 
             HashMap<String,String> map = new HashMap<String,String>();
-            map.put("strainName",stainName[stainType]);
+            map.put("stainName",stainName[stainType]);
             parameterList = SCMDManager.getDBManager().queryResults("ViewORFTeadrop:parameterlist",map,MorphParameter.class);
 
 /*
@@ -190,7 +190,7 @@ public class ViewORFTeardropAction extends Action
             
             minRow.add(roughFormat.format(teardrop.getMin()));
             maxRow.add(roughFormat.format(teardrop.getMax()));
-            
+
             // Teardropè„ÇÃì_ÇÃà íuèÓïÒÇéÊìæ
 /*            String sql3 = SQLExpression.assignTo("select strainname, average from $1 where groupid='0' and strainname in ($2) and paramid=$3",
                     SCMDConfiguration.getProperty("DB_PARAMSTAT", "paramstat"),
@@ -200,8 +200,8 @@ public class ViewORFTeardropAction extends Action
             map.clear();
             map.put("paramID",String.valueOf(paramID));
             map.put("separatedList",SQLUtil.commaSeparatedList(orfSet, SQLUtil.QuotationType.singleQuote));
-
             List<TeardropPoint> plotList = SCMDManager.getDBManager().queryResults("ViewORFTeadrop:paramstat",map,TeardropPoint.class);
+
             //List<TeardropPoint> plotList = (List<TeardropPoint>) ConnectionServer.query(sql3, new BeanListHandler(TeardropPoint.class));
             double value = -1;
             for(TeardropPoint tp : plotList)
