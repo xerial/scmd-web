@@ -4,7 +4,7 @@
   <display-name>SCMD Server Application </display-name>
   
   <listener>    
-    <listener-class>lab.cb.scmd.web.common.SetupServlet</listener-class>
+    <listener-class>lab.cb.scmd.web.manager.SetupServletListener</listener-class>
   </listener>
   
   
@@ -50,7 +50,7 @@
 
   <servlet>
     <servlet-name>ImageServer</servlet-name>
-    <servlet-class>lab.cb.scmd.web.image.ImageServer</servlet-class>
+    <servlet-class>lab.cb.scmd.web.servlet.image.ImageServer</servlet-class>
   </servlet>  	
     
   <servlet-mapping>
@@ -60,7 +60,7 @@
 
   <servlet>
     <servlet-name>SCMDImageServer</servlet-name>
-    <servlet-class>lab.cb.scmd.web.image.SCMDImageServer</servlet-class>
+    <servlet-class>lab.cb.scmd.web.servlet.image.SCMDImageServer</servlet-class>
   </servlet>  	
   <servlet-mapping>
     <servlet-name>SCMDImageServer</servlet-name>
@@ -70,22 +70,10 @@
     <servlet-name>SCMDImageServer</servlet-name>
     <url-pattern>/scmdimage.png</url-pattern>
   </servlet-mapping>
-  
 
-
-<!--
-  <servlet>
-    <servlet-name>com</servlet-name>
-    <servlet-class>lab.cb.scmd.web.image.EchoServlet</servlet-class>
-  </servlet>  	
-  <servlet-mapping>
-    <servlet-name>com</servlet-name>
-    <url-pattern>/manager/com</url-pattern>
-  </servlet-mapping>
-  -->
   <servlet>
     <servlet-name>plot2d</servlet-name>
-    <servlet-class>lab.cb.scmd.web.image.Plot2DServlet</servlet-class>
+    <servlet-class>lab.cb.scmd.web.servlet.image.Plot2DServlet</servlet-class>
   </servlet>  	
   <servlet-mapping>
     <servlet-name>plot2d</servlet-name>
@@ -94,7 +82,7 @@
   
   <servlet>
 	<servlet-name>ParamFigPainter</servlet-name>
-	<servlet-class>lab.cb.scmd.web.image.ParamFigPainter</servlet-class>
+	<servlet-class>lab.cb.scmd.web.servlet.image.ParamFigPainter</servlet-class>
   </servlet>
   <servlet-mapping>
 	<servlet-name>ParamFigPainter</servlet-name>
@@ -104,7 +92,7 @@
 
   <servlet>
     <servlet-name>BufferedCellImageServer</servlet-name>
-    <servlet-class>lab.cb.scmd.web.image.BufferedCellImageServer</servlet-class>
+    <servlet-class>lab.cb.scmd.web.servlet.image.BufferedCellImageServer</servlet-class>
   </servlet>  	
   <servlet-mapping>
     <servlet-name>BufferedCellImageServer</servlet-name>
@@ -114,7 +102,7 @@
 
   <servlet>
     <servlet-name>CellPainter</servlet-name>
-    <servlet-class>lab.cb.scmd.web.image.CellPainter</servlet-class>
+    <servlet-class>lab.cb.scmd.web.servlet.image.CellPainter</servlet-class>
   </servlet>  	
   <servlet-mapping>
     <servlet-name>CellPainter</servlet-name>
@@ -123,7 +111,7 @@
 
   <servlet>
     <servlet-name>TeardropPainter</servlet-name>
-    <servlet-class>lab.cb.scmd.web.image.TeardropPainter</servlet-class>
+    <servlet-class>lab.cb.scmd.web.servlet.image.TeardropPainter</servlet-class>
   </servlet>  	
   <servlet-mapping>
     <servlet-name>TeardropPainter</servlet-name>
@@ -138,8 +126,36 @@
     <servlet-name>EnrichGraphPainter</servlet-name>
     <url-pattern>/enrich.png</url-pattern>
   </servlet-mapping>
-  
-  
+   <servlet>
+	<servlet-name>CellImageServer</servlet-name>
+	<servlet-class>lab.cb.scmd.web.servlet.image.CellImageServer</servlet-class>
+   </servlet>
+   <servlet-mapping>
+	<servlet-name>CellImageServer</servlet-name>
+	<url-pattern>/singlecell.jpg</url-pattern>
+  </servlet-mapping>
+    
+   <!-- 
+	   エラーログ配信RSS
+	   IP制限,BASIC認証をかける必要がある（Fileterで実装する？)
+   -->
+  <filter>
+	<filter-name>ErrorCatchFilter</filter-name>
+	<filter-class>lab.cb.scmd.web.servlet.ErrorCatchFilter</filter-class>
+  </filter>
+  <filter-mapping>
+		<filter-name>ErrorCatchFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+  </filter-mapping>
+   <servlet>
+	<servlet-name>RSSErrorServlet</servlet-name>
+	<servlet-class>lab.cb.scmd.web.servlet.RSSErrorServlet</servlet-class>
+   </servlet>
+   <servlet-mapping>
+	<servlet-name>RSSErrorServlet</servlet-name>
+	<url-pattern>/error.rss</url-pattern>
+  </servlet-mapping>
+
   <!-- The Usual Welcome File List -->
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
