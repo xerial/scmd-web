@@ -7,7 +7,7 @@
 // $URL$ 
 // $LastChangedBy$ 
 //--------------------------------------
-package lab.cb.scmd.web.image;
+package lab.cb.scmd.web.servlet.image;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -29,6 +29,8 @@ import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.exception.UnfinishedTaskException;
 import lab.cb.scmd.db.scripts.TeardropStatistics;
 import lab.cb.scmd.web.common.SCMDConfiguration;
+import lab.cb.scmd.web.image.TeardropGenerator;
+import lab.cb.scmd.web.image.TeardropPoint;
 import lab.cb.scmd.web.image.teaddrop.Teardrop;
 
 

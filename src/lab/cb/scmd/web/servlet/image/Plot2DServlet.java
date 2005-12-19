@@ -8,7 +8,7 @@
 // $LastChangedBy$ 
 //--------------------------------------
 
-package lab.cb.scmd.web.image;
+package lab.cb.scmd.web.servlet.image;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -19,10 +19,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
-
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -30,15 +30,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.xerial.algorithm.Algorithm;
-import org.xerial.util.MinMax;
-import org.xerial.util.Pair;
-import org.xerial.util.Tuple;
-
 import lab.cb.scmd.db.common.TableQuery;
-import lab.cb.scmd.db.connect.ConnectionServer;
+import lab.cb.scmd.db.connect.SCMDManager;
 import lab.cb.scmd.util.stat.EliminateOnePercentOfBothSidesStrategy;
-import lab.cb.scmd.util.stat.SampleFilteringStrategy;
 import lab.cb.scmd.util.stat.Statistics;
 import lab.cb.scmd.util.stat.StatisticsWithMissingValueSupport;
 import lab.cb.scmd.web.bean.CellViewerForm;
@@ -49,6 +43,9 @@ import lab.cb.scmd.web.common.SCMDSessionManager;
 import lab.cb.scmd.web.design.PlotColor;
 import lab.cb.scmd.web.table.ColLabelIndex;
 import lab.cb.scmd.web.table.Table;
+
+import org.xerial.algorithm.Algorithm;
+import org.xerial.util.Pair;
 
 /**
  * @author leo
@@ -75,26 +72,32 @@ public class Plot2DServlet extends HttpServlet
         if(selectedORFSet.isEmpty() || plotForm.isPlotTargetORF())
             selectedORFSet.add(view.getOrf().toUpperCase());
         
-        TableQuery query = SCMDConfiguration.getTableQueryInstance();
-        
-        String param1 = plotForm.getParamName(plotForm.getParam1());
-        String param2 = plotForm.getParamName(plotForm.getParam2());
-        String sql = "SELECT t1.strainname, p1, p2 from "
-            + "(select strainname, average as p1 from $1 where paramid=$2 and groupid=0) as t1 "
-            + "left join (select strainname, average as p2 from $1 where paramid=$3 and groupid=0) as t2 "
-            + "on t1.strainname = t2.strainname";
-        String sql_wt = "select t1.average as p1, t2.average as p2 from $1 as t1 inner join $1 as t2 using (strainname) where t1.paramid=$2 and t2.paramid=$3 and t1.groupid=0 and t2.groupid=0";
+//        TableQuery query = SCMDConfiguration.getTableQueryInstance();
+//        
+//        String param1 = plotForm.getParamName(plotForm.getParam1());
+//        String param2 = plotForm.getParamName(plotForm.getParam2());
+//        String sql = "SELECT t1.strainname, p1, p2 from "
+//            + "(select strainname, average as p1 from $1 where paramid=$2 and groupid=0) as t1 "
+//            + "left join (select strainname, average as p2 from $1 where paramid=$3 and groupid=0) as t2 "
+//            + "on t1.strainname = t2.strainname";
+//        String sql_wt = "select t1.average as p1, t2.average as p2 from $1 as t1 inner join $1 as t2 using (strainname) where t1.paramid=$2 and t2.paramid=$3 and t1.groupid=0 and t2.groupid=0";
         
         Table plotTable = null;  // 全mutantのデータ
         Table plotTable_wt = null; // 野生株のデータ
         try
         {
-            plotTable = ConnectionServer.retrieveTable(sql, 
-                            SCMDConfiguration.getProperty("DB_PARAMSTAT", "paramstat"),
-                            plotForm.getParam1(), plotForm.getParam2());
-            plotTable_wt = ConnectionServer.retrieveTable(sql_wt, 
-                    SCMDConfiguration.getProperty("DB_PARAMSTAT_WT", "paramstat_wt"),
-                    plotForm.getParam1(), plotForm.getParam2());
+			HashMap<String,String> map = new HashMap<String,String>();
+			map.put("param1",String.valueOf(plotForm.getParam1()));
+			map.put("param2",String.valueOf(plotForm.getParam2()));
+			plotTable = SCMDManager.getDBManager().queryTable("lab.cb.scmd.web.image.Plot2DServlet:plot",map);
+			plotTable_wt = SCMDManager.getDBManager().queryTable("lab.cb.scmd.web.image.Plot2DServlet:plot_wt",map);
+
+//            plotTable = ConnectionServer.retrieveTable(sql, 
+//                            SCMDConfiguration.getProperty("DB_PARAMSTAT", "paramstat"),
+//                            plotForm.getParam1(), plotForm.getParam2());
+//            plotTable_wt = ConnectionServer.retrieveTable(sql_wt, 
+//                    SCMDConfiguration.getProperty("DB_PARAMSTAT_WT", "paramstat_wt"),
+//                    plotForm.getParam1(), plotForm.getParam2());
         }
         catch(SQLException e)
         {
@@ -138,7 +141,7 @@ public class Plot2DServlet extends HttpServlet
         double y_ave = Statistics.calcMean(p2List);
         
         double canvasWidth = Algorithm.<Double>minmax(x_ave-x_min, x_max-x_ave).max();
-        double canvasHeight = Algorithm.<Double>minmax(y_ave-y_min, y_max-y_ave).max();
+        double canvasHeight =	 Algorithm.<Double>minmax(y_ave-y_min, y_max-y_ave).max();
         
         Plot2DCanvas plotCanvas = new Plot2DCanvas(new Range(x_ave - canvasWidth, x_ave + canvasWidth), 
                                                    new Range(y_ave - canvasHeight, y_ave + canvasHeight), IMAGEWIDTH);        

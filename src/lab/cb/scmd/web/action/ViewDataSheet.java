@@ -9,27 +9,18 @@
 //--------------------------------------
 package lab.cb.scmd.web.action;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import lab.cb.scmd.db.connect.ConnectionServer;
+import lab.cb.scmd.db.connect.SCMDManager;
 import lab.cb.scmd.db.sql.SQLUtil;
-import lab.cb.scmd.exception.InvalidParameterException;
 import lab.cb.scmd.exception.SCMDException;
-import lab.cb.scmd.util.image.BoundingRectangle;
 import lab.cb.scmd.web.action.logic.ActionLogic;
 import lab.cb.scmd.web.action.logic.DBUtil;
 import lab.cb.scmd.web.bean.CellList;
@@ -37,43 +28,36 @@ import lab.cb.scmd.web.bean.CellViewerForm;
 import lab.cb.scmd.web.bean.IndividualCell;
 import lab.cb.scmd.web.common.Cell;
 import lab.cb.scmd.web.common.DataSheetType;
-import lab.cb.scmd.web.common.PhotoType;
 import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.common.SCMDSessionManager;
 import lab.cb.scmd.web.common.SCMDThreadManager;
 import lab.cb.scmd.web.common.StainType;
 import lab.cb.scmd.web.image.ImageCache;
+import lab.cb.scmd.web.image.PhotoClippingProcess;
 import lab.cb.scmd.web.sessiondata.MorphParameter;
 import lab.cb.scmd.web.sessiondata.ParamUserSelection;
 import lab.cb.scmd.web.table.ColLabelIndex;
-import lab.cb.scmd.web.table.ImageElement;
 import lab.cb.scmd.web.table.RowLabelIndex;
 import lab.cb.scmd.web.table.Table;
 import lab.cb.scmd.web.table.TableElement;
-import lab.cb.scmd.web.table.decollation.AttributeDecollation;
-import lab.cb.scmd.web.viewer.Photo;
 
-import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageDecoder;
-
 /**
  * @author leo
  *
  */
-public class ViewIndividualCellDatasheetAction extends Action
+public class ViewDataSheet extends Action
 {
     ActionLogic _logic = new ActionLogic();
 
     /**
      * 
      */
-    public ViewIndividualCellDatasheetAction()
+    public ViewDataSheet()
     {
         super();
         // TODO Auto-generated constructor stub
@@ -103,12 +87,16 @@ public class ViewIndividualCellDatasheetAction extends Action
             Integer[] paramIds = DataSheetType.getParameterIds(view.getSheetType());
             if(paramIds.length == 0)
                 throw new SCMDException("invalid parameter list");
-                
+
+            HashMap<String,String> map = new HashMap<String,String>();
+            map.put("separatedList",SQLUtil.commaSeparatedList(paramIds, SQLUtil.QuotationType.none));
+            columns = SCMDManager.getDBManager().queryResults("ViewIndividualCellDatasheet:parameterlist",map,MorphParameter.class);
+/*
             columns = (List<MorphParameter>) ConnectionServer.query(new BeanListHandler(MorphParameter.class), 
                     "select * from $1 where id in ($2)",
                     SCMDConfiguration.getProperty("DB_PARAMETERLIST"),
                     SQLUtil.commaSeparatedList(paramIds, SQLUtil.QuotationType.none));
-                   
+ */                  
             if(columns == null)
             {
                 return mapping.findForward("failure");
@@ -192,105 +180,105 @@ public class ViewIndividualCellDatasheetAction extends Action
 
 
 
-class PhotoClippingProcess implements Runnable
-{
-    TreeMap<String, BufferedImage> photoStorage = new TreeMap<String, BufferedImage>();
-    TreeSet<String> unavailablePhotoIDSet = new TreeSet<String>();
-    ImageCache imageCache = null;
-    Collection<Cell> cellList = null;
-    int photoType = PhotoType.ANALYZED_PHOTO;
-    int stainTypeList[] = new int[] {}; 
-                                  
-    
-    public PhotoClippingProcess(ImageCache imageCache, Collection<Cell> cellList, int photoType, int[] stainTypeList)
-    {
-        this.imageCache = imageCache;
-        this.cellList = cellList;
-        this.photoType = photoType;
-        this.stainTypeList = stainTypeList;
-    }
-    
-    /**
-     * 
-     */
-    public void process()
-    {
-        Thread thread = new Thread(this);
-        thread.start();
-    }
-        
-    
-    public void run()
-    {
-        for(Cell cell : cellList)
-        {
-            Photo photo = cell.getPhoto();
-            for(int stainType : stainTypeList)
-            {
-                String photoID = photo.getImageID(photoType, stainType);
-                BufferedImage photoImage = null;
-                if(photoStorage.containsKey(photoID))
-                {
-                    photoImage = photoStorage.get(photoID);
-                }
-                else
-                {
-                    if(!unavailablePhotoIDSet.contains(photoID))
-                    {
-                        try
-                        {
-                            // load image
-                            URL imageURL = photo.getPhotoURL(photoType, stainType);
-                            JPEGImageDecoder decoder = JPEGCodec.createJPEGDecoder(imageURL.openStream());
-                            // Get jpeg image.
-                            photoImage = decoder.decodeAsBufferedImage();
-                            photoStorage.put(photoID, photoImage);
-                        }
-                        catch (InvalidParameterException e)
-                        {
-                            imageCache.setAsNotAvailable(photoID);
-                            continue;
-                        }
-                        catch (MalformedURLException e)
-                        {
-                            imageCache.setAsNotAvailable(photoID);
-                            continue;
-                        }
-                        catch(IOException e)
-                        {
-                            imageCache.setAsNotAvailable(photoID);
-                            continue;
-                        }                                
-                    }
-                    else
-                        continue; // skip the cell in this photooo
-                }
-
-                // clip the cell 
-                BoundingRectangle br = cell.getBoundingRectangle();
-                int x1 = br.getX1();
-                int x2 = br.getX2();
-                int y1 = br.getY1();
-                int y2 = br.getY2();
-                int borderSize = 2;
-                int xRange = x2 - x1 + borderSize * 2;
-                int yRange = y2 - y1 + borderSize * 2;
-                int xBegin = x1 < borderSize ? 0 : x1 - borderSize;
-                int yBegin = y1 < borderSize ? 0 : y1 - borderSize;
-
-                BufferedImage cellImage = photoImage.getSubimage(xBegin, yBegin, xRange, yRange);                          
-                imageCache.addImage(cell.getImageID(photoType, stainType), cellImage);                             
-            } // for stainType
-        } // for cell
-        
-        
-        
-        // ŒãŽn––
-        photoStorage.clear();
-        unavailablePhotoIDSet.clear();
-    }
-    
-}
+//class PhotoClippingProcess implements Runnable
+//{
+//    TreeMap<String, BufferedImage> photoStorage = new TreeMap<String, BufferedImage>();
+//    TreeSet<String> unavailablePhotoIDSet = new TreeSet<String>();
+//    ImageCache imageCache = null;
+//    Collection<Cell> cellList = null;
+//    int photoType = PhotoType.ANALYZED_PHOTO;
+//    int stainTypeList[] = new int[] {}; 
+//                                  
+//    
+//    public PhotoClippingProcess(ImageCache imageCache, Collection<Cell> cellList, int photoType, int[] stainTypeList)
+//    {
+//        this.imageCache = imageCache;
+//        this.cellList = cellList;
+//        this.photoType = photoType;
+//        this.stainTypeList = stainTypeList;
+//    }
+//    
+//    /**
+//     * 
+//     */
+//    public void process()
+//    {
+//        Thread thread = new Thread(this);
+//        thread.start();
+//    }
+//        
+//    
+//    public void run()
+//    {
+//        for(Cell cell : cellList)
+//        {
+//            Photo photo = cell.getPhoto();
+//            for(int stainType : stainTypeList)
+//            {
+//                String photoID = photo.getImageID(photoType, stainType);
+//                BufferedImage photoImage = null;
+//                if(photoStorage.containsKey(photoID))
+//                {
+//                    photoImage = photoStorage.get(photoID);
+//                }
+//                else
+//                {
+//                    if(!unavailablePhotoIDSet.contains(photoID))
+//                    {
+//                        try
+//                        {
+//                            // load image
+//                            URL imageURL = photo.getPhotoURL(photoType, stainType);
+//                            JPEGImageDecoder decoder = JPEGCodec.createJPEGDecoder(imageURL.openStream());
+//                            // Get jpeg image.
+//                            photoImage = decoder.decodeAsBufferedImage();
+//                            photoStorage.put(photoID, photoImage);
+//                        }
+//                        catch (InvalidParameterException e)
+//                        {
+//                            imageCache.setAsNotAvailable(photoID);
+//                            continue;
+//                        }
+//                        catch (MalformedURLException e)
+//                        {
+//                            imageCache.setAsNotAvailable(photoID);
+//                            continue;
+//                        }
+//                        catch(IOException e)
+//                        {
+//                            imageCache.setAsNotAvailable(photoID);
+//                            continue;
+//                        }                                
+//                    }
+//                    else
+//                        continue; // skip the cell in this photooo
+//                }
+//
+//                // clip the cell 
+//                BoundingRectangle br = cell.getBoundingRectangle();
+//                int x1 = br.getX1();
+//                int x2 = br.getX2();
+//                int y1 = br.getY1();
+//                int y2 = br.getY2();
+//                int borderSize = 2;
+//                int xRange = x2 - x1 + borderSize * 2;
+//                int yRange = y2 - y1 + borderSize * 2;
+//                int xBegin = x1 < borderSize ? 0 : x1 - borderSize;
+//                int yBegin = y1 < borderSize ? 0 : y1 - borderSize;
+//
+//                BufferedImage cellImage = photoImage.getSubimage(xBegin, yBegin, xRange, yRange);                          
+//                imageCache.addImage(cell.getImageID(photoType, stainType), cellImage);                             
+//            } // for stainType
+//        } // for cell
+//        
+//        
+//        
+//        // ŒãŽn––
+//        photoStorage.clear();
+//        unavailablePhotoIDSet.clear();
+//    }
+//    
+//}
 
 
 

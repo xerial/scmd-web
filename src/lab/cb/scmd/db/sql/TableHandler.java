@@ -20,6 +20,8 @@ import org.apache.commons.dbutils.ResultSetHandler;
 
 /**
  * SQLのResultSetをTableに変換して返すHandler
+ * DBUtilsの機能
+ * lab.cb.scmd.db.scripts内で使用中
  * @author leo
  *
  */

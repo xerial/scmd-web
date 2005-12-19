@@ -72,7 +72,8 @@ public class ViewORFTeardropAction extends Action
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception 
     {
-        ViewORFTeardropForm teardropForm = (ViewORFTeardropForm) form;        
+        ViewORFTeardropForm teardropForm = (ViewORFTeardropForm) form;
+        //	セッションからユーザーが選択した項目を取り出す
         UserSelection userSelection = SCMDSessionManager.getUserSelection(request);
         CellViewerForm view = SCMDSessionManager.getCellViewerForm(request);
         

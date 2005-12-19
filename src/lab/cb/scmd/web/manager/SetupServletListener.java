@@ -4,11 +4,11 @@
 // SetupServlet.java 
 // Since:  2004/07/17
 //
-// $URL$ 
-// $LastChangedBy$ 
+// $URL: http://phenome.gi.k.u-tokyo.ac.jp/devel/svn/phenome/branches/SCMDWeb/matsumiya/src/lab/cb/scmd/web/common/SetupServlet.java $ 
+// $LastChangedBy: matsumiya $ 
 //--------------------------------------
 
-package lab.cb.scmd.web.common;
+package lab.cb.scmd.web.manager;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -18,9 +18,12 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.http.HttpServlet;
 
-import lab.cb.scmd.db.connect.ConnectionServer;
+import lab.cb.scmd.db.connect.SCMDManager;
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.web.bean.ParamPlotForm;
+import lab.cb.scmd.web.common.ConfigObserver;
+import lab.cb.scmd.web.common.SCMDConfiguration;
+import lab.cb.scmd.web.common.SCMDThreadManager;
 import lab.cb.scmd.web.formbean.ViewCustomizeForm;
 import lab.cb.scmd.web.log.SCMDLogging;
 
@@ -29,7 +32,7 @@ import lab.cb.scmd.web.log.SCMDLogging;
  * @author leo
  *
  */
-public class SetupServlet extends HttpServlet implements ConfigObserver, ServletContextListener {
+public class SetupServletListener extends HttpServlet implements ConfigObserver, ServletContextListener {
 
     /**
      * Comment for <code>serialVersionUID</code>
@@ -68,11 +71,8 @@ public class SetupServlet extends HttpServlet implements ConfigObserver, Servlet
     {
         SCMDConfiguration.Initialize();
         System.out.println("[scmd-server] SCMDConfiguration is initialized");
-        
-        ConnectionServer.initialize();
-//        SCMDManager.initialize();
-//        ConnectionServer.initialize();
 
+        //	Loggingの初期化
         try{
         	SCMDLogging.Initialize(SCMDConfiguration.getProperty("SCMD_ROOT")+SCMDConfiguration.getProperty("LOG_FILEPATH"),Level.ALL,true);
             System.out.println("[scmd-server] SCMDLogging is initialized");
@@ -83,6 +83,8 @@ public class SetupServlet extends HttpServlet implements ConfigObserver, Servlet
         
         // register myself
         SCMDConfiguration.addObserver(this);
+
+        SCMDLogging.file("セットアップが終了しました",Level.ALL);
     }
     
     
@@ -102,12 +104,15 @@ public class SetupServlet extends HttpServlet implements ConfigObserver, Servlet
     
     /**
      * 初期化時に必要な操作をここにまとめて書く
+     * 
      * @throws SCMDException
      */
     private void setup() throws SCMDException
     {
         try
         {
+            SCMDManager.restart();
+            System.out.println("[scmd-server] SCMDManager is initialized");
             SCMDThreadManager.initialize(Integer.parseInt(SCMDConfiguration.getProperty("NUM_WORKER_THREAD", "50")),
                     Integer.parseInt(SCMDConfiguration.getProperty("TASK_QUEUE_SIZE", "100")));
             ViewCustomizeForm.loadParameters();
@@ -139,10 +144,9 @@ public class SetupServlet extends HttpServlet implements ConfigObserver, Servlet
     // @see javax.servlet.ServletContextListener#contextDestroyed(javax.servlet.ServletContextEvent)
     public void contextDestroyed(ServletContextEvent arg0)
     {
-        ConnectionServer.dispose();
+    	SCMDManager.destory();
         SCMDThreadManager.joinAll();
     }
-
 }
 
 

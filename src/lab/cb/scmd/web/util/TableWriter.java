@@ -22,8 +22,10 @@ import lab.cb.scmd.util.xml.XMLAttribute;
 import lab.cb.scmd.util.xml.XMLOutputter;
 
 /**
+ *　テーブルタグの生成
  * @author leo
- *  
+ * @version $Revision: $ $LastChangedDate: $
+ * $LastChangedBy$
  */
 public class TableWriter
 {

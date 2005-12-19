@@ -22,9 +22,11 @@ import lab.cb.scmd.web.common.Cell;
 import lab.cb.scmd.web.exception.XMLParseErrorException;
 import lab.cb.scmd.web.viewer.Photo;
 
-/** 一つの写真に含まれるCellのデータを格納するクラス
- * @author leo
- *
+/**
+ * 一つの写真に含まれるCellのデータを格納するクラス
+ * @author mattun
+ * @version $Revision: $ $LastChangedDate: $
+ * $LastChangedBy$
  */
 public class CellList implements Iterable<Cell>
 {

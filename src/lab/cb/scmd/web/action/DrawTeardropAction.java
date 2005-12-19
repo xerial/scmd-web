@@ -21,21 +21,16 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import lab.cb.scmd.db.connect.ConnectionServer;
 import lab.cb.scmd.db.connect.SCMDManager;
-import lab.cb.scmd.db.sql.SQLExpression;
 import lab.cb.scmd.db.sql.SQLUtil;
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.web.bean.CellViewerForm;
 import lab.cb.scmd.web.bean.UserSelection;
-import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.common.SCMDSessionManager;
 import lab.cb.scmd.web.formbean.DrawTeardropForm;
 import lab.cb.scmd.web.image.TeardropPoint;
 import lab.cb.scmd.web.image.teaddrop.Teardrop;
 
-import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

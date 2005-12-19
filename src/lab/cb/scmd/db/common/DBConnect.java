@@ -13,13 +13,13 @@ package lab.cb.scmd.db.common;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
-import lab.cb.scmd.db.connect.ConnectionServer;
+import lab.cb.scmd.db.bean.Image;
+import lab.cb.scmd.db.bean.Strain;
+import lab.cb.scmd.db.connect.SCMDManager;
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.util.table.BasicTable;
 import lab.cb.scmd.util.table.Cell;
-import lab.cb.scmd.web.exception.DBConnectException;
 import lab.cb.scmd.web.exception.InvalidSQLException;
-import lab.cb.scmd.web.table.Table;
 
 public class DBConnect {
     protected boolean _useSQL = true;
@@ -85,14 +85,28 @@ public class DBConnect {
     protected BasicTable query (String sql) throws InvalidSQLException {
         return query(sql, "", false);
     }
+    /**
+     * @param sql
+     * @param keyColumnName
+     * @return
+     * @throws InvalidSQLException
+     */
     protected BasicTable query (String sql, String keyColumnName) throws InvalidSQLException {
     	return query(sql, keyColumnName, true);
     }
 
+    /**
+     * @param sql
+     * @param keyColumnName
+     * @param isShowColumn
+     * @return
+     * @throws InvalidSQLException
+     */
     protected BasicTable query (String sql, String keyColumnName, boolean isShowColumn) throws InvalidSQLException {
         try
         {
-            return ConnectionServer.retrieveBasicTable(sql, keyColumnName);
+        	return SCMDManager.getDBManager().queryBasicTable(sql, keyColumnName);
+//            return ConnectionServer.retrieveBasicTable(sql, keyColumnName);
         } 
         catch (SQLException e) 
         {
@@ -100,15 +114,15 @@ public class DBConnect {
         }
     }
     
-    public Table getQueryResult(String sql) throws InvalidSQLException {
-        try
-        {
-            return ConnectionServer.retrieveTable(sql);
-        } 
-        catch (SQLException e) {
-            throw new InvalidSQLException(e);
-        }
-    }
+//    public Table getQueryResult(String sql) throws InvalidSQLException {
+//        try
+//        {
+//            return ConnectionServer.retrieveTable(sql);
+//        } 
+//        catch (SQLException e) {
+//            throw new InvalidSQLException(e);
+//        }
+//    }
 //    public synchronized void close() 
 //    {
 //        if(_useSQL)
@@ -194,6 +208,9 @@ public class DBConnect {
 //            System.out.println("SQL --- " + sql);
             
             bt = query(sql, "systematicname");
+//            HashMap<String,String> map = new HashMap<String,String>();
+//            map.put("columns",sql_columns);
+//            map.put("systematicname",sql_columns);
         } else {
             throw new SCMDException("This class only support to read data from DB");
         }

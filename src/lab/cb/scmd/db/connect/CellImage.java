@@ -9,7 +9,7 @@
 //--------------------------------------
 package lab.cb.scmd.db.connect;
 
-import lab.cb.scmd.db.common.Image;
+import lab.cb.scmd.db.bean.Image;
 
 public class CellImage extends Image {
 	

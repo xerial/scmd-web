@@ -8,7 +8,7 @@
 // $LastChangedBy$ 
 //--------------------------------------
 
-package lab.cb.scmd.web.image;
+package lab.cb.scmd.web.servlet.image;
 
 import java.io.*;
 import java.net.URL;
@@ -27,9 +27,12 @@ import lab.cb.scmd.web.bean.TargetPhoto;
 import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.viewer.Photo;
 
+
 /**
+ *
  * @author leo
- * @deprecated 
+ * @version $Revision: $ $LastChangedDate: $
+ * $LastChangedBy$
  */
 public class ImageServer extends HttpServlet
 {

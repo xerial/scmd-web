@@ -19,12 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
-
 import lab.cb.scmd.db.common.TableQuery;
 import lab.cb.scmd.util.image.BoundingRectangle;
 import lab.cb.scmd.web.action.logic.DBUtil;
@@ -36,6 +30,7 @@ import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.common.SCMDThreadManager;
 import lab.cb.scmd.web.common.StainType;
 import lab.cb.scmd.web.image.ImageCache;
+import lab.cb.scmd.web.image.PhotoClippingProcess;
 import lab.cb.scmd.web.table.ColLabelIndex;
 import lab.cb.scmd.web.table.ImageElement;
 import lab.cb.scmd.web.table.Table;
@@ -43,6 +38,11 @@ import lab.cb.scmd.web.table.decollation.AttributeDecollator;
 import lab.cb.scmd.web.table.decollation.NumberFormatDecollator;
 import lab.cb.scmd.web.table.decollation.StyleDecollator;
 import lab.cb.scmd.web.viewer.Photo;
+
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 /**
  * @author leo

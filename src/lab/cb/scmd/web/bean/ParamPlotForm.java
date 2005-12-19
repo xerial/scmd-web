@@ -16,15 +16,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.commons.dbutils.handlers.ColumnListHandler;
-import org.apache.struts.action.ActionForm;
-
-import lab.cb.scmd.db.connect.ConnectionServer;
-import lab.cb.scmd.web.common.SCMDConfiguration;
-import lab.cb.scmd.web.datagen.MorphologicalSearch;
+import lab.cb.scmd.db.connect.SCMDManager;
 import lab.cb.scmd.web.sessiondata.MorphParameter;
 import lab.cb.scmd.web.util.CGIUtil;
+
+import org.apache.struts.action.ActionForm;
 
 
 /**
@@ -63,9 +59,10 @@ public class ParamPlotForm extends ActionForm
     {
         try
         {
-            paramList = (List<MorphParameter>) ConnectionServer.query(new BeanListHandler(MorphParameter.class), 
-                    "select id, name, shortname, displayname from $1 where scope='orf' and datatype = 'num' order by id",
-                    SCMDConfiguration.getProperty("DB_PARAMETERLIST", "visible_parameterlist"));
+//            paramList = (List<MorphParameter>) ConnectionServer.query(new BeanListHandler(MorphParameter.class), 
+//                    "select id, name, shortname, displayname from $1 where scope='orf' and datatype = 'num' order by id",
+//                    SCMDConfiguration.getProperty("DB_PARAMETERLIST", "visible_parameterlist"));
+        	paramList = SCMDManager.getDBManager().queryResults("lab.cb.scmd.web.bean.ParamPlotForm:paramlist",null,MorphParameter.class);
         }
         catch (SQLException e)
         {

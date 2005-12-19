@@ -10,9 +10,6 @@
 
 package lab.cb.scmd.db.connect;
 
-import lab.cb.scmd.db.common.DBConnect;
-import lab.cb.scmd.db.common.QueryAPI;
-import lab.cb.scmd.web.exception.DBConnectException;
 
 /**
  * @deprecated 

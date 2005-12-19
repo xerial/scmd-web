@@ -11,6 +11,7 @@ package lab.cb.scmd.db.connect;
 
 import java.util.Iterator;
 
+import lab.cb.scmd.db.common.GeneGroup;
 import lab.cb.scmd.db.common.GeneInformation;
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.util.table.BasicTable;
@@ -18,7 +19,13 @@ import lab.cb.scmd.util.xml.InvalidXMLException;
 import lab.cb.scmd.util.xml.XMLAttribute;
 import lab.cb.scmd.util.xml.XMLOutputter;
 
-public class ORFGroup extends lab.cb.scmd.db.common.GeneGroup {
+/**
+ *
+ * @author leo
+ * @version $Revision: $ $LastChangedDate: $
+ * $LastChangedBy$
+ */
+public class ORFGroup extends GeneGroup {
 
     public ORFGroup(String groupName) {
         super(groupName);

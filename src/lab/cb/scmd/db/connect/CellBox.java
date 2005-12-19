@@ -17,6 +17,12 @@ import lab.cb.scmd.util.table.BasicTable;
 import lab.cb.scmd.util.table.Cell;
 import lab.cb.scmd.web.exception.InvalidPageException;
 
+/**
+ *
+ * @author leo
+ * @version $Revision: $ $LastChangedDate: $
+ * $LastChangedBy$
+ */
 public class CellBox extends IndividualBox
 {
 	int _cellID	= -1;

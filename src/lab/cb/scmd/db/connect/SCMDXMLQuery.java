@@ -9,17 +9,14 @@
 //--------------------------------------
 package lab.cb.scmd.db.connect;
 
-//import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
-//import java.io.PrintStream;
+import java.sql.SQLException;
 import java.util.AbstractMap;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
-//import java.util.Iterator;
-//import java.util.Set;
 
-import lab.cb.scmd.db.common.GOQuery;
 import lab.cb.scmd.db.common.PageStatus;
 import lab.cb.scmd.db.common.XMLQuery;
 import lab.cb.scmd.exception.SCMDException;
@@ -27,7 +24,6 @@ import lab.cb.scmd.util.xml.InvalidXMLException;
 import lab.cb.scmd.util.xml.XMLAttribute;
 import lab.cb.scmd.util.xml.XMLOutputter;
 import lab.cb.scmd.web.common.SCMDConfiguration;
-//import lab.cb.scmd.web.exception.InvalidSQLException;
 import lab.cb.scmd.web.table.ColLabelIndex;
 import lab.cb.scmd.web.table.Table;
 
@@ -268,9 +264,6 @@ public class SCMDXMLQuery implements XMLQuery {
 
     }
 
-    /* (non-Javadoc)
-     * @see lab.cb.scmd.db.common.XMLQuery#getSearchResult(java.io.OutputStream, java.lang.String, int, int)
-     */
     public void getSearchResult(OutputStream out, String keywordstr, int currentPage, int numElementInAPage) {
 
 	    XMLOutputter xmlout = new XMLOutputter(out);
@@ -283,19 +276,25 @@ public class SCMDXMLQuery implements XMLQuery {
         for(int i = 0; i < keyword.length; i++ ) {
             if( i != 0 )
                 whereClause += " AND ";
-            String exp = "'" + keyword[i] + "%'";
-            String exp_annot = "'%" + keyword[i] + "%'";
-            
-            // curkey ‚ª Gene Ontology‚Éˆê’v‚·‚éê‡
-            whereClause += "( "; 
-            whereClause	+= GOQuery.searchBoxWhereClause(keyword[i]);
-    		whereClause += " OR ";
-            // curkey ‚ª primaryname ,alias, annotation ‚Ìê‡‚É‚ÍA‚±‚Ìwhere ‹å‚Å‚Ð‚Á‚©‚©‚é        
-            whereClause += "(" + "systematicname ILIKE " + exp 
+            String curkey = keyword[i];
+            if( curkey.matches("^GO:[0-9]+") ) {
+                while(curkey.length() < 10) {
+                    curkey = "GO:0" + curkey.substring(3);
+                }
+                    
+                whereClause += "systematicname in " +
+                        "( select distinct strainname as systematicname " +
+                        "from goassociation where goid in " +
+                        "( select cid as goid from term_graph " +
+                        "where pid = '" + curkey + "'))";
+            } else {
+                String exp = "'" + keyword[i] + "%'";
+                String exp_annot = "'%" + keyword[i] + "%'";
+                whereClause += "(systematicname ILIKE " + exp 
                     + " OR primaryname ILIKE " + exp 
                     + " OR aliasname ILIKE " + exp
                     + " OR annotation ILIKE " + exp_annot + ")";
-            whereClause += ")";
+            }
         }
 		String sql = "SELECT systematicname, primaryname, aliasname, annotation FROM "
             + "(SELECT strainname FROM " + summaryTable + ") AS GT INNER JOIN " 
@@ -304,7 +303,11 @@ public class SCMDXMLQuery implements XMLQuery {
 //		    + " genename_20040719 " + whereClause;
 
         try {
-            Table orfTable = _connection.getQueryResult(sql);
+        	HashMap<String,String> map = new HashMap<String,String>();
+        	map.put("whereCaluse",whereClause);
+        	Table orfTable = SCMDManager.getDBManager().queryTable("SCMDXMLQuery.getSearchResult",map);
+
+//        	Table orfTable = _connection.getQueryResult(sql);
             ColLabelIndex colLabelIndex = new ColLabelIndex(orfTable);
             
             int count = orfTable.getRowSize() - 1;
@@ -347,6 +350,9 @@ public class SCMDXMLQuery implements XMLQuery {
         catch (SCMDException e) {
         	System.err.println(e.getMessage());
             e.what();
+        }
+        catch(SQLException e) {
+        	
         }
 
 

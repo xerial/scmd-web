@@ -10,6 +10,12 @@
 
 package lab.cb.scmd.db.common;
 
+/**
+ * Individual‚ÌJava Beans
+ * @author mattun
+ * @version $Revision: $ $LastChangedDate: $
+ * $LastChangedBy$
+ */
 public class Individual {
 	private String _id = "";
 	private int _x1 = 0;

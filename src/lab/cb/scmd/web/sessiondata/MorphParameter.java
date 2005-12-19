@@ -10,13 +10,9 @@
 package lab.cb.scmd.web.sessiondata;
 
 import java.sql.SQLException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.HashMap;
 
-import org.apache.commons.dbutils.handlers.ScalarHandler;
-
-import lab.cb.scmd.db.connect.ConnectionServer;
-import lab.cb.scmd.web.common.SCMDConfiguration;
+import lab.cb.scmd.db.connect.SCMDManager;
 
 public class MorphParameter {
     int id = 0; 
@@ -145,12 +141,17 @@ public class MorphParameter {
     {
         try
         {
-            Integer id = (Integer) ConnectionServer.query(new ScalarHandler("id"), 
+        	HashMap<String,String> map = new HashMap<String,String>();
+        	map.put("parameterName",parameterName);
+        	Integer id = (Integer) SCMDManager.getDBManager().queryScalar("MorphParameter:parameterID",map,"id");
+ /*
+        	Integer id = (Integer) ConnectionServer.query(new ScalarHandler("id"), 
                     "select id from $1 where name='$2'",
                     SCMDConfiguration.getProperty("DB_PARAMETERLIST", "visible_parameterlist"),
                     parameterName
                     );
-            if(id != null)
+*/
+        	if(id != null)
                 return id.intValue();
             else
                 return -1;

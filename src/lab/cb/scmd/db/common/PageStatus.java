@@ -19,6 +19,12 @@ import lab.cb.scmd.util.xml.XMLAttribute;
 import lab.cb.scmd.util.xml.XMLOutputter;
 import lab.cb.scmd.web.exception.XMLParseErrorException;
 
+/**
+ *
+ * @author mattun
+ * @version $Revision: $ $LastChangedDate: $
+ * $LastChangedBy$
+ */
 public class PageStatus implements Serializable {
     private int _current	= 0;
     private int _max		= 0;

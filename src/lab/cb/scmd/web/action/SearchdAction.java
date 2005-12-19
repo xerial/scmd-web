@@ -33,8 +33,10 @@ import lab.cb.scmd.web.xml.DOMParser;
 import lab.cb.scmd.web.xml.XMLReaderThread;
 
 /**
+ *
  * @author leo
- *  
+ * @version $Revision: $ $LastChangedDate: $
+ * $LastChangedBy$
  */
 public class SearchdAction extends Action
 {

@@ -28,8 +28,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
 /**
+ * 
+ *Å@BeanàµÇ¢Ç…Ç‡Ç∑ÇÈÇΩÇﬂSerializableÇimplementsÇ∑ÇÈ
  * @author leo
- *
+ * @version $Revision: $ $LastChangedDate: $
+ * $LastChangedBy$
  */
 public class CellViewerForm extends ActionForm implements Serializable
 {

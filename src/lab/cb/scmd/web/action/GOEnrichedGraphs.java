@@ -1,14 +1,14 @@
 package lab.cb.scmd.web.action;
 
-import java.awt.List;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import lab.cb.scmd.db.common.TableQuery;
-import lab.cb.scmd.db.connect.ConnectionServer;
+import lab.cb.scmd.db.connect.SCMDManager;
 import lab.cb.scmd.web.bean.GeneOntology;
 import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.container.Enrichments;
@@ -17,7 +17,6 @@ import lab.cb.scmd.web.sessiondata.MorphParameter;
 import lab.cb.scmd.web.table.ColLabelIndex;
 import lab.cb.scmd.web.table.Table;
 
-import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -69,8 +68,11 @@ public class GOEnrichedGraphs extends Action {
         	
         	MorphParameter param = new MorphParameter();
 			try {
-				param = (MorphParameter) ConnectionServer.query(new BeanHandler(MorphParameter.class), "select * from $1 list where id=$2 and scope='orf'", 
-				        SCMDConfiguration.getProperty("DB_PARAMETERLIST", "visible_parameterlist"), paramID);
+				HashMap<String,String> map = new HashMap<String,String>();
+				map.put("paramid",paramID);
+				param = SCMDManager.getDBManager().query("GOEnrichedGraphs.paramlist",map,MorphParameter.class);
+//				param = (MorphParameter) ConnectionServer.query(new BeanHandler(MorphParameter.class), "select * from $1 list where id=$2 and scope='orf'", 
+//				        SCMDConfiguration.getProperty("DB_PARAMETERLIST", "visible_parameterlist"), paramID);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}        

@@ -9,12 +9,10 @@
 //--------------------------------------
 package lab.cb.scmd.web.action;
 
-import java.io.OutputStream;
-import java.io.Writer;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.sql.SQLException;
-import java.text.NumberFormat;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
@@ -23,14 +21,10 @@ import java.util.Vector;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.rowset.spi.XmlWriter;
 
-import lab.cb.scmd.db.common.GeneList;
 import lab.cb.scmd.db.common.PageStatus;
-import lab.cb.scmd.db.connect.ConnectionServer;
+import lab.cb.scmd.db.connect.SCMDManager;
 import lab.cb.scmd.db.sql.SQLUtil;
-import lab.cb.scmd.exception.SCMDException;
-import lab.cb.scmd.util.table.TableIterator;
 import lab.cb.scmd.web.bean.Range;
 import lab.cb.scmd.web.bean.YeastGene;
 import lab.cb.scmd.web.common.SCMDConfiguration;
@@ -40,9 +34,6 @@ import lab.cb.scmd.web.sessiondata.MorphParameter;
 import lab.cb.scmd.web.table.ColLabelIndex;
 import lab.cb.scmd.web.table.Table;
 
-import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.commons.dbutils.handlers.ColumnListHandler;
-import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -72,12 +63,16 @@ public class ViewORFParameterAction extends Action
         case input:
             if(input.getParamID().length == 0)
                 break;
+            HashMap<String,String> map = new HashMap<String,String>();
+            map.put("paramID",SQLUtil.commaSeparatedList(input.getParamID(), SQLUtil.QuotationType.singleQuote));
+            selectedORFParameter = SCMDManager.getDBManager().queryResults("lab.cb.scmd.web.action.ViewORFParameterAction:parameterlistORF",map,MorphParameter.class);
+/*
             selectedORFParameter = 
                 (List<MorphParameter>)
                 ConnectionServer.query(new BeanListHandler(MorphParameter.class), 
                         "select * from $1 where scope='orf' and id in ($2)",
                         SCMDConfiguration.getProperty("DB_PARAMETERLIST", "visible_parameterlist"),
-                        SQLUtil.commaSeparatedList(input.getParamID(), SQLUtil.QuotationType.singleQuote));
+                        SQLUtil.commaSeparatedList(input.getParamID(), SQLUtil.QuotationType.singleQuote));*/
             break;
         case custom:
             selectedORFParameter = SCMDSessionManager.getParamUserSelection(request).getOrfParamInfo();
@@ -90,12 +85,16 @@ public class ViewORFParameterAction extends Action
             List<MorphParameter> selectedCellParameter = null;
             if(input.getParamID().length != 0)
             {
-                selectedCellParameter = 
-                    (List<MorphParameter>)
-                    ConnectionServer.query(new BeanListHandler(MorphParameter.class), 
-                            "select * from $1 where scope='cell' and id in ($2)",
-                            SCMDConfiguration.getProperty("DB_PARAMETERLIST", "visible_parameterlist"),
-                            SQLUtil.commaSeparatedList(input.getParamID(), SQLUtil.QuotationType.singleQuote));
+                HashMap<String,String> map = new HashMap<String,String>();
+                map.put("paramID",SQLUtil.commaSeparatedList(input.getParamID(), SQLUtil.QuotationType.singleQuote));
+                selectedORFParameter = SCMDManager.getDBManager().queryResults("lab.cb.scmd.web.action.ViewORFParameterAction:parameterlistCell",map,MorphParameter.class);
+//                selectedCellParameter = 
+//                    (List<MorphParameter>)
+//                    ConnectionServer.query(new BeanListHandler(MorphParameter.class), 
+//                            "select * from $1 where scope='cell' and id in ($2)",
+//                            SCMDConfiguration.getProperty("DB_PARAMETERLIST", "visible_parameterlist"),
+//                            SQLUtil.commaSeparatedList(input.getParamID(), SQLUtil.QuotationType.singleQuote));
+
             }
     
             if(selectedCellParameter == null || selectedCellParameter.size() <= 0)
@@ -140,11 +139,11 @@ public class ViewORFParameterAction extends Action
 //            count++;
         }
         
-        // calculate the max page        
-        Integer numItem = (Integer) ConnectionServer.query(new ScalarHandler("count"), 
-                "select cast(count(*) as int4) from $1",
-                SCMDConfiguration.getProperty("DB_ANALYSISDATA", "analysisdata_20050131"));
-
+		// calculate the max page        
+//		Integer numItem = (Integer) ConnectionServer.query(new ScalarHandler("count"), 
+//			"select cast(count(*) as int4) from $1",
+//			SCMDConfiguration.getProperty("DB_ANALYSISDATA", "analysisdata_20050131"));
+		Integer numItem = (Integer) SCMDManager.getDBManager().queryScalar("lab.cb.scmd.web.action.ViewORFParameterAction:analysisdata",null,"count");
          
         List<YeastGene> geneList = null;
                 
@@ -241,35 +240,59 @@ public class ViewORFParameterAction extends Action
     
     private LinkedList<YeastGene> retrieveYeastGeneList(List<MorphParameter> selectedORFParameter, int numRows, int offset, Vector<String> sqlParamList, String sortParamName) throws SQLException
     {
-        String sql = "";
-        if( numRows!=-1 || selectedOrfSet.size() == 0) 
-        { 
-                sql = "select strainname as \"ORF\",primaryname, aliasname, annotation, $1 from $2 left join $5 on strainname = systematicname order by $6 limit $3 offset $4";
-        } else { 
-                // -1 ‚È‚ç my gene list ‚Ì‚Ý‚ðŽæ“¾‚·‚é
-                sql = "select strainname as \"ORF\",primaryname, aliasname, annotation, $1 from $2 left join $5 on strainname = systematicname ";
-                boolean flag = false;
-                for(String orf: selectedOrfSet) {
-                    if( flag ) {
-                        sql += " or";
-                    } else {
-                        sql += " where";
-                        flag = true;
-                    }
-                    sql += " strainname='" + orf.toUpperCase() + "'";
-                }
-                sql += " order by $6";
-        }
+//        String sql = "";
+//        if( numRows!=-1 || selectedOrfSet.size() == 0) 
+//        { 
+//                sql = "select strainname as \"ORF\",primaryname, aliasname, annotation, $1 from $2 left join $5 on strainname = systematicname order by $6 limit $3 offset $4";
+//        } else { 
+//                // -1 ‚È‚ç my gene list ‚Ì‚Ý‚ðŽæ“¾‚·‚é
+//                sql = "select strainname as \"ORF\",primaryname, aliasname, annotation, $1 from $2 left join $5 on strainname = systematicname ";
+//                boolean flag = false;
+//                for(String orf: selectedOrfSet) {
+//                    if( flag ) {
+//                        sql += " or";
+//                    } else {
+//                        sql += " where";
+//                        flag = true;
+//                    }
+//                    sql += " strainname='" + orf.toUpperCase() + "'";
+//                }
+//                sql += " order by $6";
+//        }
         // retrieve datasheet
-        Table datasheet = ConnectionServer.retrieveTable(
-                sql,
-                SQLUtil.commaSeparatedList(sqlParamList, SQLUtil.QuotationType.none),
-                SCMDConfiguration.getProperty("DB_ANALYSISDATA", "analysisdata_20050131"),
-                numRows,
-                offset,
-                SCMDConfiguration.getProperty("DB_GENENAME"),
-                SQLUtil.doubleQuote(sortParamName)
-        );
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("separatedList",SQLUtil.commaSeparatedList(sqlParamList, SQLUtil.QuotationType.none));
+		map.put("sortparamname",SQLUtil.doubleQuote(sortParamName));
+		map.put("limitrows",String.valueOf(numRows));
+		map.put("offset",String.valueOf(offset));
+		Table datasheet;
+		if( numRows!=-1 || selectedOrfSet.size() == 0) 
+		{ 
+			datasheet = SCMDManager.getDBManager().queryTable("lab.cb.scmd.web.action.ViewORFParameterAction:genelist1",map);
+		} else {
+			boolean flag = false;
+			String sql = "";
+			for(String orf: selectedOrfSet) {
+			if( flag ) {
+				sql += " or";
+			} else {
+				sql += " where";
+				flag = true;
+			}
+				sql += " strainname='" + orf.toUpperCase() + "'";
+			}
+			map.put("selectedorfset",sql);
+			datasheet = SCMDManager.getDBManager().queryTable("lab.cb.scmd.web.action.ViewORFParameterAction:genelist2",map);			
+		}
+//		Table datasheet = ConnectionServer.retrieveTable(
+//			sql,
+//			SQLUtil.commaSeparatedList(sqlParamList, SQLUtil.QuotationType.none),
+//			SCMDConfiguration.getProperty("DB_ANALYSISDATA", "analysisdata_20050131"),
+//			numRows,
+//			offset,
+//			SCMDConfiguration.getProperty("DB_GENENAME"),
+//			SQLUtil.doubleQuote(sortParamName)
+//		);
         
         ColLabelIndex colIndex = new ColLabelIndex(datasheet);        
         LinkedList<YeastGene> geneList = new LinkedList<YeastGene>();

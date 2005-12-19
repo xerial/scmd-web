@@ -8,7 +8,7 @@
 // $LastChangedBy$ 
 //--------------------------------------
 
-package lab.cb.scmd.web.image;
+package lab.cb.scmd.web.servlet.image;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

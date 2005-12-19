@@ -20,6 +20,11 @@ public class SCMDThreadManager
     private ThreadManager manager = null;
     static private SCMDThreadManager _instance = null;
     
+    /**
+     * インスタンス生成
+     * @param maximumThread
+     * @param taskQueueSize
+     */
     static public void initialize(int maximumThread, int taskQueueSize)
     {
         if(_instance != null)

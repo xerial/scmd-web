@@ -4,8 +4,8 @@
 // GroupViewAction.java 
 // Since: 2004/08/11
 //
-// $URL$ 
-// $LastChangedBy$ 
+// $URL: http://phenome.gi.k.u-tokyo.ac.jp/devel/svn/phenome/branches/SCMDWeb/matsumiya/src/lab/cb/scmd/web/action/GroupViewAction.java $ 
+// $LastChangedBy: matsumiya $ 
 //--------------------------------------
 
 package lab.cb.scmd.web.action;
@@ -17,12 +17,6 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 
 import lab.cb.scmd.db.common.TableQuery;
 import lab.cb.scmd.util.image.BoundingRectangle;
@@ -36,6 +30,7 @@ import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.common.SCMDThreadManager;
 import lab.cb.scmd.web.common.StainType;
 import lab.cb.scmd.web.image.ImageCache;
+import lab.cb.scmd.web.image.PhotoClippingProcess;
 import lab.cb.scmd.web.table.ColLabelIndex;
 import lab.cb.scmd.web.table.ImageElement;
 import lab.cb.scmd.web.table.Link;
@@ -49,11 +44,16 @@ import lab.cb.scmd.web.table.decollation.AttributeDecollator;
 import lab.cb.scmd.web.table.decollation.StyleDecollator;
 import lab.cb.scmd.web.viewer.Photo;
 
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+
 /** @deprecated
  * @author leo
  *
  */
-public class GroupViewAction extends Action
+public class ViewGroupBySheetAction extends Action
 {
     static final String[][] _groupName =
     {
@@ -65,7 +65,7 @@ public class GroupViewAction extends Action
     /**
      * 
      */
-    public GroupViewAction()
+    public ViewGroupBySheetAction()
     {
         super();
     }

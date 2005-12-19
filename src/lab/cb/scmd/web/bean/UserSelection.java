@@ -15,19 +15,18 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
 
-import lab.cb.scmd.db.connect.ConnectionServer;
-import lab.cb.scmd.web.common.SCMDConfiguration;
+import lab.cb.scmd.db.connect.SCMDManager;
 import lab.cb.scmd.web.design.PlotColor;
 import lab.cb.scmd.web.xmlbean.Item;
 import lab.cb.scmd.web.xmlbean.Selection;
 
-import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.struts.upload.FormFile;
 import org.xerial.util.Pair;
 import org.xerial.util.XMLParserException;
@@ -73,9 +72,9 @@ public class UserSelection implements Serializable
         _colorMap.remove(orf.toUpperCase());
     }
     
-    public Set<String> orfSet()
+    public TreeSet<String> orfSet()
     {
-        return (Set<String>) _selection.clone();
+        return (TreeSet<String>)_selection.clone();
     }
        
     public Vector<String> getColorList()
@@ -176,11 +175,14 @@ public class UserSelection implements Serializable
     {
         try
         {
-            Object result = ConnectionServer.query(new ScalarHandler("orf"),
-                    "select orf from $1 where alias ilike '$2'",
-                    SCMDConfiguration.getProperty("DB_ORFALIAS", "orfaliasname_20040719"),
-                    genename                            
-            );
+        	HashMap<String,String> map = new HashMap<String,String>();
+        	map.put("genename",genename);
+        	Object result = SCMDManager.getDBManager().queryScalar("lab.cb.scmd.web.bean.UserSelection:orfalias",map,"orf");
+//            Object result = ConnectionServer.query(new ScalarHandler("orf"),
+//                    "select orf from $1 where alias ilike '$2'",
+//                    SCMDConfiguration.getProperty("DB_ORFALIAS", "orfaliasname_20040719"),
+//                    genename                            
+//            );
             if(result != null)
                 return result.toString();
         }

@@ -17,6 +17,7 @@ import lab.cb.scmd.db.sql.SqlQuery;
 import lab.cb.scmd.util.table.AppendableTable;
 import lab.cb.scmd.util.table.BasicTable;
 import lab.cb.scmd.web.common.SCMDConfiguration;
+import lab.cb.scmd.web.log.ErrorLog;
 import lab.cb.scmd.web.log.SCMDLogging;
 import lab.cb.scmd.web.table.Table;
 import net.jp.peace.db.ConnectionPool;
@@ -56,9 +57,13 @@ public class DBManager implements SCMDManagerModel{
 			//	エラー処理をする
 		}
 
+		//	TODO このExceptionはinitializeでスルーさせるようにする
 		//	データベースプーリングを作成する
-		pooling = new ConnectionPool(driver,uri,user,pass,maxconnection);
-
+		try{
+			pooling = new ConnectionPool(driver,uri,user,pass,maxconnection);
+		} catch(ClassNotFoundException e) {
+			ErrorLog.insert("JDBCドライバーが存在しません",e.getMessage(),e);
+		}
 		//	SQLマネージャーを作成する
 		try{
 			System.out.println(SCMDConfiguration.getProperty("SCMD_ROOT")+SCMDConfiguration.getProperty("DB_SQLCONFIGPATH"));
@@ -102,8 +107,8 @@ public class DBManager implements SCMDManagerModel{
 			Statement stmt = con.createStatement();
 			updateline = stmt.executeUpdate(sql);
 	    	SCMDLogging.file(sql,java.util.logging.Level.INFO);
-	    } catch(Exception e) {
-	    	
+	    } catch(SQLException sqe) {
+			sqlErrorLog(sqe);
 		} finally {
 			con.close();
 		}
@@ -121,8 +126,8 @@ public class DBManager implements SCMDManagerModel{
 		int updateline = 0;
 		try{
 			sqlManager.executeUpdate(con,sql,params);
-	    } catch(Exception e) {
-	    	
+	    } catch(SQLException sqe) {
+			sqlErrorLog(sqe);
 		} finally {
 			con.close();
 		}
@@ -142,8 +147,8 @@ public class DBManager implements SCMDManagerModel{
 		try{
 			//	SQL文章を生成
 			updateline = query.update(map);
-	    } catch(Exception e) {
-	    	
+	    } catch(SQLException sqe) {
+			sqlErrorLog(sqe);
 		} finally {
 			con.close();
 		}
@@ -156,8 +161,8 @@ public class DBManager implements SCMDManagerModel{
 		try{
 			//	SQL文章を生成
 			updateline = query.update(bean);
-	    } catch(Exception e) {
-	    	
+	    } catch(SQLException sqe) {
+			sqlErrorLog(sqe);	    	
 		} finally {
 			con.close();
 		}
@@ -180,6 +185,7 @@ public class DBManager implements SCMDManagerModel{
 	    	SqlQuery query = sqlManager.getSqlQuery(name,con);
 	    	result = query.queryResults(map,cast);
     	} catch(SQLException sqe) {
+			sqlErrorLog(sqe);
     		throw sqe;
 		} finally {
 			con.close();
@@ -188,12 +194,23 @@ public class DBManager implements SCMDManagerModel{
     	return result.get(0);
     }
 
+    /**
+     * 指定したカラム名のオブジェクトが返る
+     * DBでINTEGER型だと JAVAではINTEGER型
+     * DBでTEXT型だと JAVAではString型となる
+     * @param name
+     * @param map
+     * @param column
+     * @return
+     * @throws SQLException
+     */
     public Object queryScalar(String name,HashMap<String,String> map,int column) throws SQLException{
     	Connection con = pooling.getPoolConnection();
     	try{
 	    	SqlQuery query = sqlManager.getSqlQuery(name,con);
 	    	return query.queryScalar(map,column);
     	} catch(SQLException sqe) {
+			sqlErrorLog(sqe);
     		throw sqe;
 		} finally {
 			con.close();
@@ -206,6 +223,7 @@ public class DBManager implements SCMDManagerModel{
 	    	SqlQuery query = sqlManager.getSqlQuery(name,con);
 	    	return query.queryScalar(map,column);
     	} catch(SQLException sqe) {
+			sqlErrorLog(sqe);
     		throw sqe;
 		} finally {
 			con.close();
@@ -227,6 +245,7 @@ public class DBManager implements SCMDManagerModel{
 			SqlQuery query = sqlManager.getSqlQuery(name,con);
 			result = query.queryResults(map,cast);
 		} catch(SQLException sqe) {
+			sqlErrorLog(sqe);
 			throw sqe;
 		} finally {
 			con.close();
@@ -250,6 +269,7 @@ public class DBManager implements SCMDManagerModel{
 			table = convertTable(con.createStatement().executeQuery(sql));
 			//result = query.queryBean(map,cast);
 		} catch(SQLException sqe) {
+			sqlErrorLog(sqe);
 			throw sqe;
 		} finally {
 			con.close();
@@ -274,6 +294,7 @@ public class DBManager implements SCMDManagerModel{
 			table = convertBasicTable(con.createStatement().executeQuery(sql),keyColumnName);
 			//result = query.queryBean(map,cast);
 		} catch(SQLException sqe) {
+			sqlErrorLog(sqe);
 			throw sqe;
 		} finally {
 			con.close();
@@ -294,6 +315,7 @@ public class DBManager implements SCMDManagerModel{
 			table = convertBasicTable(con.createStatement().executeQuery(sql),keyColumnName);
 			//result = query.queryBean(map,cast);
 		} catch(SQLException sqe) {
+			sqlErrorLog(sqe);
 			throw sqe;
 		} finally {
 			con.close();
@@ -375,6 +397,10 @@ public class DBManager implements SCMDManagerModel{
 			at.append(row);
 		}
 		return at;
+	}
+	
+	private void sqlErrorLog(SQLException e) {
+    	ErrorLog.insert(e.getMessage(),"データーベースエラー",e);
 	}
 }
 

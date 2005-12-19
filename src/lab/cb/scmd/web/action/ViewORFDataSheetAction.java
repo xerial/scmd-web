@@ -9,6 +9,7 @@
 //--------------------------------------
 package lab.cb.scmd.web.action;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,20 +19,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import lab.cb.scmd.db.common.PageStatus;
-import lab.cb.scmd.db.connect.ConnectionServer;
+import lab.cb.scmd.db.connect.SCMDManager;
 import lab.cb.scmd.db.sql.SQLExpression;
 import lab.cb.scmd.web.bean.CellViewerForm;
 import lab.cb.scmd.web.bean.Range;
-import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.common.SCMDSessionManager;
 import lab.cb.scmd.web.container.ORFParamData;
 import lab.cb.scmd.web.formbean.ViewORFDataSheetForm;
-import lab.cb.scmd.web.image.teaddrop.Teardrop;
 import lab.cb.scmd.web.sessiondata.MorphParameter;
 
-import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -62,19 +58,25 @@ public class ViewORFDataSheetAction extends Action
         
         int paramID = input.getParamID();
         int currentPage = input.getPage() - 1;
-        
+ 
+        HashMap<String,String> map = new HashMap<String,String>();
+        map.put("paramID",String.valueOf(paramID));
+        MorphParameter param = SCMDManager.getDBManager().query("ViewDatasheet:parameterlist",map,MorphParameter.class);
+    
         // validate the existence of the given parameter ID
-        MorphParameter param = (MorphParameter) ConnectionServer.query(new BeanHandler(MorphParameter.class), "select * from $1 list where id=$2 and scope='orf'", 
-                SCMDConfiguration.getProperty("DB_PARAMETERLIST", "visible_parameterlist"), paramID);        
+//        MorphParameter param = (MorphParameter) ConnectionServer.query(new BeanHandler(MorphParameter.class), "select * from $1 list where id=$2 and scope='orf'", 
+//                SCMDConfiguration.getProperty("DB_PARAMETERLIST", "visible_parameterlist"), paramID);        
         if(param == null)
             return mapping.findForward("select_parameter");  // parameter‚Ì‘I‘ð‚µ‚È‚¨‚µ
         request.setAttribute("para", param);        
         
         // count available orfs 
-        Number count = (Number) ConnectionServer.query(new ScalarHandler("count"),
+        Number count = (Number)SCMDManager.getDBManager().queryScalar("paramstatCount",map,"count");
+/*        Number count = (Number) ConnectionServer.query(new ScalarHandler("count"),
                 "select count(*) from $1 where paramid=$2",
                 SCMDConfiguration.getProperty("DB_PARAMSTAT", "paramstat"),
                 paramID);       
+*/
         int numData = 0;
         if(count != null)
             numData = count.intValue();
@@ -90,18 +92,26 @@ public class ViewORFDataSheetAction extends Action
         
         PageStatus pageStatus = new PageStatus(currentPage+1, maxPage);    
         request.setAttribute("pageStatus", pageStatus);
-        
+
         // data‚ÌŽæ“¾
-        List<ORFParamData> orfData = 
-            (List<ORFParamData>) ConnectionServer.query(new BeanListHandler(ORFParamData.class), 
-                "select strainname as orf, average as data, primaryname as standardname, annotation from $1 left join $6 on $1.strainname = $6.systematicname where paramid=$2 order by average $3 limit $4 offset $5",
-                SCMDConfiguration.getProperty("DB_PARAMSTAT", "paramstat"),
-                paramID,
-                input.getOrder().name(),
-                numORFsInAPage,
-                currentPage * numORFsInAPage,
-                SCMDConfiguration.getProperty("DB_GENENAME")                
-            );
+        map.clear();
+        map.put("paramID",String.valueOf(paramID));
+        map.put("currentPageXnumORFsInAPage",String.valueOf(currentPage * numORFsInAPage));
+        map.put("ordername",input.getOrder().name());
+        
+        List<ORFParamData> orfData = SCMDManager.getDBManager().queryResults("ViewORFDataSheet:paramstat",map,ORFParamData.class);
+
+        // data‚ÌŽæ“¾
+//        List<ORFParamData> orfData = 
+//            (List<ORFParamData>) ConnectionServer.query(new BeanListHandler(ORFParamData.class), 
+//                "select strainname as orf, average as data, primaryname as standardname, annotation from $1 left join $6 on $1.strainname = $6.systematicname where paramid=$2 order by average $3 limit $4 offset $5",
+//                SCMDConfiguration.getProperty("DB_PARAMSTAT", "paramstat"),
+//                paramID,
+//                input.getOrder().name(),
+//                numORFsInAPage,
+//                currentPage * numORFsInAPage,
+//                SCMDConfiguration.getProperty("DB_GENENAME")                
+//            );
                 
         LinkedList<List<ORFParamData>> orfDataList = new LinkedList<List<ORFParamData>>();
         int orfCount = orfData.size();

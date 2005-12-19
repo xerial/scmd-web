@@ -12,6 +12,8 @@ package lab.cb.scmd.db.common;
 
 import java.util.Vector;
 
+import lab.cb.scmd.db.bean.Image;
+import lab.cb.scmd.db.bean.Strain;
 import lab.cb.scmd.exception.SCMDException;
 import lab.cb.scmd.util.table.BasicTable;
 import lab.cb.scmd.util.table.Cell;
