@@ -220,13 +220,13 @@
 		<param name="strain"/>
 	</query>
 	
-	<query name="SCMDDBConnect.getDataSheet1" sql="SELECT ${columns} FROM ${individualTable} 
+	<query name="SCMDDBConnect.getDataSheet1" sql="SELECT ${columns} FROM ${DB_INDIVIDUAL} 
 		WHERE strainname = '${strain}' AND image_number = ${photoid}">
 		<param name="columns"/>
 		<param name="strain"/>
 		<param name="photoid"/>
 	</query>
-	<query name="SCMDDBConnect.getDataSheet2" sql="SELECT ${columns} FROM ${individualTable} 
+	<query name="SCMDDBConnect.getDataSheet2" sql="SELECT ${columns} FROM ${DB_INDIVIDUAL} 
 		WHERE strainname = '${strain}' AND image_number = ${photoid} AND cell_local_id = ${cellid}">
 		<param name="columns"/>
 		<param name="strain"/>
