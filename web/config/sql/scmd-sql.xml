@@ -200,6 +200,18 @@
 	<query name="lab.cb.scmd.db.connect.SCMDTableQuery:getShapeZScoreTable2" sql="${sql}">
 		<param name="sql"/>
 	</query>
+	<query name="SCMDTableQuery.getAssociatedGO" 
+		sql="SELECT goid, name, namespace, def FROM term WHERE ${where}">
+		<param name="where"/>
+	</query>
+	<query name="SCMDTableQuery.getForwardReverseAssociations" 
+		sql="SELECT * FROM goenrich WHERE goid = '${goid}'">
+		<param name="goid"/>
+	</query>
+	<!-- GOEnrichedGraphs -->
+	<query name="GOEnrichedGraphs.paramlist" sql="select * from ${DB_PARAMETERLIST} list where id=${paramid} and scope='orf'">
+		<param name="paramid"/>
+	</query>
 	<!-- SCMDDBConnect -->
 	<query name="SCMDDBConnect.cellBoxQuery" sql="SELECT ${columns} FROM ${DB_INDIVIDUAL} WHERE strainname = '${strain}' AND image_number = ${photoid} AND cell_local_id = '${cellid}' ORDER BY cell_local_id">
 		<param name="columns"/>
@@ -236,7 +248,7 @@
 	</query>
 	
 	<!-- SCMDXMLQuery.java -->
-	<query name="lab.cb.scmd.db.connect:getSearchResult" sql="SELECT systematicname, primaryname, aliasname, annotation FROM 
+	<query name="SCMDXMLQuery.getSearchResult" sql="SELECT systematicname, primaryname, aliasname, annotation FROM 
 		(SELECT strainname FROM ${DB_SUMMARY} AS GT INNER JOIN
 		(SELECT systematicname, primaryname, aliasname, annotation FROM ${DB_GENENAME} ${whereCaluse}) 
 		AS QT ON systematicname = strainname">
