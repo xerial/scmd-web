@@ -8,7 +8,7 @@
 <%@ taglib prefix="c" uri="/WEB-INF/c-rt.tld"%>
 
 <jsp:useBean id="view"  scope="session" class="lab.cb.scmd.web.bean.CellViewerForm"/>
-
+"web/scmd-server/pages/ORFTeardrop.jsp"
 <scmd-base:header title="Individual Cell Datasheet of ${view.orf}" css="/css/tabsheet.css"/>
 <body>
 <center>

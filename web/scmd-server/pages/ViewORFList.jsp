@@ -59,7 +59,7 @@
 <td width="40"/>
 <td width="240">
 <html:link page="/ViewPhoto.do?orf=${yeastGene.orf}"> photo viewer </html:link>&nbsp;
-<html:link page="/ORFTeardrop.do?orf=${yeastGene.orf}"> teardrop </html:link>&nbsp; 
+<%-- <html:link page="/ORFTeardrop.do?orf=${yeastGene.orf}"> teardrop </html:link>&nbsp; --%>
 <a href="http://mips.gsf.de/genre/proj/yeast/searchEntryAction.do?text=${yeastGene.orf}" target="_blank">CYGD</a>&nbsp;
 <a href="http://genome-www4.stanford.edu/cgi-bin/SGD/locus.pl?locus=${yeastGene.orf}" target="_blank">SGD</a>
 <%--<td width="40"><p align="center"> <scmd-tags:selectorf orf="${yeastGene.orf}"/></p></td>--%>
