@@ -222,6 +222,16 @@ public class MockTableQuery extends MockQueryAPI implements TableQuery
     public MorphParameter getOneParameterInfo(String param, String scope) {
         return null;
     }
+
+	public Table getAssociatedGO(String[] keywordList) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Table getForwardReverseAssociations(String goid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 
 //--------------------------------------
