@@ -213,10 +213,15 @@
 		<param name="paramid"/>
 	</query>
 	<!-- SCMDDBConnect -->
-	<query name="SCMDDBConnect.cellBoxQuery" sql="SELECT ${columns} FROM ${DB_INDIVIDUAL} WHERE strainname = '${strain}' AND image_number = ${photoid} AND cell_local_id = '${cellid}' ORDER BY cell_local_id">
+	<query name="SCMDDBConnect.cellBoxQuery" sql="SELECT ${columns} FROM ${DB_INDIVIDUAL} WHERE strainname = '${strain}' AND image_number = ${photoid} AND cell_local_id = ${cellid} ORDER BY cell_local_id">
 		<param name="columns"/>
 		<param name="photoid"/>
 		<param name="cellid"/>
+		<param name="strain"/>
+	</query>
+	<query name="SCMDDBConnect.cellBoxQuery_nocellid" sql="SELECT ${columns} FROM ${DB_INDIVIDUAL} WHERE strainname = '${strain}' AND image_number = ${photoid} ORDER BY cell_local_id">
+		<param name="columns"/>
+		<param name="photoid"/>
 		<param name="strain"/>
 	</query>
 	
