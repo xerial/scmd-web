@@ -134,7 +134,17 @@
 	<servlet-name>CellImageServer</servlet-name>
 	<url-pattern>/singlecell.jpg</url-pattern>
   </servlet-mapping>
-    
+  <!--
+	  Teardrop画像配信
+  -->
+   <servlet>
+	<servlet-name>TeardropImageServer</servlet-name>
+	<servlet-class>lab.cb.scmd.web.servlet.image.TeardropImageServer</servlet-class>
+   </servlet>
+   <servlet-mapping>
+	<servlet-name>TeardropImageServer</servlet-name>
+	<url-pattern>/teardrop.png</url-pattern>
+  </servlet-mapping>
    <!-- 
 	   エラーログ配信RSS
 	   IP制限,BASIC認証をかける必要がある（Fileterで実装する？)
