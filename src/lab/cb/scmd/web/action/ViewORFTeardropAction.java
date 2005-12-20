@@ -22,6 +22,7 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import lab.cb.scmd.db.connect.SCMDManager;
 import lab.cb.scmd.db.sql.SQLUtil;
@@ -30,7 +31,6 @@ import lab.cb.scmd.web.action.logic.DBUtil;
 import lab.cb.scmd.web.bean.CellViewerForm;
 import lab.cb.scmd.web.bean.UserSelection;
 import lab.cb.scmd.web.common.SCMDSessionManager;
-import lab.cb.scmd.web.common.SCMDThreadManager;
 import lab.cb.scmd.web.formbean.ViewORFTeardropForm;
 import lab.cb.scmd.web.image.ImageCache;
 import lab.cb.scmd.web.image.TeardropPoint;
@@ -53,6 +53,8 @@ import org.apache.struts.action.ActionMapping;
 import org.xerial.util.Pair;
 
 /**
+ * TeardropデータをSessionに入れておいたほうがいい？
+ * そうするとTeardropImageServerでのSQL発行が無くなる
  * ORFごとの全パラメータのTeardrop表示用のAction
  * @author leo
  *
@@ -133,7 +135,7 @@ public class ViewORFTeardropAction extends Action
             paramIDList.add(param.getId());
         }
         
- 
+        //	登録されたORFリストの取り出し？
         Set<String> orfSet = new TreeSet<String>();
         for(String orf : userSelection.getSelection())
         {
@@ -201,6 +203,9 @@ public class ViewORFTeardropAction extends Action
             map.put("paramID",String.valueOf(paramID));
             map.put("separatedList",SQLUtil.commaSeparatedList(orfSet, SQLUtil.QuotationType.singleQuote));
             List<TeardropPoint> plotList = SCMDManager.getDBManager().queryResults("ViewORFTeadrop:paramstat",map,TeardropPoint.class);
+            HttpSession session = request.getSession(true);
+            Pair<Teardrop, List<TeardropPoint>> pair = new Pair<Teardrop, List<TeardropPoint>>(teardrop,plotList);
+            session.setAttribute("teardrop_paramid="+paramID,pair);
 
             //List<TeardropPoint> plotList = (List<TeardropPoint>) ConnectionServer.query(sql3, new BeanListHandler(TeardropPoint.class));
             double value = -1;
@@ -244,12 +249,14 @@ public class ViewORFTeardropAction extends Action
             imageCache.registerImage(imageID);
             
             */
+
+            //	ここでＵＲＬを指定している
             TreeMap<String, String> imgArg = new TreeMap<String, String>();
             //imgArg.put("imageID", imageID);
             imgArg.put("encoding", "png"); 
-            
-            
-            ImageElement img = new ImageElement(response.encodeURL("scmdimage.png"), imgArg);
+            imgArg.put("paramid",""+paramID);
+//            ImageElement img = new ImageElement(response.encodeURL("scmdimage.png"), imgArg);
+            ImageElement img = new ImageElement(response.encodeURL("teardrop.png"), imgArg);
             img.setProperty("alt", "avg. of all mutants = " + format.format(teardrop.getAverage()) + "\navg. of wildtype = " + format.format(teardrop.getWt_average()));            
             img.setProperty("border", "0");
             img.setProperty("width", "134");            
@@ -326,7 +333,6 @@ public class ViewORFTeardropAction extends Action
             shadingTable.decollate(0, i, new AttributeDecollator("height", "15"));
         }
         request.setAttribute("shadingTable", shadingTable);
-        
          
         return mapping.findForward("success");        
     }
