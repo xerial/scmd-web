@@ -134,8 +134,12 @@ public class SCMDDBConnect extends DBConnect {
    			map.put("photoid",String.valueOf(photo.getID()));
    			map.put("strain",strain.getName());
    			map.put("cellid",String.valueOf(cellID));
+
    			try{
-   				bt = SCMDManager.getDBManager().queryBasicTable("SCMDDBConnect.cellBoxQuery",map,"cell_id");
+   	   			if( cellID >= 0 )
+   	   				bt = SCMDManager.getDBManager().queryBasicTable("SCMDDBConnect.cellBoxQuery",map,"cell_id");
+   	   			else
+   	   				bt = SCMDManager.getDBManager().queryBasicTable("SCMDDBConnect.cellBoxQuery_nocellid",map,"cell_id");
    			} catch(SQLException e) {
    				throw new InvalidSQLException(e);
    			}
