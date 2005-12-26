@@ -260,13 +260,6 @@
 		<param name="whereCaluse"/>
 	</query>
 	
-	<!-- SCMDDBConnect.java -->
-	<query name="lab.cb.scmd.db.connect.SCMDConnect.getAverageShapeStatSheet" sql="SELECT * FROM ${DB_AVERAGESHAPE} WHERE strainname = '${strain}'">
-		<param name="strain"/>
-	</query>
-	<query name="lab.cb.scmd.db.connect.SCMDConnect.getAverageShapeStatSheet" sql="SELECT * FROM ${DB_AVERAGESHAPE} WHERE strainname = '${strain}'">
-		<param name="strain"/>
-	</query>
 	<!-- DBConnect.java -->
 	<query name="DBConnect.geneGroupQuery" 
 		sql="SELECT ${columns} FROM (SELECT ${columnbs} FROM ${DB_GENENAME} WHERE systematicname='${systematicname}' ${orsystematicnames})
