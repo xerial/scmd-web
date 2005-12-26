@@ -59,6 +59,11 @@ public class ActionLogic
             return type.intValue();
     }
 
+    /**
+     * actionを見て次に進む前に戻るなどページ移動処理
+     * @param form
+     * @param request
+     */
     public void handleAction(CellViewerForm form, HttpServletRequest request) {
         String action = (String) request.getParameter("action");
 

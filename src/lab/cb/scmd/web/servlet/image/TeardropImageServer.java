@@ -26,7 +26,7 @@ import lab.cb.scmd.web.util.Mutex;
 import org.xerial.util.Pair;
 
 /**
- * @todo 最大同時受付数を設定する？
+ * 
  * @author mattun
  * @version $Revision: $ $LastChangedDate: $
  * $LastChangedBy: $
@@ -45,7 +45,8 @@ public class TeardropImageServer extends HttpServlet{
 			formOrf = "";
 		try{
 			HttpSession session = request.getSession();
-			
+
+			//	セッションにデータのキャッシュがある場合はそれを使用する
             Pair<Teardrop, List<TeardropPoint>> pair = (Pair<Teardrop, List<TeardropPoint>>)session.getAttribute("teardrop_paramid="+paramID);
             Teardrop teardrop = null;
             List<TeardropPoint> plotList = null;

@@ -72,7 +72,7 @@ public class ViewDataSheetAction extends Action
 
         _logic.handleAction(view, request);
         CellList cellList = _logic.loadCellList(view);
-        view.loadImage();
+//        view.loadImage();
         
         // 表示するパラメータの設定
         List<MorphParameter> columns = null;
@@ -113,16 +113,16 @@ public class ViewDataSheetAction extends Action
             return mapping.findForward("failure");
         
         ColLabelIndex colLabelIndex = new ColLabelIndex(datasheet);
-        RowLabelIndex rowLabelIndex = new RowLabelIndex(datasheet);
-        
-        Table table = new Table();
-        
-        String [] imageLabel = new String[] {"Cell", "Nucleus", "Actin"};
+//        RowLabelIndex rowLabelIndex = new RowLabelIndex(datasheet);
+//        
+//        Table table = new Table();
+//        
+//        String [] imageLabel = new String[] {"Cell", "Nucleus", "Actin"};
 
         
         
         LinkedList<IndividualCell> cells = new LinkedList<IndividualCell>();        
-        ImageCache imageCache = ImageCache.getImageCache(request);
+//        ImageCache imageCache = ImageCache.getImageCache(request);
         int rowNum = 1;
         LinkedList<Cell> cellsInTheDisplay = new LinkedList<Cell>();
         for(Cell cell : cellList.getCellList())
@@ -138,7 +138,7 @@ public class ViewDataSheetAction extends Action
                 int h = cell.getBoundingRectangle().getY2() - cell.getBoundingRectangle().getY1() + 4;
 
                 String imageID = cell.getImageID(view.getPhotoType(), stainType);
-                imageCache.registerImage(imageID); 
+//                imageCache.registerImage(imageID); 
                 c.setImageID(stainType, imageID);
                 c.setHeight(h);
                 c.setWidth(w);
@@ -164,8 +164,8 @@ public class ViewDataSheetAction extends Action
         }
         
 
-        SCMDThreadManager.addTask(new PhotoClippingProcess(imageCache, cellsInTheDisplay, view.getPhotoType(), StainType.getStainTypes()));
-        SCMDThreadManager.addTask(new ImageCache.ImageRecallProcess(imageCache, 20));            
+//        SCMDThreadManager.addTask(new PhotoClippingProcess(imageCache, cellsInTheDisplay, view.getPhotoType(), StainType.getStainTypes()));
+//        SCMDThreadManager.addTask(new ImageCache.ImageRecallProcess(imageCache, 20));            
 
         request.setAttribute("cells", cells);
         request.setAttribute("tabName", DataSheetType.TAB_NAME);

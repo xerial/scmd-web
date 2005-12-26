@@ -205,6 +205,7 @@ public class ViewORFTeardropAction extends Action
             List<TeardropPoint> plotList = SCMDManager.getDBManager().queryResults("ViewORFTeadrop:paramstat",map,TeardropPoint.class);
             HttpSession session = request.getSession(true);
             Pair<Teardrop, List<TeardropPoint>> pair = new Pair<Teardrop, List<TeardropPoint>>(teardrop,plotList);
+            //	TeardropImageServer‚ÅÄ“x‚r‚p‚k”­s‚µ‚È‚¢‚Å‚·‚Ş‚æ‚¤‚ÉPairŒ^‚Å•Û‘¶‚·‚é
             session.setAttribute("teardrop_paramid="+paramID,pair);
 
             //List<TeardropPoint> plotList = (List<TeardropPoint>) ConnectionServer.query(sql3, new BeanListHandler(TeardropPoint.class));

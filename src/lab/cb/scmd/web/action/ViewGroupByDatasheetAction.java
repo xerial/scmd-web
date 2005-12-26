@@ -101,7 +101,7 @@ public class ViewGroupByDatasheetAction extends Action
             int rowEnd = rowBegin + numElementInAPage;
             if(rowEnd > numRow) rowEnd = numRow;
 
-            ImageCache imageCache = ImageCache.getImageCache(request);
+//            ImageCache imageCache = ImageCache.getImageCache(request);
             LinkedList<Cell> cellsInTheDisplay = new LinkedList<Cell>();
             for (int row = rowBegin; row <= rowEnd; row++)
             {
@@ -121,10 +121,10 @@ public class ViewGroupByDatasheetAction extends Action
                 for (int stain = 0; stain < StainType.STAIN_MAX; stain++)
                 {
                     String imageID = cell.getImageID(view.getPhotoType(), stain);
-                    imageCache.registerImage(imageID);
+//                    imageCache.registerImage(imageID);
                     argMap.put("imageID", imageID);
                     argMap.put("encoding", "jpeg");
-                    ImageElement img = new ImageElement(response.encodeURL("scmdimage.img"), (Map) argMap.clone());
+                    ImageElement img = new ImageElement(response.encodeURL("photo.img"), (Map) argMap.clone());
                     img.setProperty("alt", "cell ID=" + colIndex.get(row, "cell_local_id"));
                     img.setProperty("width", Integer.toString(w));
                     img.setProperty("height", Integer.toString(h));
@@ -139,8 +139,8 @@ public class ViewGroupByDatasheetAction extends Action
             }
 
             
-            SCMDThreadManager.addTask(new PhotoClippingProcess(imageCache, cellsInTheDisplay, view.getPhotoType(), StainType.getStainTypes()));
-            SCMDThreadManager.addTask(new ImageCache.ImageRecallProcess(imageCache, 20));            
+//            SCMDThreadManager.addTask(new PhotoClippingProcess(imageCache, cellsInTheDisplay, view.getPhotoType(), StainType.getStainTypes()));
+//            SCMDThreadManager.addTask(new ImageCache.ImageRecallProcess(imageCache, 20));            
             for (int i = 0; i < StainType.STAIN_MAX; i++)
             {
                 datasheet.decollateCol(i, new AttributeDecollator("bgcolor", "black"));

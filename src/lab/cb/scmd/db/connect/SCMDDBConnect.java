@@ -24,6 +24,12 @@ import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.exception.InvalidSQLException;
 import lab.cb.scmd.web.table.Table;
 
+/**
+ * TODO Ç±ÇÃÉNÉâÉXÇÕSingletonÇ≈Ç‡Ç¢Ç¢ÇÃÇ≈ÇÕÅH
+ * @author mattun
+ * @version $Revision: $ $LastChangedDate: $
+ * $LastChangedBy$
+ */
 public class SCMDDBConnect extends DBConnect {
     private String _groupQueryTableFile	= ""; 
     private String _cellBoxQueryTableFile = "";
