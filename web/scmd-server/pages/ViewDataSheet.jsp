@@ -71,7 +71,7 @@
 <tr>
 <logic:iterate id="stain" collection="<%= lab.cb.scmd.web.common.StainType.getStainTypes()%>">
 <td class="cellimg">
-<html:img page="/scmdimage.png?encoding=jpeg&imageID=${c.imageID[stain]}" border="0" width="${c.width}" height="${c.height}"/> 
+<html:img page="/photo.img?encoding=jpeg&imageID=${c.imageID[stain]}" border="0" width="${c.width}" height="${c.height}"/> 
 </td>
 </logic:iterate>
 
