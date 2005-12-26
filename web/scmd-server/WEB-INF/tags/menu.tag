@@ -16,7 +16,7 @@
 </logic:notEqual>
 </logic:equal>
 
-<script type="text/javascript" language="javascript" src="js/styleutil.js"></script>
+<script type="text/javascript" language="javascript" src="<%= request.getContextPath() + "/js/styleutil.js" %>"></script>
 
 
 <table width="700" border="0" cellspacing=0 cellpadding=0>
@@ -96,6 +96,24 @@
 </table>
 </td>
 
+<td align="center" id="download" onMouseOver="selectMenu('dmenu');" onMouseOut="detectMouseOut(event,this);">
+<table cellpadding="0" cellspacing="0">
+<tr class="menubar"><td><html:link page="/download.jsp">Download</html:link></td></tr>
+<tr><td>
+<table width="200" border="0" class="dropdownmenu" cellpadding="0" id="dmenu" align="left">
+<tr>
+<td  nowrap="nowrap">
+<ul>
+<li> <html:link page="/calmorph"> Image Processing Software </html:link> </li>
+<li> <html:link page="/download.jsp"> Datasheets </html:link></li>
+</ul>
+</td>
+</tr>
+</table>
+</td></tr>
+</table>    
+
+</td>     
 
 
 
@@ -142,7 +160,6 @@
 <td  nowrap="nowrap">
 <ul>
 <li> <html:link page="/publication.jsp"> Publications</html:link> </li>
-<li> <html:link page="/calmorph/"> CalMorph </html:link></li>
 <li> <html:link page="/about.jsp"> Info. & Staffs </html:link> </li>
 </ul>
 </td>

@@ -85,12 +85,14 @@ a:visited { color: #666666; }
 .cellimg { background-color: black; text-align: center; }
 .averageshape { text-align: center; vertical-align: bottom; }
 
-.small { font-family: Arial, Helvetica, sans-serif; font-size: 10pt}
+.small { font-family: Arial, Helvetica, sans-serif; font-size: 10pt;}
 .annotation { font-family: Arial, Helvetica, sans-serif; font-size: 10pt; color: #705030;}
-.default { font-family: Arial, Helvetica, sans-serif; font-size: 12pt}
+.default { font-family: Arial, Helvetica, sans-serif; font-size: 12pt;}
 
-.title { color: #006699; font-weight: bold; font-size:12pt }
+.title { color: #006699; font-weight: bold; font-size:12pt; }
+.subtitle { color: #666666; font-weight: bold; font-size:11pt; }
 .notice { color: #f08080; font-weight: bold; }
+.note { color #333333; font-size: 10pt; }
 .time { font-size: 8pt; }
 
 .orf { color: #0066b0; font-size: 12pt; font-weight: bold; }

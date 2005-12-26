@@ -36,9 +36,25 @@
 <td>
 <ul>
  <li>
-   Data Mining Tools for The <i>Saccharomyces Cerevisiae</i> Morphological Database. Taro L. Saito, Jun Sese, Yoichiro Nakatani, 
+ Yoshikazu Ohya, Jun Sese(*), Masashi Yukawa(*), Fumi Sano, Yoichiro
+Nakatani, Taro L. Saito, Ayaka Saka, Tomoyuki Fukuda, Satoru Ishihara,
+Satomi Oka, Genjiro Suzuki, Machika Watanabe, Aiko Hirata, Miwaka Ohtani,
+Hiroshi Sawai, Nicolas Fraysse, Jean-Paul Latge, Jean M. Francois, Markus
+Aebi, Seiji Tanaka, Sachiko Muramatsu, Hiroyuki Araki, Kintake Sonoike,
+Satoru Nogami, and Shinichi Morishita.
+High-dimensional and large-scale phenotyping of yeast mutants.
+<i>PNAS published December 19, 2005, 10.1073/pnas.0509436102 ( Genetics ) </i>
+(* equally contributed authors)
+<a href="http://www.pnas.org/cgi/content/abstract/0509436102v1">http://www.pnas.org/cgi/content/abstract/0509436102v1</a>
+ </li>
+ <br/>
+ <br/>
+ <li>
+   Data Mining Tools for The <i>Saccharomyces Cerevisiae</i> Morphological Database. Taro L. Saito(*), Jun Sese(*), Yoichiro Nakatani, 
    Fumi Sano, Masashi Yukawa, Yoshikazu Ohya and Shinichi Morishita.
-  <i>Nucl. Acids. Res. 33, Web Server Issue</i>: (<a href="http://nar.oxfordjournals.org/cgi/content/abstract/33/suppl_2/W753">in press</a>)
+  <i>Nucleic Acids Research 2005. Vol. 33 (Web Server Issue)</i>. 
+  (* equally contributed authors)
+  <a href="http://nar.oxfordjournals.org/cgi/content/abstract/33/suppl_2/W753">http://nar.oxfordjournals.org/cgi/content/abstract/33/suppl_2/W753</a>
  </li>
  <br>
  <br>

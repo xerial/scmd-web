@@ -64,7 +64,7 @@ ${morphParam.displayname}
 </tr>
 <tr>
 <td class="menubutton" align="center">
-download as [<html:link page="/ViewORFParameter.do?format=xml">XML</html:link>] [<html:link page="/ViewORFParameter.do?format=tab">tab-separated sheet</html:link>]
+download the ORF parameter datasheet as [<html:link page="/ViewORFParameter.do?format=xml">XML</html:link>] [<html:link page="/ViewORFParameter.do?format=tab">tab-separated sheet</html:link>]
 </td>
 </tr>
 </table>
