@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
+import lab.cb.scmd.db.common.GOQuery;
 import lab.cb.scmd.db.common.PageStatus;
 import lab.cb.scmd.db.common.XMLQuery;
 import lab.cb.scmd.exception.SCMDException;
@@ -276,30 +277,24 @@ public class SCMDXMLQuery implements XMLQuery {
         for(int i = 0; i < keyword.length; i++ ) {
             if( i != 0 )
                 whereClause += " AND ";
-            String curkey = keyword[i];
-            if( curkey.matches("^GO:[0-9]+") ) {
-                while(curkey.length() < 10) {
-                    curkey = "GO:0" + curkey.substring(3);
-                }
-                    
-                whereClause += "systematicname in " +
-                        "( select distinct strainname as systematicname " +
-                        "from goassociation where goid in " +
-                        "( select cid as goid from term_graph " +
-                        "where pid = '" + curkey + "'))";
-            } else {
-                String exp = "'" + keyword[i] + "%'";
-                String exp_annot = "'%" + keyword[i] + "%'";
-                whereClause += "(systematicname ILIKE " + exp 
+            String exp = "'" + keyword[i] + "%'";
+            String exp_annot = "'%" + keyword[i] + "%'";
+            
+            // curkey ‚ª Gene Ontology‚Éˆê’v‚·‚éê‡
+            whereClause += "( "; 
+            whereClause	+= GOQuery.searchBoxWhereClause(keyword[i]);
+    		whereClause += " OR ";
+            // curkey ‚ª primaryname ,alias, annotation ‚Ìê‡‚É‚ÍA‚±‚Ìwhere ‹å‚Å‚Ð‚Á‚©‚©‚é        
+            whereClause += "(" + "systematicname ILIKE " + exp 
                     + " OR primaryname ILIKE " + exp 
                     + " OR aliasname ILIKE " + exp
                     + " OR annotation ILIKE " + exp_annot + ")";
-            }
+            whereClause += ")";
         }
-		String sql = "SELECT systematicname, primaryname, aliasname, annotation FROM "
-            + "(SELECT strainname FROM " + summaryTable + ") AS GT INNER JOIN " 
-            + "(SELECT systematicname, primaryname, aliasname, annotation FROM " + genenameTable 
-            + " " + whereClause + ") AS QT ON systematicname = strainname";
+//		String sql = "SELECT systematicname, primaryname, aliasname, annotation FROM "
+//            + "(SELECT strainname FROM " + summaryTable + ") AS GT INNER JOIN " 
+//            + "(SELECT systematicname, primaryname, aliasname, annotation FROM " + genenameTable 
+//            + " " + whereClause + ") AS QT ON systematicname = strainname";
 //		    + " genename_20040719 " + whereClause;
 
         try {
