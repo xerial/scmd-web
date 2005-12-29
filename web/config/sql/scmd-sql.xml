@@ -253,8 +253,9 @@
 	</query>
 	
 	<!-- SCMDXMLQuery.java -->
-	<query name="SCMDXMLQuery.getSearchResult" sql="SELECT systematicname, primaryname, aliasname, annotation FROM 
-		(SELECT strainname FROM ${DB_SUMMARY} AS GT INNER JOIN
+	<query name="SCMDXMLQuery.getSearchResult" sql=
+		"SELECT systematicname, primaryname, aliasname, annotation FROM 
+		(SELECT strainname FROM ${DB_SUMMARY}) AS GT INNER JOIN
 		(SELECT systematicname, primaryname, aliasname, annotation FROM ${DB_GENENAME} ${whereCaluse}) 
 		AS QT ON systematicname = strainname">
 		<param name="whereCaluse"/>
