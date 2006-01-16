@@ -39,7 +39,7 @@ public class SCMDLogging {
 	 */
 	public void Initialize(String filepath,Level level,boolean xmllog,int t) throws IOException{
 		filelogger = Logger.getLogger("systemlog");
-		FileHandler fh = new FileHandler(filepath);
+		FileHandler fh = new FileHandler(filepath+"smcd.log");
 		if(xmllog) {
 			fh.setFormatter(new XMLFormatter());
 		} else {
