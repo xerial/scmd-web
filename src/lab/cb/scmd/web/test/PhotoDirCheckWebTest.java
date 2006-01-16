@@ -5,9 +5,12 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.imageio.ImageIO;
 
+import lab.cb.scmd.db.connect.SCMDManager;
 import lab.cb.scmd.web.common.SCMDConfiguration;
 
 /**
@@ -75,6 +78,21 @@ public class PhotoDirCheckWebTest extends WebTestCase {
 			//	analyzed_photo_clipsをチェック
 			if(!checkDir(file.getAbsolutePath(),"analyzed_photo_clips")) {
 				return false; 
+			}
+			//	データベースからすべてを取り出す
+			try{
+				ResultSet rs = SCMDManager.getDBManager().queryExecute("SELECT systematicname,primaryname,aliasname,annotation FROM (SELECT systematicname,primaryname,aliasname,annotation FROM genename_20040719) AS genetable INNER JOIN analysisdata_20050131 ON genetable.systematicname = analysisdata_20050131.strainname ORDER BY systematicname");
+				if(rs == null) {
+					setReport("SQLの発行に失敗しました");
+					return false;
+				}
+				while(rs.next()) {
+					if(!checkDir(file.getAbsolutePath()+"/analyzed_photo_clips",rs.getString("systematicname"))) {
+						return false; 
+					}
+				}
+			} catch(SQLException e) {
+				
 			}
 		} catch(MalformedURLException e) {
 			setReport("SCMD_PHOTO_DIR_URLのアドレスがおかしいです。");
