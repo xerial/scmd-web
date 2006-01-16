@@ -155,7 +155,7 @@
 	</query>
 	
 	<!-- DrawTeardropAction.java -->
-	<query name="DrawTeardrop:teardrop" sql="select t1.paramid as &quot;paramID&quot;, t1.groupid, t1.average, t1.sd, t1.min, t1.max, t2.average as wt_average, t2.sd as wt_sd from ${DB_PARAM_AVG_SD} as t1 inner join ${DB_PARAM_AVG_SD_WT} as t2 using(paramid) where t1.groupid=${paramID} and t2.groupid=${paramID} and paramid=${groupID}">
+	<query name="DrawTeardrop:teardrop" sql="select t1.paramid as &quot;paramID&quot;, t1.groupid, t1.average, t1.sd, t1.min, t1.max, t2.average as wt_average, t2.sd as wt_sd from ${DB_PARAM_AVG_SD} as t1 inner join ${DB_PARAM_AVG_SD_WT} as t2 using(paramid) where t1.groupid=${groupID} and t2.groupid=${groupID} and paramid=${paramID}">
 		<param name="groupID"/>
 		<param name="paramID"/>
 	</query>
