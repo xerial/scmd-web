@@ -162,6 +162,8 @@
 		<form-bean name="paramForm" type="lab.cb.scmd.web.formbean.ViewParamSheetForm"/>
 		<form-bean name="drawTeardropForm" type="lab.cb.scmd.web.formbean.DrawTeardropForm"/>
 		<form-bean name="orfParamForm" type="lab.cb.scmd.web.formbean.ViewORFParameterForm"/>
+		<form-bean name="singleCellForm" type="lab.cb.scmd.web.formbean.DisplaySingleCellForm"/>
+		<form-bean name="paramsForm" type="lab.cb.scmd.web.formbean.EnrichedParamsForm"/>
     </form-beans>
 
 

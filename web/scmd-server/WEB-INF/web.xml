@@ -156,6 +156,15 @@
 	<servlet-name>PhotoClipImageServer</servlet-name>
 	<url-pattern>/photo.img</url-pattern>
   </servlet-mapping>
+	
+  <servlet>
+	<servlet-name>SCMDServerTest</servlet-name>
+	<servlet-class>lab.cb.scmd.web.servlet.SCMDServerTest</servlet-class>
+   </servlet>
+   <servlet-mapping>
+	<servlet-name>SCMDServerTest</servlet-name>
+	<url-pattern>/SCMDServerTest</url-pattern>
+  </servlet-mapping>
    <!-- 
 	   エラーログ配信RSS
 	   IP制限,BASIC認証をかける必要がある（Fileterで実装する？)
