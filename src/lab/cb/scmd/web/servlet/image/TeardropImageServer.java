@@ -77,6 +77,7 @@ public class TeardropImageServer extends HttpServlet{
 				plotList = SCMDManager.getDBManager().queryResults("ViewORFTeadrop:paramstat",map,TeardropPoint.class);
             }
 			ImageIO.write(teardrop.drawImage(plotList),encoding,response.getOutputStream());
+			return;
 		} catch(SQLException e) {
 			e.printStackTrace();
 	    } catch(SCMDException e) {
@@ -84,6 +85,7 @@ public class TeardropImageServer extends HttpServlet{
 	    } finally {
 	    	mutex.unlock();
 	    }
+		response.setStatus(404);
 	}
 }
 

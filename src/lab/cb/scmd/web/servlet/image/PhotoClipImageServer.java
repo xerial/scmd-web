@@ -29,7 +29,7 @@ import lab.cb.scmd.web.table.Table;
  */
 public class PhotoClipImageServer extends HttpServlet{
 	//	HashMapよりFastHashMapを使用したほうがいい？
-	protected LinkedHashMap<String,BufferedImage> cache = new LinkedHashMap<String,BufferedImage>();
+	protected static LinkedHashMap<String,BufferedImage> cache = new LinkedHashMap<String,BufferedImage>();
 	protected static SCMDDBConnect scmdconnect = new SCMDDBConnect();
 	protected static int CACHE_SIZE = 1000;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -59,6 +59,7 @@ public class PhotoClipImageServer extends HttpServlet{
 			}
 			if(img == null) {
 				System.out.println("Not found " + getPhotoURL(strainname,stain_type,image_number,photo_type,cell_local_id));
+				response.setStatus(404);
 				return;
 			} else {
 				//	キャッシュサイズがいっぱいの場合は最後にキャッシュしたデータを消す
