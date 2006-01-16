@@ -169,6 +169,24 @@ public class DBManager implements SCMDManagerModel{
 		return updateline;
 	}
 
+	/**
+	 * StatementのexecuteQueryと同じ動作をする
+	 * 直接SQL文章を書きたい場合に使う
+	 * 
+	 * @param sql
+	 * @return
+	 * @throws SQLException
+	 */
+	public ResultSet queryExecute(String sql) throws SQLException {
+		Connection con = pooling.getPoolConnection();
+		Statement stmt = con.createStatement();
+		try{
+			return stmt.executeQuery(sql);
+		} finally {
+			con.close();
+		}
+	}
+	
     /**
      * @param <T>
      * @param name SQLXMLに記述された名前
