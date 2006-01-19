@@ -36,7 +36,7 @@ public class ErrorCatchFilter implements Filter {
 			ErrorLog.insert(""+e.getMessage(),"ErrorCatchFilterが受け取った重要なエラー",e);
 			ex = e;
 			e.printStackTrace();
-//			throw e;
+		//	throw e;
 		} finally {
 			//	エラーをキャッチした場合は500番のInternal Server Errorを出す
 			if(ex != null) {
