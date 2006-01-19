@@ -26,7 +26,7 @@
 		<param name="genename"/>
 	</query>
 	<!-- lab.cb.scmd.web.image.Plot2DServlet -->
-	<query name="lab.cb.scmd.web.image.Plot2DServlet:plot_wt" sql="select t1.average as p1, t2.average as p2 from ${DB_PARAMSTAT} as t1 inner join ${DB_PARAMSTAT} as t2 using (strainname) where t1.paramid=${param1} and t2.paramid=${param2} and t1.groupid=0 and t2.groupid=0">
+	<query name="lab.cb.scmd.web.image.Plot2DServlet:plot_wt" sql="select t1.average as p1, t2.average as p2 from ${DB_PARAMSTAT_WT} as t1 inner join ${DB_PARAMSTAT_WT} as t2 using (strainname) where t1.paramid=${param1} and t2.paramid=${param2} and t1.groupid=0 and t2.groupid=0">
 		<param name="param1"/>
 		<param name="param2"/>
 	</query>
