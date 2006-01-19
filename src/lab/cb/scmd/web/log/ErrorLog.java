@@ -24,9 +24,11 @@ public class ErrorLog {
 	
 	public static void insert(String title,String description,Exception e) {
 		StringWriter w = new StringWriter();
-		PrintWriter pw = new PrintWriter(w);
-		e.printStackTrace(pw);
-		pw.close();
+		if(e != null) {
+			PrintWriter pw = new PrintWriter(w);
+			e.printStackTrace(pw);
+			pw.close();
+		}
 		insert(title,description,w.toString());
 	}
 
@@ -41,9 +43,9 @@ public class ErrorLog {
 		}
 
 		Properties props = new Properties();
-		props.setProperty("title",title);
-		props.setProperty("description",description);
-		props.setProperty("content",content);
+		props.setProperty("title",""+title);
+		props.setProperty("description",""+description);
+		props.setProperty("content",""+content);
 		try{
 			FileOutputStream file = new FileOutputStream(logdir.getAbsolutePath()+"/"+new Timestamp().getDateTime());
 			props.storeToXML(file,"UTF-8");
