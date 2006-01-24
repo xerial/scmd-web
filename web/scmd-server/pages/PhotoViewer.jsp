@@ -95,7 +95,7 @@ Magnification:
 <script language="javascript">
 <!--
 function cellinfo(cellID, width){
-    target_url = "<%= response.encodeURL("ViewCellInfo.do") %>?"
+    target_url = "<%= response.encodeURL("ViewCellInfo.do") %>;jsessionid=<%=session.getId()%>?"
      + "cellID=" + cellID;
      widthArg = "width=" + (width * 3 + 100);
      infowin=window.open
