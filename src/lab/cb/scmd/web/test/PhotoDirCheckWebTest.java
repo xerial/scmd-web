@@ -87,7 +87,16 @@ public class PhotoDirCheckWebTest extends WebTestCase {
 					return false;
 				}
 				while(rs.next()) {
+					if(!checkDir(file.getAbsolutePath()+"/analyzed_photo",rs.getString("systematicname").toLowerCase())) {
+						return false; 
+					}
+					if(!checkDir(file.getAbsolutePath()+"/half_photo",rs.getString("systematicname").toLowerCase())) {
+						return false; 
+					}
 					if(!checkDir(file.getAbsolutePath()+"/analyzed_photo_clips",rs.getString("systematicname").toLowerCase())) {
+						return false; 
+					}
+					if(!checkDir(file.getAbsolutePath()+"/half_photo_clips",rs.getString("systematicname").toLowerCase())) {
 						return false; 
 					}
 				}
