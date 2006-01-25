@@ -196,7 +196,7 @@ public class CellPainter extends HttpServlet
         double yRange = (shortAxis / 2.0) * (Math.sin(neckPosition * radian) + 1) + longAxisOfBud
                 * Math.sin(budGrowthDirection * radian);
 
-        int X_BASE = 50;
+        int X_BASE = 60;
         int Y_BASE = 118;
         
         int xCenter = (int) (X_BASE - (xRange / 2.0) + (longAxis / 2.0));
@@ -240,6 +240,9 @@ public class CellPainter extends HttpServlet
         if(isClip)
         {
             int x1 = xCenter - radiusOfLongAxis;
+            if(x1<=0) {
+            	x1 = 0;
+            }
             int y1 = Algorithm.<Integer>minmax(yOfBudOffset - radiusOfBudLongAxis, yCenter - radiusOfShortAxis).min();
             int xwidth = Algorithm.<Integer>minmax(xOfBudOffset + radiusOfBudLongAxis, xCenter + radiusOfLongAxis).max() - x1;
             int ywidth = yCenter + radiusOfShortAxis - y1;
