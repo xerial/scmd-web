@@ -89,10 +89,28 @@ public class PhotoClipImageServer extends HttpServlet{
 					.getProperty("SCMD_PHOTO_DIR_URL"));
 			String photoPath;
 			if (photoType == PhotoType.ORIGINAL_PHOTO) {
-				photoPath = "/"+PhotoType.getPhotoDirectory(photoType) + "/" + strainname
-						+ "/" + strainname + "-"
-						+ StainType.getStainTypeName(stainType) + image_number
-						+ PhotoType.getPhotoSuffix(photoType) + ".jpg";
+				List list = table.getRowList(1);
+
+				StringBuilder path = new StringBuilder();
+				path.append("/");
+				path.append("half_photo_clips");
+				path.append("/");
+				path.append(strainname);
+				path.append("/");
+				path.append(strainname);
+				path.append("-");
+				path.append(StainType.STAIN_TYPE[stainType]);
+				path.append(image_number);
+				path.append("_");
+				path.append(list.get(0));
+				path.append("_");
+				path.append(list.get(1));
+				path.append("_");
+				path.append(list.get(2));
+				path.append("_");
+				path.append(list.get(3));
+				path.append(".jpg");
+				photoPath = path.toString();
 			} else {
 				List list = table.getRowList(1);
 
