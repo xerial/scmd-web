@@ -36,21 +36,20 @@ public class PhotoClipImageServer extends HttpServlet{
 		String encoding = request.getParameter("encoding");
 		String imageID = request.getParameter("imageID");
 
+		if(imageID == null)
+			return;
+		
 		if(cache.containsKey(imageID)) {
 //			System.out.println("キャッシュから画像を出力します");
 		} else {
 			String split[] = imageID.split("_");
 			String strainname = null;
-			int photo_type = -1;
-			int stain_type = -1;
-			int image_number = -1;
-			int cell_local_id = -1;
 	
 			strainname = split[1];
-			photo_type = Integer.parseInt(split[2]);
-			stain_type = Integer.parseInt(split[3]);
-			image_number = Integer.parseInt(split[4]);
-			cell_local_id = Integer.parseInt(split[5]);
+			int photo_type = Integer.parseInt(split[2]);
+			int stain_type = Integer.parseInt(split[3]);
+			int image_number = Integer.parseInt(split[4]);
+			int cell_local_id = Integer.parseInt(split[5]);
 			BufferedImage img = null;
 			try{
 				img = ImageIO.read(getPhotoURL(strainname,stain_type,image_number,photo_type,cell_local_id));
