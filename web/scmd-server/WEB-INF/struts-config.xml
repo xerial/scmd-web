@@ -445,7 +445,7 @@
 
 		<action path="/DisplaySingleCell"
 			name="singleCellForm"
-			scope="page"
+			scope="request"
 			validate="true"
 			type="lab.cb.scmd.web.action.DisplaySingleCellAction"
 			input="/png/na_small.png">
@@ -453,7 +453,7 @@
 
 		<action path="/GOEnrichedGraphs"
 			name="paramsForm"
-			scope="page"
+			scope="request"
 			validate="true"
 			type="lab.cb.scmd.web.action.GOEnrichedGraphs"
 			input="/error.jsp">
