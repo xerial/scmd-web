@@ -32,14 +32,14 @@ public class ViewParamSheetAction extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        String parameter = (String) request.getParameter("param");
-
+        String parameter = request.getParameter("param");
+        String scope = request.getParameter("scope");
 //        HttpSession session = request.getSession(true);
 //        ViewParamSheetForm view = (ViewParamSheetForm) session.getAttribute("view");
 //        if(view == null)
 //            view = new ViewParamSheetForm();
 
-        request.setAttribute("param", DBUtil.getParamInfo(parameter, "orf"));
+        request.setAttribute("param", DBUtil.getParamInfo(parameter, scope));
         return mapping.findForward("success");
     }
     
