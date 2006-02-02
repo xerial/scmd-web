@@ -214,7 +214,7 @@
 <logic:iterate id="p" name="cellParamList" type="lab.cb.scmd.web.sessiondata.MorphParameter">
 <tr>
 <td>
-<html:link page="/ViewORFParameter.do?columnType=input&paramID=${p.id}&sortspec=${p.id}">${p.name}</html:link>
+<html:link page="/ParamSheet.do?param=${p.name}&scope=cell">${p.name}</html:link>
 </td>
 <td bgcolor="#FFEFEF"><scmd-base:paramdef def="${p.displayname}"/></td>
 <td bgcolor="#EFEFEF" align="center">${p.stain} </td>
