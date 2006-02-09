@@ -30,7 +30,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import lab.cb.scmd.db.common.TableQuery;
 import lab.cb.scmd.db.connect.SCMDManager;
 import lab.cb.scmd.util.stat.EliminateOnePercentOfBothSidesStrategy;
 import lab.cb.scmd.util.stat.Statistics;
@@ -38,7 +37,7 @@ import lab.cb.scmd.util.stat.StatisticsWithMissingValueSupport;
 import lab.cb.scmd.web.bean.CellViewerForm;
 import lab.cb.scmd.web.bean.ParamPlotForm;
 import lab.cb.scmd.web.bean.UserSelection;
-import lab.cb.scmd.web.common.SCMDConfiguration;
+import lab.cb.scmd.web.common.SCMDCache;
 import lab.cb.scmd.web.common.SCMDSessionManager;
 import lab.cb.scmd.web.design.PlotColor;
 import lab.cb.scmd.web.table.ColLabelIndex;
@@ -56,7 +55,7 @@ public class Plot2DServlet extends HttpServlet
     public Plot2DServlet() {
         super();
     }
-
+    public static SCMDCache<String,Table> cache = new SCMDCache<String,Table>(1000);
     final int IMAGEWIDTH = 300;        
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -90,7 +89,13 @@ public class Plot2DServlet extends HttpServlet
 			map.put("param1",String.valueOf(plotForm.getParam1()));
 			map.put("param2",String.valueOf(plotForm.getParam2()));
 			plotTable = SCMDManager.getDBManager().queryTable("lab.cb.scmd.web.image.Plot2DServlet:plot",map);
-			plotTable_wt = SCMDManager.getDBManager().queryTable("lab.cb.scmd.web.image.Plot2DServlet:plot_wt",map);
+			//	ƒLƒƒƒbƒVƒ…
+			if(cache.get(plotForm.getParam1()+"-"+plotForm.getParam2()) == null){
+				plotTable_wt = SCMDManager.getDBManager().queryTable("lab.cb.scmd.web.image.Plot2DServlet:plot_wt",map);				
+				cache.put(plotForm.getParam1()+"-"+plotForm.getParam2(),plotTable_wt);
+			} else {
+				plotTable_wt = cache.get(plotForm.getParam1()+"-"+plotForm.getParam2());
+			}
 
 //            plotTable = ConnectionServer.retrieveTable(sql, 
 //                            SCMDConfiguration.getProperty("DB_PARAMSTAT", "paramstat"),

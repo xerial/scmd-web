@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.imageio.IIOException;
@@ -16,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import lab.cb.scmd.db.connect.SCMDDBConnect;
 import lab.cb.scmd.web.common.PhotoType;
+import lab.cb.scmd.web.common.SCMDCache;
 import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.common.StainType;
 import lab.cb.scmd.web.exception.InvalidSQLException;
@@ -29,9 +29,8 @@ import lab.cb.scmd.web.table.Table;
  */
 public class PhotoClipImageServer extends HttpServlet{
 	//	HashMapよりFastHashMapを使用したほうがいい？
-	protected static LinkedHashMap<String,BufferedImage> cache = new LinkedHashMap<String,BufferedImage>();
+	protected static SCMDCache<String,BufferedImage> cache = new SCMDCache<String,BufferedImage>(1000);
 	protected static SCMDDBConnect scmdconnect = new SCMDDBConnect();
-	protected static int CACHE_SIZE = 1000;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String encoding = request.getParameter("encoding");
 		String imageID = request.getParameter("imageID");
@@ -61,10 +60,6 @@ public class PhotoClipImageServer extends HttpServlet{
 				response.setStatus(404);
 				return;
 			} else {
-				//	キャッシュサイズがいっぱいの場合は最後にキャッシュしたデータを消す
-				if(cache.size() > CACHE_SIZE) {
-					cache.remove(cache.keySet().iterator().next());
-				}
 				//	キャッシュに保存する
 				cache.put(imageID,img);
 			}
