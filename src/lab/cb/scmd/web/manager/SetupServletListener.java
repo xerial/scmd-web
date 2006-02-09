@@ -74,7 +74,7 @@ public class SetupServletListener extends HttpServlet implements ConfigObserver,
 
         //	Loggingの初期化
         try{
-        	SCMDLogging.Initialize(SCMDConfiguration.getProperty("SCMD_ROOT")+SCMDConfiguration.getProperty("LOG_FILEPATH"),Level.ALL,true);
+        	SCMDLogging.Initialize(SCMDConfiguration.getProperty("SCMD_ROOT")+SCMDConfiguration.getProperty("LOG_FILEPATH"),Level.INFO,true);
             System.out.println("[scmd-server] SCMDLogging is initialized");
         } catch(IOException e) {
         	
@@ -84,7 +84,7 @@ public class SetupServletListener extends HttpServlet implements ConfigObserver,
         // register myself
         SCMDConfiguration.addObserver(this);
 
-        SCMDLogging.file("セットアップが終了しました",Level.ALL);
+        SCMDLogging.file("セットアップが終了しました",Level.INFO);
     }
     
     
