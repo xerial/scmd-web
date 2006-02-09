@@ -156,7 +156,7 @@ public class SqlQuery {
 				}
 			}
 		}
-		SCMDLogging.file(name+"\n"+select,Level.SEVERE);
+		SCMDLogging.file(name+"\n"+select,Level.FINE);
 		return select;
 	}
 	/**
@@ -263,4 +263,4 @@ public class SqlQuery {
 
 //	-------------------------
 //	$log: $
-//	------------------------->>>>>>> .merge-right.r816
+//	-------------------------
