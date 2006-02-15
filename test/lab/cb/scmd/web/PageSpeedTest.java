@@ -3,6 +3,7 @@ package lab.cb.scmd.web;
 import java.io.IOException;
 
 import junit.framework.TestCase;
+import lab.cb.scmd.GlobalConfigure;
 
 import com.meterware.httpunit.GetMethodWebRequest;
 import com.meterware.httpunit.WebConversation;
@@ -19,7 +20,7 @@ public class PageSpeedTest extends TestCase {
 	final int ERROR_CODES[] = {403,404,500,503};
 	int MAX_RESPONSETIME = 30;	//	Ç‡Çµ30ïbÇÃä‘Ç…éÊìæÇ≈Ç´Ç»Ç¢èÍçáÇÕí ím
 
-	static String SERVERURL="http://localhost:8080/scmd-server";
+	static String SERVERURL=GlobalConfigure.SERVER_URL;
 	static String CheckURLS[] = {
 			"/ViewORFList.do",
 			"/ParameterHelp.do",
