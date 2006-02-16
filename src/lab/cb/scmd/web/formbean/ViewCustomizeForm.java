@@ -10,6 +10,7 @@
 package lab.cb.scmd.web.formbean;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -18,6 +19,7 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 
 import lab.cb.scmd.db.common.TableQuery;
+import lab.cb.scmd.db.connect.SCMDManager;
 import lab.cb.scmd.db.connect.SCMDTableQuery;
 import lab.cb.scmd.web.common.SCMDConfiguration;
 import lab.cb.scmd.web.sessiondata.MorphParameter;
@@ -176,61 +178,69 @@ public class ViewCustomizeForm extends ActionForm
     public List<MorphParameter> getORFDetailCategoryList() {
         TableQuery query = SCMDConfiguration.getTableQueryInstance();
         Set<Integer> category = null;
-        if( getOrfCategory().equals("Cell Wall") ) {
-            category = new TreeSet<Integer> ();
-            for(int i = 221; i < 228; i++ ) {
-                category.add(i);
-            }
-            // nucleus status A
-            for(int i = 261; i < 269; i++ ) { 
-                category.add(i);
-            }
-            // nucleus status A1B
-            for(int i = 301; i < 328; i++ ) {
-                category.add(i);
-            }
-            // nucleus status C
-            for(int i = 380; i < 409; i++ ) {
-                category.add(i);
-            }
-            
-        } else if( getOrfCategory().equals("Actin") ) {
-            category = new TreeSet<Integer> ();
-            for(int i = 228; i < 243; i++ ) {
-                category.add(i);
-            }
-            // nucleus A
-            for(int i = 228; i < 243; i++ ) {
-                category.add(i);
-            }
-            // nucleus A1B
-            for(int i = 269; i < 298; i++ ) {
-                category.add(i);
-            }
-            // nucleus C
-            for(int i = 409; i < 428; i++ ) {
-                category.add(i);
-            }
-        } else { // Dapi
-            category = new TreeSet<Integer> ();
-            for(int i = 243; i < 261; i++ ) {
-                category.add(i);
-            }
-            // nucleus A
-            for(int i = 279; i < 280; i++ ) {
-                category.add(i);
-            }
-            // nucleus A1B
-            for(int i = 347; i < 379; i++ ) {
-                category.add(i);
-            }
-            // nucleus C
-            for(int i = 428; i < 502; i++ ) {
-                category.add(i);
-            }
+//        if( getOrfCategory().equals("Cell Wall") ) {
+//            category = new TreeSet<Integer> ();
+//            for(int i = 221; i < 228; i++ ) {
+//                category.add(i);
+//            }
+//            // nucleus status A
+//            for(int i = 261; i < 269; i++ ) { 
+//                category.add(i);
+//            }
+//            // nucleus status A1B
+//            for(int i = 301; i < 328; i++ ) {
+//                category.add(i);
+//            }
+//            // nucleus status C
+//            for(int i = 380; i < 409; i++ ) {
+//                category.add(i);
+//            }
+//            
+//        } else if( getOrfCategory().equals("Actin") ) {
+//            category = new TreeSet<Integer> ();
+//            for(int i = 228; i < 243; i++ ) {
+//                category.add(i);
+//            }
+//            // nucleus A
+//            for(int i = 228; i < 243; i++ ) {
+//                category.add(i);
+//            }
+//            // nucleus A1B
+//            for(int i = 269; i < 298; i++ ) {
+//                category.add(i);
+//            }
+//            // nucleus C
+//            for(int i = 409; i < 428; i++ ) {
+//                category.add(i);
+//            }
+//        } else { // Dapi
+//            category = new TreeSet<Integer> ();
+//            for(int i = 243; i < 261; i++ ) {
+//                category.add(i);
+//            }
+//            // nucleus A
+//            for(int i = 279; i < 280; i++ ) {
+//                category.add(i);
+//            }
+//            // nucleus A1B
+//            for(int i = 347; i < 379; i++ ) {
+//                category.add(i);
+//            }
+//            // nucleus C
+//            for(int i = 428; i < 502; i++ ) {
+//                category.add(i);
+//            }
+//        }
+       // List<MorphParameter> params = query.getParameterInfo(category);
+        HashMap<String,String> map = new HashMap<String,String>();
+        List<MorphParameter> params = null;
+        map.put("stain",getOrfCategory());
+        map.put("scope","orf");
+        try{
+        	params = SCMDManager.getDBManager().queryResults("ViewCustomizeForm.getParameterList",map,MorphParameter.class);
+        } catch(SQLException e) {
+        	
         }
-        
-        List<MorphParameter> params = query.getParameterInfo(category);
         return params;
     }
 }

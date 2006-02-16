@@ -9,14 +9,14 @@
 //--------------------------------------
 package lab.cb.scmd.web.action;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import lab.cb.scmd.db.common.TableQuery;
-import lab.cb.scmd.web.common.SCMDConfiguration;
+import lab.cb.scmd.db.connect.SCMDManager;
 import lab.cb.scmd.web.formbean.ViewCustomizeForm;
 import lab.cb.scmd.web.sessiondata.MorphParameter;
 import lab.cb.scmd.web.sessiondata.ParamUserSelection;
@@ -49,7 +49,10 @@ public class CustomizeViewAction extends Action
         ViewCustomizeForm selection = (ViewCustomizeForm) form;
         List<MorphParameter> cellParameter = selection.getCellParameterList();
         List<MorphParameter> orfParameter  = selection.getORFParameterList();
-        
+//        HashMap<String,String> map = new HashMap<String,String>();
+//        SCMDManager.getDBManager().query("")
+//        map.put("","");
+        //List<MorphParameter> orfParameter =  
         // session‚ðŽæ“¾
         HttpSession session = request.getSession(true);
         ParamUserSelection paramSelection = (ParamUserSelection) session.getAttribute("paramSelection");
