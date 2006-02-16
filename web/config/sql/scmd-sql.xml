@@ -269,4 +269,10 @@
 		<param name="systematicname"/>
 		<param name="orsystematicnames"/>
 	</query>
+	
+	<query name="ViewCustomizeForm.getParameterList" 
+		sql="select * from parameterlist where scope = '${scope}' AND lower(stain) = lower('${stain}');">
+		<param name="scope"/>
+		<param name="stain"/>
+	</query>
 </db>
