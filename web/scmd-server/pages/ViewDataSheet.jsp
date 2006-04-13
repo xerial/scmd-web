@@ -80,7 +80,13 @@
 <c:if test="${col % 3 == 1}">bgcolor="#E0F0F0"</c:if>
 <c:if test="${col % 3 == 2}">bgcolor="#F0F0E0"</c:if>
 >
-<bean:write name="c" property="value(${p.name})"/>
+<bean:define id="column" name="c" property="value(${p.name})"/>
+
+<c:choose>
+<c:when test="${column == '-1.0'}">N/A</c:when>
+<c:otherwise>${column}</c:otherwise>
+</c:choose>
+
 </td>
 </logic:iterate>
 </tr>
