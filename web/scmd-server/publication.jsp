@@ -35,6 +35,21 @@
 <tr>
 <td>
 <ul>
+<li>
+Kikuchi Y, Mizuuchi E, Nogami S, Morishita S, and Ohya, Y.
+Involvement of Rho-type GTPase in control of cell size in Saccharomyces
+cerevisiae.
+FEMS Yeast Research (in press)
+</li>
+<br/>
+<li>
+Suzuki G, Sawai H, Ohtani M, Nogami S, Sano-Kumagai F, Saka A, Yukawa M,
+Saito T L, Sese J, Hirata D, Morishita S, and Ohya Y.
+Evaluation of image processing programs for accurate measurement of budding
+and fission yeast morphology.
+Curr Genet. 2006 Jan 6;:1-11
+</li>
+<br/>
  <li>
  Yoshikazu Ohya, Jun Sese(*), Masashi Yukawa(*), Fumi Sano, Yoichiro
 Nakatani, Taro L. Saito, Ayaka Saka, Tomoyuki Fukuda, Satoru Ishihara,

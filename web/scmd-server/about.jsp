@@ -111,70 +111,45 @@ Finally, we are continuing to improve the SCMD database; therefore, any feedback
 		     <ul>
 			  <br>
               <li><span class=notation> Postdoctroal Fellows </span> 
-                <ul>
-                  <li><a href="mailto:kumagai@k.u-tokyo.ac.jp"> Fumi Sano</a> </li>
-                  <li><a href="mailto:kmyukawa@mail.ecc.u-tokyo.ac.jp"> Masashi Yukawa </a> </li>
-                </ul>
+			  <ul>
+			    <li>Satoru Nogami</li>
+			  </ul>
               </li>
 			  <br>
               <li><span class="notation">Graduate Students </span> 
                 <ul>
-                  <li><a href="mailto:kk27517@mail.ecc.u-tokyo.ac.jp"> Genjiro Suzuki</a> </li>
-                  <li>Keiko Kono </li>
-                  <li>Mieko Higuchi</li>
-				  <li>Satoshi Ishihara</li>
-				  <li>Aiko Hirata</li>
+			  <li>Shinsuke Ohnuki</li>
                 </ul>
               </li>
             </ul>
           </td>
 
+    <td width="4%"> </td>
+    <td width="48%" valign=top> 
+     <ul>
+       <li><span class=notation>Graduate Students</span></li>
+       <ul>
+         <li> Yoichiro Nakatani </li>
+           <ul><li> statistical analysis & data mining</li></ul>
+	   <li><a href="http://www.gi.k.u-tokyo.ac.jp/%7Eleo">Taro L. Saito</a></li>
+           <ul><li><span class="arialsmall">database program & web site management</span></li></ul>
+         <li>Hiroshi Hatsuda</li>
+           <ul><li>image processing & data mining</li></ul>
+       </ul>
+      <ul>
+         <li><span class=notation>Secretary</span></li>
+         <ul><li>Tsurutsuki Iijima</li></ul>
+      </ul>
+        </td>
+        </tr>
+        <tr> 
+          <td width="48%"> </td>
           <td width="4%"> </td>
-          <td width="48%" valign=top> 
-              <ul>
-				<br>
+          <td width="48%"> </td>
+        </tr>
 
-                <li><span class=notation>Research Associate</span>
-				<ul> 
-				  <li><a href="http://www.gi.k.u-tokyo.ac.jp/%7Esesejun">Jun Sese</a>
-					<ul>
-					  <li><span class="arialsmall">image processing & data mining</span></li>
-					</ul>
-				  </li>
-				</ul>
-                <li><span class=notation>Graduate Students</span>
-                <ul>
-                  <li><a href="http://www.gi.k.u-tokyo.ac.jp/%7Eleo">Taro L. Saito</a>
-                    <ul>
-					  <li><span class="arialsmall">database program & web site management</span></li>
-                    </ul>
-                  </li>
-				  <li> Yoichiro Nakatani </li>
-				  <ul><li> statistical analysis & data mining</li></ul>
-                </ul>
-				<br>
-				<li><span class=notation>Secretary</span>
-				<ul>
-				  <li>Tsurutsuki Iijima</li>
-				</ul>
-              </ul>
-          </td>
-        </tr>
-        <tr> 
-          <td width="48%"> </td>
-          <td width="4%"> </td>
-          <td width="48%"> </td>
-        </tr>
-        <tr> 
-          <td colspan="3" height="50"> 
-            <div align="left" class="arial"><b><font color="#006699"> Supporting 
-              Members </font></b></div>
-          </td>
-        </tr>
         <tr> 
           <td colspan="3" class="arial"> 
-Emi Shimoi, Tamao Goto, Yuka Kitamura,
-Shin Sasaki, Naoko Bando, Yukinobu Nagayasu, Eri Nakamura, Ahsan Budrul, Wei Qu
 		  </td>
         </tr>
         <tr>           <td colspan="3" height="50"> 
@@ -184,7 +159,7 @@ Shin Sasaki, Naoko Bando, Yukinobu Nagayasu, Eri Nakamura, Ahsan Budrul, Wei Qu
         <tr>
           <td colspan="3" class="arial"> 
 Miwaka Ohtani, Hiroshi Sawai, Ayaka Saka, Daisuke Watanabe,
-Mitsuhiro Abe, Yuri Nagai, Kouichiro Doi, Tomoyuki Yamada, Masahiro Kasahara
+Mitsuhiro Abe, Yuri Nagai, Kouichiro Doi, Tomoyuki Yamada, Masahiro Kasahara, Emi Shimoi, Tamao Goto, Yuka Kitamura, Shin Sasaki, Naoko Bando, Yukinobu Nagayasu, Eri Nakamura, Ahsan Budrul, Wei Qu, Fumi Sano, Masashi Yukawa, Jun Sese, Genjiro Suzuki, Keiko Kono, Mieko Higuchi, Satoshi Ishihara, Aiko Hirata
        </td></tr>
         <tr> 
 
