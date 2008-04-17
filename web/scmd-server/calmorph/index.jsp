@@ -42,6 +42,7 @@ CalMorph is a program that outputs a large amount of data on cell cycle phase, c
 <td>
 <ul>
   <li><html:link page="/calmorph/CalMorph.jar">Download CalMorph Version 1.1</html:link> 
+  <li><html:link page="/calmorph/CalMorph1.2.jar">Download CalMorph Version 1.2 (2006 Jul. 10th)</html:link> 
    <ul>
     <li>CalMorph requres <a href="http://java.sun.com/j2se/1.4.2/index.jsp">Java 1.4.2 or later</a></li>
    </ul>

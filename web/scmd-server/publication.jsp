@@ -36,10 +36,26 @@
 <td>
 <ul>
 <li>
+Ohnuki
+S, Nogami S, Kanai H, Hirata D, Nakatani Y, Morishita S, Ohya Y. 
+Diversity of Ca2+-induced morphology revealed by morphological
+phenotyping of Ca2+-sensitive mutants of <i>Saccharomyces cerevisiae</i>.
+<i>Eukaryot Cell</i>. 2007 Mar 9. (<a href="http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&cmd=Retrieve&dopt=AbstractPlus&list_uids=17351076&query_hl=1&itool=pubmed_docsum">PubMed</a>)
+</li>
+<br/>
+<li>
+Nogami
+S, Ohya Y, Yvert G.
+Genetic complexity and quantitative trait loci mapping of yeast
+morphological traits.
+<i>PLoS Genet.</i> 2007 Feb 23;3(2):e31. (<a href="http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&cmd=Retrieve&dopt=AbstractPlus&list_uids=17319748&query_hl=1&itool=pubmed_docsum">PubMed</a>)
+</li>
+<br/>
+<li>
 Kikuchi Y, Mizuuchi E, Nogami S, Morishita S, and Ohya, Y.
-Involvement of Rho-type GTPase in control of cell size in Saccharomyces
-cerevisiae.
-FEMS Yeast Research (in press)
+Involvement of Rho-type GTPase in control of cell size in <i>Saccharomyces
+cerevisiae</i>.
+<i>FEMS Yeast Research.</i> 2007 Feb 16. (<a href="http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&cmd=Retrieve&dopt=AbstractPlus&list_uids=17302939&query_hl=1&itool=pubmed_docsum">PubMed</a>)
 </li>
 <br/>
 <li>
@@ -47,7 +63,7 @@ Suzuki G, Sawai H, Ohtani M, Nogami S, Sano-Kumagai F, Saka A, Yukawa M,
 Saito T L, Sese J, Hirata D, Morishita S, and Ohya Y.
 Evaluation of image processing programs for accurate measurement of budding
 and fission yeast morphology.
-Curr Genet. 2006 Jan 6;:1-11
+<i>Curr Genet</i>. 2006 Jan 6;:1-11
 </li>
 <br/>
  <li>
