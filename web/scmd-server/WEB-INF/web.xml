@@ -165,11 +165,10 @@
 	<servlet-name>SCMDServerTest</servlet-name>
 	<url-pattern>/SCMDServerTest</url-pattern>
   </servlet-mapping>
-   <!-- 
-	   エラーログ配信RSS
-	   IP制限,BASIC認証をかける必要がある（Fileterで実装する？)
-   -->
-  <filter>
+
+
+<!-- 
+   <filter>
 	<filter-name>ErrorCatchFilter</filter-name>
 	<filter-class>lab.cb.scmd.web.servlet.ErrorCatchFilter</filter-class>
   </filter>
@@ -185,7 +184,8 @@
 	<servlet-name>RSSErrorServlet</servlet-name>
 	<url-pattern>/error.rss</url-pattern>
   </servlet-mapping>
-
+ -->
+ 
   <!-- The Usual Welcome File List -->
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
