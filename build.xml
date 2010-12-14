@@ -47,7 +47,7 @@
 		     <fileset dir="${webinf}/lib">
 		   	     <include name="*.jar"/>
 			 </fileset>
-			 <fileset dir="${TOMCAT_HOME}/common/lib">
+			 <fileset dir="${TOMCAT_HOME}/lib">
 			     <include name="*.jar"/>
 			 </fileset>
 		   </classpath>

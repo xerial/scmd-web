@@ -32,6 +32,16 @@ public class Header extends TagSupport
             out.println("<html>");            
             out.println("<head><title>SCMD " + getTitle() + "</title>");
             out.println("<link rel=StyleSheet href=\"" + getCss() + "\" type=\"text/css\">");
+	    out.println("<script type=\"text/javascript\">");
+	    out.println("var _gaq = _gaq || [];");
+	    out.println(" _gaq.push(['_setAccount', 'UA-59666-3']);");
+	    out.println(" _gaq.push(['_trackPageview']);");
+	    out.println("  (function() {");
+	    out.println("    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;");
+	    out.println("    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';");
+	    out.println("    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);");
+	    out.println("  })();");
+	    out.println("</script>");
             out.println("</head>");
         }
         catch(IOException e)
