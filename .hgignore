@@ -1,0 +1,7 @@
+web/scmd-server/WEB-INF/classes/
+build
+web/config/SCMDServer.config
+web/scmd-server/META-INF/context.xml
+
+syntax:glob
+*~
