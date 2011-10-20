@@ -27,7 +27,7 @@
  <div class="note">You also can see partial previews of the data sheets below from the <html:link page="/ViewORFParameter.do">ORF Parmeter Sheet</html:link> page. 
  </div>
 <ul>
-<li><html:link href="pnas/mutant_analysis.tab">Mutant Data (501 parameters x 4718 mutants) (43.3MBytes) </html:link> </li>
+<li><html:link href="pnas/mutant_analysis_2011_10_20.tab">Mutant Data (501 parameters x 4718 mutants) (43.3MBytes) </html:link> </li>
 <li><html:link href="pnas/wildtype_analysis.tab">Wild type Data (501 parameters x 126 mutants) (1.2MBytes)  </html:link> </li>
 </ul>
 <p class="notice">Notice!</p> 

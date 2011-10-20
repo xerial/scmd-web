@@ -38,7 +38,7 @@
 		<param name="param2"/>
 	</query>
 	<!-- lab.cb.scmd.web.bean.ParamPlotForm -->
-	<query name="lab.cb.scmd.web.bean.ParamPlotForm:paramlist" sql="select id, name, shortname, displayname from ${DB_PARAMETERLIST} where scope='orf' and datatype = 'num' order by id">
+	<query name="lab.cb.scmd.web.bean.ParamPlotForm:paramlist" sql="select id, name, shortname, displayname from ${DB_PARAMETERLIST} where scope='orf' and datatype = 'num' order by name, id">
 	</query>
 	<!-- lab.cb.scmd.web.action.ViewORFParameterAction -->
 	<query name="lab.cb.scmd.web.action.ViewORFParameterAction:genelist1" 
